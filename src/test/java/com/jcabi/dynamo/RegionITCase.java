@@ -185,4 +185,31 @@ public final class RegionITCase {
         items.remove();
     }
 
+    /**
+     * Region.Simple can retrieve attributes.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void retrievesAttributesFromDynamo() throws Exception {
+        final Table tbl = this.region.table(RegionITCase.TABLE);
+        final String idx = "2f7whf";
+        final String hash = "7afe5efa";
+        final String attr = "some-attribute";
+        tbl.put(
+            new Attributes()
+                .with(RegionITCase.HASH, hash)
+                .with(RegionITCase.RANGE, idx)
+                .with(attr, "test-value")
+        );
+        MatcherAssert.assertThat(
+            tbl.frame()
+                .where(RegionITCase.HASH, hash)
+                .where(RegionITCase.RANGE, idx)
+                .through(new QueryValve().withAttributeToGet(attr))
+                .iterator().next()
+                .has("something"),
+            Matchers.is(false)
+        );
+    }
+
 }
