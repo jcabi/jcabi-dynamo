@@ -112,11 +112,9 @@ public final class ScanValve implements Valve {
             final ScanResult result = aws.scan(request);
             Logger.debug(
                 this,
-                "#items(): loaded %d item(s) from '%s' using %s, %.2f units",
-                result.getCount(),
-                table,
-                conditions,
-                result.getConsumedCapacity().getCapacityUnits()
+                "#items(): loaded %d item(s) from '%s' using %s%s",
+                result.getCount(), table, conditions,
+                AwsTable.print(result.getConsumedCapacity())
             );
             return new ScanValve.NextDosage(credentials, request, result);
         } finally {
@@ -224,12 +222,9 @@ public final class ScanValve implements Valve {
                 final ScanResult rslt = aws.scan(rqst);
                 Logger.debug(
                     this,
-                    // @checkstyle LineLength (1 line)
-                    "#next(): loaded %d item(s) from '%s' using %s, %.2f units",
-                    rslt.getCount(),
-                    rqst.getTableName(),
-                    rqst.getScanFilter(),
-                    rslt.getConsumedCapacity().getCapacityUnits()
+                    "#next(): loaded %d item(s) from '%s' using %s%s",
+                    rslt.getCount(), rqst.getTableName(), rqst.getScanFilter(),
+                    AwsTable.print(rslt.getConsumedCapacity())
                 );
                 return new ScanValve.NextDosage(this.credentials, rqst, rslt);
             } finally {

@@ -31,6 +31,7 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
@@ -102,10 +103,9 @@ final class AwsTable implements Table {
         aws.shutdown();
         Logger.debug(
             this,
-            "#put('%[text]s'): created item in '%s', %.2f units",
-            attributes,
-            this.self,
-            result.getConsumedCapacity().getCapacityUnits()
+            "#put('%[text]s'): created item in '%s'%s",
+            attributes, this.self,
+            AwsTable.print(result.getConsumedCapacity())
         );
         return new AwsItem(
             this.credentials,
@@ -153,6 +153,21 @@ final class AwsTable implements Table {
             keys.add(key.getAttributeName());
         }
         return keys;
+    }
+
+    /**
+     * Print consumed capacity nicely.
+     * @param capacity Consumed capacity or NULL
+     * @return Suffix to add to a log line
+     */
+    public static String print(final ConsumedCapacity capacity) {
+        final String txt;
+        if (capacity == null) {
+            txt = "";
+        } else {
+            txt = String.format(", %.2f units", capacity.getCapacityUnits());
+        }
+        return txt;
     }
 
 }

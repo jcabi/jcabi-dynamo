@@ -41,10 +41,8 @@ import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.AfterClass;
-import org.junit.Assume;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -56,22 +54,16 @@ import org.junit.Test;
 public final class RegionITCase {
 
     /**
-     * AWS key.
+     * DynamoDB Local port.
      */
-    private static final String KEY =
-        System.getProperty("failsafe.dynamo.key");
-
-    /**
-     * AWS secret.
-     */
-    private static final String SECRET =
-        System.getProperty("failsafe.dynamo.secret");
+    private static final int PORT = Integer.parseInt(
+        System.getProperty("failsafe.port")
+    );
 
     /**
      * AWS table name.
      */
-    private static final String TABLE =
-        System.getProperty("failsafe.dynamo.table");
+    private static final String TABLE = "test-table";
 
     /**
      * Dynamo table hash key.
@@ -86,38 +78,24 @@ public final class RegionITCase {
     /**
      * Region.
      */
-    private static Region region;
+    private transient Region region;
 
     /**
      * Table mocker.
      */
-    private static TableMocker table;
+    private transient TableMocker table;
 
     /**
      * Before the test.
      * @throws Exception If fails
      */
     @Before
-    public void skip() throws Exception {
-        Assume.assumeThat(RegionITCase.KEY, Matchers.notNullValue());
-    }
-
-    /**
-     * Before the test.
-     * @throws Exception If fails
-     */
-    @BeforeClass
-    public static void before() throws Exception {
-        if (RegionITCase.KEY == null) {
-            return;
-        }
-        RegionITCase.region = new Region.Simple(
-            new Credentials.Simple(
-                RegionITCase.KEY, RegionITCase.SECRET
-            )
+    public void before() throws Exception {
+        this.region = new Region.Simple(
+            new Credentials.Direct(Credentials.TEST, RegionITCase.PORT)
         );
-        RegionITCase.table = new TableMocker(
-            RegionITCase.region,
+        this.table = new TableMocker(
+            this.region,
             new CreateTableRequest()
                 .withTableName(RegionITCase.TABLE)
                 .withProvisionedThroughput(
@@ -142,19 +120,16 @@ public final class RegionITCase {
                         .withKeyType(KeyType.RANGE)
                 )
         );
-        RegionITCase.table.create();
+        this.table.create();
     }
 
     /**
      * After the test.
      * @throws Exception If fails
      */
-    @AfterClass
-    public static void after() throws Exception {
-        if (RegionITCase.KEY == null) {
-            return;
-        }
-        RegionITCase.table.drop();
+    @After
+    public void after() throws Exception {
+        this.table.drop();
     }
 
     /**
@@ -164,7 +139,7 @@ public final class RegionITCase {
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void worksWithAmazon() throws Exception {
-        final Table tbl = RegionITCase.region.table(RegionITCase.TABLE);
+        final Table tbl = this.region.table(RegionITCase.TABLE);
         final String attr = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final String value = RandomStringUtils.randomAlphanumeric(Tv.TEN);
         final String hash = RandomStringUtils.randomAlphanumeric(Tv.TEN);
@@ -186,7 +161,7 @@ public final class RegionITCase {
             .where(attr, Conditions.equalTo(value))
             .through(
                 new ScanValve()
-                    .withLimit(1)
+                    .withLimit(Tv.TEN)
                     .withAttributeToGet(attr)
             );
         MatcherAssert.assertThat(frame, Matchers.hasSize(Tv.FIVE));

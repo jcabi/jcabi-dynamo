@@ -122,11 +122,9 @@ public final class QueryValve implements Valve {
             final QueryResult result = aws.query(request);
             Logger.debug(
                 this,
-                "#items(): loaded %d item(s) from '%s' using %s, %.2f units",
-                result.getCount(),
-                table,
-                conditions,
-                result.getConsumedCapacity().getCapacityUnits()
+                "#items(): loaded %d item(s) from '%s' using %s%s",
+                result.getCount(), table, conditions,
+                AwsTable.print(result.getConsumedCapacity())
             );
             return new QueryValve.NextDosage(credentials, request, result);
         } finally {
@@ -250,11 +248,10 @@ public final class QueryValve implements Valve {
                 final QueryResult rslt = aws.query(rqst);
                 Logger.debug(
                     this,
-                    "#next(): loaded %d item(s) from '%s' using %s, %.2f units",
-                    rslt.getCount(),
-                    rqst.getTableName(),
+                    "#next(): loaded %d item(s) from '%s' using %s%s",
+                    rslt.getCount(), rqst.getTableName(),
                     rqst.getKeyConditions(),
-                    rslt.getConsumedCapacity().getCapacityUnits()
+                    AwsTable.print(rslt.getConsumedCapacity())
                 );
                 return new QueryValve.NextDosage(this.credentials, rqst, rslt);
             } finally {

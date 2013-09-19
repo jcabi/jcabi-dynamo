@@ -113,10 +113,8 @@ final class AwsItem implements Item {
                 has = result.getItem().get(attr) != null;
                 Logger.debug(
                     this,
-                    "#has('%s'): %B from DynamoDB, %.2f units",
-                    attr,
-                    has,
-                    result.getConsumedCapacity().getCapacityUnits()
+                    "#has('%s'): %B from DynamoDB%s",
+                    attr, has, AwsTable.print(result.getConsumedCapacity())
                 );
             } finally {
                 aws.shutdown();
@@ -150,10 +148,8 @@ final class AwsItem implements Item {
                 }
                 Logger.debug(
                     this,
-                    "#get('%s'): loaded '%[text]s' from DynamoDB, %.2f units",
-                    attr,
-                    value,
-                    result.getConsumedCapacity().getCapacityUnits()
+                    "#get('%s'): loaded '%[text]s' from DynamoDB%s",
+                    attr, value, AwsTable.print(result.getConsumedCapacity())
                 );
             } finally {
                 aws.shutdown();
@@ -187,9 +183,8 @@ final class AwsItem implements Item {
             final PutItemResult result = aws.putItem(request);
             Logger.debug(
                 this,
-                "#put('%s'): saved item to DynamoDB, %.2f units",
-                attrs,
-                result.getConsumedCapacity().getCapacityUnits()
+                "#put('%s'): saved item to DynamoDB%s",
+                attrs, AwsTable.print(result.getConsumedCapacity())
             );
         } finally {
             aws.shutdown();

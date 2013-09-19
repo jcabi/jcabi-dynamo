@@ -39,7 +39,23 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>jcabi-dynamo</name>
+    <repositories>
+        <repository>
+            <id>jcabi-dynamodb-maven-plugin</id>
+            <url>http://repo.jcabi.com/releases</url>
+        </repository>
+    </repositories>
+    <properties>
+        <dynamodblocal.tgz>${com.jcabi:DynamoDBLocal:tgz}</dynamodblocal.tgz>
+    </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.jcabi</groupId>
+            <artifactId>DynamoDBLocal</artifactId>
+            <version>2013-09-12</version>
+            <type>tgz</type>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-aspects</artifactId>
@@ -83,15 +99,57 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <configuration>
                         <systemPropertyVariables>
-                            <failsafe.dynamo.key>${failsafe.dynamo.key}</failsafe.dynamo.key>
-                            <failsafe.dynamo.secret>${failsafe.dynamo.secret}</failsafe.dynamo.secret>
-                            <failsafe.dynamo.table>${failsafe.dynamo.table}</failsafe.dynamo.table>
+                            <failsafe.port>${dynamodb.port}</failsafe.port>
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>reserve-network-port</goal>
+                        </goals>
+                        <configuration>
+                            <portNames>
+                                <portName>dynamodb.port</portName>
+                            </portNames>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.jcabi</groupId>
+                <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <port>${dynamodb.port}</port>
+                    <tgz>${dynamodblocal.tgz}</tgz>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>start</goal>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <executions>

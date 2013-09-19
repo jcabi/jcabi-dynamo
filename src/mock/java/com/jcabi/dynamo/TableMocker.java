@@ -36,6 +36,7 @@ import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.amazonaws.services.dynamodbv2.model.ListTablesRequest;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
+import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import java.util.concurrent.TimeUnit;
@@ -145,12 +146,7 @@ public final class TableMocker {
     public void create() throws InterruptedException {
         final AmazonDynamoDB aws = this.region.aws();
         final String name = this.request.getTableName();
-        final ListTablesResult list = aws.listTables(
-            new ListTablesRequest()
-                .withExclusiveStartTableName(name)
-                .withLimit(1)
-        );
-        if (list.getTableNames().contains(name)) {
+        if (this.exists()) {
             Logger.info(
                 this,
                 "DynamoDB table '%s' already exists",
@@ -191,14 +187,7 @@ public final class TableMocker {
         final String name = this.request.getTableName();
         aws.deleteTable(new DeleteTableRequest().withTableName(name));
         Logger.info(this, "DynamoDB table '%s' deletion requested", name);
-        final ListTablesRequest req = new ListTablesRequest()
-            .withExclusiveStartTableName(name)
-            .withLimit(1);
-        while (true) {
-            final ListTablesResult list = aws.listTables(req);
-            if (!list.getTableNames().contains(name)) {
-                break;
-            }
+        while (this.exists()) {
             Logger.info(
                 this,
                 "DynamoDB table '%s' still exists",
@@ -207,6 +196,27 @@ public final class TableMocker {
             TimeUnit.SECONDS.sleep(Tv.TEN);
         }
         Logger.info(this, "DynamoDB table '%s' deleted", name);
+    }
+
+    /**
+     * The table exists?
+     * @return TRUE if it exists in DynamoDB
+     */
+    private boolean exists() {
+        final AmazonDynamoDB aws = this.region.aws();
+        final String name = this.request.getTableName();
+        boolean exists;
+        try {
+            final ListTablesResult list = aws.listTables(
+                new ListTablesRequest()
+                    .withExclusiveStartTableName(name)
+                    .withLimit(1)
+            );
+            exists = list.getTableNames().contains(name);
+        } catch (ResourceNotFoundException ex) {
+            exists = false;
+        }
+        return exists;
     }
 
 }

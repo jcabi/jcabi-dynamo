@@ -218,6 +218,14 @@ public interface Credentials {
             this.endpoint = pnt;
         }
         /**
+         * Public ctor.
+         * @param creds Original credentials
+         * @param port Port number for localhost
+         */
+        public Direct(@NotNull final Credentials creds, final int port) {
+            this(creds, String.format("http://localhost:%d", port));
+        }
+        /**
          * {@inheritDoc}
          */
         @Override

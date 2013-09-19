@@ -217,9 +217,8 @@ final class AwsIterator implements Iterator<Item> {
                 );
                 Logger.debug(
                     this,
-                    "#remove(): item #%d removed from DynamoDB, %.2f units",
-                    this.position,
-                    res.getConsumedCapacity().getCapacityUnits()
+                    "#remove(): item #%d removed from DynamoDB",
+                    this.position, AwsTable.print(res.getConsumedCapacity())
                 );
             } finally {
                 aws.shutdown();
