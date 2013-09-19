@@ -149,4 +149,44 @@ public interface Region {
         }
     }
 
+    /**
+     * Region pointed to a specific endpoint.
+     */
+    @Immutable
+    @Loggable(Loggable.DEBUG)
+    @ToString
+    @EqualsAndHashCode(of = { "origin", "endpoint" })
+    final class WithEndpoint implements Region {
+        /**
+         * Original region.
+         */
+        private final transient Region origin;
+        /**
+         * Endpoint to use.
+         */
+        private final transient String endpoint;
+        /**
+         * Public ctor.
+         * @param region Original region
+         * @param pnt Endpoint to use
+         */
+        public WithEndpoint(@NotNull final Region region,
+            @NotNull final String pnt) {
+            this.origin = region;
+            this.endpoint = pnt;
+        }
+        @Override
+        @NotNull
+        public AmazonDynamoDB aws() {
+            final AmazonDynamoDB aws = this.origin.aws();
+            aws.setEndpoint(this.endpoint);
+            return aws;
+        }
+        @Override
+        @NotNull
+        public Table table(@NotNull final String name) {
+            return this.origin.table(name);
+        }
+    }
+
 }
