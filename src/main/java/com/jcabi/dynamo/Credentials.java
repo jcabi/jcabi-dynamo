@@ -52,6 +52,14 @@ import org.apache.commons.lang3.Validate;
 public interface Credentials {
 
     /**
+     * Test credentials, for unit testing mostly.
+     */
+    Credentials TEST = new Credentials.Simple(
+        "AAAAAAAAAAAAAAAAAAAA",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    );
+
+    /**
      * Build AWS client.
      *
      * <p>Don't forget to shut it down after use,
