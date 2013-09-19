@@ -39,6 +39,7 @@ import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -79,19 +80,26 @@ final class AwsItem implements Item {
     private final transient Attributes attributes;
 
     /**
+     * Table keys.
+     */
+    private final transient Array<String> keys;
+
+    /**
      * Public ctor.
      * @param creds Credentials
      * @param frame Frame
      * @param table Table name
      * @param attrs Loaded already attributes with values
+     * @param pks Keys of the table
      * @checkstyle ParameterNumber (5 lines)
      */
     protected AwsItem(final Credentials creds, final AwsFrame frame,
-        final String table, final Attributes attrs) {
+        final String table, final Attributes attrs, final Array<String> pks) {
         this.credentials = creds;
         this.frm = frame;
         this.name = table;
         this.attributes = attrs;
+        this.keys = pks;
     }
 
     /**
@@ -106,7 +114,7 @@ final class AwsItem implements Item {
                 final GetItemRequest request = new GetItemRequest();
                 request.setTableName(this.name);
                 request.setAttributesToGet(Arrays.asList(attr));
-                request.setKey(this.attributes);
+                request.setKey(this.attributes.only(this.keys));
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
                 final GetItemResult result = aws.getItem(request);
@@ -136,7 +144,7 @@ final class AwsItem implements Item {
                 final GetItemRequest request = new GetItemRequest();
                 request.setTableName(this.name);
                 request.setAttributesToGet(Arrays.asList(attr));
-                request.setKey(this.attributes);
+                request.setKey(this.attributes.only(this.keys));
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
                 final GetItemResult result = aws.getItem(request);

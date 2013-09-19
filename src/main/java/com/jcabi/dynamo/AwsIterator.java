@@ -35,6 +35,7 @@ import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
 import com.amazonaws.services.dynamodbv2.model.DeleteItemResult;
 import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,6 +54,7 @@ import lombok.ToString;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
 @Loggable(Loggable.DEBUG)
 @ToString
@@ -168,7 +170,8 @@ final class AwsIterator implements Iterator<Item> {
                 this.credentials,
                 this.frame,
                 this.name,
-                new Attributes(this.dosage.get().items().get(this.position))
+                new Attributes(this.dosage.get().items().get(this.position)),
+                new Array<String>(this.keys)
             );
             return item;
         }

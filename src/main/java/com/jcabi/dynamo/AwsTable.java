@@ -39,8 +39,10 @@ import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
 import com.amazonaws.services.dynamodbv2.model.PutItemResult;
 import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
+import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -111,7 +113,8 @@ final class AwsTable implements Table {
             this.credentials,
             this.frame(),
             this.self,
-            new Attributes(attributes).only(this.keys())
+            new Attributes(attributes).only(this.keys()),
+            new Array<String>(this.keys())
         );
     }
 
@@ -143,6 +146,7 @@ final class AwsTable implements Table {
      * Get names of keys.
      * @return Names of attributes, which are primary keys
      */
+    @Cacheable(forever = true)
     public Collection<String> keys() {
         final AmazonDynamoDB aws = this.credentials.aws();
         final DescribeTableResult result = aws.describeTable(
