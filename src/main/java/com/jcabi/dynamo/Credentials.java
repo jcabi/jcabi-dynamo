@@ -192,4 +192,48 @@ public interface Credentials {
         }
     }
 
+    /**
+     * With explicitly specified endpoint.
+     */
+    @Immutable
+    @Loggable(Loggable.DEBUG)
+    @EqualsAndHashCode(of = { "origin", "endpoint" })
+    final class Direct implements Credentials {
+        /**
+         * Original credentials.
+         */
+        private final transient Credentials origin;
+        /**
+         * Endpoint.
+         */
+        private final transient String endpoint;
+        /**
+         * Public ctor.
+         * @param creds Original credentials
+         * @param pnt Endpoint
+         */
+        public Direct(@NotNull final Credentials creds,
+            @NotNull final String pnt) {
+            this.origin = creds;
+            this.endpoint = pnt;
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return String.format("%s at %s", this.origin, this.endpoint);
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        @NotNull
+        public AmazonDynamoDB aws() {
+            final AmazonDynamoDB aws = this.origin.aws();
+            aws.setEndpoint(this.endpoint);
+            return aws;
+        }
+    }
+
 }
