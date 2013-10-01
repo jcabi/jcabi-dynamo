@@ -137,7 +137,10 @@ public interface Credentials {
             final AmazonDynamoDB aws = new AmazonDynamoDBClient(
                 new BasicAWSCredentials(this.key, this.secret)
             );
-            aws.setRegion(RegionUtils.getRegion(this.region));
+            final com.amazonaws.regions.Region reg =
+                RegionUtils.getRegion(this.region);
+            Validate.notNull(reg, "Failed to find region '%s'", this.region);
+            aws.setRegion(reg);
             return aws;
         }
     }
