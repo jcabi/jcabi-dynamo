@@ -190,7 +190,10 @@ public interface Credentials {
         @NotNull
         public AmazonDynamoDB aws() {
             final AmazonDynamoDB aws = new AmazonDynamoDBClient();
-            aws.setRegion(RegionUtils.getRegion(this.region));
+            final com.amazonaws.regions.Region reg =
+                RegionUtils.getRegion(this.region);
+            Validate.notNull(reg, "Failed to detect region '%s'", this.region);
+            aws.setRegion(reg);
             return aws;
         }
     }
