@@ -59,6 +59,12 @@
             <url>http://repo.jcabi.com/releases</url>
         </repository>
     </repositories>
+    <distributionManagement>
+        <site>
+            <id>www.jcabi.com</id>
+            <url>s3://www.jcabi.com/jcabi-dynamo</url>
+        </site>
+    </distributionManagement>
     <properties>
         <dynamodblocal.tgz>${com.jcabi:DynamoDBLocal:tgz}</dynamodblocal.tgz>
     </properties>
