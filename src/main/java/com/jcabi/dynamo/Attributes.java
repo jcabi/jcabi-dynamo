@@ -92,7 +92,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     public Attributes(@NotNull final Map<String, AttributeValue> map) {
         this.pairs = new Object[map.size()][];
         int pos = 0;
-        for (Map.Entry<String, AttributeValue> entry : map.entrySet()) {
+        for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
             this.pairs[pos] = new Object[] {entry.getKey(), entry.getValue()};
             ++pos;
         }
@@ -120,7 +120,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param attrs Attributes to add
      * @return Attributes
      */
-    public Attributes with(@NotNull final Attributes attrs) {
+    public Attributes with(@NotNull final Map<String, AttributeValue> attrs) {
         final ConcurrentMap<String, AttributeValue> map =
             new ConcurrentHashMap<String, AttributeValue>(
                 this.pairs.length + 1
@@ -139,7 +139,7 @@ public final class Attributes implements Map<String, AttributeValue> {
             new ConcurrentHashMap<String, ExpectedAttributeValue>(
                 this.pairs.length
             );
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             map.put(
                 pair[0].toString(),
                 new ExpectedAttributeValue(AttributeValue.class.cast(pair[1]))
@@ -167,7 +167,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     public Attributes only(@NotNull final Collection<String> keys) {
         final ConcurrentMap<String, AttributeValue> map =
             new ConcurrentHashMap<String, AttributeValue>(this.pairs.length);
-        for (Map.Entry<String, AttributeValue> entry : this.entrySet()) {
+        for (final Map.Entry<String, AttributeValue> entry : this.entrySet()) {
             if (keys.contains(entry.getKey())) {
                 map.put(entry.getKey(), entry.getValue());
             }
@@ -179,7 +179,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     public String toString() {
         final Collection<String> terms =
             new ArrayList<String>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             terms.add(
                 String.format(
                     "%s=%s",
@@ -214,7 +214,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     @Override
     public AttributeValue get(final Object key) {
         AttributeValue value = null;
-        for (Map.Entry<String, AttributeValue> entry : this.entrySet()) {
+        for (final Map.Entry<String, AttributeValue> entry : this.entrySet()) {
             if (entry.getKey().equals(key)) {
                 value = entry.getValue();
                 break;
@@ -226,7 +226,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     @Override
     public Set<String> keySet() {
         final Set<String> keys = new HashSet<String>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             keys.add(pair[0].toString());
         }
         return keys;
@@ -236,17 +236,17 @@ public final class Attributes implements Map<String, AttributeValue> {
     public Collection<AttributeValue> values() {
         final Collection<AttributeValue> values =
             new ArrayList<AttributeValue>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             values.add(AttributeValue.class.cast(pair[1]));
         }
         return values;
     }
 
     @Override
-    public Set<Entry<String, AttributeValue>> entrySet() {
-        final Set<Entry<String, AttributeValue>> entries =
-            new HashSet<Entry<String, AttributeValue>>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+    public Set<Map.Entry<String, AttributeValue>> entrySet() {
+        final Set<Map.Entry<String, AttributeValue>> entries =
+            new HashSet<Map.Entry<String, AttributeValue>>(this.pairs.length);
+        for (final Object[] pair : this.pairs) {
             entries.add(
                 new HashMap.SimpleImmutableEntry<String, AttributeValue>(
                     pair[0].toString(),
@@ -259,23 +259,31 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     @Override
     public AttributeValue put(final String key, final AttributeValue value) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Attributes class is immutable, can't do #put()"
+        );
     }
 
     @Override
     public AttributeValue remove(final Object key) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Attributes class is immutable, can't do #remove()"
+        );
     }
 
     @Override
     public void putAll(
         final Map<? extends String, ? extends AttributeValue> map) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Attributes class is immutable, can't do #putAll()"
+        );
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Attributes class is immutable, can't do #clear()"
+        );
     }
 
 }

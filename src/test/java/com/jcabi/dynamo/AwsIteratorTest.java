@@ -31,8 +31,8 @@ package com.jcabi.dynamo;
 
 import com.jcabi.aspects.Tv;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
@@ -61,13 +61,13 @@ public final class AwsIteratorTest {
         final String table = "table-1";
         final Dosage first = Mockito.mock(Dosage.class);
         Mockito.doReturn(
-            Arrays.asList(new Attributes().with(attr, value))
+            Collections.singletonList(new Attributes().with(attr, value))
         ).when(first).items();
         Mockito.doReturn(true).when(first).hasNext();
         final Dosage second = Mockito.mock(Dosage.class);
         Mockito.doReturn(second).when(first).next();
         Mockito.doReturn(
-            Arrays.asList(new Attributes().with(attr, value))
+            Collections.singletonList(new Attributes().with(attr, value))
         ).when(second).items();
         Mockito.doReturn(true).when(second).hasNext();
         final Dosage last = Mockito.mock(Dosage.class);

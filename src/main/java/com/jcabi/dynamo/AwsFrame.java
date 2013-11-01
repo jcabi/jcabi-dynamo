@@ -86,7 +86,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
      * @param table Table
      * @param label Table name
      */
-    protected AwsFrame(final Credentials creds, final AwsTable table,
+    AwsFrame(final Credentials creds, final AwsTable table,
         final String label) {
         this(creds, table, label, new Conditions(), new ScanValve());
     }
@@ -100,7 +100,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
      * @param vlv Valve
      * @checkstyle ParameterNumber (5 lines)
      */
-    protected AwsFrame(final Credentials creds, final AwsTable table,
+    AwsFrame(final Credentials creds, final AwsTable table,
         final String label, final Conditions conds, final Valve vlv) {
         super();
         this.credentials = creds;

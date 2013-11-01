@@ -43,10 +43,10 @@ import com.jcabi.log.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -99,7 +99,7 @@ public final class ScanValve implements Valve {
         final Collection<String> keys) {
         final AmazonDynamoDB aws = credentials.aws();
         try {
-            final Set<String> attrs = new HashSet<String>(
+            final Collection<String> attrs = new HashSet<String>(
                 Arrays.asList(this.attributes)
             );
             attrs.addAll(keys);
@@ -141,7 +141,7 @@ public final class ScanValve implements Valve {
             this.limit,
             Iterables.concat(
                 Arrays.asList(this.attributes),
-                Arrays.asList(name)
+                Collections.singletonList(name)
             )
         );
     }
@@ -186,7 +186,7 @@ public final class ScanValve implements Valve {
          * @param rqst Query request
          * @param rslt Query result
          */
-        protected NextDosage(final Credentials creds,
+        NextDosage(final Credentials creds,
             final ScanRequest rqst, final ScanResult rslt) {
             this.credentials = creds;
             this.request = rqst;
@@ -203,7 +203,9 @@ public final class ScanValve implements Valve {
         @Override
         public Dosage next() {
             if (!this.hasNext()) {
-                throw new IllegalStateException();
+                throw new IllegalStateException(
+                    "nothing left in the iterator"
+                );
             }
             final AmazonDynamoDB aws = this.credentials.aws();
             try {

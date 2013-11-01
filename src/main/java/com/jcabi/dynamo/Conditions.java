@@ -93,7 +93,7 @@ public final class Conditions implements Map<String, Condition> {
     public Conditions(@NotNull final Map<String, Condition> map) {
         this.pairs = new Object[map.size()][];
         int pos = 0;
-        for (Map.Entry<String, Condition> entry : map.entrySet()) {
+        for (final Map.Entry<String, Condition> entry : map.entrySet()) {
             this.pairs[pos] = new Object[] {entry.getKey(), entry.getValue()};
             ++pos;
         }
@@ -149,7 +149,7 @@ public final class Conditions implements Map<String, Condition> {
     public String toString() {
         final Collection<String> terms =
             new ArrayList<String>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             final Condition condition = Condition.class.cast(pair[1]);
             terms.add(
                 String.format(
@@ -186,7 +186,7 @@ public final class Conditions implements Map<String, Condition> {
     @Override
     public Condition get(final Object key) {
         Condition value = null;
-        for (Map.Entry<String, Condition> entry : this.entrySet()) {
+        for (final Map.Entry<String, Condition> entry : this.entrySet()) {
             if (entry.getKey().equals(key)) {
                 value = entry.getValue();
                 break;
@@ -198,7 +198,7 @@ public final class Conditions implements Map<String, Condition> {
     @Override
     public Set<String> keySet() {
         final Set<String> keys = new HashSet<String>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             keys.add(pair[0].toString());
         }
         return keys;
@@ -208,7 +208,7 @@ public final class Conditions implements Map<String, Condition> {
     public Collection<Condition> values() {
         final Collection<Condition> values =
             new ArrayList<Condition>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             values.add(Condition.class.cast(pair[1]));
         }
         return values;
@@ -218,7 +218,7 @@ public final class Conditions implements Map<String, Condition> {
     public Set<Map.Entry<String, Condition>> entrySet() {
         final Set<Map.Entry<String, Condition>> entries =
             new HashSet<Map.Entry<String, Condition>>(this.pairs.length);
-        for (Object[] pair : this.pairs) {
+        for (final Object[] pair : this.pairs) {
             entries.add(
                 new HashMap.SimpleImmutableEntry<String, Condition>(
                     pair[0].toString(),

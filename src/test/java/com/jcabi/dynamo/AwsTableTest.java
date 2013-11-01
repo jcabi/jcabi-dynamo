@@ -61,7 +61,7 @@ public final class AwsTableTest {
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
             new PutItemResult().withConsumedCapacity(
-                new ConsumedCapacity().withCapacityUnits(1d)
+                new ConsumedCapacity().withCapacityUnits(1.0d)
             )
         ).when(aws).putItem(Mockito.any(PutItemRequest.class));
         Mockito.doReturn(

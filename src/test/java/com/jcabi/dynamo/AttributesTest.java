@@ -31,7 +31,7 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -90,7 +90,7 @@ public final class AttributesTest {
             new Attributes()
                 .with("first", "test-1")
                 .with("second", "test-2")
-                .only(Arrays.asList("never"))
+                .only(Collections.singletonList("never"))
                 .keySet(),
             Matchers.empty()
         );

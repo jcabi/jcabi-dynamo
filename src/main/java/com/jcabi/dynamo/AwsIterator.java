@@ -114,7 +114,7 @@ final class AwsIterator implements Iterator<Item> {
      * @param vlv Valve with items
      * @checkstyle ParameterNumber (5 lines)
      */
-    protected AwsIterator(final Credentials creds, final AwsFrame frm,
+    AwsIterator(final Credentials creds, final AwsFrame frm,
         final String label, final Conditions conds,
         final Collection<String> primary, final Valve vlv) {
         this.credentials = creds;
@@ -160,14 +160,13 @@ final class AwsIterator implements Iterator<Item> {
                 );
             }
             ++this.position;
-            final Item item = new AwsItem(
+            return new AwsItem(
                 this.credentials,
                 this.frame,
                 this.name,
                 new Attributes(this.dosage.get().items().get(this.position)),
                 new Array<String>(this.keys)
             );
-            return item;
         }
     }
 

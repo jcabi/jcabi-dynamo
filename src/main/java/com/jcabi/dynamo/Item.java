@@ -31,6 +31,7 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
+import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -83,7 +84,7 @@ public interface Item {
      *
      * @param attrs Attributes
      */
-    void put(@NotNull Attributes attrs);
+    void put(@NotNull Map<String, AttributeValue> attrs);
 
     /**
      * Get back to the frame it is from.

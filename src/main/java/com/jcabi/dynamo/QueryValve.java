@@ -46,7 +46,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -107,7 +106,7 @@ public final class QueryValve implements Valve {
         final Collection<String> keys) {
         final AmazonDynamoDB aws = credentials.aws();
         try {
-            final Set<String> attrs = new HashSet<String>(
+            final Collection<String> attrs = new HashSet<String>(
                 Arrays.asList(this.attributes)
             );
             attrs.addAll(keys);
@@ -211,7 +210,7 @@ public final class QueryValve implements Valve {
          * @param rqst Query request
          * @param rslt Query result
          */
-        protected NextDosage(final Credentials creds,
+        NextDosage(final Credentials creds,
             final QueryRequest rqst, final QueryResult rslt) {
             this.credentials = creds;
             this.request = rqst;
@@ -228,7 +227,9 @@ public final class QueryValve implements Valve {
         @Override
         public Dosage next() {
             if (!this.hasNext()) {
-                throw new IllegalStateException();
+                throw new IllegalStateException(
+                    "nothing left in the iterator"
+                );
             }
             final AmazonDynamoDB aws = this.credentials.aws();
             try {

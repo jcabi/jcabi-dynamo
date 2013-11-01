@@ -83,7 +83,7 @@ final class AwsTable implements Table {
      * @param region Region
      * @param table Table name
      */
-    protected AwsTable(final Credentials creds, final Region region,
+    AwsTable(final Credentials creds, final Region region,
         final String table) {
         this.credentials = creds;
         this.reg = region;
@@ -141,7 +141,7 @@ final class AwsTable implements Table {
             new DescribeTableRequest().withTableName(this.self)
         );
         final Collection<String> keys = new LinkedList<String>();
-        for (KeySchemaElement key : result.getTable().getKeySchema()) {
+        for (final KeySchemaElement key : result.getTable().getKeySchema()) {
             keys.add(key.getAttributeName());
         }
         return keys;

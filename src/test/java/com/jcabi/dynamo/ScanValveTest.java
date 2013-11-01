@@ -36,7 +36,7 @@ import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,7 +57,7 @@ public final class ScanValveTest {
     @Test
     @SuppressWarnings("unchecked")
     public void fetchesData() throws Exception {
-        final ScanValve valve = new ScanValve();
+        final Valve valve = new ScanValve();
         final Credentials credentials = Mockito.mock(Credentials.class);
         final ImmutableMap<String, AttributeValue> item =
             new ImmutableMap.Builder<String, AttributeValue>()
@@ -66,7 +66,9 @@ public final class ScanValveTest {
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
             new ScanResult()
-                .withItems(Arrays.<Map<String, AttributeValue>>asList(item))
+                .withItems(
+                    Collections.<Map<String, AttributeValue>>singletonList(item)
+            )
                 .withConsumedCapacity(
                     new ConsumedCapacity().withCapacityUnits(1d)
                 )

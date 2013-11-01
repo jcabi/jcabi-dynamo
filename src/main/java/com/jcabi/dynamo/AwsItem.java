@@ -41,7 +41,8 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -93,7 +94,7 @@ final class AwsItem implements Item {
      * @param pks Keys of the table
      * @checkstyle ParameterNumber (5 lines)
      */
-    protected AwsItem(final Credentials creds, final AwsFrame frame,
+    AwsItem(final Credentials creds, final AwsFrame frame,
         final String table, final Attributes attrs, final Array<String> pks) {
         this.credentials = creds;
         this.frm = frame;
@@ -110,7 +111,7 @@ final class AwsItem implements Item {
             try {
                 final GetItemRequest request = new GetItemRequest();
                 request.setTableName(this.name);
-                request.setAttributesToGet(Arrays.asList(attr));
+                request.setAttributesToGet(Collections.singletonList(attr));
                 request.setKey(this.attributes.only(this.keys));
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
@@ -137,7 +138,7 @@ final class AwsItem implements Item {
             try {
                 final GetItemRequest request = new GetItemRequest();
                 request.setTableName(this.name);
-                request.setAttributesToGet(Arrays.asList(attr));
+                request.setAttributesToGet(Collections.singletonList(attr));
                 request.setKey(this.attributes.only(this.keys));
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
@@ -167,7 +168,7 @@ final class AwsItem implements Item {
     }
 
     @Override
-    public void put(@NotNull final Attributes attrs) {
+    public void put(@NotNull final Map<String, AttributeValue> attrs) {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
             final PutItemRequest request = new PutItemRequest();

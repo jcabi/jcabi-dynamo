@@ -82,7 +82,9 @@ public interface Dosage {
         }
         @Override
         public Dosage next() {
-            throw new IllegalStateException();
+            throw new IllegalStateException(
+                "this is nothing left"
+            );
         }
         @Override
         public boolean hasNext() {
