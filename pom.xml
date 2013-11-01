@@ -36,7 +36,7 @@
         <version>0.13</version>
     </parent>
     <artifactId>jcabi-dynamo</artifactId>
-    <version>0.8.4</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>jcabi-dynamo</name>
     <description>Object Layer on top of Amazon DynamoDB SDK</description>
