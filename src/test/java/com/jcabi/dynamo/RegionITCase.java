@@ -41,8 +41,6 @@ import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -61,11 +59,6 @@ public final class RegionITCase {
     );
 
     /**
-     * AWS table name.
-     */
-    private static final String TABLE = "test-table";
-
-    /**
      * Dynamo table hash key.
      */
     private static final String HASH = "hash-key";
@@ -76,70 +69,14 @@ public final class RegionITCase {
     private static final String RANGE = "range-key";
 
     /**
-     * Region.
-     */
-    private transient Region region;
-
-    /**
-     * Table mocker.
-     */
-    private transient TableMocker table;
-
-    /**
-     * Before the test.
-     * @throws Exception If fails
-     */
-    @Before
-    public void before() throws Exception {
-        this.region = new Region.Simple(
-            new Credentials.Direct(Credentials.TEST, RegionITCase.PORT)
-        );
-        this.table = new TableMocker(
-            this.region,
-            new CreateTableRequest()
-                .withTableName(RegionITCase.TABLE)
-                .withProvisionedThroughput(
-                    new ProvisionedThroughput()
-                        .withReadCapacityUnits(1L)
-                        .withWriteCapacityUnits(1L)
-                )
-                .withAttributeDefinitions(
-                    new AttributeDefinition()
-                        .withAttributeName(RegionITCase.HASH)
-                        .withAttributeType(ScalarAttributeType.S),
-                    new AttributeDefinition()
-                        .withAttributeName(RegionITCase.RANGE)
-                        .withAttributeType(ScalarAttributeType.S)
-                )
-                .withKeySchema(
-                    new KeySchemaElement()
-                        .withAttributeName(RegionITCase.HASH)
-                        .withKeyType(KeyType.HASH),
-                    new KeySchemaElement()
-                        .withAttributeName(RegionITCase.RANGE)
-                        .withKeyType(KeyType.RANGE)
-                )
-        );
-        this.table.create();
-    }
-
-    /**
-     * After the test.
-     * @throws Exception If fails
-     */
-    @After
-    public void after() throws Exception {
-        this.table.drop();
-    }
-
-    /**
      * Region.Simple can work with AWS.
      * @throws Exception If some problem inside
      */
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void worksWithAmazon() throws Exception {
-        final Table tbl = this.region.table(RegionITCase.TABLE);
+        final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
+        final Table tbl = this.region(name).table(name);
         final String attr = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final String value = RandomStringUtils.randomAlphanumeric(Tv.TEN);
         final String hash = RandomStringUtils.randomAlphanumeric(Tv.TEN);
@@ -191,7 +128,8 @@ public final class RegionITCase {
      */
     @Test
     public void retrievesAttributesFromDynamo() throws Exception {
-        final Table tbl = this.region.table(RegionITCase.TABLE);
+        final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
+        final Table tbl = this.region(name).table(name);
         final String idx = "2f7whf";
         final String hash = "7afe5efa";
         final String attr = "some-attribute";
@@ -210,6 +148,45 @@ public final class RegionITCase {
                 .has("something"),
             Matchers.is(false)
         );
+    }
+
+    /**
+     * Get region with a table.
+     * @param table Table name
+     * @return Region
+     * @throws Exception If fails
+     */
+    private Region region(final String table) throws Exception {
+        final Region region = new Region.Simple(
+            new Credentials.Direct(Credentials.TEST, RegionITCase.PORT)
+        );
+        new TableMocker(
+            region,
+            new CreateTableRequest()
+                .withTableName(table)
+                .withProvisionedThroughput(
+                    new ProvisionedThroughput()
+                        .withReadCapacityUnits(1L)
+                        .withWriteCapacityUnits(1L)
+                )
+                .withAttributeDefinitions(
+                    new AttributeDefinition()
+                        .withAttributeName(RegionITCase.HASH)
+                        .withAttributeType(ScalarAttributeType.S),
+                    new AttributeDefinition()
+                        .withAttributeName(RegionITCase.RANGE)
+                        .withAttributeType(ScalarAttributeType.S)
+                )
+                .withKeySchema(
+                    new KeySchemaElement()
+                        .withAttributeName(RegionITCase.HASH)
+                        .withKeyType(KeyType.HASH),
+                    new KeySchemaElement()
+                        .withAttributeName(RegionITCase.RANGE)
+                        .withKeyType(KeyType.RANGE)
+                )
+        ).createIfAbsent();
+        return region;
     }
 
 }

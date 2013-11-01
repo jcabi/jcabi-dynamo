@@ -217,23 +217,14 @@ public final class QueryValve implements Valve {
             this.request = rqst;
             this.result = rslt;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public List<Map<String, AttributeValue>> items() {
             return this.result.getItems();
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean hasNext() {
             return this.result.getLastEvaluatedKey() != null;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public Dosage next() {
             if (!this.hasNext()) {

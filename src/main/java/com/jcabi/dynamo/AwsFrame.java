@@ -110,9 +110,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
         this.valve = vlv;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Iterator<Item> iterator() {
         return new AwsIterator(
@@ -125,17 +122,11 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int size() {
         return Iterators.size(this.iterator());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Frame where(@NotNull final String attr,
@@ -143,9 +134,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
         return this.where(attr, Conditions.equalTo(value));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Frame where(@NotNull final String attr,
@@ -159,9 +147,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Frame where(@NotNull final Map<String, Condition> conds) {
@@ -174,9 +159,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Frame through(@NotNull final Valve vlv) {
@@ -189,9 +171,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Table table() {

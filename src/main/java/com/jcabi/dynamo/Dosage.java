@@ -76,23 +76,14 @@ public interface Dosage {
     @ToString
     @EqualsAndHashCode
     final class Empty implements Dosage {
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public List<Map<String, AttributeValue>> items() {
             return new ArrayList<Map<String, AttributeValue>>(0);
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public Dosage next() {
             throw new IllegalStateException();
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean hasNext() {
             return false;

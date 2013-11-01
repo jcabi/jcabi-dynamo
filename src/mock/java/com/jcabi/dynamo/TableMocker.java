@@ -46,14 +46,14 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>Use it like this in your integration test:
  *
- * <pre>public class FooITCase {
+ * <pre> public class FooITCase {
  *   private Region region;
  *   private TableMocker table;
  *   &#64;Before
  *   public void prepare() {
  *     this.region = new Region.Simple(..your IT credentials..);
  *     this.table = new TableMocker(this.region, new CreateTableRequest()...);
- *     this.table.create();
+ *     this.table.createIfAbsent();
  *   }
  *   &#64;After
  *   public void dropTable() {
@@ -73,7 +73,7 @@ import java.util.concurrent.TimeUnit;
  * can create table before the entire test case and drop when all methods
  * are completed:
  *
- * <pre>public class FooITCase {
+ * <pre> public class FooITCase {
  *   private static Region region;
  *   private static TableMocker table;
  *   &#64;BeforeClass
@@ -82,7 +82,7 @@ import java.util.concurrent.TimeUnit;
  *     FooITCase.table = new TableMocker(
  *       FooITCase.region, new CreateTableRequest()...
  *     );
- *     FooITCase.table.create();
+ *     FooITCase.table.createIfAbsent();
  *   }
  *   &#64;AfterClass
  *   public static void dropTable() {
@@ -140,6 +140,17 @@ public final class TableMocker {
     }
 
     /**
+     * Create table if it's absent.
+     * @throws InterruptedException If something fails
+     * @since 0.9
+     */
+    public void createIfAbsent() throws InterruptedException {
+        if (!this.exists()) {
+            this.create();
+        }
+    }
+
+    /**
      * Create table.
      * @throws InterruptedException If something fails
      */
@@ -147,11 +158,7 @@ public final class TableMocker {
         final AmazonDynamoDB aws = this.region.aws();
         final String name = this.request.getTableName();
         if (this.exists()) {
-            Logger.info(
-                this,
-                "DynamoDB table '%s' already exists",
-                name
-            );
+            Logger.info(this, "DynamoDB table '%s' already exists", name);
         } else {
             aws.createTable(this.request);
         }
@@ -163,23 +170,21 @@ public final class TableMocker {
                 Logger.info(
                     this,
                     "DynamoDB table '%s' is %s",
-                    name,
-                    result.getTable().getTableStatus()
+                    name, result.getTable().getTableStatus()
                 );
                 break;
             }
-            TimeUnit.SECONDS.sleep(Tv.TEN);
+            TimeUnit.SECONDS.sleep((long) Tv.TEN);
             Logger.info(
                 this,
                 "waiting for DynamoDB table '%s': %s",
-                name,
-                result.getTable().getTableStatus()
+                name, result.getTable().getTableStatus()
             );
         }
     }
 
     /**
-     * Create table.
+     * Drop table.
      * @throws InterruptedException If something fails
      */
     public void drop() throws InterruptedException {
@@ -188,12 +193,8 @@ public final class TableMocker {
         aws.deleteTable(new DeleteTableRequest().withTableName(name));
         Logger.info(this, "DynamoDB table '%s' deletion requested", name);
         while (this.exists()) {
-            Logger.info(
-                this,
-                "DynamoDB table '%s' still exists",
-                name
-            );
-            TimeUnit.SECONDS.sleep(Tv.TEN);
+            Logger.info(this, "DynamoDB table '%s' still exists", name);
+            TimeUnit.SECONDS.sleep((long) Tv.TEN);
         }
         Logger.info(this, "DynamoDB table '%s' deleted", name);
     }
@@ -201,8 +202,9 @@ public final class TableMocker {
     /**
      * The table exists?
      * @return TRUE if it exists in DynamoDB
+     * @since 0.9
      */
-    private boolean exists() {
+    public boolean exists() {
         final AmazonDynamoDB aws = this.region.aws();
         final String name = this.request.getTableName();
         boolean exists;

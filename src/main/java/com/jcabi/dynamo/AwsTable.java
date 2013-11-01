@@ -90,9 +90,6 @@ final class AwsTable implements Table {
         this.self = table;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Item put(final Map<String, AttributeValue> attributes) {
         final AmazonDynamoDB aws = this.credentials.aws();
@@ -118,25 +115,16 @@ final class AwsTable implements Table {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Region region() {
         return this.reg;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public AwsFrame frame() {
         return new AwsFrame(this.credentials, this, this.self);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String name() {
         return this.self;

@@ -125,9 +125,6 @@ final class AwsIterator implements Iterator<Item> {
         this.valve = vlv;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean hasNext() {
         synchronized (this.dosage) {
@@ -151,9 +148,6 @@ final class AwsIterator implements Iterator<Item> {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Item next() {
         synchronized (this.dosage) {
@@ -177,9 +171,6 @@ final class AwsIterator implements Iterator<Item> {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void remove() {

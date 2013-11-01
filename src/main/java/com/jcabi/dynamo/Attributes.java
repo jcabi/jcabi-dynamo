@@ -175,9 +175,6 @@ public final class Attributes implements Map<String, AttributeValue> {
         return new Attributes(map);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         final Collection<String> terms =
@@ -194,41 +191,26 @@ public final class Attributes implements Map<String, AttributeValue> {
         return StringUtils.join(terms, "; ");
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int size() {
         return this.pairs.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isEmpty() {
         return this.pairs.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsKey(final Object key) {
         return this.keySet().contains(key.toString());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsValue(final Object value) {
         return this.values().contains(AttributeValue.class.cast(value));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public AttributeValue get(final Object key) {
         AttributeValue value = null;
@@ -241,9 +223,6 @@ public final class Attributes implements Map<String, AttributeValue> {
         return value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Set<String> keySet() {
         final Set<String> keys = new HashSet<String>(this.pairs.length);
@@ -253,9 +232,6 @@ public final class Attributes implements Map<String, AttributeValue> {
         return keys;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Collection<AttributeValue> values() {
         final Collection<AttributeValue> values =
@@ -266,9 +242,6 @@ public final class Attributes implements Map<String, AttributeValue> {
         return values;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Set<Entry<String, AttributeValue>> entrySet() {
         final Set<Entry<String, AttributeValue>> entries =
@@ -284,34 +257,22 @@ public final class Attributes implements Map<String, AttributeValue> {
         return entries;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public AttributeValue put(final String key, final AttributeValue value) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public AttributeValue remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void putAll(
         final Map<? extends String, ? extends AttributeValue> map) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();

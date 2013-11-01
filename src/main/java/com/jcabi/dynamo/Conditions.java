@@ -145,9 +145,6 @@ public final class Conditions implements Map<String, Condition> {
         return new Conditions(map);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         final Collection<String> terms =
@@ -166,41 +163,26 @@ public final class Conditions implements Map<String, Condition> {
         return StringUtils.join(terms, " AND ");
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int size() {
         return this.pairs.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isEmpty() {
         return this.pairs.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsKey(final Object key) {
         return this.keySet().contains(key.toString());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsValue(final Object value) {
         return this.values().contains(Condition.class.cast(value));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Condition get(final Object key) {
         Condition value = null;
@@ -213,9 +195,6 @@ public final class Conditions implements Map<String, Condition> {
         return value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Set<String> keySet() {
         final Set<String> keys = new HashSet<String>(this.pairs.length);
@@ -225,9 +204,6 @@ public final class Conditions implements Map<String, Condition> {
         return keys;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Collection<Condition> values() {
         final Collection<Condition> values =
@@ -238,9 +214,6 @@ public final class Conditions implements Map<String, Condition> {
         return values;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Set<Map.Entry<String, Condition>> entrySet() {
         final Set<Map.Entry<String, Condition>> entries =
@@ -256,34 +229,22 @@ public final class Conditions implements Map<String, Condition> {
         return entries;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Condition put(final String key, final Condition value) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Condition remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void putAll(
         final Map<? extends String, ? extends Condition> map) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();

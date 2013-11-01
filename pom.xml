@@ -33,7 +33,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.9</version>
+        <version>0.13</version>
     </parent>
     <artifactId>jcabi-dynamo</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -61,21 +61,11 @@
     </repositories>
     <distributionManagement>
         <site>
-            <id>www.jcabi.com</id>
-            <url>s3://www.jcabi.com/jcabi-dynamo</url>
+            <id>dynamo.jcabi.com</id>
+            <url>http://dynamo.jcabi.com/</url>
         </site>
     </distributionManagement>
-    <properties>
-        <dynamodblocal.tgz>${com.jcabi:DynamoDBLocal:tgz}</dynamodblocal.tgz>
-    </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.jcabi</groupId>
-            <artifactId>DynamoDBLocal</artifactId>
-            <version>2013-09-12</version>
-            <type>tgz</type>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-aspects</artifactId>
@@ -147,18 +137,30 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>properties</goal>
+                            <goal>unpack</goal>
                         </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.jcabi</groupId>
+                                    <artifactId>DynamoDBLocal</artifactId>
+                                    <version>2013-09-12</version>
+                                    <type>zip</type>
+                                    <outputDirectory>${project.build.directory}/dynamodb-dist</outputDirectory>
+                                    <overWrite>false</overWrite>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <groupId>com.jcabi</groupId>
                 <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
-                <version>0.1.1</version>
+                <version>0.4.1</version>
                 <configuration>
                     <port>${dynamodb.port}</port>
-                    <tgz>${dynamodblocal.tgz}</tgz>
+                    <dist>${project.build.directory}/dynamodb-dist</dist>
                 </configuration>
                 <executions>
                     <execution>

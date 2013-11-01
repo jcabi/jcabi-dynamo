@@ -102,9 +102,6 @@ final class AwsItem implements Item {
         this.keys = pks;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean has(@NotNull final String attr) {
         boolean has = this.attributes.containsKey(attr);
@@ -131,9 +128,6 @@ final class AwsItem implements Item {
         return has;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public AttributeValue get(@NotNull final String attr) {
@@ -166,18 +160,12 @@ final class AwsItem implements Item {
         return value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void put(@NotNull final String attr,
         @NotNull final AttributeValue value) {
         this.put(new Attributes().with(attr, value));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void put(@NotNull final Attributes attrs) {
         final AmazonDynamoDB aws = this.credentials.aws();
@@ -199,9 +187,6 @@ final class AwsItem implements Item {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Frame frame() {
         return this.frm;

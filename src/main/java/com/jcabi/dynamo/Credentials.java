@@ -121,16 +121,10 @@ public interface Credentials {
             );
             this.region = reg;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return String.format("%s/%s", this.region, this.key);
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         @NotNull
         public AmazonDynamoDB aws() {
@@ -176,16 +170,10 @@ public interface Credentials {
             );
             this.region = reg;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return this.region;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         @NotNull
         public AmazonDynamoDB aws() {
@@ -231,16 +219,10 @@ public interface Credentials {
         public Direct(@NotNull final Credentials creds, final int port) {
             this(creds, String.format("http://localhost:%d", port));
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return String.format("%s at %s", this.origin, this.endpoint);
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         @NotNull
         public AmazonDynamoDB aws() {
