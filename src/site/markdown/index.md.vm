@@ -1,0 +1,75 @@
+# Amazon Dynamo DB Object Layer
+
+Set of classes in
+[`com.jcabi.dynamo`](./apidocs-${project.version}/com/jcabi/dynamo/index.html)
+is an object layer on top of
+[AWS SDK for Dynamo DB](http://aws.amazon.com/sdkforjava/).
+For example, to read an item from your Dynamo table:
+
+```
+public class Main {
+  public static void main(String[] args) {
+    Credentials credentials = new Credentials.Simple("AWS key", "AWS secret");
+    Region region = new Region.Simple(credentials);
+    Table table = region.table("foo");
+    Collection<Item> items = table.frame().where("id", Conditions.equalTo(123));
+    for (Item item : items) {
+      System.out.println(item.get("name").getS());
+    }
+  }
+}
+```
+
+You can put an item using
+[`Table#put()`](./apidocs-${project.version}/com/jcabi/dynamo/Table.html) method:
+
+```
+public class Main {
+  public static void main(String[] args) {
+    Table table = region.table("foo");
+    table.put(
+      new Attributes()
+        .with("id", 123)
+        .with("name", "Jeff Lebowski")
+        .with("salary", 0.69d)
+    );
+  }
+}
+```
+
+Read [JavaDoc](./apidocs-${project.version}/com/jcabi/dynamo/index.html)
+for more information and examples.
+
+The only dependency you need is
+(you can also download
+[jcabi-dynamo-${project.version}.jar](http://repo1.maven.org/maven2/com/jcabi/jcabi-dynamo/${project.version}/jcabi-dynamo-${project.version}.jar)
+and add it to the classpath):
+
+```
+<dependency>
+  <groupId>com.jcabi</groupId>
+  <artifactId>jcabi-dynamo</artifactId>
+  <version>${project.version}</version>
+</dependency>
+```
+
+## Cutting Edge Version
+
+If you want to use current version of the product, you can do it with
+this configuration in your `pom.xml`:
+
+```
+<repositories>
+  <repository>
+    <id>oss.sonatype.org</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+  </repository>
+</repositories>
+<dependencies>
+  <dependency>
+    <groupId>com.jcabi</groupId>
+    <artifactId>jcabi-dynamo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </dependency>
+</dependencies>
+```

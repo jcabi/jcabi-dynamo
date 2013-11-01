@@ -1,0 +1,41 @@
+# Query vs. Scan
+
+There are two possible ways to retrieve items from a DynamoDB table:
+[query and scan](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html).
+Scan works on any table, no matter what is the structure of its keys, and
+goes through all items filtering out what's not relevant. Performance will
+seriously suffer if the table is big, but for small tables such operation
+is acceptable:
+
+```
+public class MyData {
+  public Collection<Item> items() {
+    return this.region.table()
+      .frame()
+      .where("name", Conditions.equalTo("John Doe"))
+      .through(new ScanValve().withLimit(50));
+  }
+}
+```
+
+By providing an instance of
+[`ScanValve`](./apidocs-${project.version}/com/jcabi/dynamo/ScanValve.html)
+to the
+[`Frame`](./apidocs-${project.version}/com/jcabi/dynamo/Frame.html)
+we instruct it which strategy to use for fetching items from the DynamoDB table.
+
+Query operation requires a table to have hash/range key schema
+and demands at least hash to be mentioned in the query conditions. For example:
+
+```
+public class MyData {
+  public Collection<Item> items() {
+    return this.region.table()
+      .frame()
+      .where("hash", Conditions.equalTo(83788322))
+      .through(new QueryValve().withScanIndexForward(false));
+  }
+}
+```
+
+This example will fetch items from the table in a backward order.
