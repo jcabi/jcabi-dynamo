@@ -160,7 +160,7 @@ public final class RegionITCase {
         final Region region = new Region.Simple(
             new Credentials.Direct(Credentials.TEST, RegionITCase.PORT)
         );
-        new TableMocker(
+        final TableMocker mocker = new TableMocker(
             region,
             new CreateTableRequest()
                 .withTableName(table)
@@ -185,7 +185,9 @@ public final class RegionITCase {
                         .withAttributeName(RegionITCase.RANGE)
                         .withKeyType(KeyType.RANGE)
                 )
-        ).createIfAbsent();
+        );
+        mocker.create();
+        mocker.createIfAbsent();
         return region;
     }
 

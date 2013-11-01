@@ -35,7 +35,6 @@ import com.amazonaws.services.dynamodbv2.model.DeleteTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.amazonaws.services.dynamodbv2.model.ListTablesRequest;
-import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
@@ -157,11 +156,8 @@ public final class TableMocker {
     public void create() throws InterruptedException {
         final AmazonDynamoDB aws = this.region.aws();
         final String name = this.request.getTableName();
-        if (this.exists()) {
-            Logger.info(this, "DynamoDB table '%s' already exists", name);
-        } else {
-            aws.createTable(this.request);
-        }
+        aws.createTable(this.request);
+        Logger.info(this, "DynamoDB table '%s' creation requested...", name);
         final DescribeTableRequest req = new DescribeTableRequest()
             .withTableName(name);
         while (true) {
@@ -209,14 +205,16 @@ public final class TableMocker {
         final String name = this.request.getTableName();
         boolean exists;
         try {
-            final ListTablesResult list = aws.listTables(
+            aws.listTables(
                 new ListTablesRequest()
                     .withExclusiveStartTableName(name)
                     .withLimit(1)
             );
-            exists = list.getTableNames().contains(name);
+            exists = true;
+            Logger.info(this, "DynamoDB table '%s' already exists", name);
         } catch (ResourceNotFoundException ex) {
             exists = false;
+            Logger.info(this, "DynamoDB table '%s' doesn't exist", name);
         }
         return exists;
     }
