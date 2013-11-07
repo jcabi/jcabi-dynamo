@@ -29,20 +29,18 @@
  */
 package com.jcabi.dynamo.retry;
 
-import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import com.jcabi.dynamo.Credentials;
+import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.dynamo.Dosage;
-import com.jcabi.dynamo.Valve;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Valve that retries on failure.
+ * Dosage that retries on failure.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -52,33 +50,36 @@ import lombok.ToString;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = "origin")
-public final class ReValve implements Valve {
+public final class ReDosage implements Dosage {
 
     /**
-     * Original valve.
+     * Original dosage.
      */
-    private final transient Valve origin;
+    private final transient Dosage origin;
 
     /**
      * Public ctor.
-     * @param valve Origin valve
+     * @param dosage Origin dosage
      */
-    public ReValve(final Valve valve) {
-        this.origin = valve;
+    public ReDosage(final Dosage dosage) {
+        this.origin = dosage;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (7 lines)
-     */
     @Override
-    public Dosage fetch(@NotNull final Credentials credentials,
-        @NotNull final String table,
-        @NotNull final Map<String, Condition> conditions,
-        @NotNull final Collection<String> keys) {
-        return new ReDosage(
-            this.origin.fetch(credentials, table, conditions, keys)
-        );
+    @RetryOnFailure(verbose = false)
+    public List<Map<String, AttributeValue>> items() {
+        return this.origin.items();
     }
 
+    @Override
+    @RetryOnFailure(verbose = false)
+    public boolean hasNext() {
+        return this.origin.hasNext();
+    }
+
+    @Override
+    @RetryOnFailure(verbose = false)
+    public Dosage next() {
+        return new ReDosage(this.origin.next());
+    }
 }
