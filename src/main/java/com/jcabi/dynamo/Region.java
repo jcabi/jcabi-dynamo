@@ -44,6 +44,11 @@ import lombok.ToString;
  * <p>You can use {@link #aws()} method to get access to Amazon DynamoDB
  * client directly.
  *
+ * <p>Since version 0.9 it is strongly recommended to wrap your region
+ * in {@link com.jcabi.dynamo.retry.ReRegion} before use, for example:
+ *
+ * <pre> Region region = new ReRegion(new Region.Simple(credentials));</pre>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
