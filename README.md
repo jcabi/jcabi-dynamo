@@ -27,7 +27,7 @@ You need just this dependency:
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-dynamo</artifactId>
-  <version>0.8.4</version>
+  <version>0.9</version>
 </dependency>
 ```
 
