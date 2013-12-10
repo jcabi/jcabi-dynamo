@@ -32,19 +32,16 @@ package com.jcabi.dynamo;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.immutable.ArrayMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * DynamoDB query conditions.
@@ -62,7 +59,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@EqualsAndHashCode(of = "pairs")
+@EqualsAndHashCode(of = "conds")
 @SuppressWarnings({
     "PMD.TooManyMethods",
     "PMD.AvoidInstantiatingObjectsInLoops"
@@ -77,13 +74,13 @@ public final class Conditions implements Map<String, Condition> {
     /**
      * Pairs.
      */
-    private final transient Object[][] pairs;
+    private final transient ArrayMap<String, Condition> conds;
 
     /**
      * Public ctor.
      */
     public Conditions() {
-        this(new HashMap<String, Condition>(0));
+        this(new ArrayMap<String, Condition>());
     }
 
     /**
@@ -91,12 +88,7 @@ public final class Conditions implements Map<String, Condition> {
      * @param map Map of them
      */
     public Conditions(@NotNull final Map<String, Condition> map) {
-        this.pairs = new Object[map.size()][];
-        int pos = 0;
-        for (final Map.Entry<String, Condition> entry : map.entrySet()) {
-            this.pairs[pos] = new Object[] {entry.getKey(), entry.getValue()};
-            ++pos;
-        }
+        this.conds = new ArrayMap<String, Condition>(map);
     }
 
     /**
@@ -120,134 +112,103 @@ public final class Conditions implements Map<String, Condition> {
     @NotNull
     public Conditions with(@NotNull final String name,
         @NotNull final Condition value) {
-        final ConcurrentMap<String, Condition> map =
-            new ConcurrentHashMap<String, Condition>(
-                this.pairs.length + 1
-            );
-        map.putAll(this);
-        map.put(name, value);
-        return new Conditions(map);
+        return new Conditions(this.conds.with(name, value));
     }
 
     /**
      * With these conditions.
-     * @param conds The conditions
+     * @param map The conditions
      * @return New map of conditions
      */
     @NotNull
-    public Conditions with(@NotNull final Map<String, Condition> conds) {
-        final ConcurrentMap<String, Condition> map =
-            new ConcurrentHashMap<String, Condition>(
-                this.pairs.length + conds.size()
-            );
-        map.putAll(this);
-        map.putAll(conds);
-        return new Conditions(map);
+    public Conditions with(@NotNull final Map<String, Condition> map) {
+        return new Conditions(this.conds.with(map));
     }
 
     @Override
     public String toString() {
         final Collection<String> terms =
-            new ArrayList<String>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
-            final Condition condition = Condition.class.cast(pair[1]);
+            new ArrayList<String>(this.conds.size());
+        for (final Map.Entry<String, Condition> cond : this.conds.entrySet()) {
             terms.add(
                 String.format(
                     "%s %s %s",
-                    pair[0],
-                    condition.getComparisonOperator(),
-                    condition.getAttributeValueList()
+                    cond.getKey(),
+                    cond.getValue().getComparisonOperator(),
+                    cond.getValue().getAttributeValueList()
                 )
             );
         }
-        return StringUtils.join(terms, " AND ");
+        return Joiner.on(" AND ").join(terms);
     }
 
     @Override
     public int size() {
-        return this.pairs.length;
+        return this.conds.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.pairs.length == 0;
+        return this.conds.isEmpty();
     }
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.keySet().contains(key.toString());
+        return this.conds.containsKey(key);
     }
 
     @Override
     public boolean containsValue(final Object value) {
-        return this.values().contains(Condition.class.cast(value));
+        return this.conds.containsValue(value);
     }
 
     @Override
     public Condition get(final Object key) {
-        Condition value = null;
-        for (final Map.Entry<String, Condition> entry : this.entrySet()) {
-            if (entry.getKey().equals(key)) {
-                value = entry.getValue();
-                break;
-            }
-        }
-        return value;
+        return this.conds.get(key);
     }
 
     @Override
     public Set<String> keySet() {
-        final Set<String> keys = new HashSet<String>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
-            keys.add(pair[0].toString());
-        }
-        return keys;
+        return this.conds.keySet();
     }
 
     @Override
     public Collection<Condition> values() {
-        final Collection<Condition> values =
-            new ArrayList<Condition>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
-            values.add(Condition.class.cast(pair[1]));
-        }
-        return values;
+        return this.conds.values();
     }
 
     @Override
     public Set<Map.Entry<String, Condition>> entrySet() {
-        final Set<Map.Entry<String, Condition>> entries =
-            new HashSet<Map.Entry<String, Condition>>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
-            entries.add(
-                new HashMap.SimpleImmutableEntry<String, Condition>(
-                    pair[0].toString(),
-                    Condition.class.cast(pair[1])
-                )
-            );
-        }
-        return entries;
+        return this.conds.entrySet();
     }
 
     @Override
     public Condition put(final String key, final Condition value) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Conditions class is immutable, can't do #put()"
+        );
     }
 
     @Override
     public Condition remove(final Object key) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Conditions class is immutable, can't do #remove()"
+        );
     }
 
     @Override
     public void putAll(
         final Map<? extends String, ? extends Condition> map) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Conditions class is immutable, can't do #putAll()"
+        );
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "Conditions class is immutable, can't do #clear()"
+        );
     }
 
 }

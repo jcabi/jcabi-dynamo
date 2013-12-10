@@ -37,7 +37,6 @@ import com.jcabi.dynamo.Dosage;
 import com.jcabi.dynamo.Valve;
 import java.util.Collection;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -72,10 +71,9 @@ public final class ReValve implements Valve {
      * @checkstyle ParameterNumber (7 lines)
      */
     @Override
-    public Dosage fetch(@NotNull final Credentials credentials,
-        @NotNull final String table,
-        @NotNull final Map<String, Condition> conditions,
-        @NotNull final Collection<String> keys) {
+    public Dosage fetch(final Credentials credentials, final String table,
+        final Map<String, Condition> conditions,
+        final Collection<String> keys) {
         return new ReDosage(
             this.origin.fetch(credentials, table, conditions, keys)
         );

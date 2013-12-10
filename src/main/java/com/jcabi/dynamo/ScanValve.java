@@ -47,6 +47,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -136,7 +137,8 @@ public final class ScanValve implements Valve {
      * @param name Name of attribute to pre-load
      * @return New query valve
      */
-    public ScanValve withAttributeToGet(final String name) {
+    public ScanValve withAttributeToGet(
+        @NotNull(message = "attribute name can't be NULL") final String name) {
         return new ScanValve(
             this.limit,
             Iterables.concat(

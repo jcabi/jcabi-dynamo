@@ -47,6 +47,7 @@ import com.jcabi.log.Logger;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -91,7 +92,8 @@ final class AwsTable implements Table {
     }
 
     @Override
-    public Item put(final Map<String, AttributeValue> attributes) {
+    public Item put(@NotNull(message = "map of attributes can't be NULL")
+        final Map<String, AttributeValue> attributes) {
         final AmazonDynamoDB aws = this.credentials.aws();
         final PutItemRequest request = new PutItemRequest();
         request.setTableName(this.self);
@@ -116,16 +118,19 @@ final class AwsTable implements Table {
     }
 
     @Override
+    @NotNull(message = "region is never NULL")
     public Region region() {
         return this.reg;
     }
 
     @Override
+    @NotNull(message = "frame is never NULL")
     public AwsFrame frame() {
         return new AwsFrame(this.credentials, this, this.self);
     }
 
     @Override
+    @NotNull(message = "name of table is never NULL")
     public String name() {
         return this.self;
     }
@@ -135,6 +140,7 @@ final class AwsTable implements Table {
      * @return Names of attributes, which are primary keys
      */
     @Cacheable(forever = true)
+    @NotNull(message = "collection of keys is never NULL")
     public Collection<String> keys() {
         final AmazonDynamoDB aws = this.credentials.aws();
         final DescribeTableResult result = aws.describeTable(

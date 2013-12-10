@@ -37,8 +37,8 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.Validate;
 
 /**
  * Amazon DynamoDB credentials.
@@ -67,7 +67,7 @@ public interface Credentials {
      *
      * @return Amazon Dynamo DB client
      */
-    @NotNull
+    @NotNull(message = "AWS DynamoDB client is never NULL")
     AmazonDynamoDB aws();
 
     /**
@@ -94,7 +94,9 @@ public interface Credentials {
          * @param akey AWS key
          * @param scrt Secret
          */
-        public Simple(@NotNull final String akey, @NotNull final String scrt) {
+        public Simple(
+            @NotNull(message = "key can't be NULL") final String akey,
+            @NotNull(message = "secret can't be NULL") final String scrt) {
             this(akey, scrt, Regions.US_EAST_1.getName());
         }
         /**
@@ -103,22 +105,18 @@ public interface Credentials {
          * @param scrt Secret
          * @param reg Region
          */
-        public Simple(@NotNull final String akey, @NotNull final String scrt,
-            @NotNull final String reg) {
-            Validate.matchesPattern(
-                akey, "[A-Z0-9]{20}",
-                "Invalid AWS key '%s'", akey
-            );
+        public Simple(
+            @NotNull(message = "key can't be NULL")
+            @Pattern(regexp = "[A-Z0-9]{20}")
+            final String akey,
+            @NotNull(message = "secret can't be NULL")
+            @Pattern(regexp = "[a-zA-Z0-9+/=]{40}")
+            final String scrt,
+            @NotNull(message = "region can't be NULL")
+            @Pattern(regexp = "[-a-z0-9]+")
+            final String reg) {
             this.key = akey;
-            Validate.matchesPattern(
-                scrt, "[a-zA-Z0-9+/=]{40}",
-                "Invalid AWS secret key '%s'", scrt
-            );
             this.secret = scrt;
-            Validate.matchesPattern(
-                reg, "[-a-z0-9]+",
-                "Invalid AWS region name '%s'", reg
-            );
             this.region = reg;
         }
         @Override
@@ -126,14 +124,18 @@ public interface Credentials {
             return String.format("%s/%s", this.region, this.key);
         }
         @Override
-        @NotNull
+        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             final AmazonDynamoDB aws = new AmazonDynamoDBClient(
                 new BasicAWSCredentials(this.key, this.secret)
             );
             final com.amazonaws.regions.Region reg =
                 RegionUtils.getRegion(this.region);
-            Validate.notNull(reg, "Failed to find region '%s'", this.region);
+            if (reg == null) {
+                throw new IllegalStateException(
+                    String.format("Failed to find region '%s'", this.region)
+                );
+            }
             aws.setRegion(reg);
             return aws;
         }
@@ -162,12 +164,10 @@ public interface Credentials {
          * Public ctor.
          * @param reg Region
          */
-        public Assumed(@NotNull(message = "DynamoDB region can't be NULL")
+        public Assumed(
+            @NotNull(message = "DynamoDB region can't be NULL")
+            @Pattern(regexp = "[-0-9a-z]+")
             final String reg) {
-            Validate.matchesPattern(
-                reg, "[-0-9a-z]+",
-                "Invalid AWS region name: '%s'", reg
-            );
             this.region = reg;
         }
         @Override
@@ -175,12 +175,16 @@ public interface Credentials {
             return this.region;
         }
         @Override
-        @NotNull
+        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             final AmazonDynamoDB aws = new AmazonDynamoDBClient();
             final com.amazonaws.regions.Region reg =
                 RegionUtils.getRegion(this.region);
-            Validate.notNull(reg, "Failed to detect region '%s'", this.region);
+            if (reg == null) {
+                throw new IllegalStateException(
+                    String.format("Failed to detect region '%s'", this.region)
+                );
+            }
             aws.setRegion(reg);
             return aws;
         }
@@ -206,8 +210,9 @@ public interface Credentials {
          * @param creds Original credentials
          * @param pnt Endpoint
          */
-        public Direct(@NotNull final Credentials creds,
-            @NotNull final String pnt) {
+        public Direct(
+            @NotNull(message = "creds can't be NULL") final Credentials creds,
+            @NotNull(message = "endpoint can't be NULL") final String pnt) {
             this.origin = creds;
             this.endpoint = pnt;
         }
@@ -216,7 +221,8 @@ public interface Credentials {
          * @param creds Original credentials
          * @param port Port number for localhost
          */
-        public Direct(@NotNull final Credentials creds, final int port) {
+        public Direct(@NotNull(message = "creds can't be NULL")
+            final Credentials creds, final int port) {
             this(creds, String.format("http://localhost:%d", port));
         }
         @Override
@@ -224,7 +230,7 @@ public interface Credentials {
             return String.format("%s at %s", this.origin, this.endpoint);
         }
         @Override
-        @NotNull
+        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             final AmazonDynamoDB aws = this.origin.aws();
             aws.setEndpoint(this.endpoint);

@@ -68,7 +68,8 @@ public interface Table {
      * @see Attributes
      */
     @NotNull(message = "item is never NULL")
-    Item put(@NotNull Map<String, AttributeValue> attributes);
+    Item put(@NotNull(message = "map of attributes can't be NULL")
+        Map<String, AttributeValue> attributes);
 
     /**
      * Make a new frame, in order to retrieve items.

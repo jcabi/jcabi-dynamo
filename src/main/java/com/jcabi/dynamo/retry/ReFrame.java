@@ -33,6 +33,7 @@ import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
+import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Table;
@@ -40,7 +41,7 @@ import com.jcabi.dynamo.Valve;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -72,19 +73,17 @@ public final class ReFrame implements Frame {
     }
 
     @Override
-    public Frame where(@NotNull final String name,
-        @NotNull final String value) {
+    public Frame where(final String name, final String value) {
         return new ReFrame(this.origin.where(name, value));
     }
 
     @Override
-    public Frame where(@NotNull final String name,
-        @NotNull final Condition condition) {
+    public Frame where(final String name, final Condition condition) {
         return new ReFrame(this.origin.where(name, condition));
     }
 
     @Override
-    public Frame where(@NotNull final Map<String, Condition> conditions) {
+    public Frame where(final Map<String, Condition> conditions) {
         return new ReFrame(this.origin.where(conditions));
     }
 
@@ -94,18 +93,18 @@ public final class ReFrame implements Frame {
     }
 
     @Override
-    public Frame through(@NotNull final Valve valve) {
+    public Frame through(final Valve valve) {
         return new ReFrame(this.origin.through(new ReValve(valve)));
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public int size() {
         return this.origin.size();
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean isEmpty() {
         return this.origin.isEmpty();
     }
@@ -122,49 +121,49 @@ public final class ReFrame implements Frame {
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Object[] toArray() {
         return this.origin.toArray();
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public <T> T[] toArray(final T[] arr) {
         return this.origin.toArray(arr);
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean add(final Item item) {
         return this.origin.add(item);
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean remove(final Object obj) {
         return this.origin.remove(obj);
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean containsAll(final Collection<?> list) {
         return this.origin.containsAll(list);
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean addAll(final Collection<? extends Item> list) {
         return this.origin.addAll(list);
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean removeAll(final Collection<?> list) {
         return this.origin.removeAll(list);
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean retainAll(final Collection<?> list) {
         return this.origin.retainAll(list);
     }

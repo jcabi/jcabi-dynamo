@@ -33,9 +33,11 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
+import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Dosage;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -66,19 +68,19 @@ public final class ReDosage implements Dosage {
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public List<Map<String, AttributeValue>> items() {
         return this.origin.items();
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean hasNext() {
         return this.origin.hasNext();
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Dosage next() {
         return new ReDosage(this.origin.next());
     }

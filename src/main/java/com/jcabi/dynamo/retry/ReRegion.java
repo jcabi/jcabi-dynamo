@@ -34,7 +34,6 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -70,7 +69,7 @@ public final class ReRegion implements Region {
     }
 
     @Override
-    public Table table(@NotNull final String name) {
+    public Table table(final String name) {
         return new ReTable(this.origin.table(name));
     }
 }

@@ -54,15 +54,16 @@ public interface Item {
      * @param name Attribute name
      * @return Value
      */
-    @NotNull
-    AttributeValue get(@NotNull String name);
+    @NotNull(message = "attribute value is never NULL")
+    AttributeValue get(@NotNull(message = "attribute name can't be NULL")
+        String name);
 
     /**
      * Does this attribute exist?
      * @param name Attribute name
      * @return TRUE if it exists
      */
-    boolean has(@NotNull String name);
+    boolean has(@NotNull(message = "attribute name can't be NULL") String name);
 
     /**
      * Change one attribute, immediately saving it to AWS (all other attributes
@@ -74,7 +75,8 @@ public interface Item {
      * @param name Attribute name
      * @param value Value to save
      */
-    void put(@NotNull String name, @NotNull AttributeValue value);
+    void put(@NotNull(message = "attribute name can't be NULL") String name,
+        @NotNull(message = "value can't be NULL") AttributeValue value);
 
     /**
      * Change all attributes in one call.
@@ -84,13 +86,14 @@ public interface Item {
      *
      * @param attrs Attributes
      */
-    void put(@NotNull Map<String, AttributeValue> attrs);
+    void put(@NotNull(message = "map attributes can't be NULL")
+        Map<String, AttributeValue> attrs);
 
     /**
      * Get back to the frame it is from.
      * @return Frame
      */
-    @NotNull
+    @NotNull(message = "frame is never NULL")
     Frame frame();
 
 }

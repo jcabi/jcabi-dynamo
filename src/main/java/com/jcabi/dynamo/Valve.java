@@ -55,8 +55,11 @@ public interface Valve {
      * @checkstyle ParameterNumber (5 lines)
      */
     @NotNull(message = "dosage is never NULL")
-    Dosage fetch(@NotNull Credentials credentials,
-        @NotNull String table, @NotNull Map<String, Condition> conditions,
-        @NotNull Collection<String> keys);
+    Dosage fetch(
+        @NotNull(message = "creds can't be NULL") Credentials credentials,
+        @NotNull(message = "table name can't be NULL") String table,
+        @NotNull(message = "conditions can't be NULL")
+        Map<String, Condition> conditions,
+        @NotNull(message = "keys can't be NULL") Collection<String> keys);
 
 }

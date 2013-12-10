@@ -104,7 +104,8 @@ final class AwsItem implements Item {
     }
 
     @Override
-    public boolean has(@NotNull final String attr) {
+    public boolean has(@NotNull(message = "attribute name can't be NULL")
+        final String attr) {
         boolean has = this.attributes.containsKey(attr);
         if (!has) {
             final AmazonDynamoDB aws = this.credentials.aws();
@@ -130,8 +131,9 @@ final class AwsItem implements Item {
     }
 
     @Override
-    @NotNull
-    public AttributeValue get(@NotNull final String attr) {
+    @NotNull(message = "attribute value is never NULL")
+    public AttributeValue get(@NotNull(message = "attribute name can't be NULL")
+        final String attr) {
         AttributeValue value = this.attributes.get(attr);
         if (value == null) {
             final AmazonDynamoDB aws = this.credentials.aws();
@@ -162,13 +164,15 @@ final class AwsItem implements Item {
     }
 
     @Override
-    public void put(@NotNull final String attr,
-        @NotNull final AttributeValue value) {
+    public void put(
+        @NotNull(message = "attribute name can't be NULL") final String attr,
+        @NotNull(message = "value can't be NULL") final AttributeValue value) {
         this.put(new Attributes().with(attr, value));
     }
 
     @Override
-    public void put(@NotNull final Map<String, AttributeValue> attrs) {
+    public void put(@NotNull(message = "attributes can't be NULL")
+        final Map<String, AttributeValue> attrs) {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
             final PutItemRequest request = new PutItemRequest();

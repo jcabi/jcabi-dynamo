@@ -31,19 +31,17 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.immutable.ArrayMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * DynamoDB item attributes.
@@ -61,7 +59,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@EqualsAndHashCode(of = "pairs")
+@EqualsAndHashCode(of = "attrs")
 @SuppressWarnings({
     "PMD.TooManyMethods",
     "PMD.AvoidInstantiatingObjectsInLoops"
@@ -74,28 +72,24 @@ public final class Attributes implements Map<String, AttributeValue> {
     private static final long serialVersionUID = 0x3456998922348767L;
 
     /**
-     * Pairs.
+     * Encapsulated attributes.
      */
-    private final transient Object[][] pairs;
+    private final transient ArrayMap<String, AttributeValue> attrs;
 
     /**
      * Private ctor.
      */
     public Attributes() {
-        this(new HashMap<String, AttributeValue>(0));
+        this(new ArrayMap<String, AttributeValue>());
     }
 
     /**
      * Private ctor.
      * @param map Map of them
      */
-    public Attributes(@NotNull final Map<String, AttributeValue> map) {
-        this.pairs = new Object[map.size()][];
-        int pos = 0;
-        for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
-            this.pairs[pos] = new Object[] {entry.getKey(), entry.getValue()};
-            ++pos;
-        }
+    public Attributes(@NotNull(message = "map of attributes can't be NULL")
+        final Map<String, AttributeValue> map) {
+        this.attrs = new ArrayMap<String, AttributeValue>(map);
     }
 
     /**
@@ -104,30 +98,20 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param value The value
      * @return Attributes
      */
-    public Attributes with(@NotNull final String name,
-        @NotNull final AttributeValue value) {
-        final ConcurrentMap<String, AttributeValue> map =
-            new ConcurrentHashMap<String, AttributeValue>(
-                this.pairs.length + 1
-            );
-        map.putAll(this);
-        map.put(name, value);
-        return new Attributes(map);
+    public Attributes with(
+        @NotNull(message = "attribute name can't be NULL") final String name,
+        @NotNull(message = "value can't be NULL") final AttributeValue value) {
+        return new Attributes(this.attrs.with(name, value));
     }
 
     /**
      * With these attributes.
-     * @param attrs Attributes to add
+     * @param map Attributes to add
      * @return Attributes
      */
-    public Attributes with(@NotNull final Map<String, AttributeValue> attrs) {
-        final ConcurrentMap<String, AttributeValue> map =
-            new ConcurrentHashMap<String, AttributeValue>(
-                this.pairs.length + 1
-            );
-        map.putAll(this);
-        map.putAll(attrs);
-        return new Attributes(map);
+    public Attributes with(@NotNull(message = "map of attributes can't be NULL")
+        final Map<String, AttributeValue> map) {
+        return new Attributes(this.attrs.with(map));
     }
 
     /**
@@ -135,17 +119,16 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @return Expected values
      */
     public Map<String, ExpectedAttributeValue> asKeys() {
-        final ConcurrentMap<String, ExpectedAttributeValue> map =
-            new ConcurrentHashMap<String, ExpectedAttributeValue>(
-                this.pairs.length
-            );
-        for (final Object[] pair : this.pairs) {
+        final ImmutableMap.Builder<String, ExpectedAttributeValue> map =
+            new ImmutableMap.Builder<String, ExpectedAttributeValue>();
+        for (final Map.Entry<String, AttributeValue> attr
+            : this.attrs.entrySet()) {
             map.put(
-                pair[0].toString(),
-                new ExpectedAttributeValue(AttributeValue.class.cast(pair[1]))
+                attr.getKey(),
+                new ExpectedAttributeValue(attr.getValue())
             );
         }
-        return map;
+        return map.build();
     }
 
     /**
@@ -154,8 +137,9 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param value The value
      * @return Attributes
      */
-    public Attributes with(@NotNull final String name,
-        @NotNull final Object value) {
+    public Attributes with(
+        @NotNull(message = "attribute name can't be NULL") final String name,
+        @NotNull(message = "value can't be NULL") final Object value) {
         return this.with(name, new AttributeValue(value.toString()));
     }
 
@@ -164,97 +148,73 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param keys Keys to leave in the map
      * @return Attributes
      */
-    public Attributes only(@NotNull final Collection<String> keys) {
-        final ConcurrentMap<String, AttributeValue> map =
-            new ConcurrentHashMap<String, AttributeValue>(this.pairs.length);
+    public Attributes only(@NotNull(message = "key names can't be NULL")
+        final Collection<String> keys) {
+        final ImmutableMap.Builder<String, AttributeValue> map =
+            new ImmutableMap.Builder<String, AttributeValue>();
         for (final Map.Entry<String, AttributeValue> entry : this.entrySet()) {
             if (keys.contains(entry.getKey())) {
                 map.put(entry.getKey(), entry.getValue());
             }
         }
-        return new Attributes(map);
+        return new Attributes(map.build());
     }
 
     @Override
     public String toString() {
         final Collection<String> terms =
-            new ArrayList<String>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
+            new ArrayList<String>(this.attrs.size());
+        for (final Map.Entry<String, AttributeValue> attr
+            : this.attrs.entrySet()) {
             terms.add(
                 String.format(
                     "%s=%s",
-                    pair[0],
-                    pair[1]
+                    attr.getKey(),
+                    attr.getValue()
                 )
             );
         }
-        return StringUtils.join(terms, "; ");
+        return Joiner.on("; ").join(terms);
     }
 
     @Override
     public int size() {
-        return this.pairs.length;
+        return this.attrs.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.pairs.length == 0;
+        return this.attrs.isEmpty();
     }
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.keySet().contains(key.toString());
+        return this.attrs.containsKey(key);
     }
 
     @Override
     public boolean containsValue(final Object value) {
-        return this.values().contains(AttributeValue.class.cast(value));
+        return this.attrs.containsValue(value);
     }
 
     @Override
     public AttributeValue get(final Object key) {
-        AttributeValue value = null;
-        for (final Map.Entry<String, AttributeValue> entry : this.entrySet()) {
-            if (entry.getKey().equals(key)) {
-                value = entry.getValue();
-                break;
-            }
-        }
-        return value;
+        return this.attrs.get(key);
     }
 
     @Override
     public Set<String> keySet() {
-        final Set<String> keys = new HashSet<String>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
-            keys.add(pair[0].toString());
-        }
-        return keys;
+        return this.attrs.keySet();
     }
 
     @Override
     public Collection<AttributeValue> values() {
-        final Collection<AttributeValue> values =
-            new ArrayList<AttributeValue>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
-            values.add(AttributeValue.class.cast(pair[1]));
-        }
-        return values;
+        return this.attrs.values();
     }
 
     @Override
     public Set<Map.Entry<String, AttributeValue>> entrySet() {
-        final Set<Map.Entry<String, AttributeValue>> entries =
-            new HashSet<Map.Entry<String, AttributeValue>>(this.pairs.length);
-        for (final Object[] pair : this.pairs) {
-            entries.add(
-                new HashMap.SimpleImmutableEntry<String, AttributeValue>(
-                    pair[0].toString(),
-                    AttributeValue.class.cast(pair[1])
-                )
-            );
-        }
-        return entries;
+        return this.attrs.entrySet();
     }
 
     @Override

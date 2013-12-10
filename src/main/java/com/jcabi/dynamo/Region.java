@@ -68,7 +68,7 @@ public interface Region {
      * @return Table
      */
     @NotNull(message = "table is never NULL")
-    Table table(@NotNull String name);
+    Table table(@NotNull(message = "table name can't be NULL") String name);
 
     /**
      * Simple region, basic implementation.
@@ -90,13 +90,14 @@ public interface Region {
             this.credentials = creds;
         }
         @Override
-        @NotNull
+        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             return this.credentials.aws();
         }
         @Override
-        @NotNull
-        public Table table(@NotNull final String name) {
+        @NotNull(message = "table is never NULL")
+        public Table table(@NotNull(message = "table name can't be NULL")
+            final String name) {
             return new AwsTable(this.credentials, this, name);
         }
     }
@@ -135,18 +136,17 @@ public interface Region {
          * @param region Original region
          * @param pfx Prefix to add to all tables
          */
-        public Prefixed(@NotNull final Region region,
-            @NotNull final String pfx) {
+        public Prefixed(
+            @NotNull(message = "region can't be NULL") final Region region,
+            @NotNull(message = "prefix can't be NULL") final String pfx) {
             this.origin = region;
             this.prefix = pfx;
         }
         @Override
-        @NotNull
         public AmazonDynamoDB aws() {
             return this.origin.aws();
         }
         @Override
-        @NotNull
         public Table table(@NotNull final String name) {
             return this.origin.table(
                 new StringBuilder(this.prefix).append(name).toString()

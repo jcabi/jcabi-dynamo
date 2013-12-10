@@ -128,16 +128,19 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull
-    public Frame where(@NotNull final String attr,
-        @NotNull final String value) {
+    @NotNull(message = "frame is never NULL")
+    public Frame where(
+        @NotNull(message = "attribute name can't be NULL") final String attr,
+        @NotNull(message = "value can't be NULL") final String value) {
         return this.where(attr, Conditions.equalTo(value));
     }
 
     @Override
-    @NotNull
-    public Frame where(@NotNull final String attr,
-        @NotNull final Condition condition) {
+    @NotNull(message = "frame is never NULL")
+    public Frame where(
+        @NotNull(message = "attribute name can't be NULL") final String attr,
+        @NotNull(message = "condition can't be NULL")
+        final Condition condition) {
         return new AwsFrame(
             this.credentials,
             this.tbl,
@@ -148,8 +151,9 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull
-    public Frame where(@NotNull final Map<String, Condition> conds) {
+    @NotNull(message = "modified frame is never NULL")
+    public Frame where(@NotNull(message = "conditions can't be NULL")
+        final Map<String, Condition> conds) {
         return new AwsFrame(
             this.credentials,
             this.tbl,
@@ -160,8 +164,9 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull
-    public Frame through(@NotNull final Valve vlv) {
+    @NotNull(message = "frame is never NULL")
+    public Frame through(@NotNull(message = "valve can't be NULL")
+        final Valve vlv) {
         return new AwsFrame(
             this.credentials,
             this.tbl,
@@ -172,7 +177,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull
+    @NotNull(message = "table is never NULL")
     public Table table() {
         return this.tbl;
     }

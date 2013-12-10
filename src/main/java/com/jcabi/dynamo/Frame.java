@@ -69,7 +69,8 @@ public interface Frame extends Collection<Item> {
      * @since 0.7.21
      */
     @NotNull(message = "frame is never NULL")
-    Frame where(@NotNull String name, @NotNull String value);
+    Frame where(@NotNull(message = "attribute name can't be NULL") String name,
+        @NotNull(message = "value can't be NULL") String value);
 
     /**
      * Refine using this condition.
@@ -83,7 +84,8 @@ public interface Frame extends Collection<Item> {
      * @return New frame
      */
     @NotNull(message = "new frame is never NULL")
-    Frame where(@NotNull String name, @NotNull Condition condition);
+    Frame where(@NotNull(message = "attribute name can't be NULL") String name,
+        @NotNull(message = "condition can't be NULL") Condition condition);
 
     /**
      * Refine using these conditions.
@@ -96,7 +98,8 @@ public interface Frame extends Collection<Item> {
      * @see Conditions
      */
     @NotNull(message = "frame is never NULL")
-    Frame where(@NotNull Map<String, Condition> conditions);
+    Frame where(@NotNull(message = "conditions can't be NULL")
+        Map<String, Condition> conditions);
 
     /**
      * Get back to the table this frame came from.
@@ -112,6 +115,6 @@ public interface Frame extends Collection<Item> {
      * @since 0.7.21
      */
     @NotNull(message = "frame is never NULL")
-    Frame through(@NotNull Valve valve);
+    Frame through(@NotNull(message = "valve can't be NULL") Valve valve);
 
 }
