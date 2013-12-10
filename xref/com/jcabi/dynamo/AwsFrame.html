@@ -138,56 +138,61 @@
 <a class="jxr_linenumber" name="128" href="#128">128</a>     }
 <a class="jxr_linenumber" name="129" href="#129">129</a> 
 <a class="jxr_linenumber" name="130" href="#130">130</a>     @Override
-<a class="jxr_linenumber" name="131" href="#131">131</a>     @NotNull
-<a class="jxr_linenumber" name="132" href="#132">132</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> where(@NotNull <strong class="jxr_keyword">final</strong> String attr,
-<a class="jxr_linenumber" name="133" href="#133">133</a>         @NotNull <strong class="jxr_keyword">final</strong> String value) {
-<a class="jxr_linenumber" name="134" href="#134">134</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.where(attr, Conditions.equalTo(value));
-<a class="jxr_linenumber" name="135" href="#135">135</a>     }
-<a class="jxr_linenumber" name="136" href="#136">136</a> 
-<a class="jxr_linenumber" name="137" href="#137">137</a>     @Override
-<a class="jxr_linenumber" name="138" href="#138">138</a>     @NotNull
-<a class="jxr_linenumber" name="139" href="#139">139</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> where(@NotNull <strong class="jxr_keyword">final</strong> String attr,
-<a class="jxr_linenumber" name="140" href="#140">140</a>         @NotNull <strong class="jxr_keyword">final</strong> Condition condition) {
-<a class="jxr_linenumber" name="141" href="#141">141</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/AwsFrame.html">AwsFrame</a>(
-<a class="jxr_linenumber" name="142" href="#142">142</a>             <strong class="jxr_keyword">this</strong>.credentials,
-<a class="jxr_linenumber" name="143" href="#143">143</a>             <strong class="jxr_keyword">this</strong>.tbl,
-<a class="jxr_linenumber" name="144" href="#144">144</a>             <strong class="jxr_keyword">this</strong>.name,
-<a class="jxr_linenumber" name="145" href="#145">145</a>             <strong class="jxr_keyword">this</strong>.conditions.with(attr, condition),
-<a class="jxr_linenumber" name="146" href="#146">146</a>             <strong class="jxr_keyword">this</strong>.valve
-<a class="jxr_linenumber" name="147" href="#147">147</a>         );
-<a class="jxr_linenumber" name="148" href="#148">148</a>     }
-<a class="jxr_linenumber" name="149" href="#149">149</a> 
-<a class="jxr_linenumber" name="150" href="#150">150</a>     @Override
-<a class="jxr_linenumber" name="151" href="#151">151</a>     @NotNull
-<a class="jxr_linenumber" name="152" href="#152">152</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> where(@NotNull <strong class="jxr_keyword">final</strong> Map&lt;String, Condition&gt; conds) {
-<a class="jxr_linenumber" name="153" href="#153">153</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/AwsFrame.html">AwsFrame</a>(
-<a class="jxr_linenumber" name="154" href="#154">154</a>             <strong class="jxr_keyword">this</strong>.credentials,
-<a class="jxr_linenumber" name="155" href="#155">155</a>             <strong class="jxr_keyword">this</strong>.tbl,
-<a class="jxr_linenumber" name="156" href="#156">156</a>             <strong class="jxr_keyword">this</strong>.name,
-<a class="jxr_linenumber" name="157" href="#157">157</a>             <strong class="jxr_keyword">this</strong>.conditions.with(conds),
-<a class="jxr_linenumber" name="158" href="#158">158</a>             <strong class="jxr_keyword">this</strong>.valve
-<a class="jxr_linenumber" name="159" href="#159">159</a>         );
-<a class="jxr_linenumber" name="160" href="#160">160</a>     }
-<a class="jxr_linenumber" name="161" href="#161">161</a> 
-<a class="jxr_linenumber" name="162" href="#162">162</a>     @Override
-<a class="jxr_linenumber" name="163" href="#163">163</a>     @NotNull
-<a class="jxr_linenumber" name="164" href="#164">164</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> through(@NotNull <strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/Valve.html">Valve</a> vlv) {
-<a class="jxr_linenumber" name="165" href="#165">165</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/AwsFrame.html">AwsFrame</a>(
-<a class="jxr_linenumber" name="166" href="#166">166</a>             <strong class="jxr_keyword">this</strong>.credentials,
-<a class="jxr_linenumber" name="167" href="#167">167</a>             <strong class="jxr_keyword">this</strong>.tbl,
-<a class="jxr_linenumber" name="168" href="#168">168</a>             <strong class="jxr_keyword">this</strong>.name,
-<a class="jxr_linenumber" name="169" href="#169">169</a>             <strong class="jxr_keyword">this</strong>.conditions,
-<a class="jxr_linenumber" name="170" href="#170">170</a>             vlv
-<a class="jxr_linenumber" name="171" href="#171">171</a>         );
-<a class="jxr_linenumber" name="172" href="#172">172</a>     }
-<a class="jxr_linenumber" name="173" href="#173">173</a> 
-<a class="jxr_linenumber" name="174" href="#174">174</a>     @Override
-<a class="jxr_linenumber" name="175" href="#175">175</a>     @NotNull
-<a class="jxr_linenumber" name="176" href="#176">176</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Table.html">Table</a> table() {
-<a class="jxr_linenumber" name="177" href="#177">177</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.tbl;
-<a class="jxr_linenumber" name="178" href="#178">178</a>     }
-<a class="jxr_linenumber" name="179" href="#179">179</a> 
-<a class="jxr_linenumber" name="180" href="#180">180</a> }
+<a class="jxr_linenumber" name="131" href="#131">131</a>     @NotNull(message = <span class="jxr_string">"frame is never NULL"</span>)
+<a class="jxr_linenumber" name="132" href="#132">132</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> where(
+<a class="jxr_linenumber" name="133" href="#133">133</a>         @NotNull(message = <span class="jxr_string">"attribute name can't be NULL"</span>) <strong class="jxr_keyword">final</strong> String attr,
+<a class="jxr_linenumber" name="134" href="#134">134</a>         @NotNull(message = <span class="jxr_string">"value can't be NULL"</span>) <strong class="jxr_keyword">final</strong> String value) {
+<a class="jxr_linenumber" name="135" href="#135">135</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.where(attr, Conditions.equalTo(value));
+<a class="jxr_linenumber" name="136" href="#136">136</a>     }
+<a class="jxr_linenumber" name="137" href="#137">137</a> 
+<a class="jxr_linenumber" name="138" href="#138">138</a>     @Override
+<a class="jxr_linenumber" name="139" href="#139">139</a>     @NotNull(message = <span class="jxr_string">"frame is never NULL"</span>)
+<a class="jxr_linenumber" name="140" href="#140">140</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> where(
+<a class="jxr_linenumber" name="141" href="#141">141</a>         @NotNull(message = <span class="jxr_string">"attribute name can't be NULL"</span>) <strong class="jxr_keyword">final</strong> String attr,
+<a class="jxr_linenumber" name="142" href="#142">142</a>         @NotNull(message = <span class="jxr_string">"condition can't be NULL"</span>)
+<a class="jxr_linenumber" name="143" href="#143">143</a>         <strong class="jxr_keyword">final</strong> Condition condition) {
+<a class="jxr_linenumber" name="144" href="#144">144</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/AwsFrame.html">AwsFrame</a>(
+<a class="jxr_linenumber" name="145" href="#145">145</a>             <strong class="jxr_keyword">this</strong>.credentials,
+<a class="jxr_linenumber" name="146" href="#146">146</a>             <strong class="jxr_keyword">this</strong>.tbl,
+<a class="jxr_linenumber" name="147" href="#147">147</a>             <strong class="jxr_keyword">this</strong>.name,
+<a class="jxr_linenumber" name="148" href="#148">148</a>             <strong class="jxr_keyword">this</strong>.conditions.with(attr, condition),
+<a class="jxr_linenumber" name="149" href="#149">149</a>             <strong class="jxr_keyword">this</strong>.valve
+<a class="jxr_linenumber" name="150" href="#150">150</a>         );
+<a class="jxr_linenumber" name="151" href="#151">151</a>     }
+<a class="jxr_linenumber" name="152" href="#152">152</a> 
+<a class="jxr_linenumber" name="153" href="#153">153</a>     @Override
+<a class="jxr_linenumber" name="154" href="#154">154</a>     @NotNull(message = <span class="jxr_string">"modified frame is never NULL"</span>)
+<a class="jxr_linenumber" name="155" href="#155">155</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> where(@NotNull(message = <span class="jxr_string">"conditions can't be NULL"</span>)
+<a class="jxr_linenumber" name="156" href="#156">156</a>         <strong class="jxr_keyword">final</strong> Map&lt;String, Condition&gt; conds) {
+<a class="jxr_linenumber" name="157" href="#157">157</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/AwsFrame.html">AwsFrame</a>(
+<a class="jxr_linenumber" name="158" href="#158">158</a>             <strong class="jxr_keyword">this</strong>.credentials,
+<a class="jxr_linenumber" name="159" href="#159">159</a>             <strong class="jxr_keyword">this</strong>.tbl,
+<a class="jxr_linenumber" name="160" href="#160">160</a>             <strong class="jxr_keyword">this</strong>.name,
+<a class="jxr_linenumber" name="161" href="#161">161</a>             <strong class="jxr_keyword">this</strong>.conditions.with(conds),
+<a class="jxr_linenumber" name="162" href="#162">162</a>             <strong class="jxr_keyword">this</strong>.valve
+<a class="jxr_linenumber" name="163" href="#163">163</a>         );
+<a class="jxr_linenumber" name="164" href="#164">164</a>     }
+<a class="jxr_linenumber" name="165" href="#165">165</a> 
+<a class="jxr_linenumber" name="166" href="#166">166</a>     @Override
+<a class="jxr_linenumber" name="167" href="#167">167</a>     @NotNull(message = <span class="jxr_string">"frame is never NULL"</span>)
+<a class="jxr_linenumber" name="168" href="#168">168</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> through(@NotNull(message = <span class="jxr_string">"valve can't be NULL"</span>)
+<a class="jxr_linenumber" name="169" href="#169">169</a>         <strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/Valve.html">Valve</a> vlv) {
+<a class="jxr_linenumber" name="170" href="#170">170</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/AwsFrame.html">AwsFrame</a>(
+<a class="jxr_linenumber" name="171" href="#171">171</a>             <strong class="jxr_keyword">this</strong>.credentials,
+<a class="jxr_linenumber" name="172" href="#172">172</a>             <strong class="jxr_keyword">this</strong>.tbl,
+<a class="jxr_linenumber" name="173" href="#173">173</a>             <strong class="jxr_keyword">this</strong>.name,
+<a class="jxr_linenumber" name="174" href="#174">174</a>             <strong class="jxr_keyword">this</strong>.conditions,
+<a class="jxr_linenumber" name="175" href="#175">175</a>             vlv
+<a class="jxr_linenumber" name="176" href="#176">176</a>         );
+<a class="jxr_linenumber" name="177" href="#177">177</a>     }
+<a class="jxr_linenumber" name="178" href="#178">178</a> 
+<a class="jxr_linenumber" name="179" href="#179">179</a>     @Override
+<a class="jxr_linenumber" name="180" href="#180">180</a>     @NotNull(message = <span class="jxr_string">"table is never NULL"</span>)
+<a class="jxr_linenumber" name="181" href="#181">181</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Table.html">Table</a> table() {
+<a class="jxr_linenumber" name="182" href="#182">182</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.tbl;
+<a class="jxr_linenumber" name="183" href="#183">183</a>     }
+<a class="jxr_linenumber" name="184" href="#184">184</a> 
+<a class="jxr_linenumber" name="185" href="#185">185</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
