@@ -39,7 +39,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>jcabi-dynamo</name>
-    <description>Object Layer on top of Amazon DynamoDB SDK</description>
+    <description>Object Oriented Wrapper of Amazon DynamoDB SDK</description>
     <issueManagement>
         <system>github</system>
         <url>https://github.com/jcabi/jcabi-dynamo/issues</url>
@@ -53,12 +53,6 @@
         <developerConnection>scm:git:github.com:jcabi/jcabi-dynamo.git</developerConnection>
         <url>https://github.com/jcabi/jcabi-dynamo</url>
     </scm>
-    <repositories>
-        <repository>
-            <id>jcabi-dynamodb-maven-plugin</id>
-            <url>http://repo.jcabi.com/releases</url>
-        </repository>
-    </repositories>
     <distributionManagement>
         <site>
             <id>dynamo.jcabi.com</id>
