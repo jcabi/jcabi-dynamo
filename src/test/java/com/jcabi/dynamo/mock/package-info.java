@@ -27,39 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.dynamo.mock;
-
-import com.jcabi.aspects.Immutable;
-import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Conditions;
-import java.io.IOException;
 
 /**
- * Mock data.
+ * Amazon Dynamo DB Object Layer, mock version, tests.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.10
  */
-@Immutable
-public interface MkData {
-
-    /**
-     * Iterate everything for the given table.
-     * @param table Name of the table
-     * @param conds Conditions
-     * @return All rows found
-     * @throws IOException If fails
-     */
-    Iterable<Attributes> iterate(String table, Conditions conds)
-        throws IOException;
-
-    /**
-     * Add new attribute into the given table.
-     * @param table Table name
-     * @param attrs Attributes to save
-     * @throws IOException If fails
-     */
-    void put(String table, Attributes attrs) throws IOException;
-
-}
+package com.jcabi.dynamo.mock;

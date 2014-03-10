@@ -32,10 +32,12 @@ package com.jcabi.dynamo.mock;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
+import java.io.IOException;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -66,6 +68,7 @@ final class MkTable implements Table {
     /**
      * Public ctor.
      * @param name Name of the table
+     * @param dta Data
      */
     MkTable(final MkData dta, final String name) {
         this.data = dta;
@@ -74,12 +77,18 @@ final class MkTable implements Table {
 
     @Override
     public Item put(final Map<String, AttributeValue> attributes) {
-        this.data.add(new MkRow.Simple(attributes));
+        final Attributes attrs = new Attributes(attributes);
+        try {
+            this.data.put(this.self, attrs);
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+        return new MkItem(this.data, this.self, attrs);
     }
 
     @Override
     public Frame frame() {
-        return new MkFrame(this.data, this);
+        return new MkFrame(this.data, this.self);
     }
 
     @Override

@@ -31,43 +31,73 @@ package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
+import com.jcabi.dynamo.Conditions;
+import java.io.File;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
- * Test case for {@link MkRegion}.
+ * Test case for {@link H2Data}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.10
  */
-public final class MkRegionTest {
+public final class H2DataTest {
 
     /**
-     * MkRegion can store and read items.
+     * Temp directory.
+     * @checkstyle VisibilityModifierCheck (5 lines)
+     */
+    @Rule
+    public final transient TemporaryFolder temp = new TemporaryFolder();
+
+    /**
+     * H2Data can store and fetch.
      * @throws Exception If some problem inside
      */
     @Test
     public void storesAndReadsAttributes() throws Exception {
-        final String name = "users";
+        final String table = "users";
         final String key = "id";
+        final int number = 43;
         final String attr = "description";
-        final Region region = new MkRegion(
-            new H2Data().with(name, new String[] {key}, new String[] {attr})
+        final String value = "some\n\t\u20ac text";
+        final MkData data = new H2Data().with(
+            table, new String[] {key}, new String[] {attr}
         );
-        final Table table = region.table(name);
-        final AttributeValue value = new AttributeValue("some\n\t\u20ac text");
-        table.put(
-            new Attributes()
-                .with(key, "32443")
-                .with(attr, value)
-        );
+        data.put(table, new Attributes().with(key, number).with(attr, value));
         MatcherAssert.assertThat(
-            table.frame().iterator().next().get(attr),
-            Matchers.equalTo(value)
+            data.iterate(
+                table, new Conditions().with(key, Conditions.equalTo(number))
+            ).iterator().next(),
+            Matchers.hasEntry(
+                Matchers.equalTo(attr),
+                Matchers.equalTo(new AttributeValue(value))
+            )
         );
+    }
+
+    /**
+     * H2Data can store to a file.
+     * @throws Exception If some problem inside
+     * @see https://code.google.com/p/h2database/issues/detail?id=447
+     */
+    @Test
+    @Ignore
+    public void storesToFile() throws Exception {
+        final File file = this.temp.newFile();
+        final String table = "tbl";
+        final String key = "key1";
+        final MkData data = new H2Data(file).with(
+            table, new String[] {key}, new String[0]
+        );
+        data.put(table, new Attributes().with(key, "x2"));
+        MatcherAssert.assertThat(file.exists(), Matchers.is(true));
+        MatcherAssert.assertThat(file.length(), Matchers.greaterThan(0L));
     }
 
 }

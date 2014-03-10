@@ -31,6 +31,7 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
+import com.jcabi.immutable.ArrayMap;
 import java.util.Collections;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
@@ -93,6 +94,34 @@ public final class AttributesTest {
                 .only(Collections.singletonList("never"))
                 .keySet(),
             Matchers.empty()
+        );
+    }
+
+    /**
+     * Attributes can be case-insensitive.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void caseInsensitive() throws Exception {
+        MatcherAssert.assertThat(
+            new Attributes().with(
+                new ArrayMap<String, AttributeValue>()
+                    .with("Gamma", new AttributeValue(""))
+                    .with("gAMma", new AttributeValue(""))
+            ).keySet(),
+            Matchers.hasSize(1)
+        );
+        MatcherAssert.assertThat(
+            new Attributes()
+                .with("Alpha", "val-1")
+                .with("AlPha", "val-2"),
+            Matchers.hasKey("alpha")
+        );
+        MatcherAssert.assertThat(
+            new Attributes()
+                .with("Beta", "some text to use")
+                .only(Collections.singletonList("bEta")),
+            Matchers.hasKey("beta")
         );
     }
 

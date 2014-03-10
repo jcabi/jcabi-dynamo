@@ -33,9 +33,10 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.google.common.collect.ImmutableMap;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
-import com.jcabi.dynamo.Table;
+import java.io.IOException;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -50,7 +51,7 @@ import lombok.ToString;
 @Immutable
 @ToString
 @Loggable(Loggable.DEBUG)
-@EqualsAndHashCode(of = { "frm", "data" })
+@EqualsAndHashCode(of = { "data", "table", "coords" })
 final class MkItem implements Item {
 
     /**
@@ -59,28 +60,35 @@ final class MkItem implements Item {
     private final transient MkData data;
 
     /**
-     * Frame.
+     * Table name.
      */
-    private final transient Frame frm;
+    private final transient String table;
+
+    /**
+     * Attributes.
+     */
+    private final transient Attributes coords;
 
     /**
      * Public ctor.
      * @param dta Data
-     * @param frame Origin
+     * @param tbl Table
+     * @param attribs Map of attributes
      */
-    MkItem(final MkData dta, final Frame frame) {
+    MkItem(final MkData dta, final String tbl, final Attributes attribs) {
         this.data = dta;
-        this.frm = frame;
+        this.table = tbl;
+        this.coords = attribs;
     }
 
     @Override
     public AttributeValue get(final String name) {
-        return this.row.get(name);
+        return this.coords.get(name);
     }
 
     @Override
     public boolean has(final String name) {
-        throw new UnsupportedOperationException("#has()");
+        return this.coords.containsKey(name);
     }
 
     @Override
@@ -93,11 +101,15 @@ final class MkItem implements Item {
 
     @Override
     public void put(final Map<String, AttributeValue> attrs) {
-        throw new UnsupportedOperationException("#put()");
+        try {
+            this.data.put(this.table, new Attributes(attrs));
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     @Override
     public Frame frame() {
-        return this.frm;
+        return new MkFrame(this.data, this.table);
     }
 }

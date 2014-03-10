@@ -1,0 +1,28 @@
+# Unit Testing w/Mock
+
+Since version 0.10 you can use
+[`MkRegion`](./apidocs-${project.version}/com/jcabi/dynamo/mock/MkRegion.html)
+class to mock
+interaction with DynamoDB without even starting DynamoDB Local:
+
+```
+public class FooTest {
+  @Test
+  public void createsAndDeletesItems() {
+    final Region region = new MkRegion(
+        new H2Data().with("users", new String[] {"id"}, new String[] {"name"})
+    );
+    final Table table = region.table("users");
+    final AttributeValue value = ;
+    table.put(
+        new Attributes()
+            .with("id", 10)
+            .with("name", "Jeff Lebowski")
+    );
+    MatcherAssert.assertThat(
+        table.frame().iterator().next().get("name"),
+        Matchers.equalTo("Jeff Lebowski")
+    );
+  }
+}
+```

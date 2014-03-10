@@ -37,10 +37,12 @@ import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import com.jcabi.aspects.Tv;
+import com.jcabi.dynamo.mock.MadeTable;
 import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -127,6 +129,7 @@ public final class RegionITCase {
      * @throws Exception If some problem inside
      */
     @Test
+    @Ignore
     public void retrievesAttributesFromDynamo() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final Table tbl = this.region(name).table(name);
@@ -160,7 +163,7 @@ public final class RegionITCase {
         final Region region = new Region.Simple(
             new Credentials.Direct(Credentials.TEST, RegionITCase.PORT)
         );
-        final TableMocker mocker = new TableMocker(
+        final MadeTable mocker = new MadeTable(
             region,
             new CreateTableRequest()
                 .withTableName(table)

@@ -38,8 +38,12 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.ArrayMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 
@@ -101,7 +105,9 @@ public final class Attributes implements Map<String, AttributeValue> {
     public Attributes with(
         @NotNull(message = "attribute name can't be NULL") final String name,
         @NotNull(message = "value can't be NULL") final AttributeValue value) {
-        return new Attributes(this.attrs.with(name, value));
+        return new Attributes(
+            this.attrs.with(name.toLowerCase(Locale.ENGLISH), value)
+        );
     }
 
     /**
@@ -111,7 +117,15 @@ public final class Attributes implements Map<String, AttributeValue> {
      */
     public Attributes with(@NotNull(message = "map of attributes can't be NULL")
         final Map<String, AttributeValue> map) {
-        return new Attributes(this.attrs.with(map));
+        final ConcurrentMap<String, AttributeValue> attribs =
+            new ConcurrentHashMap<String, AttributeValue>();
+        for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
+            attribs.put(
+                entry.getKey().toLowerCase(Locale.ENGLISH),
+                entry.getValue()
+            );
+        }
+        return new Attributes(this.attrs.with(attribs));
     }
 
     /**
@@ -152,8 +166,12 @@ public final class Attributes implements Map<String, AttributeValue> {
         final Collection<String> keys) {
         final ImmutableMap.Builder<String, AttributeValue> map =
             new ImmutableMap.Builder<String, AttributeValue>();
+        final Collection<String> hash = new HashSet<String>(keys.size());
+        for (final String key : keys) {
+            hash.add(key.toLowerCase(Locale.ENGLISH));
+        }
         for (final Map.Entry<String, AttributeValue> entry : this.entrySet()) {
-            if (keys.contains(entry.getKey())) {
+            if (hash.contains(entry.getKey())) {
                 map.put(entry.getKey(), entry.getValue());
             }
         }
@@ -189,7 +207,9 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.attrs.containsKey(key);
+        return this.attrs.containsKey(
+            key.toString().toLowerCase(Locale.ENGLISH)
+        );
     }
 
     @Override
@@ -199,7 +219,9 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     @Override
     public AttributeValue get(final Object key) {
-        return this.attrs.get(key);
+        return this.attrs.get(
+            key.toString().toLowerCase(Locale.ENGLISH)
+        );
     }
 
     @Override

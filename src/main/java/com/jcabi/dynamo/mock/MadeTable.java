@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.dynamo;
+package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
@@ -37,21 +37,22 @@ import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.amazonaws.services.dynamodbv2.model.ListTablesRequest;
 import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.jcabi.aspects.Tv;
+import com.jcabi.dynamo.Region;
 import com.jcabi.log.Logger;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Mocker of {@link Table}.
+ * A Table that can be made and dropped.
  *
  * <p>Use it like this in your integration test:
  *
  * <pre> public class FooITCase {
  *   private Region region;
- *   private TableMocker table;
+ *   private MadeTable table;
  *   &#64;Before
  *   public void prepare() {
  *     this.region = new Region.Simple(..your IT credentials..);
- *     this.table = new TableMocker(this.region, new CreateTableRequest()...);
+ *     this.table = new MadeTable(this.region, new CreateTableRequest()...);
  *     this.table.createIfAbsent();
  *   }
  *   &#64;After
@@ -74,11 +75,11 @@ import java.util.concurrent.TimeUnit;
  *
  * <pre> public class FooITCase {
  *   private static Region region;
- *   private static TableMocker table;
+ *   private static MadeTable table;
  *   &#64;BeforeClass
  *   public static void prepare() {
  *     FooITCase.region = new Region.Simple(..your IT credentials..);
- *     FooITCase.table = new TableMocker(
+ *     FooITCase.table = new MadeTable(
  *       FooITCase.region, new CreateTableRequest()...
  *     );
  *     FooITCase.table.createIfAbsent();
@@ -116,7 +117,7 @@ import java.util.concurrent.TimeUnit;
  * @version $Id$
  * @since 0.8
  */
-public final class TableMocker {
+public final class MadeTable {
 
     /**
      * Region.
@@ -133,7 +134,7 @@ public final class TableMocker {
      * @param reg Region
      * @param req Request
      */
-    public TableMocker(final Region reg, final CreateTableRequest req) {
+    public MadeTable(final Region reg, final CreateTableRequest req) {
         this.region = reg;
         this.request = req;
     }

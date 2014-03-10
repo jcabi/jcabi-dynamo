@@ -42,6 +42,7 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.validation.constraints.NotNull;
@@ -106,7 +107,8 @@ final class AwsItem implements Item {
     @Override
     public boolean has(@NotNull(message = "attribute name can't be NULL")
         final String attr) {
-        boolean has = this.attributes.containsKey(attr);
+        final String attrib = attr.toLowerCase(Locale.ENGLISH);
+        boolean has = this.attributes.containsKey(attrib);
         if (!has) {
             final AmazonDynamoDB aws = this.credentials.aws();
             try {
@@ -117,7 +119,7 @@ final class AwsItem implements Item {
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
                 final GetItemResult result = aws.getItem(request);
-                has = result.getItem().get(attr) != null;
+                has = result.getItem().get(attrib) != null;
                 Logger.debug(
                     this,
                     "#has('%s'): %B from DynamoDB%s",
@@ -134,18 +136,19 @@ final class AwsItem implements Item {
     @NotNull(message = "attribute value is never NULL")
     public AttributeValue get(@NotNull(message = "attribute name can't be NULL")
         final String attr) {
-        AttributeValue value = this.attributes.get(attr);
+        final String attrib = attr.toLowerCase(Locale.ENGLISH);
+        AttributeValue value = this.attributes.get(attrib);
         if (value == null) {
             final AmazonDynamoDB aws = this.credentials.aws();
             try {
                 final GetItemRequest request = new GetItemRequest();
                 request.setTableName(this.name);
-                request.setAttributesToGet(Collections.singletonList(attr));
+                request.setAttributesToGet(Collections.singletonList(attrib));
                 request.setKey(this.attributes.only(this.keys));
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
                 final GetItemResult result = aws.getItem(request);
-                value = result.getItem().get(attr);
+                value = result.getItem().get(attrib);
                 if (value == null) {
                     throw new NoSuchElementException(
                         String.format("attribute %s not found", attr)
@@ -154,7 +157,7 @@ final class AwsItem implements Item {
                 Logger.debug(
                     this,
                     "#get('%s'): loaded '%[text]s' from DynamoDB%s",
-                    attr, value, AwsTable.print(result.getConsumedCapacity())
+                    attrib, value, AwsTable.print(result.getConsumedCapacity())
                 );
             } finally {
                 aws.shutdown();

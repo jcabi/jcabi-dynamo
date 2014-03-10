@@ -34,7 +34,6 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
-import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -48,21 +47,13 @@ import lombok.ToString;
 @Immutable
 @ToString
 @Loggable(Loggable.DEBUG)
-@EqualsAndHashCode(of = { "credentials", "reg", "self" })
+@EqualsAndHashCode(of = "data")
 public final class MkRegion implements Region {
 
     /**
      * Data.
      */
     private final transient MkData data;
-
-    /**
-     * Public ctor.
-     * @throws IOException If fails
-     */
-    public MkRegion() throws IOException {
-        this(new MkData.InFile());
-    }
 
     /**
      * Public ctor.

@@ -38,8 +38,11 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.ArrayMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 
@@ -88,6 +91,14 @@ public final class Conditions implements Map<String, Condition> {
      * @param map Map of them
      */
     public Conditions(@NotNull final Map<String, Condition> map) {
+        final ConcurrentMap<String, Condition> cnds =
+            new ConcurrentHashMap<String, Condition>();
+        for (final Map.Entry<String, Condition> entry : map.entrySet()) {
+            cnds.put(
+                entry.getKey().toLowerCase(Locale.ENGLISH),
+                entry.getValue()
+            );
+        }
         this.conds = new ArrayMap<String, Condition>(map);
     }
 
@@ -112,7 +123,9 @@ public final class Conditions implements Map<String, Condition> {
     @NotNull
     public Conditions with(@NotNull final String name,
         @NotNull final Condition value) {
-        return new Conditions(this.conds.with(name, value));
+        return new Conditions(
+            this.conds.with(name.toLowerCase(Locale.ENGLISH), value)
+        );
     }
 
     /**
@@ -154,7 +167,9 @@ public final class Conditions implements Map<String, Condition> {
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.conds.containsKey(key);
+        return this.conds.containsKey(
+            key.toString().toLowerCase(Locale.ENGLISH)
+        );
     }
 
     @Override
@@ -164,7 +179,9 @@ public final class Conditions implements Map<String, Condition> {
 
     @Override
     public Condition get(final Object key) {
-        return this.conds.get(key);
+        return this.conds.get(
+            key.toString().toLowerCase(Locale.ENGLISH)
+        );
     }
 
     @Override

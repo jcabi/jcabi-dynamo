@@ -1,17 +1,17 @@
 # Integration Testing With DynamoDB Table/Fixture
 
 This is how your JUnit integration test should look like
-([`TableMocker`](./testapidocs-${project.version}/com/jcabi/dynamo/TableMocker.html) class
+[`MadeTable`](./apidocs-${project.version}/com/jcabi/dynamo/mock/MadeTable.html) class
 is used from `com.jcabi:jcabi-dynamo:mock` artifact):
 
 ```
 public class FooITCase {
   private Region region;
-  private TableMocker table;
+  private MadeTable table;
   @Before
   public void prepare() {
-    this.region = new Region.Simple(/* your AWS credentials */);
-    this.table = new TableMocker(
+    this.region = new Region.Simple(your_AWS_credentials);
+    this.table = new MadeTable(
       this.region,
       new CreateTableRequest()
         .withTableName("my-sample-table")
@@ -45,20 +45,5 @@ public class FooITCase {
 }
 ```
 
-[`TableMocker`](./testapidocs-${project.version}/com/jcabi/dynamo/TableMocker.html)
+[`MadeTable`](./apidocs-${project.version}/com/jcabi/dynamo/mock/MadeTable.html)
 will create a table on demand and will drop it when tests are finished.
-
-The class is shipped in `mock`-classified dependency
-(you can also download
-[jcabi-dynamo-${project.version}-mock.jar](http://repo1.maven.org/maven2/com/jcabi/jcabi-dynamo/${project.version}/jcabi-dynamo-${project.version}-mock.jar)
-and add it to the classpath):
-
-```
-<dependency>
-  <groupId>com.jcabi</groupId>
-  <artifactId>jcabi-dynamo</artifactId>
-  <version>${project.version}</version>
-  <scope>test</scope>
-  <classifier>mock</classifier>
-</dependency>
-```
