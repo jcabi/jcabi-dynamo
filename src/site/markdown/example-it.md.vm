@@ -16,19 +16,19 @@ public class FooITCase {
       new CreateTableRequest()
         .withTableName("my-sample-table")
         .withProvisionedThroughput(
-            new ProvisionedThroughput()
-                .withReadCapacityUnits(1L)
-                .withWriteCapacityUnits(1L)
+          new ProvisionedThroughput()
+            .withReadCapacityUnits(1L)
+            .withWriteCapacityUnits(1L)
         )
         .withAttributeDefinitions(
-            new AttributeDefinition()
-                .withAttributeName("hash")
-                .withAttributeType(ScalarAttributeType.S)
+          new AttributeDefinition()
+            .withAttributeName("hash")
+            .withAttributeType(ScalarAttributeType.S)
         )
         .withKeySchema(
-            new KeySchemaElement()
-                .withAttributeName("hash")
-                .withKeyType(KeyType.HASH)
+          new KeySchemaElement()
+            .withAttributeName("hash")
+            .withKeyType(KeyType.HASH)
         )
     );
     this.table.create();

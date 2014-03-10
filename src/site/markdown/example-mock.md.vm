@@ -10,18 +10,22 @@ public class FooTest {
   @Test
   public void createsAndDeletesItems() {
     final Region region = new MkRegion(
-        new H2Data().with("users", new String[] {"id"}, new String[] {"name"})
+      new H2Data().with(
+        "users",
+        new String[] {"id"},
+        new String[] {"name", "age"}
+      )
     );
     final Table table = region.table("users");
-    final AttributeValue value = ;
     table.put(
-        new Attributes()
-            .with("id", 10)
-            .with("name", "Jeff Lebowski")
+      new Attributes()
+        .with("id", 10783)
+        .with("name", "Jeff Lebowski")
+        .with("age", 35)
     );
     MatcherAssert.assertThat(
-        table.frame().iterator().next().get("name"),
-        Matchers.equalTo("Jeff Lebowski")
+      table.frame().iterator().next().get("name"),
+      Matchers.equalTo("Jeff Lebowski")
     );
   }
 }
