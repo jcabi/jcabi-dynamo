@@ -73,26 +73,31 @@ public final class ReFrame implements Frame {
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Frame where(final String name, final String value) {
         return new ReFrame(this.origin.where(name, value));
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Frame where(final String name, final Condition condition) {
         return new ReFrame(this.origin.where(name, condition));
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Frame where(final Map<String, Condition> conditions) {
         return new ReFrame(this.origin.where(conditions));
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Table table() {
         return this.origin.table();
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Frame through(final Valve valve) {
         return new ReFrame(this.origin.through(new ReValve(valve)));
     }
@@ -110,12 +115,13 @@ public final class ReFrame implements Frame {
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public boolean contains(final Object obj) {
         return this.origin.contains(obj);
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Iterator<Item> iterator() {
         return this.origin.iterator();
     }
@@ -169,7 +175,7 @@ public final class ReFrame implements Frame {
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public void clear() {
         this.origin.clear();
     }

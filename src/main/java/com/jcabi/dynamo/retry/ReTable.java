@@ -77,16 +77,19 @@ public final class ReTable implements Table {
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Frame frame() {
         return new ReFrame(this.origin.frame());
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Region region() {
         return this.origin.region();
     }
 
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public String name() {
         return this.origin.name();
     }

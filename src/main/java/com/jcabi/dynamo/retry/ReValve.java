@@ -32,11 +32,14 @@ package com.jcabi.dynamo.retry;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.RetryOnFailure;
+import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Dosage;
 import com.jcabi.dynamo.Valve;
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -71,6 +74,7 @@ public final class ReValve implements Valve {
      * @checkstyle ParameterNumber (7 lines)
      */
     @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Dosage fetch(final Credentials credentials, final String table,
         final Map<String, Condition> conditions,
         final Collection<String> keys) {
