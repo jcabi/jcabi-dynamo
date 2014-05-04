@@ -62,7 +62,7 @@ public final class ReRegionTest {
         try {
             region.table("test").put(attrs);
             Assert.fail("exception expected here");
-        } catch (AmazonClientException ex) {
+        } catch (final AmazonClientException ex) {
             assert ex.getMessage().equals(msg);
         }
         Mockito.verify(table, Mockito.times(Tv.THREE)).put(attrs);

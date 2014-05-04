@@ -114,7 +114,7 @@ final class MkFrame extends AbstractCollection<Item> implements Frame {
                     }
                 }
             );
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
     }

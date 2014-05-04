@@ -103,7 +103,7 @@ final class MkItem implements Item {
     public void put(final Map<String, AttributeValue> attrs) {
         try {
             this.data.put(this.table, new Attributes(attrs));
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
     }

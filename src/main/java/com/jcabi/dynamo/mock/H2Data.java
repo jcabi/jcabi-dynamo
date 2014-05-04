@@ -40,6 +40,7 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.jdbc.JdbcSession;
+import com.jcabi.jdbc.Outcome;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -73,9 +74,9 @@ public final class H2Data implements MkData {
     /**
      * Fetcher of rows.
      */
-    private static final JdbcSession.Handler<Iterable<Attributes>> HANDLER =
+    private static final Outcome<Iterable<Attributes>> OUTCOME =
         // @checkstyle AnonInnerLengthCheck (50 lines)
-        new JdbcSession.Handler<Iterable<Attributes>>() {
+        new Outcome<Iterable<Attributes>>() {
             @Override
             public Iterable<Attributes> handle(final ResultSet rset,
                 final Statement stmt) throws SQLException {
@@ -195,8 +196,8 @@ public final class H2Data implements MkData {
                 final AttributeValue val = cond.getAttributeValueList().get(0);
                 session = session.set(val.getS());
             }
-            return session.select(H2Data.HANDLER);
-        } catch (SQLException ex) {
+            return session.select(H2Data.OUTCOME);
+        } catch (final SQLException ex) {
             throw new IOException(ex);
         }
     }
@@ -217,7 +218,7 @@ public final class H2Data implements MkData {
                 )
             );
             session.execute();
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             throw new IOException(ex);
         }
     }
@@ -252,7 +253,7 @@ public final class H2Data implements MkData {
         sql.append(')');
         try {
             new JdbcSession(this.connection()).sql(sql.toString()).execute();
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             throw new IOException(ex);
         }
         return this;

@@ -213,7 +213,7 @@ public final class MadeTable {
             );
             exists = true;
             Logger.info(this, "DynamoDB table '%s' already exists", name);
-        } catch (ResourceNotFoundException ex) {
+        } catch (final ResourceNotFoundException ex) {
             exists = false;
             Logger.info(this, "DynamoDB table '%s' doesn't exist", name);
         }

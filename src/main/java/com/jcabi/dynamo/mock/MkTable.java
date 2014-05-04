@@ -80,7 +80,7 @@ final class MkTable implements Table {
         final Attributes attrs = new Attributes(attributes);
         try {
             this.data.put(this.self, attrs);
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
         return new MkItem(this.data, this.self, attrs);
