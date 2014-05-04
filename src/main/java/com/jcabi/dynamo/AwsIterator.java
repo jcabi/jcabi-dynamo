@@ -197,7 +197,7 @@ final class AwsIterator implements Iterator<Item> {
                 this.dosage.set(new AwsIterator.Fixed(prev, items));
                 Logger.debug(
                     this,
-                    "#remove(): item #%d removed from DynamoDB",
+                    "#remove(): item #%d removed from DynamoDB, %s",
                     this.position, AwsTable.print(res.getConsumedCapacity())
                 );
             } finally {

@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -45,6 +46,7 @@ import org.mockito.Mockito;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
+@SuppressWarnings("unchecked")
 public final class AwsIteratorTest {
 
     /**
@@ -53,12 +55,10 @@ public final class AwsIteratorTest {
      * @checkstyle ExecutableStatementCount (100 lines)
      */
     @Test
-    @SuppressWarnings("unchecked")
     public void iteratesValve() throws Exception {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final String attr = "attribute-1";
         final String value = "value-1";
-        final String table = "table-1";
         final Dosage first = Mockito.mock(Dosage.class);
         Mockito.doReturn(
             Collections.singletonList(new Attributes().with(attr, value))
@@ -82,6 +82,7 @@ public final class AwsIteratorTest {
                 Mockito.eq(credentials), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
+        final String table = "table-1";
         final Iterator<Item> iterator = new AwsIterator(
             credentials,
             new AwsFrame(
@@ -111,6 +112,36 @@ public final class AwsIteratorTest {
         );
         MatcherAssert.assertThat(iterator.hasNext(), Matchers.is(false));
         Mockito.verify(second).next();
+    }
+
+    /**
+     * AwsIterator can iterate using valve.
+     * @throws Exception If some problem inside
+     */
+    @Test(expected = NoSuchElementException.class)
+    public void throwsOnEmptyIterator() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final Dosage dosage = Mockito.mock(Dosage.class);
+        Mockito.doReturn(Collections.emptyList()).when(dosage).items();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(dosage)
+            .when(valve)
+            .fetch(
+                Mockito.eq(credentials), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = "table-2";
+        final Iterator<Item> iterator = new AwsIterator(
+            credentials,
+            new AwsFrame(
+                credentials,
+                new AwsTable(credentials, Mockito.mock(Region.class), table),
+                table
+            ),
+            table, new Conditions(),
+            new ArrayList<String>(0), valve
+        );
+        iterator.next();
     }
 
 }
