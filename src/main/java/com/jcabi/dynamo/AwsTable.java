@@ -103,8 +103,7 @@ final class AwsTable implements Table {
         final PutItemResult result = aws.putItem(request);
         aws.shutdown();
         Logger.debug(
-            this,
-            "#put('%[text]s'): created item in '%s'%s",
+            this, "#put('%[text]s'): created item in '%s'%s",
             attributes, this.self,
             AwsTable.print(result.getConsumedCapacity())
         );

@@ -42,7 +42,7 @@ import javax.validation.constraints.NotNull;
  * and remove them. {@link Frame} acts as an iterable immutable collection of
  * items. You can't use {@link Frame#remove(Object)} method directly. Instead,
  * find the right item using iterator and than remove it with
- * {@link Iterator#remove()}.
+ * {@link java.util.Iterator#remove()}.
  *
  * <p>To fetch items from Dynamo DB, {@link Frame} uses
  * {@code Query} operation, with "consistent read" mode turned ON. It fetches
@@ -76,7 +76,7 @@ public interface Frame extends Collection<Item> {
      * Refine using this condition.
      *
      * <p>It is recommended to use a utility static method
-     * {@link Conditions.equalTo(Object)}, when condition is simply an
+     * {@link Conditions#equalTo(Object)}, when condition is simply an
      * equation to a plain string value.
      *
      * @param name Attribute name

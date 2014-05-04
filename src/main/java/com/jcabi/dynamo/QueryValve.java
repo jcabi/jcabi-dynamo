@@ -35,6 +35,7 @@ import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.dynamodbv2.model.QueryRequest;
 import com.amazonaws.services.dynamodbv2.model.QueryResult;
 import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
+import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
@@ -43,6 +44,7 @@ import com.jcabi.log.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -78,10 +80,23 @@ public final class QueryValve implements Valve {
     private final transient String[] attributes;
 
     /**
+     * Index name.
+     */
+    private final transient String index;
+
+    /**
+     * What attributes to select.
+     */
+    private final transient String select;
+
+    /**
      * Public ctor.
      */
     public QueryValve() {
-        this(Tv.TWENTY, true, new ArrayList<String>(0));
+        this(
+            Tv.TWENTY, true, new ArrayList<String>(0),
+            "", Select.SPECIFIC_ATTRIBUTES.toString()
+        );
     }
 
     /**
@@ -89,18 +104,20 @@ public final class QueryValve implements Valve {
      * @param lmt Limit
      * @param fwd Forward
      * @param attrs Names of attributes to pre-fetch
+     * @param idx Index name or empty string
+     * @param slct Select
+     * @checkstyle ParameterNumber (5 lines)
      */
     private QueryValve(final int lmt, final boolean fwd,
-        final Iterable<String> attrs) {
+        final Iterable<String> attrs, final String idx, final String slct) {
         this.limit = lmt;
         this.forward = fwd;
         this.attributes = Iterables.toArray(attrs, String.class);
+        this.index = idx;
+        this.select = slct;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (5 lines)
-     */
+    // @checkstyle ParameterNumber (5 lines)
     @Override
     public Dosage fetch(final Credentials credentials, final String table,
         final Map<String, Condition> conditions,
@@ -111,14 +128,18 @@ public final class QueryValve implements Valve {
                 Arrays.asList(this.attributes)
             );
             attrs.addAll(keys);
-            final QueryRequest request = new QueryRequest()
+            QueryRequest request = new QueryRequest()
                 .withTableName(table)
                 .withAttributesToGet(attrs)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withKeyConditions(conditions)
                 .withConsistentRead(true)
-                .withScanIndexForward(QueryValve.this.forward)
-                .withLimit(QueryValve.this.limit);
+                .withScanIndexForward(this.forward)
+                .withSelect(this.select)
+                .withLimit(this.limit);
+            if (!this.index.isEmpty()) {
+                request = request.withIndexName(this.index);
+            }
             final QueryResult result = aws.query(request);
             Logger.debug(
                 this,
@@ -133,14 +154,46 @@ public final class QueryValve implements Valve {
     }
 
     /**
+     * With index name.
+     * @param idx Index name
+     * @return New query valve
+     * @since 0.10.2
+     * @see QueryRequest#withIndexName(String)
+     */
+    public QueryValve withIndexName(final String idx) {
+        return new QueryValve(
+            this.limit, this.forward,
+            Arrays.asList(this.attributes),
+            idx, this.select
+        );
+    }
+
+    /**
+     * With attributes to select.
+     * @param slct Select to use
+     * @return New query valve
+     * @since 0.10.2
+     * @see QueryRequest#withSelect(Select)
+     */
+    public QueryValve withSelect(final Select slct) {
+        return new QueryValve(
+            this.limit, this.forward,
+            Arrays.asList(this.attributes), this.index,
+            slct.toString()
+        );
+    }
+
+    /**
      * With given limit.
      * @param lmt Limit to use
      * @return New query valve
+     * @see QueryRequest#withLimit(Integer)
      */
     public QueryValve withLimit(final int lmt) {
         return new QueryValve(
             lmt, this.forward,
-            Arrays.asList(this.attributes)
+            Arrays.asList(this.attributes),
+            this.index, this.select
         );
     }
 
@@ -148,11 +201,13 @@ public final class QueryValve implements Valve {
      * With scan index forward flag.
      * @param fwd Forward flag
      * @return New query valve
+     * @see QueryRequest#withScanIndexForward(Boolean)
      */
     public QueryValve withScanIndexForward(final boolean fwd) {
         return new QueryValve(
             this.limit, fwd,
-            Arrays.asList(this.attributes)
+            Arrays.asList(this.attributes),
+            this.index, this.select
         );
     }
 
@@ -160,6 +215,7 @@ public final class QueryValve implements Valve {
      * With this extra attribute to pre-fetch.
      * @param name Name of attribute to pre-load
      * @return New query valve
+     * @see QueryRequest#withAttributesToGet(Collection)
      */
     public QueryValve withAttributeToGet(
         @NotNull(message = "attribute name can't be NULL") final String name) {
@@ -167,8 +223,10 @@ public final class QueryValve implements Valve {
             this.limit, this.forward,
             Iterables.concat(
                 Arrays.asList(this.attributes),
-                Arrays.asList(name)
-            )
+                Collections.singleton(name)
+            ),
+            this.index,
+            this.select
         );
     }
 
@@ -176,6 +234,7 @@ public final class QueryValve implements Valve {
      * With these extra attributes to pre-fetch.
      * @param names Name of attributes to pre-load
      * @return New query valve
+     * @see QueryRequest#withAttributesToGet(Collection)
      */
     public QueryValve withAttributesToGet(final String... names) {
         return new QueryValve(
@@ -183,7 +242,9 @@ public final class QueryValve implements Valve {
             Iterables.concat(
                 Arrays.asList(this.attributes),
                 Arrays.asList(names)
-            )
+            ),
+            this.index,
+            this.select
         );
     }
 

@@ -90,10 +90,7 @@ public final class ScanValve implements Valve {
         this.attributes = Iterables.toArray(attrs, String.class);
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (5 lines)
-     */
+    // @checkstyle ParameterNumber (5 lines)
     @Override
     public Dosage fetch(final Credentials credentials, final String table,
         final Map<String, Condition> conditions,

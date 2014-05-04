@@ -70,11 +70,6 @@ import lombok.EqualsAndHashCode;
 public final class Conditions implements Map<String, Condition> {
 
     /**
-     * Serialization marker.
-     */
-    private static final long serialVersionUID = 0x3456998922348767L;
-
-    /**
      * Pairs.
      */
     private final transient ArrayMap<String, Condition> conds;
@@ -92,14 +87,14 @@ public final class Conditions implements Map<String, Condition> {
      */
     public Conditions(@NotNull final Map<String, Condition> map) {
         final ConcurrentMap<String, Condition> cnds =
-            new ConcurrentHashMap<String, Condition>();
+            new ConcurrentHashMap<String, Condition>(map.size());
         for (final Map.Entry<String, Condition> entry : map.entrySet()) {
             cnds.put(
                 entry.getKey().toLowerCase(Locale.ENGLISH),
                 entry.getValue()
             );
         }
-        this.conds = new ArrayMap<String, Condition>(map);
+        this.conds = new ArrayMap<String, Condition>(cnds);
     }
 
     /**

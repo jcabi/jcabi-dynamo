@@ -71,11 +71,6 @@ import lombok.EqualsAndHashCode;
 public final class Attributes implements Map<String, AttributeValue> {
 
     /**
-     * Serialization marker.
-     */
-    private static final long serialVersionUID = 0x3456998922348767L;
-
-    /**
      * Encapsulated attributes.
      */
     private final transient ArrayMap<String, AttributeValue> attrs;
@@ -118,7 +113,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     public Attributes with(@NotNull(message = "map of attributes can't be NULL")
         final Map<String, AttributeValue> map) {
         final ConcurrentMap<String, AttributeValue> attribs =
-            new ConcurrentHashMap<String, AttributeValue>();
+            new ConcurrentHashMap<String, AttributeValue>(map.size());
         for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
             attribs.put(
                 entry.getKey().toLowerCase(Locale.ENGLISH),
