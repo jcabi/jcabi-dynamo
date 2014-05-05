@@ -126,9 +126,6 @@ public interface Credentials {
         @Override
         @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
-            final AmazonDynamoDB aws = new AmazonDynamoDBClient(
-                new BasicAWSCredentials(this.key, this.secret)
-            );
             final com.amazonaws.regions.Region reg =
                 RegionUtils.getRegion(this.region);
             if (reg == null) {
@@ -136,6 +133,9 @@ public interface Credentials {
                     String.format("Failed to find region '%s'", this.region)
                 );
             }
+            final AmazonDynamoDB aws = new AmazonDynamoDBClient(
+                new BasicAWSCredentials(this.key, this.secret)
+            );
             aws.setRegion(reg);
             return aws;
         }
@@ -177,7 +177,6 @@ public interface Credentials {
         @Override
         @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
-            final AmazonDynamoDB aws = new AmazonDynamoDBClient();
             final com.amazonaws.regions.Region reg =
                 RegionUtils.getRegion(this.region);
             if (reg == null) {
@@ -185,6 +184,7 @@ public interface Credentials {
                     String.format("Failed to detect region '%s'", this.region)
                 );
             }
+            final AmazonDynamoDB aws = new AmazonDynamoDBClient();
             aws.setRegion(reg);
             return aws;
         }
