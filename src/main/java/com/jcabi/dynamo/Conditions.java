@@ -104,9 +104,15 @@ public final class Conditions implements Map<String, Condition> {
      */
     @NotNull
     public static Condition equalTo(@NotNull final Object value) {
+        final AttributeValue attr;
+        if (value instanceof AttributeValue) {
+            attr = AttributeValue.class.cast(value);
+        } else {
+            attr = new AttributeValue(value.toString());
+        }
         return new Condition()
-            .withAttributeValueList(new AttributeValue(value.toString()))
-            .withComparisonOperator(ComparisonOperator.EQ);
+            .withComparisonOperator(ComparisonOperator.EQ)
+            .withAttributeValueList(attr);
     }
 
     /**
