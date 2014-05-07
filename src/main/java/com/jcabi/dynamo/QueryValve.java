@@ -139,13 +139,15 @@ public final class QueryValve implements Valve {
             attrs.addAll(keys);
             QueryRequest request = new QueryRequest()
                 .withTableName(table)
-                .withAttributesToGet(attrs)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withKeyConditions(conditions)
                 .withConsistentRead(this.consistent)
                 .withScanIndexForward(this.forward)
                 .withSelect(this.select)
                 .withLimit(this.limit);
+            if (this.select.equals(Select.SPECIFIC_ATTRIBUTES.toString())) {
+                request = request.withAttributesToGet(attrs);
+            }
             if (!this.index.isEmpty()) {
                 request = request.withIndexName(this.index);
             }
