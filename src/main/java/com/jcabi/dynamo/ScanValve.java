@@ -106,7 +106,7 @@ public final class ScanValve implements Valve {
                 .withAttributesToGet(attrs)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withScanFilter(conditions)
-                .withLimit(ScanValve.this.limit);
+                .withLimit(this.limit);
             final ScanResult result = aws.scan(request);
             Logger.debug(
                 this,

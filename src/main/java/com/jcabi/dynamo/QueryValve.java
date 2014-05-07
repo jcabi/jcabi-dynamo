@@ -62,6 +62,7 @@ import lombok.ToString;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = { "limit", "forward" })
+@SuppressWarnings("PMD.TooManyMethods")
 public final class QueryValve implements Valve {
 
     /**
@@ -90,12 +91,17 @@ public final class QueryValve implements Valve {
     private final transient String select;
 
     /**
+     * Consistent read.
+     */
+    private final transient boolean consistent;
+
+    /**
      * Public ctor.
      */
     public QueryValve() {
         this(
             Tv.TWENTY, true, new ArrayList<String>(0),
-            "", Select.SPECIFIC_ATTRIBUTES.toString()
+            "", Select.SPECIFIC_ATTRIBUTES.toString(), true
         );
     }
 
@@ -106,15 +112,18 @@ public final class QueryValve implements Valve {
      * @param attrs Names of attributes to pre-fetch
      * @param idx Index name or empty string
      * @param slct Select
+     * @param cnst Consistent read
      * @checkstyle ParameterNumber (5 lines)
      */
     private QueryValve(final int lmt, final boolean fwd,
-        final Iterable<String> attrs, final String idx, final String slct) {
+        final Iterable<String> attrs, final String idx, final String slct,
+        final boolean cnst) {
         this.limit = lmt;
         this.forward = fwd;
         this.attributes = Iterables.toArray(attrs, String.class);
         this.index = idx;
         this.select = slct;
+        this.consistent = cnst;
     }
 
     // @checkstyle ParameterNumber (5 lines)
@@ -133,7 +142,7 @@ public final class QueryValve implements Valve {
                 .withAttributesToGet(attrs)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withKeyConditions(conditions)
-                .withConsistentRead(true)
+                .withConsistentRead(this.consistent)
                 .withScanIndexForward(this.forward)
                 .withSelect(this.select)
                 .withLimit(this.limit);
@@ -154,6 +163,21 @@ public final class QueryValve implements Valve {
     }
 
     /**
+     * With consistent read.
+     * @param cnst Consistent read
+     * @return New query valve
+     * @since 0.12
+     * @see QueryRequest#withConsistentRead(Boolean)
+     */
+    public QueryValve withConsistentRead(final boolean cnst) {
+        return new QueryValve(
+            this.limit, this.forward,
+            Arrays.asList(this.attributes),
+            this.index, this.select, cnst
+        );
+    }
+
+    /**
      * With index name.
      * @param idx Index name
      * @return New query valve
@@ -164,7 +188,7 @@ public final class QueryValve implements Valve {
         return new QueryValve(
             this.limit, this.forward,
             Arrays.asList(this.attributes),
-            idx, this.select
+            idx, this.select, this.consistent
         );
     }
 
@@ -179,7 +203,7 @@ public final class QueryValve implements Valve {
         return new QueryValve(
             this.limit, this.forward,
             Arrays.asList(this.attributes), this.index,
-            slct.toString()
+            slct.toString(), this.consistent
         );
     }
 
@@ -193,7 +217,7 @@ public final class QueryValve implements Valve {
         return new QueryValve(
             lmt, this.forward,
             Arrays.asList(this.attributes),
-            this.index, this.select
+            this.index, this.select, this.consistent
         );
     }
 
@@ -207,7 +231,7 @@ public final class QueryValve implements Valve {
         return new QueryValve(
             this.limit, fwd,
             Arrays.asList(this.attributes),
-            this.index, this.select
+            this.index, this.select, this.consistent
         );
     }
 
@@ -225,8 +249,7 @@ public final class QueryValve implements Valve {
                 Arrays.asList(this.attributes),
                 Collections.singleton(name)
             ),
-            this.index,
-            this.select
+            this.index, this.select, this.consistent
         );
     }
 
@@ -244,7 +267,7 @@ public final class QueryValve implements Valve {
                 Arrays.asList(names)
             ),
             this.index,
-            this.select
+            this.select, this.consistent
         );
     }
 

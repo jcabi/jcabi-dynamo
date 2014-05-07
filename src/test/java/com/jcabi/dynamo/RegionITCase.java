@@ -42,7 +42,6 @@ import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -129,7 +128,6 @@ public final class RegionITCase {
      * @throws Exception If some problem inside
      */
     @Test
-    @Ignore
     public void retrievesAttributesFromDynamo() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final Table tbl = this.region(name).table(name);
@@ -146,7 +144,12 @@ public final class RegionITCase {
             tbl.frame()
                 .where(RegionITCase.HASH, hash)
                 .where(RegionITCase.RANGE, idx)
-                .through(new QueryValve().withAttributeToGet(attr))
+                .through(
+                    new QueryValve()
+                        .withAttributeToGet(attr)
+                        .withConsistentRead(true)
+                        .withLimit(Tv.FIFTY)
+                )
                 .iterator().next()
                 .has("something"),
             Matchers.is(false)
