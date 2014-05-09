@@ -114,7 +114,7 @@
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>                 .withAttributesToGet(attrs)
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>                 .withScanFilter(conditions)
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>                 .withLimit(ScanValve.<strong class="jxr_keyword">this</strong>.limit);
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>                 .withLimit(<strong class="jxr_keyword">this</strong>.limit);
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>             <strong class="jxr_keyword">final</strong> ScanResult result = aws.scan(request);
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>             Logger.debug(
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>                 <strong class="jxr_keyword">this</strong>,
