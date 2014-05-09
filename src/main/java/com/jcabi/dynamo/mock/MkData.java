@@ -30,6 +30,7 @@
 package com.jcabi.dynamo.mock;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import java.io.IOException;
@@ -61,5 +62,15 @@ public interface MkData {
      * @throws IOException If fails
      */
     void put(String table, Attributes attrs) throws IOException;
+
+    /**
+     * Add new attribute into the given table.
+     * @param table Table name
+     * @param keys Keys
+     * @param attrs Attributes to save
+     * @throws IOException If fails
+     */
+    void update(String table, Attributes keys,
+        AttributeUpdates attrs) throws IOException;
 
 }

@@ -29,8 +29,10 @@
  */
 package com.jcabi.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
@@ -110,7 +112,13 @@ public final class RegionITCase {
             item.get(attr).getS(),
             Matchers.equalTo(value)
         );
-        item.put(attr, new AttributeValue("empty"));
+        item.put(
+            attr,
+            new AttributeValueUpdate(
+                new AttributeValue("empty"),
+                AttributeAction.PUT
+            )
+        );
         MatcherAssert.assertThat(
             tbl.frame()
                 .where(RegionITCase.HASH, hash)

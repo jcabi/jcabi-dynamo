@@ -30,6 +30,7 @@
 package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.aspects.Immutable;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
@@ -74,9 +75,10 @@ public interface Item {
      *
      * @param name Attribute name
      * @param value Value to save
+     * @since 0.12
      */
     void put(@NotNull(message = "attribute name can't be NULL") String name,
-        @NotNull(message = "value can't be NULL") AttributeValue value);
+        @NotNull(message = "value can't be NULL") AttributeValueUpdate value);
 
     /**
      * Change all attributes in one call.
@@ -85,9 +87,10 @@ public interface Item {
      * execution of the method.
      *
      * @param attrs Attributes
+     * @since 0.12
      */
     void put(@NotNull(message = "map attributes can't be NULL")
-        Map<String, AttributeValue> attrs);
+        Map<String, AttributeValueUpdate> attrs);
 
     /**
      * Get back to the frame it is from.

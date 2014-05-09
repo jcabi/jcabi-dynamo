@@ -104,15 +104,19 @@ public final class Conditions implements Map<String, Condition> {
      */
     @NotNull
     public static Condition equalTo(@NotNull final Object value) {
-        final AttributeValue attr;
-        if (value instanceof AttributeValue) {
-            attr = AttributeValue.class.cast(value);
-        } else {
-            attr = new AttributeValue(value.toString());
-        }
+        return Conditions.equalTo(new AttributeValue(value.toString()));
+    }
+
+    /**
+     * Equal to static condition builder (factory method).
+     * @param value The value to equal to
+     * @return The condition just created
+     */
+    @NotNull
+    public static Condition equalTo(@NotNull final AttributeValue value) {
         return new Condition()
             .withComparisonOperator(ComparisonOperator.EQ)
-            .withAttributeValueList(attr);
+            .withAttributeValueList(value);
     }
 
     /**

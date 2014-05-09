@@ -31,12 +31,13 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
 import com.amazonaws.services.dynamodbv2.model.GetItemResult;
-import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
-import com.amazonaws.services.dynamodbv2.model.PutItemResult;
 import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
+import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
+import com.amazonaws.services.dynamodbv2.model.UpdateItemResult;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
@@ -169,25 +170,27 @@ final class AwsItem implements Item {
     @Override
     public void put(
         @NotNull(message = "attribute name can't be NULL") final String attr,
-        @NotNull(message = "value can't be NULL") final AttributeValue value) {
-        this.put(new Attributes().with(attr, value));
+        @NotNull(message = "value update can't be NULL")
+        final AttributeValueUpdate value) {
+        this.put(new AttributeUpdates().with(attr, value));
     }
 
     @Override
     public void put(@NotNull(message = "attributes can't be NULL")
-        final Map<String, AttributeValue> attrs) {
+        final Map<String, AttributeValueUpdate> attrs) {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
-            final PutItemRequest request = new PutItemRequest();
-            request.setTableName(this.name);
-            request.setExpected(this.attributes.asKeys());
-            request.setItem(new Attributes(this.attributes).with(attrs));
-            request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
-            request.setReturnValues(ReturnValue.NONE);
-            final PutItemResult result = aws.putItem(request);
+            final UpdateItemRequest request = new UpdateItemRequest()
+                .withTableName(this.name)
+                .withExpected(this.attributes.asKeys())
+                .withKey(this.attributes)
+                .withAttributeUpdates(attrs)
+                .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .withReturnValues(ReturnValue.NONE);
+            final UpdateItemResult result = aws.updateItem(request);
             Logger.debug(
                 this,
-                "#put('%s'): saved item to DynamoDB%s",
+                "#put('%s'): updated item to DynamoDB%s",
                 attrs, AwsTable.print(result.getConsumedCapacity())
             );
         } finally {

@@ -30,6 +30,7 @@
 package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.base.Function;
@@ -37,6 +38,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.jdbc.JdbcSession;
@@ -222,6 +224,37 @@ public final class H2Data implements MkData {
             throw new IOException(ex);
         }
     }
+
+    @Override
+    public void update(final String table, final Attributes keys,
+        final AttributeUpdates attrs)
+        throws IOException {
+        try {
+            JdbcSession session = new JdbcSession(this.connection());
+            for (final AttributeValueUpdate value : attrs.values()) {
+                session = session.set(value.getValue().getS());
+            }
+            for (final AttributeValue value : keys.values()) {
+                session = session.set(value.getS());
+            }
+            session.sql(
+                String.format(
+                    "UPDATE %s SET %s WHERE %s",
+                    table,
+                    Joiner.on(',').join(
+                        Iterables.transform(attrs.keySet(), H2Data.WHERE)
+                    ),
+                    Joiner.on(" AND  ").join(
+                        Iterables.transform(keys.keySet(), H2Data.WHERE)
+                    )
+                )
+            );
+            session.execute();
+        } catch (final SQLException ex) {
+            throw new IOException(ex);
+        }
+    }
+
     /**
      * With this table, that has given primary keys.
      * @param table Table name
