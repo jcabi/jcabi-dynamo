@@ -115,7 +115,7 @@
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         MatcherAssert.assertThat(frame, Matchers.hasSize(Tv.FIVE));
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">final</strong> Iterator&lt;Item&gt; items = frame.iterator();
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         <strong class="jxr_keyword">final</strong> Item item = items.next();
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>         <strong class="jxr_keyword">final</strong> String range = item.get(RegionITCase.RANGE).getS();
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> range = Integer.parseInt(item.get(RegionITCase.RANGE).getN());
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>         MatcherAssert.assertThat(
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>             item.get(attr).getS(),
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>             Matchers.equalTo(value)
@@ -130,7 +130,7 @@
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>         MatcherAssert.assertThat(
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>             tbl.frame()
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>                 .where(RegionITCase.HASH, hash)
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>                 .where(RegionITCase.RANGE, range)
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>                 .where(RegionITCase.RANGE, Conditions.equalTo(range))
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>                 .through(<strong class="jxr_keyword">new</strong> ScanValve())
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>                 .iterator().next()
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>                 .get(attr).getS(),
@@ -147,7 +147,7 @@
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retrievesAttributesFromDynamo() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         <strong class="jxr_keyword">final</strong> String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">final</strong> Table tbl = <strong class="jxr_keyword">this</strong>.region(name).table(name);
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">final</strong> String idx = <span class="jxr_string">"2f7whf"</span>;
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> idx = Tv.TEN;
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>         <strong class="jxr_keyword">final</strong> String hash = <span class="jxr_string">"7afe5efa"</span>;
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">final</strong> String attr = <span class="jxr_string">"some-attribute"</span>;
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         tbl.put(
@@ -159,7 +159,7 @@
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>         MatcherAssert.assertThat(
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>             tbl.frame()
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>                 .where(RegionITCase.HASH, hash)
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>                 .where(RegionITCase.RANGE, idx)
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>                 .where(RegionITCase.RANGE, Conditions.equalTo(idx))
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>                 .through(
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>                     <strong class="jxr_keyword">new</strong> QueryValve()
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>                         .withAttributeToGet(attr)
@@ -197,7 +197,7 @@
 <a class="jxr_linenumber" name="L189" href="#L189">189</a>                         .withAttributeType(ScalarAttributeType.S),
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>                     <strong class="jxr_keyword">new</strong> AttributeDefinition()
 <a class="jxr_linenumber" name="L191" href="#L191">191</a>                         .withAttributeName(RegionITCase.RANGE)
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>                         .withAttributeType(ScalarAttributeType.S)
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>                         .withAttributeType(ScalarAttributeType.N)
 <a class="jxr_linenumber" name="L193" href="#L193">193</a>                 )
 <a class="jxr_linenumber" name="L194" href="#L194">194</a>                 .withKeySchema(
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>                     <strong class="jxr_keyword">new</strong> KeySchemaElement()
