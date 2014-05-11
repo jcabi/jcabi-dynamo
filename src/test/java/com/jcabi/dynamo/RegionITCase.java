@@ -107,7 +107,7 @@ public final class RegionITCase {
         MatcherAssert.assertThat(frame, Matchers.hasSize(Tv.FIVE));
         final Iterator<Item> items = frame.iterator();
         final Item item = items.next();
-        final String range = item.get(RegionITCase.RANGE).getS();
+        final int range = Integer.parseInt(item.get(RegionITCase.RANGE).getN());
         MatcherAssert.assertThat(
             item.get(attr).getS(),
             Matchers.equalTo(value)
@@ -122,7 +122,7 @@ public final class RegionITCase {
         MatcherAssert.assertThat(
             tbl.frame()
                 .where(RegionITCase.HASH, hash)
-                .where(RegionITCase.RANGE, range)
+                .where(RegionITCase.RANGE, Conditions.equalTo(range))
                 .through(new ScanValve())
                 .iterator().next()
                 .get(attr).getS(),
@@ -139,7 +139,7 @@ public final class RegionITCase {
     public void retrievesAttributesFromDynamo() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final Table tbl = this.region(name).table(name);
-        final String idx = "2f7whf";
+        final int idx = Tv.TEN;
         final String hash = "7afe5efa";
         final String attr = "some-attribute";
         tbl.put(
@@ -151,7 +151,7 @@ public final class RegionITCase {
         MatcherAssert.assertThat(
             tbl.frame()
                 .where(RegionITCase.HASH, hash)
-                .where(RegionITCase.RANGE, idx)
+                .where(RegionITCase.RANGE, Conditions.equalTo(idx))
                 .through(
                     new QueryValve()
                         .withAttributeToGet(attr)
@@ -189,7 +189,7 @@ public final class RegionITCase {
                         .withAttributeType(ScalarAttributeType.S),
                     new AttributeDefinition()
                         .withAttributeName(RegionITCase.RANGE)
-                        .withAttributeType(ScalarAttributeType.S)
+                        .withAttributeType(ScalarAttributeType.N)
                 )
                 .withKeySchema(
                     new KeySchemaElement()

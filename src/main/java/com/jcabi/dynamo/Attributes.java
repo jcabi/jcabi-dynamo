@@ -149,7 +149,13 @@ public final class Attributes implements Map<String, AttributeValue> {
     public Attributes with(
         @NotNull(message = "attribute name can't be NULL") final String name,
         @NotNull(message = "value can't be NULL") final Object value) {
-        return this.with(name, new AttributeValue(value.toString()));
+        final AttributeValue attr;
+        if (value instanceof Long || value instanceof Integer) {
+            attr = new AttributeValue().withN(value.toString());
+        } else {
+            attr = new AttributeValue(value.toString());
+        }
+        return this.with(name, attr);
     }
 
     /**

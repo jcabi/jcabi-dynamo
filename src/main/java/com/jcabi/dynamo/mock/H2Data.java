@@ -71,6 +71,7 @@ import org.h2.Driver;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = "jdbc")
+@SuppressWarnings("PMD.TooManyMethods")
 public final class H2Data implements MkData {
 
     /**
@@ -196,7 +197,7 @@ public final class H2Data implements MkData {
                     );
                 }
                 final AttributeValue val = cond.getAttributeValueList().get(0);
-                session = session.set(val.getS());
+                session = session.set(H2Data.value(val));
             }
             return session.select(H2Data.OUTCOME);
         } catch (final SQLException ex) {
@@ -209,7 +210,7 @@ public final class H2Data implements MkData {
         try {
             JdbcSession session = new JdbcSession(this.connection());
             for (final AttributeValue value : attrs.values()) {
-                session = session.set(value.getS());
+                session = session.set(H2Data.value(value));
             }
             session.sql(
                 String.format(
@@ -232,10 +233,10 @@ public final class H2Data implements MkData {
         try {
             JdbcSession session = new JdbcSession(this.connection());
             for (final AttributeValueUpdate value : attrs.values()) {
-                session = session.set(value.getValue().getS());
+                session = session.set(H2Data.value(value.getValue()));
             }
             for (final AttributeValue value : keys.values()) {
-                session = session.set(value.getS());
+                session = session.set(H2Data.value(value));
             }
             session.sql(
                 String.format(
@@ -298,6 +299,24 @@ public final class H2Data implements MkData {
      */
     private Connection connection() throws SQLException {
         return new Driver().connect(this.jdbc, new Properties());
+    }
+
+    /**
+     * Get value from attribute.
+     * @param attr Attribute value
+     * @return Text format
+     */
+    private static String value(final AttributeValue attr) {
+        String val = attr.getS();
+        if (val == null) {
+            val = attr.getN();
+        }
+        if (val == null) {
+            throw new IllegalArgumentException(
+                "we support only N and S at the moment"
+            );
+        }
+        return val;
     }
 
 }
