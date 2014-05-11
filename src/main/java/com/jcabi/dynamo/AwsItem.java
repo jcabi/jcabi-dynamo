@@ -168,15 +168,16 @@ final class AwsItem implements Item {
     }
 
     @Override
-    public void put(
+    public Map<String, AttributeValue> put(
         @NotNull(message = "attribute name can't be NULL") final String attr,
         @NotNull(message = "value update can't be NULL")
         final AttributeValueUpdate value) {
-        this.put(new AttributeUpdates().with(attr, value));
+        return this.put(new AttributeUpdates().with(attr, value));
     }
 
     @Override
-    public void put(@NotNull(message = "attributes can't be NULL")
+    public Map<String, AttributeValue> put(
+        @NotNull(message = "attributes can't be NULL")
         final Map<String, AttributeValueUpdate> attrs) {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
@@ -186,13 +187,14 @@ final class AwsItem implements Item {
                 .withKey(this.attributes)
                 .withAttributeUpdates(attrs)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-                .withReturnValues(ReturnValue.NONE);
+                .withReturnValues(ReturnValue.UPDATED_NEW);
             final UpdateItemResult result = aws.updateItem(request);
             Logger.debug(
                 this,
                 "#put('%s'): updated item to DynamoDB%s",
                 attrs, AwsTable.print(result.getConsumedCapacity())
             );
+            return result.getAttributes();
         } finally {
             aws.shutdown();
         }

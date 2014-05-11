@@ -75,9 +75,11 @@ public interface Item {
      *
      * @param name Attribute name
      * @param value Value to save
+     * @return Values saved
      * @since 0.12
      */
-    void put(@NotNull(message = "attribute name can't be NULL") String name,
+    Map<String, AttributeValue> put(
+        @NotNull(message = "attribute name can't be NULL") String name,
         @NotNull(message = "value can't be NULL") AttributeValueUpdate value);
 
     /**
@@ -87,9 +89,11 @@ public interface Item {
      * execution of the method.
      *
      * @param attrs Attributes
+     * @return Values saved
      * @since 0.12
      */
-    void put(@NotNull(message = "map attributes can't be NULL")
+    Map<String, AttributeValue> put(
+        @NotNull(message = "map attributes can't be NULL")
         Map<String, AttributeValueUpdate> attrs);
 
     /**

@@ -31,7 +31,9 @@ package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
+import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.dynamo.AttributeUpdates;
@@ -94,15 +96,17 @@ final class MkItem implements Item {
     }
 
     @Override
-    public void put(final String name, final AttributeValueUpdate value) {
-        this.put(
+    public Map<String, AttributeValue> put(
+        final String name, final AttributeValueUpdate value) {
+        return this.put(
             new ImmutableMap.Builder<String, AttributeValueUpdate>()
                 .put(name, value).build()
         );
     }
 
     @Override
-    public void put(final Map<String, AttributeValueUpdate> attrs) {
+    public Map<String, AttributeValue> put(
+        final Map<String, AttributeValueUpdate> attrs) {
         try {
             this.data.update(
                 this.table, this.coords, new AttributeUpdates(attrs)
@@ -110,6 +114,15 @@ final class MkItem implements Item {
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
+        return Maps.transformValues(
+            attrs,
+            new Function<AttributeValueUpdate, AttributeValue>() {
+                @Override
+                public AttributeValue apply(final AttributeValueUpdate update) {
+                    return update.getValue();
+                }
+            }
+        );
     }
 
     @Override
