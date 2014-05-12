@@ -180,11 +180,12 @@ final class AwsItem implements Item {
         @NotNull(message = "attributes can't be NULL")
         final Map<String, AttributeValueUpdate> attrs) {
         final AmazonDynamoDB aws = this.credentials.aws();
+        final Attributes expected = this.attributes.only(this.keys);
         try {
             final UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(this.name)
-                .withExpected(this.attributes.asKeys())
-                .withKey(this.attributes)
+                .withExpected(expected.asKeys())
+                .withKey(expected)
                 .withAttributeUpdates(attrs)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withReturnValues(ReturnValue.UPDATED_NEW);
