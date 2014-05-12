@@ -188,32 +188,33 @@
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         @NotNull(message = <span class="jxr_string">"attributes can't be NULL"</span>)
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>         <strong class="jxr_keyword">final</strong> Map&lt;String, AttributeValueUpdate&gt; attrs) {
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">final</strong> AmazonDynamoDB aws = <strong class="jxr_keyword">this</strong>.credentials.aws();
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>             <strong class="jxr_keyword">final</strong> UpdateItemRequest request = <strong class="jxr_keyword">new</strong> UpdateItemRequest()
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>                 .withTableName(<strong class="jxr_keyword">this</strong>.name)
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>                 .withExpected(<strong class="jxr_keyword">this</strong>.attributes.asKeys())
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 .withKey(<strong class="jxr_keyword">this</strong>.attributes)
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>                 .withAttributeUpdates(attrs)
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>                 .withReturnValues(ReturnValue.UPDATED_NEW);
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>             <strong class="jxr_keyword">final</strong> UpdateItemResult result = aws.updateItem(request);
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>             Logger.debug(
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>                 <strong class="jxr_keyword">this</strong>,
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>                 <span class="jxr_string">"#put('%s'): updated item to DynamoDB%s"</span>,
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>                 attrs, AwsTable.print(result.getConsumedCapacity())
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>             );
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>             <strong class="jxr_keyword">return</strong> result.getAttributes();
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>         } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>             aws.shutdown();
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>         }
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>     }
-<a class="jxr_linenumber" name="L202" href="#L202">202</a> 
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>     @Override
-<a class="jxr_linenumber" name="L204" href="#L204">204</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> frame() {
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.frm;
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>     }
-<a class="jxr_linenumber" name="L207" href="#L207">207</a> 
-<a class="jxr_linenumber" name="L208" href="#L208">208</a> }
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>         <strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> expected = <strong class="jxr_keyword">this</strong>.attributes.only(<strong class="jxr_keyword">this</strong>.keys);
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>             <strong class="jxr_keyword">final</strong> UpdateItemRequest request = <strong class="jxr_keyword">new</strong> UpdateItemRequest()
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>                 .withTableName(<strong class="jxr_keyword">this</strong>.name)
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 .withExpected(expected.asKeys())
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>                 .withKey(expected)
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>                 .withAttributeUpdates(attrs)
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>                 .withReturnValues(ReturnValue.UPDATED_NEW);
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>             <strong class="jxr_keyword">final</strong> UpdateItemResult result = aws.updateItem(request);
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>             Logger.debug(
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>                 <strong class="jxr_keyword">this</strong>,
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>                 <span class="jxr_string">"#put('%s'): updated item to DynamoDB%s"</span>,
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>                 attrs, AwsTable.print(result.getConsumedCapacity())
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>             );
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>             <strong class="jxr_keyword">return</strong> result.getAttributes();
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>             aws.shutdown();
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>         }
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>     }
+<a class="jxr_linenumber" name="L203" href="#L203">203</a> 
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>     @Override
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Frame.html">Frame</a> frame() {
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.frm;
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>     }
+<a class="jxr_linenumber" name="L208" href="#L208">208</a> 
+<a class="jxr_linenumber" name="L209" href="#L209">209</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2012&#x2013;2014 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
