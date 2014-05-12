@@ -108,9 +108,8 @@ public final class ScanValve implements Valve {
                 .withScanFilter(conditions)
                 .withLimit(this.limit);
             final ScanResult result = aws.scan(request);
-            Logger.debug(
-                this,
-                "#items(): loaded %d item(s) from '%s' using %s%s",
+            Logger.info(
+                this, "#items(): loaded %d item(s) from '%s' using %s%s",
                 result.getCount(), table, conditions,
                 AwsTable.print(result.getConsumedCapacity())
             );

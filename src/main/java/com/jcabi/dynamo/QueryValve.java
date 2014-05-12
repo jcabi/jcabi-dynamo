@@ -152,9 +152,8 @@ public final class QueryValve implements Valve {
                 request = request.withIndexName(this.index);
             }
             final QueryResult result = aws.query(request);
-            Logger.debug(
-                this,
-                "#items(): loaded %d item(s) from '%s' using %s%s",
+            Logger.info(
+                this, "#items(): loaded %d item(s) from '%s' using %s%s",
                 result.getCount(), table, conditions,
                 AwsTable.print(result.getConsumedCapacity())
             );

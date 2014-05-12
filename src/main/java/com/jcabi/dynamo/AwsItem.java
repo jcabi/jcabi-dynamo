@@ -121,9 +121,8 @@ final class AwsItem implements Item {
                 request.setConsistentRead(true);
                 final GetItemResult result = aws.getItem(request);
                 has = result.getItem().get(attrib) != null;
-                Logger.debug(
-                    this,
-                    "#has('%s'): %B from DynamoDB%s",
+                Logger.info(
+                    this, "#has('%s'): %B from DynamoDB%s",
                     attr, has, AwsTable.print(result.getConsumedCapacity())
                 );
             } finally {
@@ -155,9 +154,8 @@ final class AwsItem implements Item {
                         String.format("attribute %s not found", attr)
                     );
                 }
-                Logger.debug(
-                    this,
-                    "#get('%s'): loaded '%[text]s' from DynamoDB%s",
+                Logger.info(
+                    this, "#get('%s'): loaded '%[text]s' from DynamoDB%s",
                     attrib, value, AwsTable.print(result.getConsumedCapacity())
                 );
             } finally {
@@ -190,9 +188,8 @@ final class AwsItem implements Item {
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withReturnValues(ReturnValue.UPDATED_NEW);
             final UpdateItemResult result = aws.updateItem(request);
-            Logger.debug(
-                this,
-                "#put('%s'): updated item to DynamoDB%s",
+            Logger.info(
+                this, "#put('%s'): updated item to DynamoDB%s",
                 attrs, AwsTable.print(result.getConsumedCapacity())
             );
             return result.getAttributes();

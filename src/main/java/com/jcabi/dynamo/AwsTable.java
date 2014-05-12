@@ -102,7 +102,7 @@ final class AwsTable implements Table {
         request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
         final PutItemResult result = aws.putItem(request);
         aws.shutdown();
-        Logger.debug(
+        Logger.info(
             this, "#put('%[text]s'): created item in '%s'%s",
             attributes, this.self,
             AwsTable.print(result.getConsumedCapacity())
@@ -142,14 +142,20 @@ final class AwsTable implements Table {
     @NotNull(message = "collection of keys is never NULL")
     public Collection<String> keys() {
         final AmazonDynamoDB aws = this.credentials.aws();
-        final DescribeTableResult result = aws.describeTable(
-            new DescribeTableRequest().withTableName(this.self)
-        );
-        final Collection<String> keys = new LinkedList<String>();
-        for (final KeySchemaElement key : result.getTable().getKeySchema()) {
-            keys.add(key.getAttributeName());
+        try {
+            final DescribeTableResult result = aws.describeTable(
+                new DescribeTableRequest().withTableName(this.self)
+            );
+            final Collection<String> keys = new LinkedList<String>();
+            for (final KeySchemaElement key
+                : result.getTable().getKeySchema()) {
+                keys.add(key.getAttributeName());
+            }
+            Logger.info(this, "#keys(): table %s described", this.self);
+            return keys;
+        } finally {
+            aws.shutdown();
         }
-        return keys;
     }
 
     /**
