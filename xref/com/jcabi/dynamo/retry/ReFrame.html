@@ -101,7 +101,7 @@
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>      @Override
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>      @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/Table.html">Table</a> table() {
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.origin.table();
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReTable.html">ReTable</a>(<strong class="jxr_keyword">this</strong>.origin.table());
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>      }
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>  
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>      @Override
@@ -131,7 +131,7 @@
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>     @Override
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>     <strong class="jxr_keyword">public</strong> Iterator&lt;Item&gt; iterator() {
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.origin.iterator();
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ReIterator&lt;Item&gt;(<strong class="jxr_keyword">this</strong>.origin.iterator());
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>     }
 <a class="jxr_linenumber" name="L128" href="#L128">128</a> 
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>     @Override
