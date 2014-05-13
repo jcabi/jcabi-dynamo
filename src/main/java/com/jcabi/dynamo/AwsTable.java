@@ -29,6 +29,7 @@
  */
 package com.jcabi.dynamo;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
@@ -44,6 +45,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
@@ -93,27 +95,32 @@ final class AwsTable implements Table {
 
     @Override
     public Item put(@NotNull(message = "map of attributes can't be NULL")
-        final Map<String, AttributeValue> attributes) {
+        final Map<String, AttributeValue> attributes) throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
-        final PutItemRequest request = new PutItemRequest();
-        request.setTableName(this.self);
-        request.setItem(attributes);
-        request.setReturnValues(ReturnValue.NONE);
-        request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
-        final PutItemResult result = aws.putItem(request);
-        aws.shutdown();
-        Logger.info(
-            this, "#put('%[text]s'): created item in '%s'%s",
-            attributes, this.self,
-            AwsTable.print(result.getConsumedCapacity())
-        );
-        return new AwsItem(
-            this.credentials,
-            this.frame(),
-            this.self,
-            new Attributes(attributes).only(this.keys()),
-            new Array<String>(this.keys())
-        );
+        try {
+            final PutItemRequest request = new PutItemRequest();
+            request.setTableName(this.self);
+            request.setItem(attributes);
+            request.setReturnValues(ReturnValue.NONE);
+            request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
+            final PutItemResult result = aws.putItem(request);
+            Logger.info(
+                this, "#put('%[text]s'): created item in '%s'%s",
+                attributes, this.self,
+                AwsTable.print(result.getConsumedCapacity())
+            );
+            return new AwsItem(
+                this.credentials,
+                this.frame(),
+                this.self,
+                new Attributes(attributes).only(this.keys()),
+                new Array<String>(this.keys())
+            );
+        } catch (final AmazonClientException ex) {
+            throw new IOException(ex);
+        } finally {
+            aws.shutdown();
+        }
     }
 
     @Override
@@ -137,10 +144,11 @@ final class AwsTable implements Table {
     /**
      * Get names of keys.
      * @return Names of attributes, which are primary keys
+     * @throws IOException If DynamoDB fails
      */
     @Cacheable(forever = true)
     @NotNull(message = "collection of keys is never NULL")
-    public Collection<String> keys() {
+    public Collection<String> keys() throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
             final DescribeTableResult result = aws.describeTable(
@@ -153,6 +161,8 @@ final class AwsTable implements Table {
             }
             Logger.info(this, "#keys(): table %s described", this.self);
             return keys;
+        } catch (final AmazonClientException ex) {
+            throw new IOException(ex);
         } finally {
             aws.shutdown();
         }

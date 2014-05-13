@@ -31,6 +31,7 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
+import java.io.IOException;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
 
@@ -66,10 +67,11 @@ public interface Table {
      * @param attributes Attributes to save
      * @return Item just created
      * @see Attributes
+     * @throws IOException In case of DynamoDB failure
      */
     @NotNull(message = "item is never NULL")
     Item put(@NotNull(message = "map of attributes can't be NULL")
-        Map<String, AttributeValue> attributes);
+        Map<String, AttributeValue> attributes) throws IOException;
 
     /**
      * Make a new frame, in order to retrieve items.

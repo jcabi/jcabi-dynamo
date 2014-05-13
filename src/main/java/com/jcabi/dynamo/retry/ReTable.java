@@ -38,6 +38,7 @@ import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.validation.constraints.NotNull;
@@ -72,7 +73,8 @@ public final class ReTable implements Table {
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Item put(@NotNull final Map<String, AttributeValue> attributes) {
+    public Item put(@NotNull final Map<String, AttributeValue> attributes)
+        throws IOException {
         return this.origin.put(attributes);
     }
 

@@ -29,6 +29,7 @@
  */
 package com.jcabi.dynamo;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.Condition;
@@ -41,6 +42,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -130,7 +132,7 @@ public final class QueryValve implements Valve {
     @Override
     public Dosage fetch(final Credentials credentials, final String table,
         final Map<String, Condition> conditions,
-        final Collection<String> keys) {
+        final Collection<String> keys) throws IOException {
         final AmazonDynamoDB aws = credentials.aws();
         try {
             final Collection<String> attrs = new HashSet<String>(
@@ -158,6 +160,8 @@ public final class QueryValve implements Valve {
                 AwsTable.print(result.getConsumedCapacity())
             );
             return new QueryValve.NextDosage(credentials, request, result);
+        } catch (final AmazonClientException ex) {
+            throw new IOException(ex);
         } finally {
             aws.shutdown();
         }

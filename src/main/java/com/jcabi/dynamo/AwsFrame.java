@@ -33,6 +33,7 @@ import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.collect.Iterators;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.Iterator;
 import java.util.Map;
@@ -112,14 +113,18 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
 
     @Override
     public Iterator<Item> iterator() {
-        return new AwsIterator(
-            this.credentials,
-            this,
-            this.name,
-            this.conditions,
-            this.tbl.keys(),
-            this.valve
-        );
+        try {
+            return new AwsIterator(
+                this.credentials,
+                this,
+                this.name,
+                this.conditions,
+                this.tbl.keys(),
+                this.valve
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     @Override

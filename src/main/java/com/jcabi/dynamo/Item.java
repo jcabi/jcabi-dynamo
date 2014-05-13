@@ -32,6 +32,7 @@ package com.jcabi.dynamo;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.aspects.Immutable;
+import java.io.IOException;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
 
@@ -39,7 +40,7 @@ import javax.validation.constraints.NotNull;
  * Immutable Amazon DynamoDB item.
  *
  * <p>The class is immutable, which means that every call to
- * {@link #put(String,AttributeValue)} or {@link #put(Map)} changes
+ * {@link #put(String,AttributeValueUpdate)} or {@link #put(Map)} changes
  * data in Amazon, but doesn't change the object. The object will contain
  * dirty data right after PUT operation, and should not be used any more.
  *
@@ -54,17 +55,20 @@ public interface Item {
      * the attribute is absent, use {@link #has(String)} first).
      * @param name Attribute name
      * @return Value
+     * @throws IOException In case of DynamoDB failure
      */
     @NotNull(message = "attribute value is never NULL")
     AttributeValue get(@NotNull(message = "attribute name can't be NULL")
-        String name);
+        String name) throws IOException;
 
     /**
      * Does this attribute exist?
      * @param name Attribute name
      * @return TRUE if it exists
+     * @throws IOException In case of DynamoDB failure
      */
-    boolean has(@NotNull(message = "attribute name can't be NULL") String name);
+    boolean has(@NotNull(message = "attribute name can't be NULL") String name)
+        throws IOException;
 
     /**
      * Change one attribute, immediately saving it to AWS (all other attributes
@@ -76,11 +80,13 @@ public interface Item {
      * @param name Attribute name
      * @param value Value to save
      * @return Values saved
+     * @throws IOException In case of DynamoDB failure
      * @since 0.12
      */
     Map<String, AttributeValue> put(
         @NotNull(message = "attribute name can't be NULL") String name,
-        @NotNull(message = "value can't be NULL") AttributeValueUpdate value);
+        @NotNull(message = "value can't be NULL") AttributeValueUpdate value)
+        throws IOException;
 
     /**
      * Change all attributes in one call.
@@ -93,11 +99,12 @@ public interface Item {
      *
      * @param attrs Attributes
      * @return Values saved
+     * @throws IOException In case of DynamoDB failure
      * @since 0.12
      */
     Map<String, AttributeValue> put(
         @NotNull(message = "map attributes can't be NULL")
-        Map<String, AttributeValueUpdate> attrs);
+        Map<String, AttributeValueUpdate> attrs) throws IOException;
 
     /**
      * Get back to the frame it is from.

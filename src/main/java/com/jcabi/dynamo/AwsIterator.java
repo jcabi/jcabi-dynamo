@@ -38,6 +38,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -131,14 +132,18 @@ final class AwsIterator implements Iterator<Item> {
     public boolean hasNext() {
         synchronized (this.dosage) {
             if (this.dosage.get() == null) {
-                this.dosage.set(
-                    this.valve.fetch(
-                        this.credentials,
-                        this.name,
-                        this.conditions,
-                        this.keys
-                    )
-                );
+                try {
+                    this.dosage.set(
+                        this.valve.fetch(
+                            this.credentials,
+                            this.name,
+                            this.conditions,
+                            this.keys
+                        )
+                    );
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
+                }
                 this.position = -1;
             }
             if (this.dosage.get().hasNext()

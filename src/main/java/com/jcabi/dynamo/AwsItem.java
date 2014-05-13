@@ -29,6 +29,7 @@
  */
 package com.jcabi.dynamo;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
@@ -42,6 +43,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
@@ -107,7 +109,7 @@ final class AwsItem implements Item {
 
     @Override
     public boolean has(@NotNull(message = "attribute name can't be NULL")
-        final String attr) {
+        final String attr) throws IOException {
         final String attrib = attr.toLowerCase(Locale.ENGLISH);
         boolean has = this.attributes.containsKey(attrib);
         if (!has) {
@@ -125,6 +127,8 @@ final class AwsItem implements Item {
                     this, "#has('%s'): %B from DynamoDB%s",
                     attr, has, AwsTable.print(result.getConsumedCapacity())
                 );
+            } catch (final AmazonClientException ex) {
+                throw new IOException(ex);
             } finally {
                 aws.shutdown();
             }
@@ -135,7 +139,7 @@ final class AwsItem implements Item {
     @Override
     @NotNull(message = "attribute value is never NULL")
     public AttributeValue get(@NotNull(message = "attribute name can't be NULL")
-        final String attr) {
+        final String attr) throws IOException {
         final String attrib = attr.toLowerCase(Locale.ENGLISH);
         AttributeValue value = this.attributes.get(attrib);
         if (value == null) {
@@ -158,6 +162,8 @@ final class AwsItem implements Item {
                     this, "#get('%s'): loaded '%[text]s' from DynamoDB%s",
                     attrib, value, AwsTable.print(result.getConsumedCapacity())
                 );
+            } catch (final AmazonClientException ex) {
+                throw new IOException(ex);
             } finally {
                 aws.shutdown();
             }
@@ -169,14 +175,14 @@ final class AwsItem implements Item {
     public Map<String, AttributeValue> put(
         @NotNull(message = "attribute name can't be NULL") final String attr,
         @NotNull(message = "value update can't be NULL")
-        final AttributeValueUpdate value) {
+        final AttributeValueUpdate value) throws IOException {
         return this.put(new AttributeUpdates().with(attr, value));
     }
 
     @Override
     public Map<String, AttributeValue> put(
         @NotNull(message = "attributes can't be NULL")
-        final Map<String, AttributeValueUpdate> attrs) {
+        final Map<String, AttributeValueUpdate> attrs) throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         final Attributes expected = this.attributes.only(this.keys);
         try {
@@ -193,6 +199,8 @@ final class AwsItem implements Item {
                 attrs, AwsTable.print(result.getConsumedCapacity())
             );
             return result.getAttributes();
+        } catch (final AmazonClientException ex) {
+            throw new IOException(ex);
         } finally {
             aws.shutdown();
         }

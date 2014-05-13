@@ -31,6 +31,7 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.aspects.Immutable;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
@@ -52,6 +53,7 @@ public interface Valve {
      * @param conditions Conditions
      * @param keys Keys of the table
      * @return Dosage
+     * @throws IOException In case of DynamoDB failure
      * @checkstyle ParameterNumber (5 lines)
      */
     @NotNull(message = "dosage is never NULL")
@@ -60,6 +62,7 @@ public interface Valve {
         @NotNull(message = "table name can't be NULL") String table,
         @NotNull(message = "conditions can't be NULL")
         Map<String, Condition> conditions,
-        @NotNull(message = "keys can't be NULL") Collection<String> keys);
+        @NotNull(message = "keys can't be NULL") Collection<String> keys)
+        throws IOException;
 
 }
