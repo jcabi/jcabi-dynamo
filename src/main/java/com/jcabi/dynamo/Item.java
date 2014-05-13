@@ -88,6 +88,9 @@ public interface Item {
      * <p>Data in memory will become out of sync right after a successful
      * execution of the method.
      *
+     * <p>It is recommended to use {@link AttributeUpdates} supplementary class,
+     * instead of a raw {@link Map}.
+     *
      * @param attrs Attributes
      * @return Values saved
      * @since 0.12

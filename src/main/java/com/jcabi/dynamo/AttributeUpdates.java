@@ -29,6 +29,8 @@
  */
 package com.jcabi.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
@@ -96,6 +98,39 @@ public final class AttributeUpdates
         return new AttributeUpdates(
             this.attrs.with(name.toLowerCase(Locale.ENGLISH), value)
         );
+    }
+
+    /**
+     * With this attribute.
+     * @param name Attribute name
+     * @param value The value
+     * @return AttributeUpdates
+     * @since 0.14.3
+     */
+    public AttributeUpdates with(final String name,
+        final AttributeValue value) {
+        return this.with(
+            name,
+            new AttributeValueUpdate(value, AttributeAction.PUT)
+        );
+    }
+
+    /**
+     * With this attribute.
+     * @param name Attribute name
+     * @param value The value
+     * @return AttributeUpdates
+     * @since 0.14.3
+     */
+    public AttributeUpdates with(final String name,
+        final Object value) {
+        final AttributeValue attr;
+        if (value instanceof Long || value instanceof Integer) {
+            attr = new AttributeValue().withN(value.toString());
+        } else {
+            attr = new AttributeValue(value.toString());
+        }
+        return this.with(name, attr);
     }
 
     /**
