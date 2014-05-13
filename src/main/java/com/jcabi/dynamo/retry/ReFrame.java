@@ -93,7 +93,7 @@ public final class ReFrame implements Frame {
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Table table() {
-        return this.origin.table();
+        return new ReTable(this.origin.table());
     }
 
     @Override
@@ -123,7 +123,7 @@ public final class ReFrame implements Frame {
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Iterator<Item> iterator() {
-        return this.origin.iterator();
+        return new ReIterator<Item>(this.origin.iterator());
     }
 
     @Override

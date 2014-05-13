@@ -29,24 +29,17 @@
  */
 package com.jcabi.dynamo.retry;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.aspects.Tv;
-import com.jcabi.dynamo.Frame;
-import com.jcabi.dynamo.Item;
-import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
-import java.io.IOException;
-import java.util.Map;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Table that retries on failure.
+ * Frame that retries on failure.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -56,44 +49,36 @@ import lombok.ToString;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = "origin")
-public final class ReTable implements Table {
+public final class ReIterator<T> implements Iterator<T> {
 
     /**
-     * Original table.
+     * Original iterator.
      */
-    private final transient Table origin;
+    private final transient Iterator<T> origin;
 
     /**
      * Public ctor.
-     * @param table Origin table
+     * @param iterator Origin iterator
      */
-    public ReTable(final Table table) {
-        this.origin = table;
+    public ReIterator(final Iterator<T> iterator) {
+        this.origin = iterator;
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Item put(@NotNull final Map<String, AttributeValue> attributes)
-        throws IOException {
-        return this.origin.put(attributes);
+    public boolean hasNext() {
+        return this.origin.hasNext();
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Frame frame() {
-        return new ReFrame(this.origin.frame());
+    public T next() {
+        return this.origin.next();
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Region region() {
-        return new ReRegion(this.origin.region());
+    public void remove() {
+        this.origin.remove();
     }
-
-    @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public String name() {
-        return this.origin.name();
-    }
-
 }
