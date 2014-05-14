@@ -29,7 +29,6 @@
  */
 package com.jcabi.dynamo.retry;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.aspects.Tv;
@@ -45,10 +44,9 @@ import lombok.ToString;
  * @version $Id$
  * @since 0.9
  */
-@Immutable
-@Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = "origin")
+@Loggable(Loggable.DEBUG)
 public final class ReIterator<T> implements Iterator<T> {
 
     /**
