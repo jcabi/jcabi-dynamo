@@ -40,6 +40,7 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.mock.MadeTable;
+import com.jcabi.dynamo.retry.ReRegion;
 import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
@@ -202,7 +203,7 @@ public final class RegionITCase {
         );
         mocker.create();
         mocker.createIfAbsent();
-        return region;
+        return new ReRegion(region);
     }
 
 }
