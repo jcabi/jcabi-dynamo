@@ -34,7 +34,6 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DeleteTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
-import com.amazonaws.services.dynamodbv2.model.ListTablesRequest;
 import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Region;
@@ -206,11 +205,7 @@ public final class MadeTable {
         final String name = this.request.getTableName();
         boolean exists;
         try {
-            aws.listTables(
-                new ListTablesRequest()
-                    .withExclusiveStartTableName(name)
-                    .withLimit(1)
-            );
+            aws.describeTable(name);
             exists = true;
             Logger.info(this, "DynamoDB table '%s' already exists", name);
         } catch (final ResourceNotFoundException ex) {
