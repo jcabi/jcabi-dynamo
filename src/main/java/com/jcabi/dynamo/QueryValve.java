@@ -153,11 +153,14 @@ public final class QueryValve implements Valve {
             if (!this.index.isEmpty()) {
                 request = request.withIndexName(this.index);
             }
+            final long start = System.currentTimeMillis();
             final QueryResult result = aws.query(request);
             Logger.info(
-                this, "#items(): loaded %d item(s) from '%s' using %s%s",
+                this,
+                "#items(): loaded %d item(s) from '%s' using %s%s, in %[ms]s",
                 result.getCount(), table, conditions,
-                AwsTable.print(result.getConsumedCapacity())
+                AwsTable.print(result.getConsumedCapacity()),
+                System.currentTimeMillis() - start
             );
             return new QueryValve.NextDosage(credentials, request, result);
         } catch (final AmazonClientException ex) {
@@ -328,13 +331,16 @@ public final class QueryValve implements Valve {
                     this.request.withExclusiveStartKey(
                         this.result.getLastEvaluatedKey()
                     );
+                final long start = System.currentTimeMillis();
                 final QueryResult rslt = aws.query(rqst);
-                Logger.debug(
+                Logger.info(
                     this,
-                    "#next(): loaded %d item(s) from '%s' using %s%s",
+                    // @checkstyle LineLength (1 line)
+                    "#next(): loaded %d item(s) from '%s' using %s%s, in %[ms]s",
                     rslt.getCount(), rqst.getTableName(),
                     rqst.getKeyConditions(),
-                    AwsTable.print(rslt.getConsumedCapacity())
+                    AwsTable.print(rslt.getConsumedCapacity()),
+                    System.currentTimeMillis() - start
                 );
                 return new QueryValve.NextDosage(this.credentials, rqst, rslt);
             } finally {

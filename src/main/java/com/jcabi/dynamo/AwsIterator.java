@@ -188,6 +188,7 @@ final class AwsIterator implements Iterator<Item> {
                     new ArrayList<Map<String, AttributeValue>>(prev.items());
                 final Map<String, AttributeValue> item =
                     items.remove(this.position);
+                final long start = System.currentTimeMillis();
                 final DeleteItemResult res = aws.deleteItem(
                     new DeleteItemRequest()
                         .withTableName(this.name)
@@ -200,10 +201,11 @@ final class AwsIterator implements Iterator<Item> {
                         )
                 );
                 this.dosage.set(new AwsIterator.Fixed(prev, items));
-                Logger.debug(
+                Logger.info(
                     this,
-                    "#remove(): item #%d removed from DynamoDB, %s",
-                    this.position, AwsTable.print(res.getConsumedCapacity())
+                    "#remove(): item #%d removed from DynamoDB, %s, in %[ms]s",
+                    this.position, AwsTable.print(res.getConsumedCapacity()),
+                    System.currentTimeMillis() - start
                 );
             } finally {
                 aws.shutdown();

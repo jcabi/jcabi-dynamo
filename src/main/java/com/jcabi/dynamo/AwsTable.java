@@ -104,10 +104,12 @@ final class AwsTable implements Table {
             request.setReturnValues(ReturnValue.NONE);
             request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
             final PutItemResult result = aws.putItem(request);
+            final long start = System.currentTimeMillis();
             Logger.info(
-                this, "#put('%[text]s'): created item in '%s'%s",
+                this, "#put('%[text]s'): created item in '%s'%s, in %[ms]s",
                 attributes, this.self,
-                AwsTable.print(result.getConsumedCapacity())
+                AwsTable.print(result.getConsumedCapacity()),
+                System.currentTimeMillis() - start
             );
             return new AwsItem(
                 this.credentials,
@@ -151,6 +153,7 @@ final class AwsTable implements Table {
     public Collection<String> keys() throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
+            final long start = System.currentTimeMillis();
             final DescribeTableResult result = aws.describeTable(
                 new DescribeTableRequest().withTableName(this.self)
             );
@@ -159,7 +162,10 @@ final class AwsTable implements Table {
                 : result.getTable().getKeySchema()) {
                 keys.add(key.getAttributeName());
             }
-            Logger.info(this, "#keys(): table %s described", this.self);
+            Logger.info(
+                this, "#keys(): table %s described, in %[ms]s",
+                this.self, System.currentTimeMillis() - start
+            );
             return keys;
         } catch (final AmazonClientException ex) {
             throw new IOException(ex);

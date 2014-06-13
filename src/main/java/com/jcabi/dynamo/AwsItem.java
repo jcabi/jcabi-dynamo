@@ -121,11 +121,13 @@ final class AwsItem implements Item {
                 request.setKey(this.attributes.only(this.keys));
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
+                final long start = System.currentTimeMillis();
                 final GetItemResult result = aws.getItem(request);
                 has = result.getItem().get(attrib) != null;
                 Logger.info(
-                    this, "#has('%s'): %B from DynamoDB%s",
-                    attr, has, AwsTable.print(result.getConsumedCapacity())
+                    this, "#has('%s'): %B from DynamoDB%s, in %[ms]s",
+                    attr, has, AwsTable.print(result.getConsumedCapacity()),
+                    System.currentTimeMillis() - start
                 );
             } catch (final AmazonClientException ex) {
                 throw new IOException(ex);
@@ -151,22 +153,26 @@ final class AwsItem implements Item {
                 request.setKey(this.attributes.only(this.keys));
                 request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
                 request.setConsistentRead(true);
+                final long start = System.currentTimeMillis();
                 final GetItemResult result = aws.getItem(request);
                 value = result.getItem().get(attrib);
-                if (value == null) {
-                    throw new NoSuchElementException(
-                        String.format("attribute %s not found", attr)
-                    );
-                }
                 Logger.info(
-                    this, "#get('%s'): loaded '%[text]s' from DynamoDB%s",
-                    attrib, value, AwsTable.print(result.getConsumedCapacity())
+                    this,
+                    // @checkstyle LineLength (1 line)
+                    "#get('%s'): loaded '%[text]s' from DynamoDB, %s, in %[ms]s",
+                    attrib, value, AwsTable.print(result.getConsumedCapacity()),
+                    System.currentTimeMillis() - start
                 );
             } catch (final AmazonClientException ex) {
                 throw new IOException(ex);
             } finally {
                 aws.shutdown();
             }
+        }
+        if (value == null) {
+            throw new NoSuchElementException(
+                String.format("attribute %s not found", attr)
+            );
         }
         return value;
     }
@@ -193,10 +199,12 @@ final class AwsItem implements Item {
                 .withAttributeUpdates(attrs)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withReturnValues(ReturnValue.UPDATED_NEW);
+            final long start = System.currentTimeMillis();
             final UpdateItemResult result = aws.updateItem(request);
             Logger.info(
-                this, "#put('%s'): updated item to DynamoDB%s",
-                attrs, AwsTable.print(result.getConsumedCapacity())
+                this, "#put('%s'): updated item to DynamoDB, %s, in %[ms]s",
+                attrs, AwsTable.print(result.getConsumedCapacity()),
+                System.currentTimeMillis() - start
             );
             return result.getAttributes();
         } catch (final AmazonClientException ex) {

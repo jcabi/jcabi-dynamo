@@ -109,11 +109,14 @@ public final class ScanValve implements Valve {
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withScanFilter(conditions)
                 .withLimit(this.limit);
+            final long start = System.currentTimeMillis();
             final ScanResult result = aws.scan(request);
             Logger.info(
-                this, "#items(): loaded %d item(s) from '%s' using %s%s",
+                this,
+                "#items(): loaded %d item(s) from '%s' using %s%s, in %[ms]s",
                 result.getCount(), table, conditions,
-                AwsTable.print(result.getConsumedCapacity())
+                AwsTable.print(result.getConsumedCapacity()),
+                System.currentTimeMillis() - start
             );
             return new ScanValve.NextDosage(credentials, request, result);
         } catch (final AmazonClientException ex) {
@@ -214,12 +217,15 @@ public final class ScanValve implements Valve {
                 final ScanRequest rqst = this.request.withExclusiveStartKey(
                     this.result.getLastEvaluatedKey()
                 );
+                final long start = System.currentTimeMillis();
                 final ScanResult rslt = aws.scan(rqst);
-                Logger.debug(
+                Logger.info(
                     this,
-                    "#next(): loaded %d item(s) from '%s' using %s%s",
+                    // @checkstyle LineLength (1 line)
+                    "#next(): loaded %d item(s) from '%s' using %s%s, in %[ms]s",
                     rslt.getCount(), rqst.getTableName(), rqst.getScanFilter(),
-                    AwsTable.print(rslt.getConsumedCapacity())
+                    AwsTable.print(rslt.getConsumedCapacity()),
+                    System.currentTimeMillis() - start
                 );
                 return new ScanValve.NextDosage(this.credentials, rqst, rslt);
             } finally {
