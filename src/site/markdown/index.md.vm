@@ -53,9 +53,6 @@ package, which make sure that accidental connectivity problems do
 not affect execution. In other words, they retry every AWS call at least
 three times before giving up and throwing an exception.
 
-Read [JavaDoc](./apidocs-${project.version}/com/jcabi/dynamo/index.html)
-for more information and examples.
-
 The only dependency you need is
 (you can also download
 [`jcabi-dynamo-${project.version}.jar`](http://repo1.maven.org/maven2/com/jcabi/jcabi-dynamo/${project.version}/jcabi-dynamo-${project.version}.jar)
