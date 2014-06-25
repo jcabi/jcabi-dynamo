@@ -80,6 +80,7 @@ public final class QueryValve implements Valve {
     /**
      * Attributes to fetch.
      */
+    @Immutable.Array
     private final transient String[] attributes;
 
     /**

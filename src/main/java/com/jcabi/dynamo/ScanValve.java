@@ -73,6 +73,7 @@ public final class ScanValve implements Valve {
     /**
      * Attributes to fetch.
      */
+    @Immutable.Array
     private final transient String[] attributes;
 
     /**
