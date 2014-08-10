@@ -1,5 +1,8 @@
 # Amazon Dynamo DB Object Layer
 
+This [blog post](http://www.yegor256.com/2014/04/14/jcabi-dynamo-java-api-of-aws-dynamodb.html)
+explains what it does and what it's for.
+
 Set of classes in
 [`com.jcabi.dynamo`](./apidocs-${project.version}/com/jcabi/dynamo/index.html)
 is an object layer on top of
@@ -66,7 +69,8 @@ and add it to the classpath):
 </dependency>
 ```
 
-## Cutting Edge Version
+Cutting Edge Version
+--------------------
 
 If you want to use current version of the product, you can do it with
 this configuration in your `pom.xml`:
