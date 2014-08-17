@@ -7,6 +7,9 @@ assets:
 env:
   MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
 
+install:
+  - "sudo gem install pdd"
+
 merge:
   script:
     - "mvn clean install -Pqulice --errors --settings ../settings.xml"
