@@ -184,7 +184,7 @@ final class AwsTable implements Table {
         if (capacity == null) {
             txt = "";
         } else {
-            txt = String.format(", %.2f units", capacity.getCapacityUnits());
+            txt = String.format("%.2f units", capacity.getCapacityUnits());
         }
         return txt;
     }
