@@ -30,6 +30,7 @@
 package com.jcabi.dynamo;
 
 import com.jcabi.aspects.Tv;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,11 +52,11 @@ public final class AwsIteratorTest {
 
     /**
      * AwsIterator can iterate using valve.
-     * @throws Exception If some problem inside
+     * @throws IOException If some problem inside
      * @checkstyle ExecutableStatementCount (100 lines)
      */
     @Test
-    public void iteratesValve() throws Exception {
+    public void iteratesValve() throws IOException {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final String attr = "attribute-1";
         final String value = "value-1";

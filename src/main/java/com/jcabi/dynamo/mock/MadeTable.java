@@ -170,12 +170,12 @@ public final class MadeTable {
                 );
                 break;
             }
-            TimeUnit.SECONDS.sleep((long) Tv.TEN);
             Logger.info(
                 this,
                 "waiting for DynamoDB table '%s': %s",
                 name, result.getTable().getTableStatus()
             );
+            TimeUnit.SECONDS.sleep((long) Tv.TEN);
         }
     }
 
@@ -210,7 +210,10 @@ public final class MadeTable {
             Logger.info(this, "DynamoDB table '%s' already exists", name);
         } catch (final ResourceNotFoundException ex) {
             exists = false;
-            Logger.info(this, "DynamoDB table '%s' doesn't exist", name);
+            Logger.info(
+                this, "DynamoDB table '%s' doesn't exist: %s",
+                name, ex.getLocalizedMessage()
+            );
         }
         return exists;
     }
