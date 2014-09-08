@@ -201,6 +201,7 @@ final class AwsIterator implements Iterator<Item> {
                         )
                 );
                 this.dosage.set(new AwsIterator.Fixed(prev, items));
+                --this.position;
                 Logger.info(
                     this,
                     "#remove(): item #%d removed from DynamoDB, %s, in %[ms]s",
