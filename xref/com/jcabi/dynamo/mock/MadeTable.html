@@ -178,12 +178,12 @@
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>                 );
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>                 <strong class="jxr_keyword">break</strong>;
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>             }
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>             TimeUnit.SECONDS.sleep((<strong class="jxr_keyword">long</strong>) Tv.TEN);
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>             Logger.info(
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>                 <strong class="jxr_keyword">this</strong>,
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>                 <span class="jxr_string">"waiting for DynamoDB table '%s': %s"</span>,
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>                 name, result.getTable().getTableStatus()
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>             );
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>             Logger.info(
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>                 <strong class="jxr_keyword">this</strong>,
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>                 <span class="jxr_string">"waiting for DynamoDB table '%s': %s"</span>,
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>                 name, result.getTable().getTableStatus()
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             );
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>             TimeUnit.SECONDS.sleep((<strong class="jxr_keyword">long</strong>) Tv.TEN);
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>         }
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>     }
 <a class="jxr_linenumber" name="L181" href="#L181">181</a> 
@@ -218,12 +218,15 @@
 <a class="jxr_linenumber" name="L210" href="#L210">210</a>             Logger.info(<strong class="jxr_keyword">this</strong>, <span class="jxr_string">"DynamoDB table '%s' already exists"</span>, name);
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> ResourceNotFoundException ex) {
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>             exists = false;
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>             Logger.info(<strong class="jxr_keyword">this</strong>, <span class="jxr_string">"DynamoDB table '%s' doesn't exist"</span>, name);
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>         }
-<a class="jxr_linenumber" name="L215" href="#L215">215</a>         <strong class="jxr_keyword">return</strong> exists;
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>     }
-<a class="jxr_linenumber" name="L217" href="#L217">217</a> 
-<a class="jxr_linenumber" name="L218" href="#L218">218</a> }
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>             Logger.info(
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>                 <strong class="jxr_keyword">this</strong>, <span class="jxr_string">"DynamoDB table '%s' doesn't exist: %s"</span>,
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>                 name, ex.getLocalizedMessage()
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>             );
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>         }
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>         <strong class="jxr_keyword">return</strong> exists;
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>     }
+<a class="jxr_linenumber" name="L220" href="#L220">220</a> 
+<a class="jxr_linenumber" name="L221" href="#L221">221</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2012&#x2013;2014 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
