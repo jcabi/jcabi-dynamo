@@ -6,7 +6,8 @@
 [![Build Status](https://travis-ci.org/jcabi/jcabi-dynamo.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-dynamo)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo)
 
-More details are here: [dynamo.jcabi.com](http://dynamo.jcabi.com/index.html)
+More details are here: [dynamo.jcabi.com](http://dynamo.jcabi.com/index.html).
+Also, read this blog post: [Object-Oriented DynamoDB API](http://www.yegor256.com/2014/04/14/jcabi-dynamo-java-api-of-aws-dynamodb.html).
 
 Set of classes in `com.jcabi.dynamo`
 is an object layer on top of
