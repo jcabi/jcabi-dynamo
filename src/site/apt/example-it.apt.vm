@@ -1,10 +1,18 @@
-# Integration Testing With DynamoDB Table/Fixture
+  ---
+  Integration Testing With DynamoDB Table/Fixture
+  ---
+  Yegor Bugayenko
+  ---
+  2014-11-02
+  ---
 
-This is how your JUnit integration test should look like
-[`MadeTable`](./apidocs-${project.version}/com/jcabi/dynamo/mock/MadeTable.html) class
-is used from `com.jcabi:jcabi-dynamo:mock` artifact):
+Integration Testing With DynamoDB Table/Fixture
 
-```
+  This is how your JUnit integration test should look like
+  {{{./apidocs-${project.version}/com/jcabi/dynamo/mock/MadeTable.html}<<<MadeTable>>>}} class
+  is used from <<<com.jcabi:jcabi-dynamo:mock>>> artifact):
+
++--
 public class FooITCase {
   private Region region;
   private MadeTable table;
@@ -43,7 +51,7 @@ public class FooITCase {
     foo.doSomething();
   }
 }
-```
++--
 
-[`MadeTable`](./apidocs-${project.version}/com/jcabi/dynamo/mock/MadeTable.html)
-will create a table on demand and will drop it when tests are finished.
+  {{{./apidocs-${project.version}/com/jcabi/dynamo/mock/MadeTable.html}<<<MadeTable>>>}}
+  will create a table on demand and will drop it when tests are finished.

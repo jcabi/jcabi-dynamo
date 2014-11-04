@@ -1,11 +1,19 @@
-# Unit Testing w/Mock
+  ---
+  Unit Testing w/Mock
+  ---
+  Yegor Bugayenko
+  ---
+  2014-11-02
+  ---
 
-Since version 0.10 you can use
-[`MkRegion`](./apidocs-${project.version}/com/jcabi/dynamo/mock/MkRegion.html)
-class to mock
-interaction with DynamoDB without even starting DynamoDB Local:
+Unit Testing w/Mock
 
-```
+  Since version 0.10 you can use
+  {{{./apidocs-${project.version}/com/jcabi/dynamo/mock/MkRegion.html}<<<MkRegion>>>}}
+  class to mock
+  interaction with DynamoDB without even starting DynamoDB Local:
+
++--
 public class FooTest {
   @Test
   public void createsAndDeletesItems() {
@@ -29,13 +37,13 @@ public class FooTest {
     );
   }
 }
-```
++--
 
-[`H2Data`](./apidocs-${project.version}/com/jcabi/dynamo/mock/H2Data.html)
-is using H2database for data persistency, that's why you should include
-these two dependencies to classpath:
+  {{{./apidocs-${project.version}/com/jcabi/dynamo/mock/H2Data.html}<<<H2Data>>>}}
+  is using H2database for data persistency, that's why you should include
+  these two dependencies to classpath:
 
-```xml
++--
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-jdbc</artifactId>
@@ -46,4 +54,4 @@ these two dependencies to classpath:
   <artifactId>h2</artifactId>
   <version>1.3.175</version>
 </dependency>
-```
++--
