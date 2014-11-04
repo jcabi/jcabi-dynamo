@@ -80,7 +80,7 @@ public class Main {
 * Cutting Edge Version
 
   If you want to use current version of the product, you can do it with
-  this configuration in your >>>pom.xml<<<:
+  this configuration in your <<<pom.xml>>>:
 
 +--
 <repositories>

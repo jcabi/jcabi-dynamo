@@ -8,9 +8,7 @@
 
 Integration Testing With DynamoDB Table/Fixture
 
-  This is how your JUnit integration test should look like
-  {{{./apidocs-${project.version}/com/jcabi/dynamo/mock/MadeTable.html}<<<MadeTable>>>}} class
-  is used from <<<com.jcabi:jcabi-dynamo:mock>>> artifact):
+  This is how your JUnit integration test should look like:
 
 +--
 public class FooITCase {
