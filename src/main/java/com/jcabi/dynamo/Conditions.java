@@ -140,6 +140,24 @@ public final class Conditions implements Map<String, Condition> {
     }
 
     /**
+     * With this condition.
+     * @param name Attribute name
+     * @param value The condition
+     * @return New map of conditions
+     * @since 0.18
+     */
+    @NotNull
+    public Conditions with(@NotNull final String name,
+        @NotNull final Object value) {
+        return new Conditions(
+            this.conds.with(
+                name.toLowerCase(Locale.ENGLISH),
+                Conditions.equalTo(value)
+            )
+        );
+    }
+
+    /**
      * With these conditions.
      * @param map The conditions
      * @return New map of conditions
