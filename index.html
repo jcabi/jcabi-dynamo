@@ -38,7 +38,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.17.1/index.html" title="JavaDoc 0.17.1">JavaDoc 0.17.1</a>
+                            <span>                        <a href="apidocs-0.18/index.html" title="JavaDoc 0.18">JavaDoc 0.18</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -117,13 +117,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.17.1</strong>
+                                    <strong itemprop="version">0.18</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2014-11-04T06:17:23Z">
+                                    <time itemprop="datePublished" datetime="2014-11-13T05:22:16Z">
                                         
-                                        04-Nov-2014
+                                        13-Nov-2014
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -171,7 +171,7 @@
                             <div class="section">
 <h2><a name="Amazon_Dynamo_DB_Object_Layer"></a>Amazon Dynamo DB Object Layer</h2>
 <p>This <a class="externalLink" href="http://www.yegor256.com/2014/04/14/jcabi-dynamo-java-api-of-aws-dynamodb.html">blog post</a> explains what it does and what it's for.</p>
-<p>Set of classes in <a href="./apidocs-0.17.1/com/jcabi/dynamo/index.html"><tt>com.jcabi.dynamo</tt></a> is an object layer on top of <a class="externalLink" href="http://aws.amazon.com/sdkforjava/">AWS SDK for Dynamo DB</a>. For example, to read an item from your Dynamo table:</p>
+<p>Set of classes in <a href="./apidocs-0.18/com/jcabi/dynamo/index.html"><tt>com.jcabi.dynamo</tt></a> is an object layer on top of <a class="externalLink" href="http://aws.amazon.com/sdkforjava/">AWS SDK for Dynamo DB</a>. For example, to read an item from your Dynamo table:</p>
 <div class="source">
 <pre>import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.Region;
@@ -194,7 +194,7 @@ public class Main {
     }
   }
 }</pre></div>
-<p>You can put an item using <a href="./apidocs-0.17.1/com/jcabi/dynamo/Table.html"><tt>Table#put()</tt></a> method:</p>
+<p>You can put an item using <a href="./apidocs-0.18/com/jcabi/dynamo/Table.html"><tt>Table#put()</tt></a> method:</p>
 <div class="source">
 <pre>public class Main {
   public static void main(String[] args) {
@@ -207,13 +207,13 @@ public class Main {
     );
   }
 }</pre></div>
-<p>Since version 0.9, it is strongly recommended to use wrappers from <a href="./apidocs-0.17.1/com/jcabi/dynamo/retry/index.html"><tt>com.jcabi.dynamo.retry</tt></a> package, which make sure that accidental connectivity problems do not affect execution. In other words, they retry every AWS call at least three times before giving up and throwing an exception.</p>
-<p>The only dependency you need is (you can also download <a class="externalLink" href="http://repo1.maven.org/maven2/com/jcabi/jcabi-dynamo/0.17.1/jcabi-dynamo-0.17.1.jar"><tt>jcabi-dynamo-0.17.1.jar</tt></a> and add it to the classpath):</p>
+<p>Since version 0.9, it is strongly recommended to use wrappers from <a href="./apidocs-0.18/com/jcabi/dynamo/retry/index.html"><tt>com.jcabi.dynamo.retry</tt></a> package, which make sure that accidental connectivity problems do not affect execution. In other words, they retry every AWS call at least three times before giving up and throwing an exception.</p>
+<p>The only dependency you need is (you can also download <a class="externalLink" href="http://repo1.maven.org/maven2/com/jcabi/jcabi-dynamo/0.18/jcabi-dynamo-0.18.jar"><tt>jcabi-dynamo-0.18.jar</tt></a> and add it to the classpath):</p>
 <div class="source">
 <pre>&lt;dependency&gt;
   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
   &lt;artifactId&gt;jcabi-dynamo&lt;/artifactId&gt;
-  &lt;version&gt;0.17.1&lt;/version&gt;
+  &lt;version&gt;0.18&lt;/version&gt;
 &lt;/dependency&gt;</pre></div>
 <div class="section">
 <h3><a name="Cutting_Edge_Version"></a>Cutting Edge Version</h3>
