@@ -264,7 +264,7 @@ public final class H2Data implements MkData {
      * @return New data, modified
      * @throws IOException If fails
      */
-    public MkData with(final String table, final String[] keys,
+    public H2Data with(final String table, final String[] keys,
         final String[] attrs) throws IOException {
         if (keys.length == 0) {
             throw new IllegalArgumentException(

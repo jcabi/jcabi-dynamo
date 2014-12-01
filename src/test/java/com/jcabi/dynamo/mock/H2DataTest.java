@@ -100,4 +100,15 @@ public final class H2DataTest {
         MatcherAssert.assertThat(file.length(), Matchers.greaterThan(0L));
     }
 
+    /**
+     * H2Data can create many tables.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void createsManyTables() throws Exception {
+        new H2Data()
+            .with("firsttable", new String[] {"firstid"}, new String[0])
+            .with("secondtable", new String[]{"secondid"}, new String[0]);
+    }
+
 }
