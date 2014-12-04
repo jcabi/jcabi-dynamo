@@ -92,12 +92,12 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-core</artifactId>
-            <version>1.9.1</version>
+            <version>1.9.8</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
-            <version>1.9.1</version>
+            <version>1.9.8</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
