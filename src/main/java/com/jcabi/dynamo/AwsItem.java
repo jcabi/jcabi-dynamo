@@ -39,6 +39,8 @@ import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemResult;
+import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
+import com.amazonaws.services.dynamodbv2.model.DeleteItemResult;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
@@ -207,6 +209,28 @@ final class AwsItem implements Item {
                 System.currentTimeMillis() - start
             );
             return result.getAttributes();
+        } catch (final AmazonClientException ex) {
+            throw new IOException(ex);
+        } finally {
+            aws.shutdown();
+        }
+    }
+
+    @Override
+    public void remove() throws IOException {
+        final AmazonDynamoDB aws = this.credentials.aws();
+        try {
+            final DeleteItemRequest request = new DeleteItemRequest();
+            request.setTableName(this.name);
+            request.setKey(this.attributes.only(this.keys));
+            request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
+            final long start = System.currentTimeMillis();
+            final DeleteItemResult result = aws.deleteItem(request);
+            Logger.info(
+                    this, "#remove('%s'): removed item from DynamoDB%s, in %[ms]s",
+                    AwsTable.print(result.getConsumedCapacity()),
+                    System.currentTimeMillis() - start
+            );
         } catch (final AmazonClientException ex) {
             throw new IOException(ex);
         } finally {

@@ -126,6 +126,11 @@ final class MkItem implements Item {
     }
 
     @Override
+    public void remove() throws IOException {
+        this.coords.clear();
+    }
+
+    @Override
     public Frame frame() {
         return new MkFrame(this.data, this.table);
     }
