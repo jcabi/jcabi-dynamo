@@ -227,9 +227,9 @@ final class AwsItem implements Item {
             final long start = System.currentTimeMillis();
             final DeleteItemResult result = aws.deleteItem(request);
             Logger.info(
-                    this, "#remove('%s'): removed item from DynamoDB%s, in %[ms]s",
-                    AwsTable.print(result.getConsumedCapacity()),
-                    System.currentTimeMillis() - start
+                this, "#remove('%s'): removed item from DynamoDB%s, in %[ms]s",
+                AwsTable.print(result.getConsumedCapacity()),
+                System.currentTimeMillis() - start
             );
         } catch (final AmazonClientException ex) {
             throw new IOException(ex);

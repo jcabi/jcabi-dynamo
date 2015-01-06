@@ -108,7 +108,6 @@ public interface Item {
 
     /**
      * Remove item
-     *
      * @throws IOException In case of DynamoDB failure
      */
     void remove()
