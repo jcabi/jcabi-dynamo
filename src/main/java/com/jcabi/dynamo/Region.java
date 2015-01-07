@@ -50,8 +50,10 @@ import lombok.ToString;
  * <pre> Region region = new ReRegion(new Region.Simple(credentials));</pre>
  *
  * <p>After all operations with the region are finished, it can be optionally
- * shutdown invoking {@link AmazonDynamoDB#shutdown()} in order to explicitly
- * release any open resources.
+ * shutdown invoking {@link AmazonDynamoDB#shutdown()}. Callers are not expected
+ * to call it, but can if they want to explicitly release any open resources.
+ * Once a client has been shutdown, it should not be used to make any more
+ * requests.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
