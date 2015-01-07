@@ -51,9 +51,9 @@ import lombok.ToString;
  *
  * <p>After all operations with the region are finished, it can be optionally
  * shutdown invoking {@link AmazonDynamoDB#shutdown()}. Callers are not expected
- * to call it, but can if they want to explicitly release any open resources.
- * Once a client has been shutdown, it should not be used to make any more
- * requests.
+ * to call it, but can if they want to explicitly release any open resources and
+ * forcibly terminate all pending asynchronous service calls. Once a client has
+ * been shutdown, it should not be used to make any more requests.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
