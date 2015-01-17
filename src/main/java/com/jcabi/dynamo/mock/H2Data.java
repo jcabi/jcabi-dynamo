@@ -57,6 +57,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.codec.binary.Base32;
 import org.h2.Driver;
 
 /**
@@ -71,7 +72,7 @@ import org.h2.Driver;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = "jdbc")
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports" })
 public final class H2Data implements MkData {
 
     /**
@@ -170,8 +171,9 @@ public final class H2Data implements MkData {
     public Iterable<Attributes> iterate(final String table,
         final Conditions conds) throws IOException {
         try {
+            final String h2Table = this.encodeTableName(table);
             final StringBuilder sql = new StringBuilder("SELECT * FROM ")
-                .append(table);
+                .append(h2Table);
             if (!conds.isEmpty()) {
                 sql.append(" WHERE ");
                 Joiner.on(" AND ").appendTo(
@@ -204,10 +206,12 @@ public final class H2Data implements MkData {
             throw new IOException(ex);
         }
     }
+
     @Override
     public void put(final String table, final Attributes attrs)
         throws IOException {
         try {
+            final String h2Table = this.encodeTableName(table);
             JdbcSession session = new JdbcSession(this.connection());
             for (final AttributeValue value : attrs.values()) {
                 session = session.set(H2Data.value(value));
@@ -215,7 +219,7 @@ public final class H2Data implements MkData {
             session.sql(
                 String.format(
                     "INSERT INTO %s (%s) VALUES (%s)",
-                    table,
+                    h2Table,
                     Joiner.on(',').join(attrs.keySet()),
                     Joiner.on(',').join(Collections.nCopies(attrs.size(), "?"))
                 )
@@ -231,6 +235,7 @@ public final class H2Data implements MkData {
         final AttributeUpdates attrs)
         throws IOException {
         try {
+            final String h2Table = this.encodeTableName(table);
             JdbcSession session = new JdbcSession(this.connection());
             for (final AttributeValueUpdate value : attrs.values()) {
                 session = session.set(H2Data.value(value.getValue()));
@@ -241,7 +246,7 @@ public final class H2Data implements MkData {
             session.sql(
                 String.format(
                     "UPDATE %s SET %s WHERE %s",
-                    table,
+                    h2Table,
                     Joiner.on(',').join(
                         Iterables.transform(attrs.keySet(), H2Data.WHERE)
                     ),
@@ -271,8 +276,9 @@ public final class H2Data implements MkData {
                 String.format("empty list of keys for %s table", table)
             );
         }
+        final String h2Table = this.encodeTableName(table);
         final StringBuilder sql = new StringBuilder("CREATE TABLE ")
-            .append(table).append(" (");
+            .append(h2Table).append(" (");
         Joiner.on(',').appendTo(
             sql,
             Iterables.transform(Arrays.asList(keys), H2Data.CREATE_KEY)
@@ -317,6 +323,15 @@ public final class H2Data implements MkData {
             );
         }
         return val;
+    }
+
+    /**
+     * Base32-encodes table name for use with H2.
+     * @param table Table name to encode
+     * @return Base-32-encoded table name
+     */
+    private String encodeTableName(final String table) {
+        return new Base32(true, (byte) '_').encodeAsString(table.getBytes());
     }
 
 }

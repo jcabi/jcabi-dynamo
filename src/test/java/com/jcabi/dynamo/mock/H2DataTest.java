@@ -30,9 +30,11 @@
 package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.google.common.base.Joiner;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import java.io.File;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -109,6 +111,21 @@ public final class H2DataTest {
         new H2Data()
             .with("firsttable", new String[] {"firstid"}, new String[0])
             .with("secondtable", new String[]{"secondid"}, new String[0]);
+    }
+
+    /**
+     * H2Data can create tables with long names (max length of DynamoDb table
+     * name is 255 characters).
+     * @throws Exception In case test fails
+     */
+    @Test
+    public void createsTablesWithLongNames() throws Exception {
+        new H2Data()
+            .with(
+                //@checkstyle MagicNumberCheck (1 line)
+                Joiner.on("").join(Collections.nCopies(255, "a")),
+                new String[] {"key"}, new String[0]
+        );
     }
 
 }
