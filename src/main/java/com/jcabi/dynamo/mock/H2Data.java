@@ -327,7 +327,10 @@ public final class H2Data implements MkData {
      * @return Base-32-encoded table name
      */
     private static String encodeTableName(final String table) {
-        return new Base32(true, (byte) '_').encodeAsString(table.getBytes());
+        return Joiner.on("").join(
+            "_",
+            new Base32(true, (byte) '_').encodeAsString(table.getBytes())
+        );
     }
 
 }

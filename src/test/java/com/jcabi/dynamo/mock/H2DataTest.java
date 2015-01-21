@@ -128,4 +128,13 @@ public final class H2DataTest {
         );
     }
 
+    /**
+     * H2Data supports table names with characters illegal to H2.
+     * @throws Exception In case test fails
+     */
+    @Test
+    public void supportsTableNamesWithIllegalCharacters() throws Exception {
+        new H2Data().with(".-.", new String[] {"pk"}, new String[0]);
+    }
+
 }
