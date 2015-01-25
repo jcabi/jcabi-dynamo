@@ -100,4 +100,16 @@ final class MkTable implements Table {
     public String name() {
         return this.self;
     }
+
+    /**
+     * Delete item from aws table.
+     * @todo Implement #25
+     * @param attributes Attributes
+     * @throws IOException In case of DynamoDB failure
+     */
+    @Override
+    public void delete(final Map<String, AttributeValue> attributes)
+        throws IOException {
+        throw new UnsupportedOperationException();
+    }
 }

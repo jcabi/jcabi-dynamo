@@ -96,4 +96,15 @@ public final class ReTable implements Table {
         return this.origin.name();
     }
 
+    /**
+     * Delete item from aws table.
+     * @todo Implement #26
+     * @param attributes Attributes
+     * @throws IOException In case of DynamoDB failure
+     */
+    @Override
+    public void delete(final Map<String, AttributeValue> attributes)
+        throws IOException {
+        throw new UnsupportedOperationException();
+    }
 }
