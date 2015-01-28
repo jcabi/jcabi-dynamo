@@ -103,8 +103,8 @@ final class MkTable implements Table {
 
     /**
      * Delete item from aws table.
-     * @todo #8 Added delete method to Table interface. Only AwsTable method
-     * implemeted (with unit test). Now we need to implement MkTable.delete
+     * @todo #8 Implement MkTable.delete() operation. delete() method added
+     * to Table interface and implemented in AwsTable class so far.
      * @param attributes Attributes
      * @throws IOException In case of DynamoDB failure
      */

@@ -98,8 +98,8 @@ public final class ReTable implements Table {
 
     /**
      * Delete item from aws table.
-     * @todo #8 Added delete method to Table interface. Only AwsTable method
-     * implemeted (with unit test). Now we need to implement ReTable.delete
+     * @todo #8 Implement ReTable.delete() operation. delete() method added
+     * to Table interface and implemented in AwsTable class so far.
      * @param attributes Attributes
      * @throws IOException In case of DynamoDB failure
      */
