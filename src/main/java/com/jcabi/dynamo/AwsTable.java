@@ -205,7 +205,7 @@ final class AwsTable implements Table {
             final DeleteItemResult result = aws.deleteItem(request);
             final long start = System.currentTimeMillis();
             Logger.info(
-                this, "#delete('%[text]s'): created item in '%s'%s, in %[ms]s",
+                this, "#delete('%[text]s'): deleted item in '%s'%s, in %[ms]s",
                 attributes, this.self,
                 AwsTable.print(result.getConsumedCapacity()),
                 System.currentTimeMillis() - start
