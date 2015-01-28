@@ -32,6 +32,8 @@ package com.jcabi.dynamo;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
+import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
+import com.amazonaws.services.dynamodbv2.model.DeleteItemResult;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
@@ -51,6 +53,15 @@ import org.mockito.Mockito;
 public final class AwsTableTest {
 
     /**
+     * Constant for 'tableName' attribute.
+     */
+    private static final String TABLE_NAME = "tableName";
+    /**
+     * Constant for 'key' attribute.
+     */
+    private static final String KEY = "key";
+
+    /**
      * AwsTable can save an item.
      * @throws Exception If some problem inside
      */
@@ -67,7 +78,7 @@ public final class AwsTableTest {
         Mockito.doReturn(
             new DescribeTableResult().withTable(
                 new TableDescription().withKeySchema(
-                    new KeySchemaElement().withAttributeName("key")
+                    new KeySchemaElement().withAttributeName(KEY)
                 )
             )
         ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
@@ -83,7 +94,7 @@ public final class AwsTableTest {
                 Mockito.argThat(
                     Matchers.allOf(
                         Matchers.hasProperty(
-                            "tableName",
+                            TABLE_NAME,
                             Matchers.equalTo(name)
                         ),
                         Matchers.hasProperty(
@@ -99,4 +110,52 @@ public final class AwsTableTest {
         );
     }
 
+    /**
+     * AwsTable can delete an item.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void deletesItemFromDynamo() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            new DeleteItemResult().withConsumedCapacity(
+                new ConsumedCapacity().withCapacityUnits(1.0d)
+            )
+        ).when(aws).deleteItem(Mockito.any(DeleteItemRequest.class));
+        Mockito.doReturn(
+            new DescribeTableResult().withTable(
+                new TableDescription().withKeySchema(
+                    new KeySchemaElement().withAttributeName(KEY)
+                )
+            )
+        ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
+        final String attr = "attribute-2";
+        final AttributeValue value = new AttributeValue("value-2");
+        final String name = "table-name-2";
+        final Table table = new AwsTable(
+            credentials, Mockito.mock(Region.class), name
+        );
+        table.delete(new Attributes().with(attr, value));
+        Mockito.verify(aws).deleteItem(
+            DeleteItemRequest.class.cast(
+                Mockito.argThat(
+                    Matchers.allOf(
+                        Matchers.hasProperty(
+                            TABLE_NAME,
+                            Matchers.equalTo(name)
+                        ),
+                        Matchers.hasProperty(
+                            KEY,
+                            Matchers.hasEntry(
+                                Matchers.equalTo(attr),
+                                Matchers.equalTo(value)
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
 }

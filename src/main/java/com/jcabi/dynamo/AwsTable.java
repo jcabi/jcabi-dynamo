@@ -33,6 +33,8 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
+import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
+import com.amazonaws.services.dynamodbv2.model.DeleteItemResult;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
@@ -58,6 +60,7 @@ import lombok.ToString;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @checkstyle ClassDataAbstractionCoupling (150 lines)
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
@@ -189,4 +192,28 @@ final class AwsTable implements Table {
         return txt;
     }
 
+    @Override
+    public void delete(@NotNull(message = "map of attributes can't be NULL")
+        final Map<String, AttributeValue> attributes) throws IOException {
+        final AmazonDynamoDB aws = this.credentials.aws();
+        try {
+            final DeleteItemRequest request = new DeleteItemRequest();
+            request.setTableName(this.self);
+            request.setKey(attributes);
+            request.setReturnValues(ReturnValue.NONE);
+            request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
+            final DeleteItemResult result = aws.deleteItem(request);
+            final long start = System.currentTimeMillis();
+            Logger.info(
+                this, "#delete('%[text]s'): deleted item in '%s'%s, in %[ms]s",
+                attributes, this.self,
+                AwsTable.print(result.getConsumedCapacity()),
+                System.currentTimeMillis() - start
+            );
+        } catch (final AmazonClientException ex) {
+            throw new IOException(ex);
+        } finally {
+            aws.shutdown();
+        }
+    }
 }

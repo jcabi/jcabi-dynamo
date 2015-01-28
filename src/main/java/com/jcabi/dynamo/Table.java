@@ -94,4 +94,13 @@ public interface Table {
     @NotNull(message = "table name is never NULL")
     String name();
 
+    /**
+     * Delete item from aws table.
+     * <p>It is recommended to use {@link Attributes} supplementary class,
+     * instead of a raw {@link Map}.
+     * @param attributes Attributes containing item key and value
+     * @see Attributes
+     * @throws IOException In case of DynamoDB failure
+     */
+    void delete(Map<String, AttributeValue> attributes) throws IOException;
 }
