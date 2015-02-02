@@ -10,7 +10,7 @@ jdk:
   - oraclejdk7
   - openjdk7
 install:
-  - sudo gem install pdd
+  - gem install pdd
 script:
   - mvn clean install -Pqulice --errors --batch-mode
   - mvn clean
