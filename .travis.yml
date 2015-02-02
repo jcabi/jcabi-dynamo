@@ -10,8 +10,11 @@ jdk:
   - oraclejdk7
   - openjdk7
 install:
+  - set -e
+  - travis_retry sudo apt-get install -y --fix-missing libmagic1 libmagic-dev
   - gem install pdd
 script:
+  - set -e
   - mvn clean install -Pqulice --errors --batch-mode
   - mvn clean
   - pdd --source=$(pwd) --verbose --file=/dev/null
