@@ -134,7 +134,25 @@ public final class H2DataTest {
      */
     @Test
     public void supportsTableNamesWithIllegalCharacters() throws Exception {
-        new H2Data().with(".-.", new String[] {"pk"}, new String[0]);
+        new H2Data().with(".-.", new String[]{"pk"}, new String[0]);
+    }
+
+    /**
+     * H2Data supports column names with characters illegal to H2.
+     * @throws Exception In case test fails
+     * @todo: #28:30min H2Data doesn't support COLUMNS with ".", "-" or digits
+     *  but I don't know for sure should it support these symbols or not.
+     *  It's needed to be confirmed and test should be uncommented
+     *  when H2Data will be supporting mentioned symbols.
+     */
+    @Test
+    @Ignore
+    public void supportsColumnNamesWithIllegalCharacters() throws Exception {
+        final String key = "0-.col.-0";
+        final String table = "test";
+        new H2Data().with(
+            table, new String[] {key}, new String[0]
+        ).put(table, new Attributes().with(key, "value"));
     }
 
 }
