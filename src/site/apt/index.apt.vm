@@ -59,7 +59,7 @@ public class Main {
 +--
 
   Since version 0.9, it is strongly recommended to use wrappers
-  from {{{./apidocs-${project.version}/com/jcabi/dynamo/retry/index.html}<<<com.jcabi.dynamo.retry>>>}}
+  from {{{./apidocs-${project.version}/com/jcabi/dynamo/retry/package-summary.html}<<<com.jcabi.dynamo.retry>>>}}
   package, which make sure that accidental connectivity problems do
   not affect execution. In other words, they retry every AWS call at least
   three times before giving up and throwing an exception.
