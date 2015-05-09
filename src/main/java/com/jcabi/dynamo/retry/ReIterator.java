@@ -33,6 +33,7 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.aspects.Tv;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -69,7 +70,10 @@ public final class ReIterator<T> implements Iterator<T> {
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(
+        verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS,
+        ignore = NoSuchElementException.class
+    )
     public T next() {
         return this.origin.next();
     }

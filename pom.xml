@@ -65,6 +65,7 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-aspects</artifactId>
+            <version>0.22</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
