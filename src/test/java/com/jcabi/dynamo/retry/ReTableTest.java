@@ -46,11 +46,11 @@ import org.mockito.Mockito;
 public final class ReTableTest {
 
     /**
-     * ReTable can retry AWS Calls.
+     * ReTable can retry delete calls to method delete.
      * @throws Exception If some problem inside
      */
     @Test
-    public void retriesAwsCalls() throws Exception {
+    public void retriesDelete() throws Exception {
         final Table table = Mockito.mock(Table.class);
         final Attributes attrs = new Attributes();
         final String msg = "Exception!";
