@@ -29,11 +29,12 @@
  */
 package com.jcabi.dynamo.retry;
 
-import com.amazonaws.AmazonClientException;
 import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Table;
-import org.junit.Assert;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -53,14 +54,13 @@ public final class ReTableTest {
         final Table table = Mockito.mock(Table.class);
         final Attributes attrs = new Attributes();
         final String msg = "Exception!";
-        Mockito.doThrow(new AmazonClientException(msg)).when(table)
+        Mockito.doThrow(new IOException(msg)).when(table)
             .delete(attrs);
         final Table retry = new ReTable(table);
         try {
             retry.delete(attrs);
-            Assert.fail("exception expected here");
-        } catch (final AmazonClientException ex) {
-            assert ex.getMessage().equals(msg);
+        } catch (final IOException ex) {
+            MatcherAssert.assertThat(ex.getMessage(), Matchers.equalTo(msg));
         }
         Mockito.verify(table, Mockito.times(Tv.THREE)).delete(attrs);
     }
