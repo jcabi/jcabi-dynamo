@@ -37,6 +37,7 @@ import javax.validation.constraints.NotNull;
  * Throughput of a table.
  * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
+ * @since 0.18.4
  */
 public final class Throughput {
     /**
