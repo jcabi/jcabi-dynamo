@@ -30,6 +30,7 @@
 package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -49,7 +50,13 @@ public class ThroughputTest {
         final Region region = Mockito.mock(Region.class);
         final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
         Mockito.when(table.region()).thenReturn(region);
+        Mockito.when(table.name()).thenReturn("Customers");
         Mockito.when(region.aws()).thenReturn(aws);
         new Throughput(table).adjust();
+        Mockito.verify(aws, Mockito.times(1))
+            .updateTable(
+                Mockito.eq("Customers"),
+                Mockito.<ProvisionedThroughput>any()
+            );
     }
 }
