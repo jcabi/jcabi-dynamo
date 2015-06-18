@@ -41,7 +41,7 @@ import org.mockito.Mockito;
  */
 public class ThroughputTest {
     /**
-     * Adjusts throughput on a table.
+     * Throughput can change throughput of a table.
      * @throws Exception If something went wrong
      */
     @Test
@@ -50,12 +50,13 @@ public class ThroughputTest {
         final Region region = Mockito.mock(Region.class);
         final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
         Mockito.when(table.region()).thenReturn(region);
-        Mockito.when(table.name()).thenReturn("Customers");
+        final String name = "Customers";
+        Mockito.when(table.name()).thenReturn(name);
         Mockito.when(region.aws()).thenReturn(aws);
         new Throughput(table).adjust();
         Mockito.verify(aws, Mockito.times(1))
             .updateTable(
-                Mockito.eq("Customers"),
+                Mockito.eq(name),
                 Mockito.<ProvisionedThroughput>any()
             );
     }
