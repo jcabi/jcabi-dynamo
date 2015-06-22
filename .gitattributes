@@ -4,3 +4,4 @@
 # be a single line here:
 
 * text=auto eol=lf
+*.java ident
