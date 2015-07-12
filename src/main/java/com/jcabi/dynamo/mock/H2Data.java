@@ -258,6 +258,12 @@ public final class H2Data implements MkData {
         }
     }
 
+    @Override
+    public void delete(String table, Attributes keys) throws IOException {
+        // @todo 30min:#35 Implement H2Data#delete() method because #delete
+        //  method was added to MkData interface.
+    }
+
     /**
      * With this table, that has given primary keys.
      * @param table Table name

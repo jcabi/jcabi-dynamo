@@ -111,6 +111,9 @@ final class MkTable implements Table {
     @Override
     public void delete(final Map<String, AttributeValue> attributes)
         throws IOException {
-        throw new UnsupportedOperationException();
+        this.data.delete(
+            this.self,
+            new Attributes(attributes)
+        );
     }
 }

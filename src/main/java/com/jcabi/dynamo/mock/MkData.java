@@ -73,4 +73,10 @@ public interface MkData {
     void update(String table, Attributes keys,
         AttributeUpdates attrs) throws IOException;
 
+    /**
+     * Delete attributes from the given table.
+     * @param table Table name
+     * @param keys Keys
+     */
+    void delete(String table, Attributes keys) throws IOException;
 }
