@@ -269,6 +269,7 @@ public final class H2Data implements MkData {
     @Override
     public void delete(final String table, final Attributes keys)
         throws IOException {
+        throw new UnsupportedOperationException();
     }
 
     /**
