@@ -258,14 +258,13 @@ public final class H2Data implements MkData {
         }
     }
 
-
     /**
      * Delete attributes from the given table.
      * @todo 30min:#35 Implement H2Data#delete() method because MkData#delete
      *  method was added.
      * @param table Table name
      * @param keys Keys
-     * @throws IOException
+     * @throws IOException If fails
      */
     @Override
     public void delete(final String table, final Attributes keys)
