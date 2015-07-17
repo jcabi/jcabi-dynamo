@@ -177,14 +177,19 @@ public final class H2DataTest {
             new Attributes().with(key, number),
             new AttributeUpdates().with(attr, updated)
         );
+        final Iterable<Attributes> result = data.iterate(
+            table, new Conditions().with(key, Conditions.equalTo(number))
+        );
         MatcherAssert.assertThat(
-            data.iterate(
-                table, new Conditions().with(key, Conditions.equalTo(number))
-            ).iterator().next(),
+            result.iterator().next(),
             Matchers.hasEntry(
                 Matchers.equalTo(attr),
                 Matchers.equalTo(new AttributeValue(updated))
             )
+        );
+        MatcherAssert.assertThat(
+            result,
+            Matchers.<Attributes>iterableWithSize(1)
         );
     }
 
