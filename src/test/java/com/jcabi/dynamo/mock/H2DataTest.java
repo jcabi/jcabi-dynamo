@@ -162,11 +162,11 @@ public final class H2DataTest {
      */
     @Test
     public void updatesTableAttributes() throws Exception {
-        final String table = "users";
-        final String key = "id";
+        final String table = "test";
+        final String key = "tid";
         final int number = 43;
-        final String attr = "description";
-        final String value = "some\n\t\u20ac text";
+        final String attr = "desc";
+        final String value = "Dummy\n\t\u20ac text";
         final String updated = "Updated";
         final MkData data = new H2Data().with(
             table, new String[] {key}, new String[] {attr}
