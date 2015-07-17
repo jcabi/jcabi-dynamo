@@ -162,7 +162,7 @@ public final class H2DataTest {
      */
     @Test
     public void updatesTableAttributes() throws Exception {
-        final String table = "test";
+        final String table = "tests";
         final String key = "tid";
         final int number = 43;
         final String attr = "desc";
