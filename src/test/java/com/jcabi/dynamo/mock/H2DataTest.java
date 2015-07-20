@@ -106,7 +106,7 @@ public final class H2DataTest {
     /**
      * H2Data can create many tables. This test is suspended as
      * with {@link MkData} definition now represents the underlining
-     * data of a table instead of a database. 
+     * data of a table instead of a database.
      * @throws Exception If some problem inside
      */
     @Test

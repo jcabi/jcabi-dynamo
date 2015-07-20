@@ -47,7 +47,6 @@ public interface MkData {
 
     /**
      * Iterate everything for the given table.
-     * @param table Name of the table
      * @param conds Conditions
      * @return All rows found
      * @throws IOException If fails
@@ -56,7 +55,6 @@ public interface MkData {
 
     /**
      * Add new attribute into the given table.
-     * @param table Table name
      * @param attrs Attributes to save
      * @throws IOException If fails
      */
@@ -64,7 +62,6 @@ public interface MkData {
 
     /**
      * Add new attribute into the given table.
-     * @param table Table name
      * @param keys Keys
      * @param attrs Attributes to save
      * @throws IOException If fails
