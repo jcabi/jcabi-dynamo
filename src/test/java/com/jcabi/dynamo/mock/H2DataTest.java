@@ -31,6 +31,7 @@ package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.google.common.base.Joiner;
+import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import java.io.File;
@@ -153,6 +154,43 @@ public final class H2DataTest {
         new H2Data(table).with(
             new String[] {key}, new String[0]
         ).put(new Attributes().with(key, "value"));
+    }
+
+    /**
+     * H2Data can update table attributes.
+     * @throws Exception In case test fails
+     */
+    @Test
+    public void updatesTableAttributes() throws Exception {
+        final String table = "tests";
+        final String key = "tid";
+        final int number = 43;
+        final String attr = "desc";
+        final String value = "Dummy\n\t\u20ac text";
+        final String updated = "Updated";
+        final MkData data = new H2Data().with(
+            table, new String[] {key}, new String[] {attr}
+        );
+        data.put(table, new Attributes().with(key, number).with(attr, value));
+        data.update(
+            table,
+            new Attributes().with(key, number),
+            new AttributeUpdates().with(attr, updated)
+        );
+        final Iterable<Attributes> result = data.iterate(
+            table, new Conditions().with(key, Conditions.equalTo(number))
+        );
+        MatcherAssert.assertThat(
+            result.iterator().next(),
+            Matchers.hasEntry(
+                Matchers.equalTo(attr),
+                Matchers.equalTo(new AttributeValue(updated))
+            )
+        );
+        MatcherAssert.assertThat(
+            result,
+            Matchers.<Attributes>iterableWithSize(1)
+        );
     }
 
 }

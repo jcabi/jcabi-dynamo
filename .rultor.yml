@@ -14,13 +14,14 @@ merge:
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
   commanders:
+  - caarlos0
   - carlosmiranda
   - darkled
+  - dmzaytsev
   - ggajos
   - krzyk
   - longtimeago
   - pinaf
-  - yegor256
 deploy:
   script: |-
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
