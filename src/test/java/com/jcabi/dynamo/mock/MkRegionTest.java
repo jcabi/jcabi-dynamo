@@ -55,7 +55,7 @@ public final class MkRegionTest {
         final String key = "id";
         final String attr = "description";
         final Region region = new MkRegion(
-            new H2Data().with(name, new String[] {key}, new String[] {attr})
+            new H2Data(name).with(new String[] {key}, new String[] {attr})
         );
         final Table table = region.table(name);
         final AttributeValue value = new AttributeValue("some\n\t\u20ac text");

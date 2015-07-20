@@ -149,18 +149,26 @@ public final class H2Data implements MkData {
     private final transient String jdbc;
 
     /**
+     * The name of the table.
+     */
+    private final transient String table;
+
+    /**
      * Public ctor.
+     * @param name The table name represents by H2Data.
      * @throws IOException If fails
      */
-    public H2Data() throws IOException {
-        this(File.createTempFile("jcabi-dynamo-", ".h2"));
+    public H2Data(final String name) throws IOException {
+        this(name, File.createTempFile("jcabi-dynamo-", ".h2"));
     }
 
     /**
      * Public ctor.
+     * @param name The table name represents by H2Data.
      * @param file Where to keep the database
      */
-    public H2Data(final File file) {
+    public H2Data(final String name, final File file) {
+        this.table = name;
         this.jdbc = String.format(
             "jdbc:h2:file:%s",
             file.getAbsolutePath()
@@ -168,11 +176,11 @@ public final class H2Data implements MkData {
     }
 
     @Override
-    public Iterable<Attributes> iterate(final String table,
-        final Conditions conds) throws IOException {
+    public Iterable<Attributes> iterate(final Conditions conds)
+        throws IOException {
         try {
             final StringBuilder sql = new StringBuilder("SELECT * FROM ")
-                .append(H2Data.encodeTableName(table));
+                .append(H2Data.encodeTableName(this.table));
             if (!conds.isEmpty()) {
                 sql.append(" WHERE ");
                 Joiner.on(" AND ").appendTo(
@@ -207,8 +215,7 @@ public final class H2Data implements MkData {
     }
 
     @Override
-    public void put(final String table, final Attributes attrs)
-        throws IOException {
+    public void put(final Attributes attrs) throws IOException {
         try {
             JdbcSession session = new JdbcSession(this.connection());
             for (final AttributeValue value : attrs.values()) {
@@ -217,7 +224,7 @@ public final class H2Data implements MkData {
             session.sql(
                 String.format(
                     "INSERT INTO %s (%s) VALUES (%s)",
-                    H2Data.encodeTableName(table),
+                    H2Data.encodeTableName(this.table),
                     Joiner.on(',').join(attrs.keySet()),
                     Joiner.on(',').join(Collections.nCopies(attrs.size(), "?"))
                 )
@@ -229,8 +236,7 @@ public final class H2Data implements MkData {
     }
 
     @Override
-    public void update(final String table, final Attributes keys,
-        final AttributeUpdates attrs)
+    public void update(final Attributes keys, final AttributeUpdates attrs)
         throws IOException {
         try {
             JdbcSession session = new JdbcSession(this.connection());
@@ -243,7 +249,7 @@ public final class H2Data implements MkData {
             session.sql(
                 String.format(
                     "UPDATE %s SET %s WHERE %s",
-                    H2Data.encodeTableName(table),
+                    H2Data.encodeTableName(this.table),
                     Joiner.on(',').join(
                         Iterables.transform(attrs.keySet(), H2Data.WHERE)
                     ),
@@ -260,21 +266,20 @@ public final class H2Data implements MkData {
 
     /**
      * With this table, that has given primary keys.
-     * @param table Table name
      * @param keys Primary keys
      * @param attrs Attributes
      * @return New data, modified
      * @throws IOException If fails
      */
-    public H2Data with(final String table, final String[] keys,
+    public H2Data with(final String[] keys,
         final String[] attrs) throws IOException {
         if (keys.length == 0) {
             throw new IllegalArgumentException(
-                String.format("empty list of keys for %s table", table)
+                String.format("empty list of keys for %s table", this.table)
             );
         }
         final StringBuilder sql = new StringBuilder("CREATE TABLE ")
-            .append(H2Data.encodeTableName(table)).append(" (");
+            .append(H2Data.encodeTableName(this.table)).append(" (");
         Joiner.on(',').appendTo(
             sql,
             Iterables.transform(Arrays.asList(keys), H2Data.CREATE_KEY)

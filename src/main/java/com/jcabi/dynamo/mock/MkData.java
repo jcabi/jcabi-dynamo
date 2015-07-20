@@ -52,8 +52,7 @@ public interface MkData {
      * @return All rows found
      * @throws IOException If fails
      */
-    Iterable<Attributes> iterate(String table, Conditions conds)
-        throws IOException;
+    Iterable<Attributes> iterate(Conditions conds) throws IOException;
 
     /**
      * Add new attribute into the given table.
@@ -61,7 +60,7 @@ public interface MkData {
      * @param attrs Attributes to save
      * @throws IOException If fails
      */
-    void put(String table, Attributes attrs) throws IOException;
+    void put(Attributes attrs) throws IOException;
 
     /**
      * Add new attribute into the given table.
@@ -70,7 +69,6 @@ public interface MkData {
      * @param attrs Attributes to save
      * @throws IOException If fails
      */
-    void update(String table, Attributes keys,
-        AttributeUpdates attrs) throws IOException;
+    void update(Attributes keys, AttributeUpdates attrs) throws IOException;
 
 }

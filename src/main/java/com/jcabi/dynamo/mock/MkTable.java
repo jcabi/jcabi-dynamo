@@ -79,7 +79,7 @@ final class MkTable implements Table {
     public Item put(final Map<String, AttributeValue> attributes) {
         final Attributes attrs = new Attributes(attributes);
         try {
-            this.data.put(this.self, attrs);
+            this.data.put(attrs);
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }

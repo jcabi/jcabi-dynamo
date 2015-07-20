@@ -109,7 +109,7 @@ final class MkItem implements Item {
         final Map<String, AttributeValueUpdate> attrs) {
         try {
             this.data.update(
-                this.table, this.coords, new AttributeUpdates(attrs)
+                this.coords, new AttributeUpdates(attrs)
             );
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
