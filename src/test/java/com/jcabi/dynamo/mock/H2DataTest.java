@@ -168,17 +168,16 @@ public final class H2DataTest {
         final String attr = "desc";
         final String value = "Dummy\n\t\u20ac text";
         final String updated = "Updated";
-        final MkData data = new H2Data().with(
-            table, new String[] {key}, new String[] {attr}
+        final MkData data = new H2Data(table).with(
+            new String[] {key}, new String[] {attr}
         );
-        data.put(table, new Attributes().with(key, number).with(attr, value));
+        data.put(new Attributes().with(key, number).with(attr, value));
         data.update(
-            table,
             new Attributes().with(key, number),
             new AttributeUpdates().with(attr, updated)
         );
         final Iterable<Attributes> result = data.iterate(
-            table, new Conditions().with(key, Conditions.equalTo(number))
+            new Conditions().with(key, Conditions.equalTo(number))
         );
         MatcherAssert.assertThat(
             result.iterator().next(),
