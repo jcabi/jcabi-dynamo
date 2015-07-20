@@ -69,13 +69,13 @@ public final class H2DataTest {
         final int number = 43;
         final String attr = "description";
         final String value = "some\n\t\u20ac text";
-        final MkData data = new H2Data().with(
-            table, new String[] {key}, new String[] {attr}
+        final MkData data = new H2Data(table).with(
+            new String[] {key}, new String[] {attr}
         );
-        data.put(table, new Attributes().with(key, number).with(attr, value));
+        data.put(new Attributes().with(key, number).with(attr, value));
         MatcherAssert.assertThat(
             data.iterate(
-                table, new Conditions().with(key, Conditions.equalTo(number))
+                new Conditions().with(key, Conditions.equalTo(number))
             ).iterator().next(),
             Matchers.hasEntry(
                 Matchers.equalTo(attr),
@@ -95,23 +95,26 @@ public final class H2DataTest {
         final File file = this.temp.newFile();
         final String table = "tbl";
         final String key = "key1";
-        final MkData data = new H2Data(file).with(
-            table, new String[] {key}, new String[0]
+        final MkData data = new H2Data(table, file).with(
+            new String[] {key}, new String[0]
         );
-        data.put(table, new Attributes().with(key, "x2"));
+        data.put(new Attributes().with(key, "x2"));
         MatcherAssert.assertThat(file.exists(), Matchers.is(true));
         MatcherAssert.assertThat(file.length(), Matchers.greaterThan(0L));
     }
 
     /**
-     * H2Data can create many tables.
+     * H2Data can create many tables. This test is suspended as
+     * with {@link MkData} definition now represents the underlining
+     * data of a table instead of a database.
      * @throws Exception If some problem inside
      */
     @Test
+    @Ignore
     public void createsManyTables() throws Exception {
-        new H2Data()
-            .with("firsttable", new String[] {"firstid"}, new String[0])
-            .with("secondtable", new String[]{"secondid"}, new String[0]);
+        new H2Data("firsttable")
+            .with(new String[] {"firstid"}, new String[0])
+            .with(new String[]{"secondid"}, new String[0]);
     }
 
     /**
@@ -121,12 +124,9 @@ public final class H2DataTest {
      */
     @Test
     public void createsTablesWithLongNames() throws Exception {
-        new H2Data()
-            .with(
-                //@checkstyle MagicNumberCheck (1 line)
-                Joiner.on("").join(Collections.nCopies(255, "a")),
-                new String[] {"key"}, new String[0]
-        );
+        //@checkstyle MagicNumberCheck (1 line)
+        new H2Data(Joiner.on("").join(Collections.nCopies(255, "a")))
+            .with(new String[] {"key"}, new String[0]);
     }
 
     /**
@@ -135,7 +135,7 @@ public final class H2DataTest {
      */
     @Test
     public void supportsTableNamesWithIllegalCharacters() throws Exception {
-        new H2Data().with(".-.", new String[]{"pk"}, new String[0]);
+        new H2Data(".-.").with(new String[]{"pk"}, new String[0]);
     }
 
     /**
@@ -151,9 +151,9 @@ public final class H2DataTest {
     public void supportsColumnNamesWithIllegalCharacters() throws Exception {
         final String key = "0-.col.-0";
         final String table = "test";
-        new H2Data().with(
-            table, new String[] {key}, new String[0]
-        ).put(table, new Attributes().with(key, "value"));
+        new H2Data(table).with(
+            new String[] {key}, new String[0]
+        ).put(new Attributes().with(key, "value"));
     }
 
     /**
@@ -168,17 +168,16 @@ public final class H2DataTest {
         final String attr = "desc";
         final String value = "Dummy\n\t\u20ac text";
         final String updated = "Updated";
-        final MkData data = new H2Data().with(
-            table, new String[] {key}, new String[] {attr}
+        final MkData data = new H2Data(table).with(
+            new String[] {key}, new String[] {attr}
         );
-        data.put(table, new Attributes().with(key, number).with(attr, value));
+        data.put(new Attributes().with(key, number).with(attr, value));
         data.update(
-            table,
             new Attributes().with(key, number),
             new AttributeUpdates().with(attr, updated)
         );
         final Iterable<Attributes> result = data.iterate(
-            table, new Conditions().with(key, Conditions.equalTo(number))
+            new Conditions().with(key, Conditions.equalTo(number))
         );
         MatcherAssert.assertThat(
             result.iterator().next(),

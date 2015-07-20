@@ -102,7 +102,7 @@ final class MkFrame extends AbstractCollection<Item> implements Frame {
     public Iterator<Item> iterator() {
         try {
             return Iterators.transform(
-                this.data.iterate(this.tbl, this.conds).iterator(),
+                this.data.iterate(this.conds).iterator(),
                 new Function<Attributes, Item>() {
                     @Override
                     public Item apply(final Attributes input) {
