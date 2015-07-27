@@ -144,6 +144,11 @@ public final class H2Data implements MkData {
         };
 
     /**
+     * WHERE clauses are joined with this.
+     */
+    private static final String AND = " AND ";
+
+    /**
      * JDBC URL.
      */
     private final transient String jdbc;
@@ -175,7 +180,7 @@ public final class H2Data implements MkData {
                 .append(H2Data.encodeTableName(table));
             if (!conds.isEmpty()) {
                 sql.append(" WHERE ");
-                Joiner.on(" AND ").appendTo(
+                Joiner.on(H2Data.AND).appendTo(
                     sql,
                     Iterables.transform(conds.keySet(), H2Data.WHERE)
                 );
@@ -247,7 +252,7 @@ public final class H2Data implements MkData {
                     Joiner.on(',').join(
                         Iterables.transform(attrs.keySet(), H2Data.WHERE)
                     ),
-                    Joiner.on(" AND  ").join(
+                    Joiner.on(H2Data.AND).join(
                         Iterables.transform(keys.keySet(), H2Data.WHERE)
                     )
                 )
@@ -258,18 +263,27 @@ public final class H2Data implements MkData {
         }
     }
 
-    /**
-     * Delete attributes from the given table.
-     * @todo #35:30min Implement H2Data#delete() method because MkData#delete
-     *  method was added.
-     * @param table Table name
-     * @param keys Keys
-     * @throws IOException If fails
-     */
     @Override
     public void delete(final String table, final Attributes keys)
         throws IOException {
-        throw new UnsupportedOperationException();
+        try {
+            JdbcSession session = new JdbcSession(this.connection());
+            for (final AttributeValue value : keys.values()) {
+                session = session.set(H2Data.value(value));
+            }
+            session.sql(
+                String.format(
+                    "DELETE FROM %s WHERE %s",
+                    H2Data.encodeTableName(table),
+                    Joiner.on(H2Data.AND).join(
+                        Iterables.transform(keys.keySet(), H2Data.WHERE)
+                    )
+                )
+            );
+            session.execute();
+        } catch (final SQLException ex) {
+            throw new IOException(ex);
+        }
     }
 
     /**

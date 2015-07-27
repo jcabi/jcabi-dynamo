@@ -31,10 +31,12 @@ package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import java.io.File;
 import java.util.Collections;
+import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -86,7 +88,8 @@ public final class H2DataTest {
     /**
      * H2Data can store to a file.
      * @throws Exception If some problem inside
-     * @see https://code.google.com/p/h2database/issues/detail?id=447
+     * @see <a href="https://code.google.com/p/h2database/issues/detail?id=447">
+     *  Google Code: DB file extension customizability</a>
      */
     @Test
     @Ignore
@@ -124,7 +127,7 @@ public final class H2DataTest {
             .with(
                 //@checkstyle MagicNumberCheck (1 line)
                 Joiner.on("").join(Collections.nCopies(255, "a")),
-                new String[] {"key"}, new String[0]
+                new String[]{"key"}, new String[0]
         );
     }
 
@@ -155,4 +158,37 @@ public final class H2DataTest {
         ).put(table, new Attributes().with(key, "value"));
     }
 
+    /**
+     * H2Data can delete records.
+     * @throws Exception In case test fails
+     */
+    @Test
+    public void deletesRecords() throws Exception {
+        final String table = "customers";
+        final String field = "name";
+        final String man = "Kevin";
+        final String woman = "Helen";
+        final H2Data data = new H2Data()
+            .with(table, new String[]{field}, new String[0]);
+        data.put(
+            table,
+            new Attributes().with(field, man)
+        );
+        data.put(
+            table,
+            new Attributes().with(field, woman)
+        );
+        data.delete(table, new Attributes().with(field, man));
+        final List<Attributes> rest = Lists.newArrayList(
+            data.iterate(table, new Conditions())
+        );
+        MatcherAssert.assertThat(
+            rest.size(),
+            Matchers.equalTo(1)
+        );
+        MatcherAssert.assertThat(
+            rest.get(0).get(field).getS(),
+            Matchers.equalTo(woman)
+        );
+    }
 }
