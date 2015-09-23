@@ -90,7 +90,7 @@ public final class Conditions implements Map<String, Condition> {
             new ConcurrentHashMap<String, Condition>(map.size());
         for (final Map.Entry<String, Condition> entry : map.entrySet()) {
             cnds.put(
-                entry.getKey().toLowerCase(Locale.ENGLISH),
+                String.format(Locale.ENGLISH, entry.getKey()),
                 entry.getValue()
             );
         }
@@ -135,7 +135,7 @@ public final class Conditions implements Map<String, Condition> {
     public Conditions with(@NotNull final String name,
         @NotNull final Condition value) {
         return new Conditions(
-            this.conds.with(name.toLowerCase(Locale.ENGLISH), value)
+            this.conds.with(String.format(Locale.ENGLISH, name), value)
         );
     }
 
@@ -151,7 +151,7 @@ public final class Conditions implements Map<String, Condition> {
         @NotNull final Object value) {
         return new Conditions(
             this.conds.with(
-                name.toLowerCase(Locale.ENGLISH),
+                String.format(Locale.ENGLISH, name),
                 Conditions.equalTo(value)
             )
         );
@@ -197,7 +197,7 @@ public final class Conditions implements Map<String, Condition> {
     @Override
     public boolean containsKey(final Object key) {
         return this.conds.containsKey(
-            key.toString().toLowerCase(Locale.ENGLISH)
+            String.format(Locale.ENGLISH, key.toString())
         );
     }
 
@@ -209,7 +209,7 @@ public final class Conditions implements Map<String, Condition> {
     @Override
     public Condition get(final Object key) {
         return this.conds.get(
-            key.toString().toLowerCase(Locale.ENGLISH)
+            String.format(Locale.ENGLISH, key.toString())
         );
     }
 

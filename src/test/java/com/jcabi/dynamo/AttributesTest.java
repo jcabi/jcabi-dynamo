@@ -103,25 +103,28 @@ public final class AttributesTest {
      */
     @Test
     public void caseInsensitive() throws Exception {
+        final String alphaone = "Alpha";
+        final String alphatwo = "AlPha";
+        final String betaone = "Beta";
         MatcherAssert.assertThat(
             new Attributes().with(
                 new ArrayMap<String, AttributeValue>()
                     .with("Gamma", new AttributeValue(""))
                     .with("gAMma", new AttributeValue(""))
             ).keySet(),
-            Matchers.hasSize(1)
+            Matchers.hasSize(2)
         );
         MatcherAssert.assertThat(
             new Attributes()
-                .with("Alpha", "val-1")
-                .with("AlPha", "val-2"),
-            Matchers.hasKey("alpha")
+                .with(alphaone, "val-1")
+                .with(alphatwo, "val-2"),
+            Matchers.hasKey(alphaone)
         );
         MatcherAssert.assertThat(
-            new Attributes()
-                .with("Beta", "some text to use")
-                .only(Collections.singletonList("bEta")),
-            Matchers.hasKey("beta")
+                new Attributes()
+                        .with(betaone, "some text to use")
+                        .only(Collections.singletonList(betaone)),
+                Matchers.hasKey(betaone)
         );
     }
 

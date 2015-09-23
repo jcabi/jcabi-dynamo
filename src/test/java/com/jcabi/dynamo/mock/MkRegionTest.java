@@ -53,7 +53,7 @@ public final class MkRegionTest {
     public void storesAndReadsAttributes() throws Exception {
         final String name = "users";
         final String key = "id";
-        final String attr = "description";
+        final String attr = "DESCRIPTION";
         final Region region = new MkRegion(
             new H2Data().with(name, new String[] {key}, new String[] {attr})
         );

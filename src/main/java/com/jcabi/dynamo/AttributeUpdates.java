@@ -96,7 +96,7 @@ public final class AttributeUpdates
         @NotNull(message = "value can't be NULL")
         final AttributeValueUpdate value) {
         return new AttributeUpdates(
-            this.attrs.with(name.toLowerCase(Locale.ENGLISH), value)
+            this.attrs.with(String.format(Locale.ENGLISH, name), value)
         );
     }
 
@@ -146,7 +146,7 @@ public final class AttributeUpdates
         for (final Map.Entry<String, AttributeValueUpdate> entry
             : map.entrySet()) {
             attribs.put(
-                entry.getKey().toLowerCase(Locale.ENGLISH),
+                String.format(Locale.ENGLISH, entry.getKey()),
                 entry.getValue()
             );
         }
@@ -183,7 +183,7 @@ public final class AttributeUpdates
     @Override
     public boolean containsKey(final Object key) {
         return this.attrs.containsKey(
-            key.toString().toLowerCase(Locale.ENGLISH)
+            String.format(Locale.ENGLISH, key.toString())
         );
     }
 
@@ -195,7 +195,7 @@ public final class AttributeUpdates
     @Override
     public AttributeValueUpdate get(final Object key) {
         return this.attrs.get(
-            key.toString().toLowerCase(Locale.ENGLISH)
+            String.format(Locale.ENGLISH, key.toString())
         );
     }
 

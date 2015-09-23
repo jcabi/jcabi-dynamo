@@ -110,7 +110,7 @@ final class AwsItem implements Item {
     @Override
     public boolean has(@NotNull(message = "attribute name can't be NULL")
         final String attr) throws IOException {
-        final String attrib = attr.toLowerCase(Locale.ENGLISH);
+        final String attrib = String.format(Locale.ENGLISH, attr);
         boolean has = this.attributes.containsKey(attrib);
         if (!has) {
             final AmazonDynamoDB aws = this.credentials.aws();
@@ -142,7 +142,7 @@ final class AwsItem implements Item {
     @NotNull(message = "attribute value is never NULL")
     public AttributeValue get(@NotNull(message = "attribute name can't be NULL")
         final String attr) throws IOException {
-        final String attrib = attr.toLowerCase(Locale.ENGLISH);
+        final String attrib = String.format(Locale.ENGLISH, attr);
         AttributeValue value = this.attributes.get(attrib);
         if (value == null) {
             final AmazonDynamoDB aws = this.credentials.aws();

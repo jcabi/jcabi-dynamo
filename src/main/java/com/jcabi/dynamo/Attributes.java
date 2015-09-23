@@ -101,7 +101,7 @@ public final class Attributes implements Map<String, AttributeValue> {
         @NotNull(message = "attribute name can't be NULL") final String name,
         @NotNull(message = "value can't be NULL") final AttributeValue value) {
         return new Attributes(
-            this.attrs.with(name.toLowerCase(Locale.ENGLISH), value)
+            this.attrs.with(String.format(Locale.ENGLISH, name), value)
         );
     }
 
@@ -116,7 +116,7 @@ public final class Attributes implements Map<String, AttributeValue> {
             new ConcurrentHashMap<String, AttributeValue>(map.size());
         for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
             attribs.put(
-                entry.getKey().toLowerCase(Locale.ENGLISH),
+                String.format(Locale.ENGLISH, entry.getKey()),
                 entry.getValue()
             );
         }
@@ -169,7 +169,7 @@ public final class Attributes implements Map<String, AttributeValue> {
             new ImmutableMap.Builder<String, AttributeValue>();
         final Collection<String> hash = new HashSet<String>(keys.size());
         for (final String key : keys) {
-            hash.add(key.toLowerCase(Locale.ENGLISH));
+            hash.add(String.format(Locale.ENGLISH, key));
         }
         for (final Map.Entry<String, AttributeValue> entry : this.entrySet()) {
             if (hash.contains(entry.getKey())) {
@@ -209,7 +209,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     @Override
     public boolean containsKey(final Object key) {
         return this.attrs.containsKey(
-            key.toString().toLowerCase(Locale.ENGLISH)
+            String.format(Locale.ENGLISH, key.toString())
         );
     }
 
@@ -221,7 +221,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     @Override
     public AttributeValue get(final Object key) {
         return this.attrs.get(
-            key.toString().toLowerCase(Locale.ENGLISH)
+            String.format(Locale.ENGLISH, key.toString())
         );
     }
 

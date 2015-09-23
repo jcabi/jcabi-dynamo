@@ -69,7 +69,7 @@ public final class H2DataTest {
         final String table = "users";
         final String key = "id";
         final int number = 43;
-        final String attr = "description";
+        final String attr = "DESCRIPTION";
         final String value = "some\n\t\u20ac text";
         final MkData data = new H2Data().with(
             table, new String[] {key}, new String[] {attr}
@@ -166,7 +166,7 @@ public final class H2DataTest {
     @Test
     public void deletesRecords() throws Exception {
         final String table = "customers";
-        final String field = "name";
+        final String field = "NAME";
         final String man = "Kevin";
         final String woman = "Helen";
         final H2Data data = new H2Data()
@@ -202,7 +202,7 @@ public final class H2DataTest {
         final String table = "tests";
         final String key = "tid";
         final int number = 43;
-        final String attr = "desc";
+        final String attr = "DESC";
         final String value = "Dummy\n\t\u20ac text";
         final String updated = "Updated";
         final MkData data = new H2Data().with(
