@@ -98,14 +98,14 @@ public final class AttributesTest {
     }
 
     /**
-     * Attributes can be case-insensitive.
+     * Attributes should be case-sensitive.
      * @throws Exception If some problem inside
      */
     @Test
-    public void caseInsensitive() throws Exception {
-        final String alphaone = "Alpha";
-        final String alphatwo = "AlPha";
-        final String betaone = "Beta";
+    public void caseSensitive() throws Exception {
+        final String first = "Alpha";
+        final String second = "AlPha";
+        final String third = "Beta";
         MatcherAssert.assertThat(
             new Attributes().with(
                 new ArrayMap<String, AttributeValue>()
@@ -116,15 +116,18 @@ public final class AttributesTest {
         );
         MatcherAssert.assertThat(
             new Attributes()
-                .with(alphaone, "val-1")
-                .with(alphatwo, "val-2"),
-            Matchers.hasKey(alphaone)
+                .with(first, "val-1")
+                .with(second, "val-2"),
+            Matchers.allOf(
+                Matchers.hasKey(first),
+                Matchers.hasKey(second)
+            )
         );
         MatcherAssert.assertThat(
-                new Attributes()
-                        .with(betaone, "some text to use")
-                        .only(Collections.singletonList(betaone)),
-                Matchers.hasKey(betaone)
+            new Attributes()
+                .with(third, "some text to use")
+                .only(Collections.singletonList(third)),
+            Matchers.hasKey(third)
         );
     }
 
