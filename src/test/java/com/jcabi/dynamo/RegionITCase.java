@@ -51,7 +51,8 @@ public final class RegionITCase {
      * Region.Simple can work with AWS.
      * @throws Exception If some problem inside
      * @todo #56 integration test fails when adding @notnull to constraints
-     *  this needs to be fixed.
+     *  this needs to be fixed in methods worksWithAmazon() and
+     *  retrievesAttributesFromDynamo().
      */
     @Ignore
     @Test
@@ -113,7 +114,6 @@ public final class RegionITCase {
     /**
      * Region.Simple can retrieve attributes.
      * @throws Exception If some problem inside
-     * @todo #56 integration test fails when adding @notnull to constraints
      *  this needs to be fixed.
      */
     @Ignore
