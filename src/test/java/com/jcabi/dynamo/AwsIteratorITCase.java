@@ -48,7 +48,8 @@ public final class AwsIteratorITCase {
     /**
      * AwsIterator can iterate.
      * @throws Exception If some problem inside
-     * @todo integration test fail when adding @NotNull constraint (issue#56)
+     * @todo integration test fail when adding @NotNull constraint,
+     *  this is reported in issue#56
      */
     @Ignore
     @Test
@@ -69,7 +70,8 @@ public final class AwsIteratorITCase {
     /**
      * AwsIterator can iterate and delete items.
      * @throws Exception If some problem inside
-     * @todo: Integration test fails when adding @NotNull to constraints
+     * @todo: Integration test fails when adding @NotNull to constraints.
+     *  An issue#56 has been created for this
      */
     @Ignore
     @Test

@@ -50,7 +50,8 @@ public final class RegionITCase {
     /**
      * Region.Simple can work with AWS.
      * @throws Exception If some problem inside
-     * @todo integration test fail when adding @NotNull constraint (issue#56)
+     * @todo integration test fail when adding @NotNull constraint
+     *  namely, issue#56
      */
     @Ignore
     @Test
@@ -112,7 +113,8 @@ public final class RegionITCase {
     /**
      * Region.Simple can retrieve attributes.
      * @throws Exception If some problem inside
-     * @todo integration test fail when adding @NotNull constraint (issue#56)
+     * @todo integration test fail when adding @NotNull constraint,
+     *  an issue issue#56 was created to handle this
      */
     @Ignore
     @Test
