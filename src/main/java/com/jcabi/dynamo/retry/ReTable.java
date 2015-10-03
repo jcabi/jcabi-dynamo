@@ -73,25 +73,31 @@ public final class ReTable implements Table {
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Item put(@NotNull final Map<String, AttributeValue> attributes)
+    @NotNull(message = "Item cannot be null")
+    public Item put(
+        @NotNull(message = "attribute attributes cannot be null")
+        final Map<String, AttributeValue> attributes)
         throws IOException {
         return this.origin.put(attributes);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "Frame cannot be null")
     public Frame frame() {
         return new ReFrame(this.origin.frame());
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "Region cannot be null")
     public Region region() {
         return new ReRegion(this.origin.region());
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "String cannot be null")
     public String name() {
         return this.origin.name();
     }
@@ -103,7 +109,9 @@ public final class ReTable implements Table {
      */
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public void delete(final Map<String, AttributeValue> attributes)
+    public void delete(
+        @NotNull(message = "attribute attributes cannot be null")
+        final Map<String, AttributeValue> attributes)
         throws IOException {
         this.origin.delete(attributes);
     }

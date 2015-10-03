@@ -81,6 +81,7 @@ public interface Dosage {
             return new ArrayList<Map<String, AttributeValue>>(0);
         }
         @Override
+        @NotNull(message = "Dosage cannot be null")
         public Dosage next() {
             throw new IllegalStateException(
                 "this is nothing left"

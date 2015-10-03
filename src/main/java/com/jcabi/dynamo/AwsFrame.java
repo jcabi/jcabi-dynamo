@@ -87,7 +87,12 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
      * @param table Table
      * @param label Table name
      */
-    AwsFrame(final Credentials creds, final AwsTable table,
+    AwsFrame(
+        @NotNull(message = "attribute creds cannot be null")
+        final Credentials creds,
+        @NotNull(message = "attribute table cannot be null")
+        final AwsTable table,
+        @NotNull(message = "attribute label cannot be null")
         final String label) {
         this(creds, table, label, new Conditions(), new ScanValve());
     }
@@ -101,8 +106,17 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
      * @param vlv Valve
      * @checkstyle ParameterNumber (5 lines)
      */
-    AwsFrame(final Credentials creds, final AwsTable table,
-        final String label, final Conditions conds, final Valve vlv) {
+    AwsFrame(
+        @NotNull(message = "attribute creds annot be null")
+        final Credentials creds,
+        @NotNull(message = "attribute table cannot be null")
+        final AwsTable table,
+        @NotNull(message = "attribute label cannot be null")
+        final String label,
+        @NotNull(message = "attribute conds cannot be null")
+        final Conditions conds,
+        @NotNull(message = "attribute vlv cannot be null")
+        final Valve vlv) {
         super();
         this.credentials = creds;
         this.tbl = table;

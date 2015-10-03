@@ -72,6 +72,7 @@ public final class Throughput {
      * certain parameters of elasticity/scalability.
      * @return Throughput settings.
      */
+    @NotNull(message = "ProvisionedThroughput cannot be null")
     private ProvisionedThroughput suitableThroughput() {
         /* @todo #10 The exact algorithm for figuring out read and write
          * capacities should be based on a CloudWatch metric accessed with

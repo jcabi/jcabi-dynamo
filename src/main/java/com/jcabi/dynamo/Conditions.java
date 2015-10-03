@@ -168,6 +168,7 @@ public final class Conditions implements Map<String, Condition> {
     }
 
     @Override
+    @NotNull
     public String toString() {
         final Collection<String> terms =
             new ArrayList<String>(this.conds.size());
@@ -195,35 +196,39 @@ public final class Conditions implements Map<String, Condition> {
     }
 
     @Override
-    public boolean containsKey(final Object key) {
+    public boolean containsKey(@NotNull final Object key) {
         return this.conds.containsKey(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
-    public boolean containsValue(final Object value) {
+    public boolean containsValue(@NotNull final Object value) {
         return this.conds.containsValue(value);
     }
 
     @Override
-    public Condition get(final Object key) {
+    @NotNull
+    public Condition get(@NotNull final Object key) {
         return this.conds.get(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
+    @NotNull
     public Set<String> keySet() {
         return this.conds.keySet();
     }
 
     @Override
+    @NotNull
     public Collection<Condition> values() {
         return this.conds.values();
     }
 
     @Override
+    @NotNull
     public Set<Map.Entry<String, Condition>> entrySet() {
         return this.conds.entrySet();
     }

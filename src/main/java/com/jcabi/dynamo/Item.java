@@ -83,6 +83,7 @@ public interface Item {
      * @throws IOException In case of DynamoDB failure
      * @since 0.12
      */
+    @NotNull(message = "Map cannot be null")
     Map<String, AttributeValue> put(
         @NotNull(message = "attribute name can't be NULL") String name,
         @NotNull(message = "value can't be NULL") AttributeValueUpdate value)
@@ -102,6 +103,7 @@ public interface Item {
      * @throws IOException In case of DynamoDB failure
      * @since 0.12
      */
+    @NotNull(message = "Map cannot be null")
     Map<String, AttributeValue> put(
         @NotNull(message = "map attributes can't be NULL")
         Map<String, AttributeValueUpdate> attrs) throws IOException;

@@ -102,5 +102,7 @@ public interface Table {
      * @see Attributes
      * @throws IOException In case of DynamoDB failure
      */
-    void delete(Map<String, AttributeValue> attributes) throws IOException;
+    void delete(
+        @NotNull(message = "attribute attributes cannot be null")
+        Map<String, AttributeValue> attributes) throws IOException;
 }

@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -68,37 +69,64 @@ public final class ReFrame implements Frame {
      * Public ctor.
      * @param frame Origin frame
      */
-    public ReFrame(final Frame frame) {
+    public ReFrame(
+        @NotNull(message = "attribute frame cannot be null")
+        final Frame frame) {
         this.origin = frame;
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Frame where(final String name, final String value) {
+    // @checkstyle AvoidDuplicateLiterals (1 line)
+    @NotNull(message = "Frame cannot be null")
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public Frame where(
+        @NotNull(message = "name cannot be null")
+        final String name,
+        @NotNull(message = "value cannot be null")
+        final String value) {
         return new ReFrame(this.origin.where(name, value));
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Frame where(final String name, final Condition condition) {
+    // @checkstyle AvoidDuplicateLiterals (1 line)
+    @NotNull(message = "Frame cannot be null")
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public Frame where(
+        @NotNull(message = "attribute name cannot be null")
+        final String name,
+        @NotNull(message = "attribute condition cannot be null")
+        final Condition condition) {
         return new ReFrame(this.origin.where(name, condition));
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Frame where(final Map<String, Condition> conditions) {
+    // @checkstyle AvoidDuplicateLiterals (1 line)
+    @NotNull(message = "Frame cannot be null")
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public Frame where(
+        @NotNull(message = "attribute conditions cannot be null")
+        final Map<String, Condition> conditions) {
         return new ReFrame(this.origin.where(conditions));
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "Table cannot be null")
     public Table table() {
         return new ReTable(this.origin.table());
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public Frame through(final Valve valve) {
+    // @checkstyle AvoidDuplicateLiterals (1 line)
+    @NotNull(message = "Frame cannot be null")
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public Frame through(
+        @NotNull(message = "attribute valve cannot be null")
+        final Valve valve) {
         return new ReFrame(this.origin.through(new ReValve(valve)));
     }
 
@@ -116,61 +144,88 @@ public final class ReFrame implements Frame {
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public boolean contains(final Object obj) {
+    public boolean contains(
+        @NotNull(message = "attribute obj cannot be null")
+        final Object obj) {
         return this.origin.contains(obj);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "Iterator cannot be null")
     public Iterator<Item> iterator() {
         return new ReIterator<Item>(this.origin.iterator());
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "Object[] cannot be null")
     public Object[] toArray() {
         return this.origin.toArray();
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public <T> T[] toArray(final T[] arr) {
+    @NotNull(message = "array cannot be null")
+    public <T> T[] toArray(
+        @NotNull(message = "attribute arr cannot be null")
+        final T[] arr) {
         return this.origin.toArray(arr);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public boolean add(final Item item) {
+    public boolean add(
+        @NotNull(message = "attribute item cannot be null")
+        final Item item) {
         return this.origin.add(item);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public boolean remove(final Object obj) {
+    public boolean remove(
+        @NotNull(message = "obj cannot be null")
+        final Object obj) {
         return this.origin.remove(obj);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public boolean containsAll(final Collection<?> list) {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public boolean containsAll(
+        // @checkstyle AvoidDuplicateLiterals (1 line)
+        @NotNull(message = "attribute list cannot be null")
+        final Collection<?> list) {
         return this.origin.containsAll(list);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public boolean addAll(final Collection<? extends Item> list) {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public boolean addAll(
+        // @checkstyle AvoidDuplicateLiterals (1 line)
+        @NotNull(message = "attribute list cannot be null")
+        final Collection<? extends Item> list) {
         return this.origin.addAll(list);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public boolean removeAll(final Collection<?> list) {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public boolean removeAll(
+        // @checkstyle AvoidDuplicateLiterals (1 line)
+        @NotNull(message = "attribute list cannot be null")
+        final Collection<?> list) {
         return this.origin.removeAll(list);
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    public boolean retainAll(final Collection<?> list) {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public boolean retainAll(
+        // @checkstyle AvoidDuplicateLiterals (1 line)
+        @NotNull(message = "attribute list cannot be null")
+        final Collection<?> list) {
         return this.origin.retainAll(list);
     }
 
