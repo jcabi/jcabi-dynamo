@@ -52,7 +52,8 @@ public final class RegionITCase {
      * @throws Exception If some problem inside
      * @todo #56:30mins/DEV integration test fails when adding @notnull to constraints
      *  this needs to be fixed in methods RegionITCase.worksWithAmazon() and
-     *  RegionITCase.retrievesAttributesFromDynamo(). Also see AwsIteratorITCase.
+     *  RegionITCase.retrievesAttributesFromDynamo(). Also see
+     *  AwsIteratorITCase.
      */
     @Ignore
     @Test

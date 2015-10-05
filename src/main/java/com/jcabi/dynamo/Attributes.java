@@ -96,7 +96,9 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param name Attribute name
      * @param value The value
      * @return Attributes
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Attributes cannot be null")
     public Attributes with(
         @NotNull(message = "attribute name can't be NULL")
@@ -112,7 +114,9 @@ public final class Attributes implements Map<String, AttributeValue> {
      * With these attributes.
      * @param map Attributes to add
      * @return Attributes
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Attributes cannot be null")
     public Attributes with(@NotNull(message = "map of attributes can't be NULL")
         final Map<String, AttributeValue> map) {
@@ -150,7 +154,10 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param name Attribute name
      * @param value The value
      * @return Attributes
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
+     * @
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Attributes cannot be null")
     public Attributes with(
         @NotNull(message = "attribute name can't be NULL")
@@ -170,7 +177,9 @@ public final class Attributes implements Map<String, AttributeValue> {
      * Filter out all keys except provided ones.
      * @param keys Keys to leave in the map
      * @return Attributes
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Attributes cannot be null")
     public Attributes only(@NotNull(message = "key names can't be NULL")
         final Collection<String> keys) {

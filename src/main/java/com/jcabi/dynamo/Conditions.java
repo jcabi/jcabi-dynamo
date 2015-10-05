@@ -86,7 +86,7 @@ public final class Conditions implements Map<String, Condition> {
      * @param map Map of them
      */
     public Conditions(
-        @NotNull(message="Attribute map cannot be null")
+        @NotNull(message = "Attribute map cannot be null")
         final Map<String, Condition> map) {
         final ConcurrentMap<String, Condition> cnds =
             new ConcurrentHashMap<String, Condition>(map.size());
@@ -103,11 +103,14 @@ public final class Conditions implements Map<String, Condition> {
      * Equal to static condition builder (factory method).
      * @param value The value to equal to
      * @return The condition just created
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
-    @NotNull
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    @NotNull(message = "Condition cannot be null")
     public static Condition equalTo(
-        @NotNull(message = "Attribute value cannot be null")
-        final Object value) {
+            // @checkstyle AvoidDuplicateLiterals (1 line)
+            @NotNull(message = "Attribute value cannot be null")
+            final Object value) {
         final AttributeValue attr;
         if (value instanceof Long || value instanceof Integer) {
             attr = new AttributeValue().withN(value.toString());
@@ -121,9 +124,11 @@ public final class Conditions implements Map<String, Condition> {
      * Equal to static condition builder (factory method).
      * @param value The value to equal to
      * @return The condition just created
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
-    @NotNull
+    @NotNull(message = "Condition cannot be null")
     public static Condition equalTo(
+        // @checkstyle AvoidDuplicateLiterals (1 line)
         @NotNull(message = "Attribute value cannot be null")
         final AttributeValue value) {
         return new Condition()
@@ -136,11 +141,13 @@ public final class Conditions implements Map<String, Condition> {
      * @param name Attribute name
      * @param value The condition
      * @return New map of conditions
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
-    @NotNull
+    @NotNull(message = "Conditions cannot be null")
     public Conditions with(
         @NotNull(message = "Attribute name cannot be null")
         final String name,
+        // @checkstyle AvoidDuplicateLiterals (1 line)
         @NotNull(message = "Attribute value cannot be null")
         final Condition value) {
         return new Conditions(
@@ -154,11 +161,13 @@ public final class Conditions implements Map<String, Condition> {
      * @param value The condition
      * @return New map of conditions
      * @since 0.18
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
     @NotNull(message = "Conditions cannot be null")
     public Conditions with(
         @NotNull(message = "Attribute name cannot be null")
         final String name,
+        // @checkstyle AvoidDuplicateLiterals (2 lines)
         @NotNull(message = "Attribute value cannot be null")
         final Object value) {
         return new Conditions(
@@ -220,14 +229,17 @@ public final class Conditions implements Map<String, Condition> {
 
     @Override
     public boolean containsValue(
+        // @checkstyle AvoidDuplicateLiterals (1 line)
         @NotNull(message = "Attribute value cannot be null")
         final Object value) {
         return this.conds.containsValue(value);
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Condition cannot be null")
     public Condition get(
+        // @checkstyle AvoidDuplicateLiterals (1 line)
         @NotNull(message = "Attribute value cannot be null")
         final Object key) {
         return this.conds.get(
@@ -254,10 +266,12 @@ public final class Conditions implements Map<String, Condition> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Condition cannot be null")
     public Condition put(
         @NotNull(message = "Attribute key cannot be null")
         final String key,
+        // @checkstyle AvoidDuplicateLiterals (1 line)
         @NotNull(message = "Attribute value cannot be null")
         final Condition value) {
         throw new UnsupportedOperationException(
@@ -266,6 +280,7 @@ public final class Conditions implements Map<String, Condition> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Condition cannot be null")
     public Condition remove(
         @NotNull(message = "Attribute key cannot be null")

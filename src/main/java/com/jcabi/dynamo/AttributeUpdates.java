@@ -90,7 +90,9 @@ public final class AttributeUpdates
      * @param name Attribute name
      * @param value The value
      * @return AttributeUpdates
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "attribute name can't be NULL")
@@ -108,7 +110,9 @@ public final class AttributeUpdates
      * @param value The value
      * @return AttributeUpdates
      * @since 0.14.3
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "attribute name can't be NULL")
@@ -127,7 +131,9 @@ public final class AttributeUpdates
      * @param value The value
      * @return AttributeUpdates
      * @since 0.14.3
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "attribute name can't be NULL")
@@ -147,7 +153,9 @@ public final class AttributeUpdates
      * With these AttributeUpdates.
      * @param map AttributeUpdates to add
      * @return AttributeUpdates
+     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "map of AttributeUpdates can't be NULL")
