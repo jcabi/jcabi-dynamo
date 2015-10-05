@@ -91,7 +91,7 @@ public final class AttributeUpdates
      * @param value The value
      * @return AttributeUpdates
      */
-    @NotNull(message = "AttributeUpdate cannot be null")
+    @NotNull(message = "AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "attribute name can't be NULL")
         final String name,
@@ -109,7 +109,7 @@ public final class AttributeUpdates
      * @return AttributeUpdates
      * @since 0.14.3
      */
-    @NotNull(message = "AttributeUpdate cannot be null")
+    @NotNull(message = "AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "attribute name can't be NULL")
         final String name,
@@ -225,7 +225,7 @@ public final class AttributeUpdates
     }
 
     @Override
-    @NotNull(message = "Colletion cannot be null")
+    @NotNull(message = "Collections<AttributeValueUpdate> cannot be null")
     public Collection<AttributeValueUpdate> values() {
         return this.attrs.values();
     }

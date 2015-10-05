@@ -48,9 +48,9 @@ public final class AwsIteratorITCase {
     /**
      * AwsIterator can iterate.
      * @throws Exception If some problem inside
-     * @todo #56 Integration test fail when adding @NotNull constraint
-     *  this should be fixed in methods iteratesItems() and
-     *  iteratesItemsAndDeletes().
+     * @todo #56:30mins/DEV Integration test fail when adding @NotNull constraint
+     *  this should be fixed in methods AwsIteratorITCase.iteratesItems() and
+     *  AwsIteratorITCase.iteratesItemsAndDeletes(). Also see RegionITCase
      */
     @Ignore
     @Test

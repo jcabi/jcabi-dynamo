@@ -97,7 +97,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param value The value
      * @return Attributes
      */
-    @NotNull(message = "attribute cannot be null")
+    @NotNull(message = "Attributes cannot be null")
     public Attributes with(
         @NotNull(message = "attribute name can't be NULL")
         final String name,
@@ -113,7 +113,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param map Attributes to add
      * @return Attributes
      */
-    @NotNull(message = "attributes annot be null")
+    @NotNull(message = "Attributes cannot be null")
     public Attributes with(@NotNull(message = "map of attributes can't be NULL")
         final Map<String, AttributeValue> map) {
         final ConcurrentMap<String, AttributeValue> attribs =

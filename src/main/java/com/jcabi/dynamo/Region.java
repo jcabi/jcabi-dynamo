@@ -149,7 +149,7 @@ public interface Region {
             this.prefix = pfx;
         }
         @Override
-        @NotNull(message = "AmaxonDynamoDB cannot be null")
+        @NotNull(message = "AmazonDynamoDB cannot be null")
         public AmazonDynamoDB aws() {
             return this.origin.aws();
         }

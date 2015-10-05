@@ -85,7 +85,9 @@ public final class Conditions implements Map<String, Condition> {
      * Public ctor.
      * @param map Map of them
      */
-    public Conditions(@NotNull final Map<String, Condition> map) {
+    public Conditions(
+        @NotNull(message="Attribute map cannot be null")
+        final Map<String, Condition> map) {
         final ConcurrentMap<String, Condition> cnds =
             new ConcurrentHashMap<String, Condition>(map.size());
         for (final Map.Entry<String, Condition> entry : map.entrySet()) {
@@ -103,7 +105,9 @@ public final class Conditions implements Map<String, Condition> {
      * @return The condition just created
      */
     @NotNull
-    public static Condition equalTo(@NotNull final Object value) {
+    public static Condition equalTo(
+        @NotNull(message = "Attribute value cannot be null")
+        final Object value) {
         final AttributeValue attr;
         if (value instanceof Long || value instanceof Integer) {
             attr = new AttributeValue().withN(value.toString());
@@ -119,7 +123,9 @@ public final class Conditions implements Map<String, Condition> {
      * @return The condition just created
      */
     @NotNull
-    public static Condition equalTo(@NotNull final AttributeValue value) {
+    public static Condition equalTo(
+        @NotNull(message = "Attribute value cannot be null")
+        final AttributeValue value) {
         return new Condition()
             .withComparisonOperator(ComparisonOperator.EQ)
             .withAttributeValueList(value);
@@ -132,8 +138,11 @@ public final class Conditions implements Map<String, Condition> {
      * @return New map of conditions
      */
     @NotNull
-    public Conditions with(@NotNull final String name,
-        @NotNull final Condition value) {
+    public Conditions with(
+        @NotNull(message = "Attribute name cannot be null")
+        final String name,
+        @NotNull(message = "Attribute value cannot be null")
+        final Condition value) {
         return new Conditions(
             this.conds.with(String.format(Locale.ENGLISH, name), value)
         );
@@ -146,9 +155,12 @@ public final class Conditions implements Map<String, Condition> {
      * @return New map of conditions
      * @since 0.18
      */
-    @NotNull
-    public Conditions with(@NotNull final String name,
-        @NotNull final Object value) {
+    @NotNull(message = "Conditions cannot be null")
+    public Conditions with(
+        @NotNull(message = "Attribute name cannot be null")
+        final String name,
+        @NotNull(message = "Attribute value cannot be null")
+        final Object value) {
         return new Conditions(
             this.conds.with(
                 String.format(Locale.ENGLISH, name),
@@ -162,13 +174,15 @@ public final class Conditions implements Map<String, Condition> {
      * @param map The conditions
      * @return New map of conditions
      */
-    @NotNull
-    public Conditions with(@NotNull final Map<String, Condition> map) {
+    @NotNull(message = "Conditions cannot be null")
+    public Conditions with(
+            @NotNull(message = "attribute map cannot be null")
+            final Map<String, Condition> map) {
         return new Conditions(this.conds.with(map));
     }
 
     @Override
-    @NotNull
+    @NotNull(message = "String cannot be null")
     public String toString() {
         final Collection<String> terms =
             new ArrayList<String>(this.conds.size());
@@ -196,52 +210,66 @@ public final class Conditions implements Map<String, Condition> {
     }
 
     @Override
-    public boolean containsKey(@NotNull final Object key) {
+    public boolean containsKey(
+        @NotNull(message = "Attribute key cannot be null")
+        final Object key) {
         return this.conds.containsKey(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
-    public boolean containsValue(@NotNull final Object value) {
+    public boolean containsValue(
+        @NotNull(message = "Attribute value cannot be null")
+        final Object value) {
         return this.conds.containsValue(value);
     }
 
     @Override
-    @NotNull
-    public Condition get(@NotNull final Object key) {
+    @NotNull(message = "Condition cannot be null")
+    public Condition get(
+        @NotNull(message = "Attribute value cannot be null")
+        final Object key) {
         return this.conds.get(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
-    @NotNull
+    @NotNull(message = "Set cannot be null")
     public Set<String> keySet() {
         return this.conds.keySet();
     }
 
     @Override
-    @NotNull
+    @NotNull(message = "Collection cannot be null")
     public Collection<Condition> values() {
         return this.conds.values();
     }
 
     @Override
-    @NotNull
+    @NotNull(message = "Set cannot be null")
     public Set<Map.Entry<String, Condition>> entrySet() {
         return this.conds.entrySet();
     }
 
     @Override
-    public Condition put(final String key, final Condition value) {
+    @NotNull(message = "Condition cannot be null")
+    public Condition put(
+        @NotNull(message = "Attribute key cannot be null")
+        final String key,
+        @NotNull(message = "Attribute value cannot be null")
+        final Condition value) {
         throw new UnsupportedOperationException(
             "Conditions class is immutable, can't do #put()"
         );
     }
 
     @Override
-    public Condition remove(final Object key) {
+    @NotNull(message = "Condition cannot be null")
+    public Condition remove(
+        @NotNull(message = "Attribute key cannot be null")
+        final Object key) {
         throw new UnsupportedOperationException(
             "Conditions class is immutable, can't do #remove()"
         );
@@ -249,6 +277,7 @@ public final class Conditions implements Map<String, Condition> {
 
     @Override
     public void putAll(
+        @NotNull(message = "Attribute map cannot be null")
         final Map<? extends String, ? extends Condition> map) {
         throw new UnsupportedOperationException(
             "Conditions class is immutable, can't do #putAll()"
