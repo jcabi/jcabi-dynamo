@@ -90,14 +90,11 @@ public final class AttributeUpdates
      * @param name Attribute name
      * @param value The value
      * @return AttributeUpdates
-     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "AttributeUpdates cannot be null")
     public AttributeUpdates with(
-        @NotNull(message = "attribute name can't be NULL")
+        @NotNull(message = "The attribute name can't be NULL")
         final String name,
-        @NotNull(message = "value can't be NULL")
+        @NotNull(message = "The attribute value can't be NULL")
         final AttributeValueUpdate value) {
         return new AttributeUpdates(
             this.attrs.with(String.format(Locale.ENGLISH, name), value)
@@ -110,14 +107,12 @@ public final class AttributeUpdates
      * @param value The value
      * @return AttributeUpdates
      * @since 0.14.3
-     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "AttributeUpdates cannot be null")
+    @NotNull(message = "The given AttributeUpdates cannot be null")
     public AttributeUpdates with(
-        @NotNull(message = "attribute name can't be NULL")
+        @NotNull(message = "The attribute name can't be NULL")
         final String name,
-        @NotNull(message = "attribute value can't be NULL")
+        @NotNull(message = "The attribute value can't be NULL")
         final AttributeValue value) {
         return this.with(
             name,
@@ -131,10 +126,8 @@ public final class AttributeUpdates
      * @param value The value
      * @return AttributeUpdates
      * @since 0.14.3
-     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "AttributeUpdates cannot be null")
+    @NotNull(message = "This AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "attribute name can't be NULL")
         final String name,
@@ -153,10 +146,8 @@ public final class AttributeUpdates
      * With these AttributeUpdates.
      * @param map AttributeUpdates to add
      * @return AttributeUpdates
-     * @checkstyle AvoidDuplicateLiterals (2 lines)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "AttributeUpdates cannot be null")
+    @NotNull(message = "The Returned AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "map of AttributeUpdates can't be NULL")
         final Map<String, AttributeValueUpdate> map) {
@@ -273,5 +264,4 @@ public final class AttributeUpdates
             "AttributeUpdates class is immutable, can't do #clear()"
         );
     }
-
 }
