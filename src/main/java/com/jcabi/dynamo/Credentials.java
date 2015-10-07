@@ -120,6 +120,7 @@ public interface Credentials {
             this.region = reg;
         }
         @Override
+        @NotNull(message = "String cannot be null")
         public String toString() {
             return String.format("%s/%s", this.region, this.key);
         }
@@ -171,6 +172,7 @@ public interface Credentials {
             this.region = reg;
         }
         @Override
+        @NotNull(message = "String cannot be null")
         public String toString() {
             return this.region;
         }
@@ -226,6 +228,7 @@ public interface Credentials {
             this(creds, String.format("http://localhost:%d", port));
         }
         @Override
+        @NotNull(message = "String cannot be null")
         public String toString() {
             return String.format("%s at %s", this.origin, this.endpoint);
         }
@@ -237,5 +240,4 @@ public interface Credentials {
             return aws;
         }
     }
-
 }

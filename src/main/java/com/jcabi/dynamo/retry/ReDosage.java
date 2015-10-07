@@ -38,6 +38,7 @@ import com.jcabi.dynamo.Dosage;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -63,12 +64,15 @@ public final class ReDosage implements Dosage {
      * Public ctor.
      * @param dosage Origin dosage
      */
-    public ReDosage(final Dosage dosage) {
+    public ReDosage(
+        @NotNull(message = "attribute dosage cannot be null")
+        final Dosage dosage) {
         this.origin = dosage;
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "List cannot be null")
     public List<Map<String, AttributeValue>> items() {
         return this.origin.items();
     }
@@ -81,6 +85,7 @@ public final class ReDosage implements Dosage {
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @NotNull(message = "Dosage cannot be null")
     public Dosage next() {
         return new ReDosage(this.origin.next());
     }

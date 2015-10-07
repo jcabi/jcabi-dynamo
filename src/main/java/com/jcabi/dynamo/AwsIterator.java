@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -117,9 +118,19 @@ final class AwsIterator implements Iterator<Item> {
      * @param vlv Valve with items
      * @checkstyle ParameterNumber (5 lines)
      */
-    AwsIterator(final Credentials creds, final AwsFrame frm,
-        final String label, final Conditions conds,
-        final Collection<String> primary, final Valve vlv) {
+    AwsIterator(
+        @NotNull(message = "attribute creds cannot be null")
+        final Credentials creds,
+        @NotNull(message = "attribute frm cannot be null")
+        final AwsFrame frm,
+        @NotNull(message = "attribute label cannot be null")
+        final String label,
+        @NotNull(message = "attribute conds cannot be null")
+        final Conditions conds,
+        @NotNull(message = "attribute primary cannot be null")
+        final Collection<String> primary,
+        @NotNull(message = "attribute vlv cannot be null")
+        final Valve vlv) {
         this.credentials = creds;
         this.frame = frm;
         this.name = label;
@@ -156,6 +167,7 @@ final class AwsIterator implements Iterator<Item> {
     }
 
     @Override
+    @NotNull(message = "Item cannot be null")
     public Item next() {
         synchronized (this.dosage) {
             if (!this.hasNext()) {
@@ -232,16 +244,21 @@ final class AwsIterator implements Iterator<Item> {
          * @param dsg Dosage
          * @param items Items
          */
-        Fixed(final Dosage dsg,
+        Fixed(
+            @NotNull(message = "attribute dsg cannot be null")
+            final Dosage dsg,
+            @NotNull(message = "attribute items cannot be null")
             final List<Map<String, AttributeValue>> items) {
             this.prev = dsg;
             this.list = new Array<Map<String, AttributeValue>>(items);
         }
         @Override
+        @NotNull(message = "List cannot be null")
         public List<Map<String, AttributeValue>> items() {
             return Collections.unmodifiableList(this.list);
         }
         @Override
+        @NotNull(message = "Dosage cannot be null")
         public Dosage next() {
             return this.prev.next();
         }
@@ -250,5 +267,4 @@ final class AwsIterator implements Iterator<Item> {
             return this.prev.hasNext();
         }
     }
-
 }

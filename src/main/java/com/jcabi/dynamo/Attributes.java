@@ -97,9 +97,12 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param value The value
      * @return Attributes
      */
+    @NotNull(message = "Attributes cannot be null")
     public Attributes with(
-        @NotNull(message = "attribute name can't be NULL") final String name,
-        @NotNull(message = "value can't be NULL") final AttributeValue value) {
+        @NotNull(message = "the attribute name can't be NULL")
+        final String name,
+        @NotNull(message = "the value cannot be NULL")
+        final AttributeValue value) {
         return new Attributes(
             this.attrs.with(String.format(Locale.ENGLISH, name), value)
         );
@@ -110,7 +113,9 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param map Attributes to add
      * @return Attributes
      */
-    public Attributes with(@NotNull(message = "map of attributes can't be NULL")
+    @NotNull(message = "Attributes cannot be null")
+    public Attributes with(
+        @NotNull(message = "the map of attributes can't be NULL")
         final Map<String, AttributeValue> map) {
         final ConcurrentMap<String, AttributeValue> attribs =
             new ConcurrentHashMap<String, AttributeValue>(map.size());
@@ -127,6 +132,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      * Convert them to a map of expected values.
      * @return Expected values
      */
+    @NotNull(message = "Map cannot be null")
     public Map<String, ExpectedAttributeValue> asKeys() {
         final ImmutableMap.Builder<String, ExpectedAttributeValue> map =
             new ImmutableMap.Builder<String, ExpectedAttributeValue>();
@@ -145,10 +151,14 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param name Attribute name
      * @param value The value
      * @return Attributes
+     * @
      */
+    @NotNull(message = "The Attributes cannot be null")
     public Attributes with(
-        @NotNull(message = "attribute name can't be NULL") final String name,
-        @NotNull(message = "value can't be NULL") final Object value) {
+        @NotNull(message = "attribute name can't be null")
+        final String name,
+        @NotNull(message = "value can't be NULL")
+        final Object value) {
         final AttributeValue attr;
         if (value instanceof Long || value instanceof Integer) {
             attr = new AttributeValue().withN(value.toString());
@@ -163,7 +173,8 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param keys Keys to leave in the map
      * @return Attributes
      */
-    public Attributes only(@NotNull(message = "key names can't be NULL")
+    @NotNull(message = "Attributes cannot be null")
+    public Attributes only(@NotNull(message = "the key names can't be NULL")
         final Collection<String> keys) {
         final ImmutableMap.Builder<String, AttributeValue> map =
             new ImmutableMap.Builder<String, AttributeValue>();
@@ -180,6 +191,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     }
 
     @Override
+    @NotNull(message = "String cannot be null")
     public String toString() {
         final Collection<String> terms =
             new ArrayList<String>(this.attrs.size());
@@ -207,35 +219,45 @@ public final class Attributes implements Map<String, AttributeValue> {
     }
 
     @Override
-    public boolean containsKey(final Object key) {
+    public boolean containsKey(
+        @NotNull(message = "attribute key cannot be NULL")
+        final Object key) {
         return this.attrs.containsKey(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
-    public boolean containsValue(final Object value) {
+    public boolean containsValue(
+        @NotNull(message = "attribute value cannot be NULL")
+        final Object value) {
         return this.attrs.containsValue(value);
     }
 
     @Override
-    public AttributeValue get(final Object key) {
+    @NotNull(message = "AttributeValue cannot be null")
+    public AttributeValue get(
+        @NotNull(message = "attribute key cannot be NULL")
+        final Object key) {
         return this.attrs.get(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
+    @NotNull(message = "Set cannot be null")
     public Set<String> keySet() {
         return this.attrs.keySet();
     }
 
     @Override
+    @NotNull(message = "Collection cannot be null")
     public Collection<AttributeValue> values() {
         return this.attrs.values();
     }
 
     @Override
+    @NotNull(message = "Set cannot be null")
     public Set<Map.Entry<String, AttributeValue>> entrySet() {
         return this.attrs.entrySet();
     }
@@ -268,5 +290,4 @@ public final class Attributes implements Map<String, AttributeValue> {
             "Attributes class is immutable, can't do #clear()"
         );
     }
-
 }

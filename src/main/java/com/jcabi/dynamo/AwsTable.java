@@ -89,7 +89,12 @@ final class AwsTable implements Table {
      * @param region Region
      * @param table Table name
      */
-    AwsTable(final Credentials creds, final Region region,
+    AwsTable(
+        @NotNull(message = "attribute creds cannot be null")
+        final Credentials creds,
+        @NotNull(message = "attribute region cannot be null")
+        final Region region,
+        @NotNull(message = "attribute table cannot be null")
         final String table) {
         this.credentials = creds;
         this.reg = region;
@@ -97,6 +102,7 @@ final class AwsTable implements Table {
     }
 
     @Override
+    @NotNull(message = "Item cannot be null")
     public Item put(@NotNull(message = "map of attributes can't be NULL")
         final Map<String, AttributeValue> attributes) throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
@@ -182,7 +188,10 @@ final class AwsTable implements Table {
      * @param capacity Consumed capacity or NULL
      * @return Suffix to add to a log line
      */
-    public static String print(final ConsumedCapacity capacity) {
+    @NotNull(message = "String cannot be null")
+    public static String print(
+        @NotNull(message = "attribute capacity cannot be null")
+        final ConsumedCapacity capacity) {
         final String txt;
         if (capacity == null) {
             txt = "";

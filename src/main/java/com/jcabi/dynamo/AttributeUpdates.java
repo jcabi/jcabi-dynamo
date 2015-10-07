@@ -92,8 +92,9 @@ public final class AttributeUpdates
      * @return AttributeUpdates
      */
     public AttributeUpdates with(
-        @NotNull(message = "attribute name can't be NULL") final String name,
-        @NotNull(message = "value can't be NULL")
+        @NotNull(message = "The attribute name can't be NULL")
+        final String name,
+        @NotNull(message = "The attribute value can't be NULL")
         final AttributeValueUpdate value) {
         return new AttributeUpdates(
             this.attrs.with(String.format(Locale.ENGLISH, name), value)
@@ -107,7 +108,11 @@ public final class AttributeUpdates
      * @return AttributeUpdates
      * @since 0.14.3
      */
-    public AttributeUpdates with(final String name,
+    @NotNull(message = "The given AttributeUpdates cannot be null")
+    public AttributeUpdates with(
+        @NotNull(message = "The attribute name can't be NULL")
+        final String name,
+        @NotNull(message = "The attribute value can't be NULL")
         final AttributeValue value) {
         return this.with(
             name,
@@ -122,7 +127,11 @@ public final class AttributeUpdates
      * @return AttributeUpdates
      * @since 0.14.3
      */
-    public AttributeUpdates with(final String name,
+    @NotNull(message = "This AttributeUpdates cannot be null")
+    public AttributeUpdates with(
+        @NotNull(message = "attribute name can't be NULL")
+        final String name,
+        @NotNull(message = "attribute value can't be NULL")
         final Object value) {
         final AttributeValue attr;
         if (value instanceof Long || value instanceof Integer) {
@@ -138,6 +147,7 @@ public final class AttributeUpdates
      * @param map AttributeUpdates to add
      * @return AttributeUpdates
      */
+    @NotNull(message = "The Returned AttributeUpdates cannot be null")
     public AttributeUpdates with(
         @NotNull(message = "map of AttributeUpdates can't be NULL")
         final Map<String, AttributeValueUpdate> map) {
@@ -154,6 +164,7 @@ public final class AttributeUpdates
     }
 
     @Override
+    @NotNull(message = "String cannot be null")
     public String toString() {
         final Collection<String> terms =
             new ArrayList<String>(this.attrs.size());
@@ -181,35 +192,45 @@ public final class AttributeUpdates
     }
 
     @Override
-    public boolean containsKey(final Object key) {
+    public boolean containsKey(
+        @NotNull(message = "attribute key cannot be null")
+        final Object key) {
         return this.attrs.containsKey(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
-    public boolean containsValue(final Object value) {
+    public boolean containsValue(
+        @NotNull(message = "attribute value cannot be NULL")
+        final Object value) {
         return this.attrs.containsValue(value);
     }
 
     @Override
-    public AttributeValueUpdate get(final Object key) {
+    @NotNull(message = "AttributeValueUpdate cannot be null")
+    public AttributeValueUpdate get(
+        @NotNull(message = "attribute key cannot be NULL")
+        final Object key) {
         return this.attrs.get(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
+    @NotNull(message = "Set cannot be null")
     public Set<String> keySet() {
         return this.attrs.keySet();
     }
 
     @Override
+    @NotNull(message = "Collections<AttributeValueUpdate> cannot be null")
     public Collection<AttributeValueUpdate> values() {
         return this.attrs.values();
     }
 
     @Override
+    @NotNull(message = "Set cannot be null")
     public Set<Map.Entry<String, AttributeValueUpdate>> entrySet() {
         return this.attrs.entrySet();
     }
@@ -243,5 +264,4 @@ public final class AttributeUpdates
             "AttributeUpdates class is immutable, can't do #clear()"
         );
     }
-
 }
