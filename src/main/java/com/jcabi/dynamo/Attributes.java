@@ -97,12 +97,11 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param value The value
      * @return Attributes
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Attributes cannot be null")
     public Attributes with(
-        @NotNull(message = "attribute name can't be NULL")
+        @NotNull(message = "the attribute name can't be NULL")
         final String name,
-        @NotNull(message = "value can't be NULL")
+        @NotNull(message = "the value cannot be NULL")
         final AttributeValue value) {
         return new Attributes(
             this.attrs.with(String.format(Locale.ENGLISH, name), value)
@@ -114,9 +113,9 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param map Attributes to add
      * @return Attributes
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Attributes cannot be null")
-    public Attributes with(@NotNull(message = "map of attributes can't be NULL")
+    public Attributes with(
+        @NotNull(message = "the map of attributes can't be NULL")
         final Map<String, AttributeValue> map) {
         final ConcurrentMap<String, AttributeValue> attribs =
             new ConcurrentHashMap<String, AttributeValue>(map.size());
@@ -154,10 +153,9 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @return Attributes
      * @
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "Attributes cannot be null")
+    @NotNull(message = "The Attributes cannot be null")
     public Attributes with(
-        @NotNull(message = "attribute name can't be NULL")
+        @NotNull(message = "attribute name can't be null")
         final String name,
         @NotNull(message = "value can't be NULL")
         final Object value) {
@@ -175,9 +173,8 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param keys Keys to leave in the map
      * @return Attributes
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "Attributes cannot be null")
-    public Attributes only(@NotNull(message = "key names can't be NULL")
+    public Attributes only(@NotNull(message = "the key names can't be NULL")
         final Collection<String> keys) {
         final ImmutableMap.Builder<String, AttributeValue> map =
             new ImmutableMap.Builder<String, AttributeValue>();

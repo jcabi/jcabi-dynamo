@@ -197,8 +197,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withConsistentRead(Boolean)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "QueryValve cannot be null")
+    @NotNull(message = "This QueryValve cannot be null")
     public QueryValve withConsistentRead(
         @NotNull(message = "attribute cnst cannot be null")
         final boolean cnst) {
@@ -217,8 +216,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withIndexName(String)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "QueryValve cannot be null")
+    @NotNull(message = "QueryValve cannot be NULL.")
     public QueryValve withIndexName(
         @NotNull(message = "attribute idx cannot be NULL")
         final String idx) {
@@ -237,8 +235,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withSelect(Select)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "QueryValve cannot be null")
+    @NotNull(message = "QueryValve should be null")
     public QueryValve withSelect(
         @NotNull(message = "attribute slct cannot be NULL")
         final Select slct) {
@@ -256,8 +253,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withLimit(Integer)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "QueryValve cannot be null")
+    @NotNull(message = "That QueryValve cannot be null")
     public QueryValve withLimit(final int lmt) {
         return new QueryValve(
             lmt, this.forward,
@@ -273,8 +269,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withScanIndexForward(Boolean)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "QueryValve cannot be null")
+    @NotNull(message = "QueryValve cannot be NUll")
     public QueryValve withScanIndexForward(
         @NotNull(message = "attribute fwd cannot be NULL")
         final boolean fwd) {
@@ -292,7 +287,6 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withAttributesToGet(Collection)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @NotNull(message = "QueryValve cannot be null")
     public QueryValve withAttributeToGet(
         @NotNull(message = "attribute name can't be NULL")
@@ -314,8 +308,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withAttributesToGet(Collection)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @NotNull(message = "QueryValve cannot be null")
+    @NotNull(message = "the QueryValve cannot be null")
     public QueryValve withAttributesToGet(
         @NotNull(message = "attribute names cannot be NULL")
         final String... names) {
