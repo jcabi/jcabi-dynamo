@@ -77,11 +77,12 @@ public interface Dosage {
     @EqualsAndHashCode
     final class Empty implements Dosage {
         @Override
+        @NotNull(message = "list of items cannot be null")
         public List<Map<String, AttributeValue>> items() {
             return new ArrayList<Map<String, AttributeValue>>(0);
         }
         @Override
-        @NotNull(message = "Dosage cannot be null")
+        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             throw new IllegalStateException(
                 "this is nothing left"

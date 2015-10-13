@@ -126,6 +126,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
+    @NotNull(message = "Iterator cannot be null")
     public Iterator<Item> iterator() {
         try {
             return new AwsIterator(

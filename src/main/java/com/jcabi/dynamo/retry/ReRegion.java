@@ -63,7 +63,9 @@ public final class ReRegion implements Region {
      * Public ctor.
      * @param region Origin region
      */
-    public ReRegion(final Region region) {
+    public ReRegion(
+        @NotNull(message = "attribute region cannot be null")
+        final Region region) {
         this.origin = region;
     }
 

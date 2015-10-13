@@ -88,7 +88,11 @@ public final class ScanValve implements Valve {
      * @param lmt Limit
      * @param attrs Attributes to pre-load
      */
-    private ScanValve(final int lmt, final Iterable<String> attrs) {
+    private ScanValve(
+        @NotNull(message = "attribute lmt cannot be NULL")
+        final int lmt,
+        @NotNull(message = "attribute attrs cannot be NULL")
+        final Iterable<String> attrs) {
         this.limit = lmt;
         this.attributes = Iterables.toArray(attrs, String.class);
     }
@@ -225,7 +229,7 @@ public final class ScanValve implements Valve {
             return this.result.getLastEvaluatedKey() != null;
         }
         @Override
-        @NotNull(message = "Dosage cannot be null")
+        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             if (!this.hasNext()) {
                 throw new IllegalStateException(

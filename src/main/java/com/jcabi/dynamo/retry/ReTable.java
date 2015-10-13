@@ -67,7 +67,9 @@ public final class ReTable implements Table {
      * Public ctor.
      * @param table Origin table
      */
-    public ReTable(final Table table) {
+    public ReTable(
+        @NotNull(message = "attribute table cannot be null")
+        final Table table) {
         this.origin = table;
     }
 

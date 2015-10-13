@@ -369,7 +369,7 @@ public final class QueryValve implements Valve {
             return this.result.getLastEvaluatedKey() != null;
         }
         @Override
-        @NotNull(message = "Dosage cannot be null")
+        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             if (!this.hasNext()) {
                 throw new IllegalStateException(

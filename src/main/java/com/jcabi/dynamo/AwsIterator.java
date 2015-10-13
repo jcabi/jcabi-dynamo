@@ -258,7 +258,7 @@ final class AwsIterator implements Iterator<Item> {
             return Collections.unmodifiableList(this.list);
         }
         @Override
-        @NotNull(message = "Dosage cannot be null")
+        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             return this.prev.next();
         }
