@@ -65,11 +65,7 @@ import lombok.ToString;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
-@EqualsAndHashCode(of = {
-    "credentials",
-    "reg",
-    "self"
-})
+@EqualsAndHashCode(of = { "credentials", "reg", "self" })
 final class AwsTable implements Table {
 
     /**
@@ -94,9 +90,12 @@ final class AwsTable implements Table {
      * @param table Table name
      */
     AwsTable(
-                    @NotNull(message = "attribute creds cannot be null") final Credentials creds,
-                    @NotNull(message = "attribute region cannot be null") final Region region,
-                    @NotNull(message = "attribute table cannot be null") final String table) {
+        @NotNull(message = "attribute creds cannot be null")
+        final Credentials creds,
+        @NotNull(message = "attribute region cannot be null")
+        final Region region,
+        @NotNull(message = "attribute table cannot be null")
+        final String table) {
         this.credentials = creds;
         this.reg = region;
         this.self = table;
@@ -104,8 +103,8 @@ final class AwsTable implements Table {
 
     @Override
     @NotNull(message = "Item cannot be null")
-    public Item put(@NotNull(message = "map of attributes can't be NULL") final Map<String, AttributeValue> attributes)
-                    throws IOException {
+    public Item put(@NotNull(message = "map of attributes can't be NULL")
+        final Map<String, AttributeValue> attributes) throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
             final PutItemRequest request = new PutItemRequest();
@@ -115,21 +114,19 @@ final class AwsTable implements Table {
             request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
             final PutItemResult result = aws.putItem(request);
             final long start = System.currentTimeMillis();
-            ConsumedCapacity consumedCapacity = result.getConsumedCapacity();
-            if (consumedCapacity == null)
-                consumedCapacity = new ConsumedCapacity().withCapacityUnits(0d);
             Logger.info(
                 this, "#put('%[text]s'): created item in '%s'%s, in %[ms]s",
                 attributes, this.self,
-                AwsTable.print(consumedCapacity),
+                AwsTable.print(result.getConsumedCapacity()),
                 System.currentTimeMillis() - start
-                );
+            );
             return new AwsItem(
                 this.credentials,
                 this.frame(),
                 this.self,
                 new Attributes(attributes).only(this.keys()),
-                new Array<String>(this.keys()));
+                new Array<String>(this.keys())
+            );
         } catch (final AmazonClientException ex) {
             throw new IOException(ex);
         } finally {
@@ -168,15 +165,16 @@ final class AwsTable implements Table {
             final long start = System.currentTimeMillis();
             final DescribeTableResult result = aws.describeTable(
                 new DescribeTableRequest().withTableName(this.self)
-                );
+            );
             final Collection<String> keys = new LinkedList<String>();
-            for (final KeySchemaElement key : result.getTable().getKeySchema()) {
+            for (final KeySchemaElement key
+                : result.getTable().getKeySchema()) {
                 keys.add(key.getAttributeName());
             }
             Logger.info(
                 this, "#keys(): table %s described, in %[ms]s",
                 this.self, System.currentTimeMillis() - start
-                );
+            );
             return keys;
         } catch (final AmazonClientException ex) {
             throw new IOException(ex);
@@ -192,7 +190,8 @@ final class AwsTable implements Table {
      */
     @NotNull(message = "String cannot be null")
     public static String print(
-                    @NotNull(message = "attribute capacity cannot be null") final ConsumedCapacity capacity) {
+//        @NotNull(message = "attribute capacity cannot be null")
+        final ConsumedCapacity capacity) {
         final String txt;
         if (capacity == null) {
             txt = "";
@@ -203,9 +202,8 @@ final class AwsTable implements Table {
     }
 
     @Override
-    public void delete(
-                    @NotNull(message = "map of attributes can't be NULL") final Map<String, AttributeValue> attributes)
-                    throws IOException {
+    public void delete(@NotNull(message = "map of attributes can't be NULL")
+        final Map<String, AttributeValue> attributes) throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
             final DeleteItemRequest request = new DeleteItemRequest();
@@ -220,7 +218,7 @@ final class AwsTable implements Table {
                 attributes, this.self,
                 AwsTable.print(result.getConsumedCapacity()),
                 System.currentTimeMillis() - start
-                );
+            );
         } catch (final AmazonClientException ex) {
             throw new IOException(ex);
         } finally {
