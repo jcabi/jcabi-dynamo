@@ -52,7 +52,6 @@ public final class AwsIteratorITCase {
      *  this should be fixed in methods AwsIteratorITCase.iteratesItems() and
      *  AwsIteratorITCase.iteratesItemsAndDeletes(). Also see RegionITCase
      */
-    @Ignore
     @Test
     public void iteratesItems() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
