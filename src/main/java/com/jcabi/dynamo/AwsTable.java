@@ -190,7 +190,7 @@ final class AwsTable implements Table {
      */
     @NotNull(message = "String cannot be null")
     public static String print(
-        @NotNull(message = "attribute capacity cannot be null")
+//        @NotNull(message = "attribute capacity cannot be null")
         final ConsumedCapacity capacity) {
         final String txt;
         if (capacity == null) {
