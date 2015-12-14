@@ -71,7 +71,6 @@ public final class AwsIteratorITCase {
      * AwsIterator can iterate and delete items.
      * @throws Exception If some problem inside
      */
-    @Ignore
     @Test
     public void iteratesItemsAndDeletes() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
