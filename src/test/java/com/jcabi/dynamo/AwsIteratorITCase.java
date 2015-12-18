@@ -34,7 +34,6 @@ import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -52,7 +51,6 @@ public final class AwsIteratorITCase {
      *  this should be fixed in methods AwsIteratorITCase.iteratesItems() and
      *  AwsIteratorITCase.iteratesItemsAndDeletes(). Also see RegionITCase
      */
-    @Ignore
     @Test
     public void iteratesItems() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
@@ -72,7 +70,6 @@ public final class AwsIteratorITCase {
      * AwsIterator can iterate and delete items.
      * @throws Exception If some problem inside
      */
-    @Ignore
     @Test
     public void iteratesItemsAndDeletes() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
