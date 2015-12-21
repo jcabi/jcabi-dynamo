@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-aspects</artifactId>
-            <version>0.22</version>
+            <version>0.22.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -82,12 +82,12 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-core</artifactId>
-            <version>1.9.8</version>
+            <version>1.10.42</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
-            <version>1.9.8</version>
+            <version>1.10.42</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.182</version>
+            <version>1.4.190</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -141,7 +141,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.10</version>
                 <executions>
                     <execution>
                         <goals>
@@ -180,7 +180,7 @@
             <plugin>
                 <groupId>com.jcabi</groupId>
                 <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
-                <version>0.4.1</version>
+                <version>0.7.1</version>
                 <configuration>
                     <port>${dynamodb.port}</port>
                     <dist>${project.build.directory}/dynamodb-dist</dist>
