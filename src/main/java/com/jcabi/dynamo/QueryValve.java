@@ -50,7 +50,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -118,19 +117,9 @@ public final class QueryValve implements Valve {
      * @param cnst Consistent read
      * @checkstyle ParameterNumber (5 lines)
      */
-    private QueryValve(
-        @NotNull(message = "attribute lmt cannot be NULL")
-        final int lmt,
-        @NotNull(message = "attribute fwd cannot be NULL")
-        final boolean fwd,
-        @NotNull(message = "attribute attrs cannot be NULL")
-        final Iterable<String> attrs,
-        @NotNull(message = "attribute idx cannot be NULL")
-        final String idx,
-        @NotNull(message = "attribute slct cannot be NULL")
-        final String slct,
-        @NotNull(message = "attribute cnst cannot be NULL")
-        final boolean cnst) {
+    private QueryValve(final int lmt, final boolean fwd,
+        final Iterable<String> attrs, final String idx,
+        final String slct, final boolean cnst) {
         this.limit = lmt;
         this.forward = fwd;
         this.attributes = Iterables.toArray(attrs, String.class);
@@ -141,16 +130,8 @@ public final class QueryValve implements Valve {
 
     // @checkstyle ParameterNumber (5 lines)
     @Override
-    @NotNull(message = "Dosage cannot be null")
-    public Dosage fetch(
-        @NotNull(message = "attribute credentials cannot be NULL")
-        final Credentials credentials,
-        @NotNull(message = "attribute table cannot be NULL")
-        final String table,
-        @NotNull(message = "attribute conditions cannot be NULL")
-        final Map<String, Condition> conditions,
-        @NotNull(message = "attribute keys canoot be NULL")
-        final Collection<String> keys)
+    public Dosage fetch(final Credentials credentials, final String table,
+        final Map<String, Condition> conditions, final Collection<String> keys)
         throws IOException {
         final AmazonDynamoDB aws = credentials.aws();
         try {
@@ -197,10 +178,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withConsistentRead(Boolean)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @NotNull(message = "This QueryValve cannot be null")
-    public QueryValve withConsistentRead(
-        @NotNull(message = "attribute cnst cannot be null")
-        final boolean cnst) {
+    public QueryValve withConsistentRead(final boolean cnst) {
         return new QueryValve(
             this.limit, this.forward,
             Arrays.asList(this.attributes),
@@ -216,10 +194,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withIndexName(String)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @NotNull(message = "QueryValve cannot be NULL.")
-    public QueryValve withIndexName(
-        @NotNull(message = "attribute idx cannot be NULL")
-        final String idx) {
+    public QueryValve withIndexName(final String idx) {
         return new QueryValve(
             this.limit, this.forward,
             Arrays.asList(this.attributes),
@@ -235,10 +210,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withSelect(Select)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @NotNull(message = "QueryValve should be null")
-    public QueryValve withSelect(
-        @NotNull(message = "attribute slct cannot be NULL")
-        final Select slct) {
+    public QueryValve withSelect(final Select slct) {
         return new QueryValve(
             this.limit, this.forward,
             Arrays.asList(this.attributes), this.index,
@@ -253,7 +225,6 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withLimit(Integer)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @NotNull(message = "That QueryValve cannot be null")
     public QueryValve withLimit(final int lmt) {
         return new QueryValve(
             lmt, this.forward,
@@ -269,10 +240,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withScanIndexForward(Boolean)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @NotNull(message = "QueryValve cannot be NUll")
-    public QueryValve withScanIndexForward(
-        @NotNull(message = "attribute fwd cannot be NULL")
-        final boolean fwd) {
+    public QueryValve withScanIndexForward(final boolean fwd) {
         return new QueryValve(
             this.limit, fwd,
             Arrays.asList(this.attributes),
@@ -287,10 +255,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withAttributesToGet(Collection)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @NotNull(message = "QueryValve cannot be null")
-    public QueryValve withAttributeToGet(
-        @NotNull(message = "attribute name can't be NULL")
-        final String name) {
+    public QueryValve withAttributeToGet(final String name) {
         return new QueryValve(
             this.limit, this.forward,
             Iterables.concat(
@@ -308,10 +273,7 @@ public final class QueryValve implements Valve {
      * @see QueryRequest#withAttributesToGet(Collection)
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
-    @NotNull(message = "the QueryValve cannot be null")
-    public QueryValve withAttributesToGet(
-        @NotNull(message = "attribute names cannot be NULL")
-        final String... names) {
+    public QueryValve withAttributesToGet(final String... names) {
         return new QueryValve(
             this.limit, this.forward,
             Iterables.concat(
@@ -348,19 +310,13 @@ public final class QueryValve implements Valve {
          * @param rqst Query request
          * @param rslt Query result
          */
-        NextDosage(
-            @NotNull(message = "attribute creds cannot be NULL")
-            final Credentials creds,
-            @NotNull(message = "attribute rqst cannot be NULL")
-            final QueryRequest rqst,
-            @NotNull(message = "attribute rslt cannot be NULL")
+        NextDosage(final Credentials creds, final QueryRequest rqst,
             final QueryResult rslt) {
             this.credentials = creds;
             this.request = rqst;
             this.result = rslt;
         }
         @Override
-        @NotNull(message = "List cannot be null")
         public List<Map<String, AttributeValue>> items() {
             return this.result.getItems();
         }
@@ -369,7 +325,6 @@ public final class QueryValve implements Valve {
             return this.result.getLastEvaluatedKey() != null;
         }
         @Override
-        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             if (!this.hasNext()) {
                 throw new IllegalStateException(

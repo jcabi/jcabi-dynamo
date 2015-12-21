@@ -32,7 +32,6 @@ package com.jcabi.dynamo;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -65,7 +64,6 @@ public interface Region {
      * Get DynamoDB client.
      * @return The client
      */
-    @NotNull(message = "AWS DynamoDB client is never NULL")
     AmazonDynamoDB aws();
 
     /**
@@ -73,8 +71,7 @@ public interface Region {
      * @param name Table name
      * @return Table
      */
-    @NotNull(message = "table is never NULL")
-    Table table(@NotNull(message = "table name can't be NULL") String name);
+    Table table(String name);
 
     /**
      * Simple region, basic implementation.
@@ -92,18 +89,15 @@ public interface Region {
          * Public ctor.
          * @param creds Credentials
          */
-        public Simple(@NotNull final Credentials creds) {
+        public Simple(final Credentials creds) {
             this.credentials = creds;
         }
         @Override
-        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             return this.credentials.aws();
         }
         @Override
-        @NotNull(message = "table is never NULL")
-        public Table table(@NotNull(message = "table name can't be NULL")
-            final String name) {
+        public Table table(final String name) {
             return new AwsTable(this.credentials, this, name);
         }
     }
@@ -142,20 +136,16 @@ public interface Region {
          * @param region Original region
          * @param pfx Prefix to add to all tables
          */
-        public Prefixed(
-            @NotNull(message = "region can't be NULL") final Region region,
-            @NotNull(message = "prefix can't be NULL") final String pfx) {
+        public Prefixed(final Region region, final String pfx) {
             this.origin = region;
             this.prefix = pfx;
         }
         @Override
-        @NotNull(message = "AmazonDynamoDB cannot be null")
         public AmazonDynamoDB aws() {
             return this.origin.aws();
         }
         @Override
-        @NotNull(message = "Table cannot be null")
-        public Table table(@NotNull final String name) {
+        public Table table(final String name) {
             return this.origin.table(
                 new StringBuilder(this.prefix).append(name).toString()
             );

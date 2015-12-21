@@ -47,7 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -62,9 +61,10 @@ import lombok.ToString;
  */
 @Loggable(Loggable.DEBUG)
 @ToString
-@EqualsAndHashCode(
-    of = { "credentials", "conditions", "frame", "name", "keys", "valve" }
-)
+@EqualsAndHashCode
+    (
+        of = { "credentials", "conditions", "frame", "name", "keys", "valve" }
+    )
 final class AwsIterator implements Iterator<Item> {
 
     /**
@@ -100,13 +100,12 @@ final class AwsIterator implements Iterator<Item> {
     /**
      * Last scan result (mutable).
      */
-    private final transient AtomicReference<Dosage> dosage =
-        new AtomicReference<Dosage>();
+    private final transient AtomicReference<Dosage> dosage;
 
     /**
      * Position inside the scan result, last seen, starts with -1 (mutable).
      */
-    private transient int position = -1;
+    private transient int position;
 
     /**
      * Public ctor.
@@ -118,25 +117,17 @@ final class AwsIterator implements Iterator<Item> {
      * @param vlv Valve with items
      * @checkstyle ParameterNumber (5 lines)
      */
-    AwsIterator(
-        @NotNull(message = "attribute creds cannot be null")
-        final Credentials creds,
-        @NotNull(message = "attribute frm cannot be null")
-        final AwsFrame frm,
-        @NotNull(message = "attribute label cannot be null")
-        final String label,
-        @NotNull(message = "attribute conds cannot be null")
-        final Conditions conds,
-        @NotNull(message = "attribute primary cannot be null")
-        final Collection<String> primary,
-        @NotNull(message = "attribute vlv cannot be null")
-        final Valve vlv) {
+    AwsIterator(final Credentials creds, final AwsFrame frm,
+        final String label, final Conditions conds,
+        final Collection<String> primary, final Valve vlv) {
         this.credentials = creds;
         this.frame = frm;
         this.name = label;
         this.conditions = conds;
         this.keys = primary;
         this.valve = vlv;
+        this.dosage = new AtomicReference<Dosage>();
+        this.position = -1;
     }
 
     @Override
@@ -167,7 +158,6 @@ final class AwsIterator implements Iterator<Item> {
     }
 
     @Override
-    @NotNull(message = "Item cannot be null")
     public Item next() {
         synchronized (this.dosage) {
             if (!this.hasNext()) {
@@ -244,21 +234,15 @@ final class AwsIterator implements Iterator<Item> {
          * @param dsg Dosage
          * @param items Items
          */
-        Fixed(
-            @NotNull(message = "attribute dsg cannot be null")
-            final Dosage dsg,
-            @NotNull(message = "attribute items cannot be null")
-            final List<Map<String, AttributeValue>> items) {
+        Fixed(final Dosage dsg, final List<Map<String, AttributeValue>> items) {
             this.prev = dsg;
             this.list = new Array<Map<String, AttributeValue>>(items);
         }
         @Override
-        @NotNull(message = "List cannot be null")
         public List<Map<String, AttributeValue>> items() {
             return Collections.unmodifiableList(this.list);
         }
         @Override
-        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             return this.prev.next();
         }

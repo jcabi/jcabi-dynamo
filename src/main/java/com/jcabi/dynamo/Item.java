@@ -34,7 +34,6 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 
 /**
  * Immutable Amazon DynamoDB item.
@@ -57,9 +56,7 @@ public interface Item {
      * @return Value
      * @throws IOException In case of DynamoDB failure
      */
-    @NotNull(message = "attribute value is never NULL")
-    AttributeValue get(@NotNull(message = "attribute name can't be NULL")
-        String name) throws IOException;
+    AttributeValue get(String name) throws IOException;
 
     /**
      * Does this attribute exist?
@@ -67,7 +64,7 @@ public interface Item {
      * @return TRUE if it exists
      * @throws IOException In case of DynamoDB failure
      */
-    boolean has(@NotNull(message = "attribute name can't be NULL") String name)
+    boolean has(String name)
         throws IOException;
 
     /**
@@ -83,10 +80,7 @@ public interface Item {
      * @throws IOException In case of DynamoDB failure
      * @since 0.12
      */
-    @NotNull(message = "Map cannot be null")
-    Map<String, AttributeValue> put(
-        @NotNull(message = "attribute name can't be NULL") String name,
-        @NotNull(message = "value can't be NULL") AttributeValueUpdate value)
+    Map<String, AttributeValue> put(String name, AttributeValueUpdate value)
         throws IOException;
 
     /**
@@ -103,16 +97,13 @@ public interface Item {
      * @throws IOException In case of DynamoDB failure
      * @since 0.12
      */
-    @NotNull(message = "Map cannot be null")
-    Map<String, AttributeValue> put(
-        @NotNull(message = "map attributes can't be NULL")
-        Map<String, AttributeValueUpdate> attrs) throws IOException;
+    Map<String, AttributeValue> put(Map<String, AttributeValueUpdate> attrs)
+        throws IOException;
 
     /**
      * Get back to the frame it is from.
      * @return Frame
      */
-    @NotNull(message = "frame is never NULL")
     Frame frame();
 
 }

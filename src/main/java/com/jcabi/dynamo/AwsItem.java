@@ -48,7 +48,6 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -98,16 +97,8 @@ final class AwsItem implements Item {
      * @param pks Keys of the table
      * @checkstyle ParameterNumber (5 lines)
      */
-    AwsItem(
-        @NotNull(message = "atrribute creds cannot be null")
-        final Credentials creds,
-        @NotNull(message = "attribte frame cannot be null")
-        final AwsFrame frame,
-        @NotNull(message = "attribute table cannot be null")
-        final String table,
-        @NotNull(message = "attribute attrs cannot be null")
-        final Attributes attrs,
-        @NotNull(message = "attribute pks cannot be null")
+    AwsItem(final Credentials creds, final AwsFrame frame,
+        final String table, final Attributes attrs,
         final Array<String> pks) {
         this.credentials = creds;
         this.frm = frame;
@@ -117,8 +108,7 @@ final class AwsItem implements Item {
     }
 
     @Override
-    public boolean has(@NotNull(message = "attribute name can't be NULL")
-        final String attr) throws IOException {
+    public boolean has(final String attr) throws IOException {
         final String attrib = String.format(Locale.ENGLISH, attr);
         boolean has = this.attributes.containsKey(attrib);
         if (!has) {
@@ -148,9 +138,7 @@ final class AwsItem implements Item {
     }
 
     @Override
-    @NotNull(message = "attribute value is never NULL")
-    public AttributeValue get(@NotNull(message = "attribute name can't be NULL")
-        final String attr) throws IOException {
+    public AttributeValue get(final String attr) throws IOException {
         final String attrib = String.format(Locale.ENGLISH, attr);
         AttributeValue value = this.attributes.get(attrib);
         if (value == null) {
@@ -187,18 +175,13 @@ final class AwsItem implements Item {
     }
 
     @Override
-    @NotNull(message = "Map cannot be null")
-    public Map<String, AttributeValue> put(
-        @NotNull(message = "attribute name can't be NULL") final String attr,
-        @NotNull(message = "value update can't be NULL")
+    public Map<String, AttributeValue> put(final String attr,
         final AttributeValueUpdate value) throws IOException {
         return this.put(new AttributeUpdates().with(attr, value));
     }
 
     @Override
-    @NotNull(message = "Map cannot be null")
     public Map<String, AttributeValue> put(
-        @NotNull(message = "attributes can't be NULL")
         final Map<String, AttributeValueUpdate> attrs) throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         final Attributes expected = this.attributes.only(this.keys);
@@ -226,7 +209,6 @@ final class AwsItem implements Item {
     }
 
     @Override
-    @NotNull(message = "Frame cannot be null")
     public Frame frame() {
         return this.frm;
     }

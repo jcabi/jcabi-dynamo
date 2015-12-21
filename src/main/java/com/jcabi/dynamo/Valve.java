@@ -34,7 +34,6 @@ import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 
 /**
  * Provider of dosages of DynamoDB items.
@@ -56,13 +55,8 @@ public interface Valve {
      * @throws IOException In case of DynamoDB failure
      * @checkstyle ParameterNumber (5 lines)
      */
-    @NotNull(message = "dosage is never NULL")
-    Dosage fetch(
-        @NotNull(message = "creds can't be NULL") Credentials credentials,
-        @NotNull(message = "table name can't be NULL") String table,
-        @NotNull(message = "conditions can't be NULL")
-        Map<String, Condition> conditions,
-        @NotNull(message = "keys can't be NULL") Collection<String> keys)
+    Dosage fetch(Credentials credentials, String table,
+        Map<String, Condition> conditions, Collection<String> keys)
         throws IOException;
 
 }

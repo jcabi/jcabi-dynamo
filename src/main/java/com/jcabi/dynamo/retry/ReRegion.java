@@ -37,7 +37,6 @@ import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import java.util.concurrent.TimeUnit;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -63,25 +62,19 @@ public final class ReRegion implements Region {
      * Public ctor.
      * @param region Origin region
      */
-    public ReRegion(
-        @NotNull(message = "attribute region cannot be null")
-        final Region region) {
+    public ReRegion(final Region region) {
         this.origin = region;
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    @NotNull(message = "AmazonDynamoDB cannot be null")
     public AmazonDynamoDB aws() {
         return this.origin.aws();
     }
 
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    @NotNull(message = "Table cannot be null")
-    public Table table(
-        @NotNull(message = "name cannot be null")
-        final String name) {
+    public Table table(final String name) {
         return new ReTable(this.origin.table(name));
     }
 }

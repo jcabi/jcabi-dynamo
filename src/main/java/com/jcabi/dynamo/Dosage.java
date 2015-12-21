@@ -35,7 +35,6 @@ import com.jcabi.aspects.Loggable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -52,7 +51,6 @@ public interface Dosage {
      * Items.
      * @return List of items
      */
-    @NotNull(message = "list of items is never NULL")
     List<Map<String, AttributeValue>> items();
 
     /**
@@ -65,7 +63,6 @@ public interface Dosage {
      * Fetch next dosage.
      * @return The dosage
      */
-    @NotNull(message = "next dosage is never NULL")
     Dosage next();
 
     /**
@@ -77,12 +74,10 @@ public interface Dosage {
     @EqualsAndHashCode
     final class Empty implements Dosage {
         @Override
-        @NotNull(message = "list of items cannot be null")
         public List<Map<String, AttributeValue>> items() {
             return new ArrayList<Map<String, AttributeValue>>(0);
         }
         @Override
-        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             throw new IllegalStateException(
                 "this is nothing left"

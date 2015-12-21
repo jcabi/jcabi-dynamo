@@ -33,7 +33,6 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 
 /**
  * Amazon DynamoDB table abstraction.
@@ -69,29 +68,24 @@ public interface Table {
      * @see Attributes
      * @throws IOException In case of DynamoDB failure
      */
-    @NotNull(message = "item is never NULL")
-    Item put(@NotNull(message = "map of attributes can't be NULL")
-        Map<String, AttributeValue> attributes) throws IOException;
+    Item put(Map<String, AttributeValue> attributes) throws IOException;
 
     /**
      * Make a new frame, in order to retrieve items.
      * @return Frame
      */
-    @NotNull(message = "frame is never NULL")
     Frame frame();
 
     /**
      * Get back to the entire region.
      * @return Region
      */
-    @NotNull(message = "region is never NULL")
     Region region();
 
     /**
      * Get real table name.
      * @return Actual name of DynamoDB table
      */
-    @NotNull(message = "table name is never NULL")
     String name();
 
     /**
@@ -102,7 +96,6 @@ public interface Table {
      * @see Attributes
      * @throws IOException In case of DynamoDB failure
      */
-    void delete(
-        @NotNull(message = "attribute attributes cannot be null")
-        Map<String, AttributeValue> attributes) throws IOException;
+    void delete(Map<String, AttributeValue> attributes) throws IOException;
+
 }

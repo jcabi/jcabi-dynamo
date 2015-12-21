@@ -36,8 +36,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -67,7 +65,6 @@ public interface Credentials {
      *
      * @return Amazon Dynamo DB client
      */
-    @NotNull(message = "AWS DynamoDB client is never NULL")
     AmazonDynamoDB aws();
 
     /**
@@ -94,9 +91,7 @@ public interface Credentials {
          * @param akey AWS key
          * @param scrt Secret
          */
-        public Simple(
-            @NotNull(message = "key can't be NULL") final String akey,
-            @NotNull(message = "secret can't be NULL") final String scrt) {
+        public Simple(final String akey, final String scrt) {
             this(akey, scrt, Regions.US_EAST_1.getName());
         }
         /**
@@ -105,27 +100,16 @@ public interface Credentials {
          * @param scrt Secret
          * @param reg Region
          */
-        public Simple(
-            @NotNull(message = "key can't be NULL")
-            @Pattern(regexp = "[A-Z0-9]{20}")
-            final String akey,
-            @NotNull(message = "secret can't be NULL")
-            @Pattern(regexp = "[a-zA-Z0-9+/=]{40}")
-            final String scrt,
-            @NotNull(message = "region can't be NULL")
-            @Pattern(regexp = "[-a-z0-9]+")
-            final String reg) {
+        public Simple(final String akey, final String scrt, final String reg) {
             this.key = akey;
             this.secret = scrt;
             this.region = reg;
         }
         @Override
-        @NotNull(message = "String cannot be null")
         public String toString() {
             return String.format("%s/%s", this.region, this.key);
         }
         @Override
-        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             final com.amazonaws.regions.Region reg =
                 RegionUtils.getRegion(this.region);
@@ -165,19 +149,14 @@ public interface Credentials {
          * Public ctor.
          * @param reg Region
          */
-        public Assumed(
-            @NotNull(message = "DynamoDB region can't be NULL")
-            @Pattern(regexp = "[-0-9a-z]+")
-            final String reg) {
+        public Assumed(final String reg) {
             this.region = reg;
         }
         @Override
-        @NotNull(message = "String cannot be null")
         public String toString() {
             return this.region;
         }
         @Override
-        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             final com.amazonaws.regions.Region reg =
                 RegionUtils.getRegion(this.region);
@@ -212,9 +191,7 @@ public interface Credentials {
          * @param creds Original credentials
          * @param pnt Endpoint
          */
-        public Direct(
-            @NotNull(message = "creds can't be NULL") final Credentials creds,
-            @NotNull(message = "endpoint can't be NULL") final String pnt) {
+        public Direct(final Credentials creds, final String pnt) {
             this.origin = creds;
             this.endpoint = pnt;
         }
@@ -223,17 +200,14 @@ public interface Credentials {
          * @param creds Original credentials
          * @param port Port number for localhost
          */
-        public Direct(@NotNull(message = "creds can't be NULL")
-            final Credentials creds, final int port) {
+        public Direct(final Credentials creds, final int port) {
             this(creds, String.format("http://localhost:%d", port));
         }
         @Override
-        @NotNull(message = "String cannot be null")
         public String toString() {
             return String.format("%s at %s", this.origin, this.endpoint);
         }
         @Override
-        @NotNull(message = "AWS client is never NULL")
         public AmazonDynamoDB aws() {
             final AmazonDynamoDB aws = this.origin.aws();
             aws.setEndpoint(this.endpoint);

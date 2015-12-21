@@ -49,7 +49,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -88,26 +87,15 @@ public final class ScanValve implements Valve {
      * @param lmt Limit
      * @param attrs Attributes to pre-load
      */
-    private ScanValve(
-        @NotNull(message = "attribute lmt cannot be NULL")
-        final int lmt,
-        @NotNull(message = "attribute attrs cannot be NULL")
-        final Iterable<String> attrs) {
+    private ScanValve(final int lmt, final Iterable<String> attrs) {
         this.limit = lmt;
         this.attributes = Iterables.toArray(attrs, String.class);
     }
 
     // @checkstyle ParameterNumber (5 lines)
     @Override
-    @NotNull(message = "Dosage cannot be null")
-    public Dosage fetch(
-        @NotNull(message = "attribute credentials cannot be null")
-        final Credentials credentials,
-        @NotNull(message = "attribute table cannot be null")
-        final String table,
-        @NotNull(message = "attribute conditions cannot be null")
-        final Map<String, Condition> conditions,
-        @NotNull(message = "attribute keys cannot be null")
+    public Dosage fetch(final Credentials credentials,
+        final String table, final Map<String, Condition> conditions,
         final Collection<String> keys) throws IOException {
         final AmazonDynamoDB aws = credentials.aws();
         try {
@@ -143,7 +131,6 @@ public final class ScanValve implements Valve {
      * @param lmt Limit to use
      * @return New query valve
      */
-    @NotNull(message = "ScanValve cannot be null")
     public ScanValve withLimit(final int lmt) {
         return new ScanValve(lmt, Arrays.asList(this.attributes));
     }
@@ -153,9 +140,7 @@ public final class ScanValve implements Valve {
      * @param name Name of attribute to pre-load
      * @return New query valve
      */
-    @NotNull(message = "ScanValve cannot be null")
-    public ScanValve withAttributeToGet(
-        @NotNull(message = "attribute name can't be NULL") final String name) {
+    public ScanValve withAttributeToGet(final String name) {
         return new ScanValve(
             this.limit,
             Iterables.concat(
@@ -170,10 +155,7 @@ public final class ScanValve implements Valve {
      * @param names Name of attributes to pre-load
      * @return New query valve
      */
-    @NotNull(message = "ScanValve cannot be null")
-    public ScanValve withAttributeToGet(
-        @NotNull(message = "attribute names cannot be null")
-        final String... names) {
+    public ScanValve withAttributeToGet(final String... names) {
         return new ScanValve(
             this.limit,
             Iterables.concat(
@@ -208,19 +190,13 @@ public final class ScanValve implements Valve {
          * @param rqst Query request
          * @param rslt Query result
          */
-        NextDosage(
-            @NotNull(message = "attribute creds cannot be null")
-            final Credentials creds,
-            @NotNull(message = "attribute rqst cannot be null")
-            final ScanRequest rqst,
-            @NotNull(message = "attribute rslt cannot be null")
+        NextDosage(final Credentials creds, final ScanRequest rqst,
             final ScanResult rslt) {
             this.credentials = creds;
             this.request = rqst;
             this.result = rslt;
         }
         @Override
-        @NotNull(message = "List cannot be null")
         public List<Map<String, AttributeValue>> items() {
             return this.result.getItems();
         }
@@ -229,7 +205,6 @@ public final class ScanValve implements Valve {
             return this.result.getLastEvaluatedKey() != null;
         }
         @Override
-        @NotNull(message = "next dosage cannot be null")
         public Dosage next() {
             if (!this.hasNext()) {
                 throw new IllegalStateException(

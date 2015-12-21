@@ -43,7 +43,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -56,10 +55,13 @@ import lombok.EqualsAndHashCode;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = "attrs")
-@SuppressWarnings({
-    "PMD.TooManyMethods",
-    "PMD.AvoidInstantiatingObjectsInLoops"
-})
+@SuppressWarnings
+    (
+        {
+            "PMD.TooManyMethods",
+            "PMD.AvoidInstantiatingObjectsInLoops"
+        }
+    )
 public final class AttributeUpdates
     implements Map<String, AttributeValueUpdate> {
 
@@ -79,9 +81,7 @@ public final class AttributeUpdates
      * Private ctor.
      * @param map Map of them
      */
-    public AttributeUpdates(
-        @NotNull(message = "map of AttributeUpdates can't be NULL")
-        final Map<String, AttributeValueUpdate> map) {
+    public AttributeUpdates(final Map<String, AttributeValueUpdate> map) {
         this.attrs = new ArrayMap<String, AttributeValueUpdate>(map);
     }
 
@@ -91,10 +91,7 @@ public final class AttributeUpdates
      * @param value The value
      * @return AttributeUpdates
      */
-    public AttributeUpdates with(
-        @NotNull(message = "The attribute name can't be NULL")
-        final String name,
-        @NotNull(message = "The attribute value can't be NULL")
+    public AttributeUpdates with(final String name,
         final AttributeValueUpdate value) {
         return new AttributeUpdates(
             this.attrs.with(String.format(Locale.ENGLISH, name), value)
@@ -108,11 +105,7 @@ public final class AttributeUpdates
      * @return AttributeUpdates
      * @since 0.14.3
      */
-    @NotNull(message = "The given AttributeUpdates cannot be null")
-    public AttributeUpdates with(
-        @NotNull(message = "The attribute name can't be NULL")
-        final String name,
-        @NotNull(message = "The attribute value can't be NULL")
+    public AttributeUpdates with(final String name,
         final AttributeValue value) {
         return this.with(
             name,
@@ -127,12 +120,7 @@ public final class AttributeUpdates
      * @return AttributeUpdates
      * @since 0.14.3
      */
-    @NotNull(message = "This AttributeUpdates cannot be null")
-    public AttributeUpdates with(
-        @NotNull(message = "attribute name can't be NULL")
-        final String name,
-        @NotNull(message = "attribute value can't be NULL")
-        final Object value) {
+    public AttributeUpdates with(final String name, final Object value) {
         final AttributeValue attr;
         if (value instanceof Long || value instanceof Integer) {
             attr = new AttributeValue().withN(value.toString());
@@ -147,10 +135,7 @@ public final class AttributeUpdates
      * @param map AttributeUpdates to add
      * @return AttributeUpdates
      */
-    @NotNull(message = "The Returned AttributeUpdates cannot be null")
-    public AttributeUpdates with(
-        @NotNull(message = "map of AttributeUpdates can't be NULL")
-        final Map<String, AttributeValueUpdate> map) {
+    public AttributeUpdates with(final Map<String, AttributeValueUpdate> map) {
         final ConcurrentMap<String, AttributeValueUpdate> attribs =
             new ConcurrentHashMap<String, AttributeValueUpdate>(map.size());
         for (final Map.Entry<String, AttributeValueUpdate> entry
@@ -164,7 +149,6 @@ public final class AttributeUpdates
     }
 
     @Override
-    @NotNull(message = "String cannot be null")
     public String toString() {
         final Collection<String> terms =
             new ArrayList<String>(this.attrs.size());
@@ -192,45 +176,35 @@ public final class AttributeUpdates
     }
 
     @Override
-    public boolean containsKey(
-        @NotNull(message = "attribute key cannot be null")
-        final Object key) {
+    public boolean containsKey(final Object key) {
         return this.attrs.containsKey(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
-    public boolean containsValue(
-        @NotNull(message = "attribute value cannot be NULL")
-        final Object value) {
+    public boolean containsValue(final Object value) {
         return this.attrs.containsValue(value);
     }
 
     @Override
-    @NotNull(message = "AttributeValueUpdate cannot be null")
-    public AttributeValueUpdate get(
-        @NotNull(message = "attribute key cannot be NULL")
-        final Object key) {
+    public AttributeValueUpdate get(final Object key) {
         return this.attrs.get(
             String.format(Locale.ENGLISH, key.toString())
         );
     }
 
     @Override
-    @NotNull(message = "Set cannot be null")
     public Set<String> keySet() {
         return this.attrs.keySet();
     }
 
     @Override
-    @NotNull(message = "Collections<AttributeValueUpdate> cannot be null")
     public Collection<AttributeValueUpdate> values() {
         return this.attrs.values();
     }
 
     @Override
-    @NotNull(message = "Set cannot be null")
     public Set<Map.Entry<String, AttributeValueUpdate>> entrySet() {
         return this.attrs.entrySet();
     }

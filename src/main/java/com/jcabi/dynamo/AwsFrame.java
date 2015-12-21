@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.Iterator;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -50,10 +49,11 @@ import lombok.ToString;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
-@EqualsAndHashCode(
-    callSuper = false,
-    of = { "credentials", "tbl", "name", "conditions", "valve" }
-)
+@EqualsAndHashCode
+    (
+        callSuper = false,
+        of = { "credentials", "tbl", "name", "conditions", "valve" }
+    )
 final class AwsFrame extends AbstractCollection<Item> implements Frame {
 
     /**
@@ -87,12 +87,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
      * @param table Table
      * @param label Table name
      */
-    AwsFrame(
-        @NotNull(message = "attribute creds cannot be null")
-        final Credentials creds,
-        @NotNull(message = "attribute table cannot be null")
-        final AwsTable table,
-        @NotNull(message = "attribute label cannot be null")
+    AwsFrame(final Credentials creds, final AwsTable table,
         final String label) {
         this(creds, table, label, new Conditions(), new ScanValve());
     }
@@ -106,17 +101,8 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
      * @param vlv Valve
      * @checkstyle ParameterNumber (5 lines)
      */
-    AwsFrame(
-        @NotNull(message = "attribute creds annot be null")
-        final Credentials creds,
-        @NotNull(message = "attribute table cannot be null")
-        final AwsTable table,
-        @NotNull(message = "attribute label cannot be null")
-        final String label,
-        @NotNull(message = "attribute conds cannot be null")
-        final Conditions conds,
-        @NotNull(message = "attribute vlv cannot be null")
-        final Valve vlv) {
+    AwsFrame(final Credentials creds, final AwsTable table,
+        final String label, final Conditions conds, final Valve vlv) {
         super();
         this.credentials = creds;
         this.tbl = table;
@@ -126,7 +112,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull(message = "Iterator cannot be null")
     public Iterator<Item> iterator() {
         try {
             return new AwsIterator(
@@ -148,19 +133,12 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull(message = "frame is never NULL")
-    public Frame where(
-        @NotNull(message = "attribute name can't be NULL") final String attr,
-        @NotNull(message = "value can't be NULL") final String value) {
+    public Frame where(final String attr, final String value) {
         return this.where(attr, Conditions.equalTo(value));
     }
 
     @Override
-    @NotNull(message = "frame is never NULL")
-    public Frame where(
-        @NotNull(message = "attribute name can't be NULL") final String attr,
-        @NotNull(message = "condition can't be NULL")
-        final Condition condition) {
+    public Frame where(final String attr, final Condition condition) {
         return new AwsFrame(
             this.credentials,
             this.tbl,
@@ -171,9 +149,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull(message = "modified frame is never NULL")
-    public Frame where(@NotNull(message = "conditions can't be NULL")
-        final Map<String, Condition> conds) {
+    public Frame where(final Map<String, Condition> conds) {
         return new AwsFrame(
             this.credentials,
             this.tbl,
@@ -184,9 +160,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull(message = "frame is never NULL")
-    public Frame through(@NotNull(message = "valve can't be NULL")
-        final Valve vlv) {
+    public Frame through(final Valve vlv) {
         return new AwsFrame(
             this.credentials,
             this.tbl,
@@ -197,7 +171,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     }
 
     @Override
-    @NotNull(message = "table is never NULL")
     public Table table() {
         return this.tbl;
     }

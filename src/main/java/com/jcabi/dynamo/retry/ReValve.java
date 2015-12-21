@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -67,27 +66,15 @@ public final class ReValve implements Valve {
      * Public ctor.
      * @param valve Origin valve
      */
-    public ReValve(
-        @NotNull(message = "attribute valve cannot be null")
-        final Valve valve) {
+    public ReValve(final Valve valve) {
         this.origin = valve;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (7 lines)
-     */
+    // @checkstyle ParameterNumber (7 lines)
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-    @NotNull(message = "Dosage cannot be null")
-    public Dosage fetch(
-        @NotNull(message = "attribute credentials cannot be null")
-        final Credentials credentials,
-        @NotNull(message = "attribute table cannot be null")
-        final String table,
-        @NotNull(message = "attribute conditions cannot be null")
+    public Dosage fetch(final Credentials credentials, final String table,
         final Map<String, Condition> conditions,
-        @NotNull(message = "attribute keys cannot be null")
         final Collection<String> keys) throws IOException {
         return new ReDosage(
             this.origin.fetch(credentials, table, conditions, keys)

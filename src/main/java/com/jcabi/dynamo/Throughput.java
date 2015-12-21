@@ -31,7 +31,6 @@ package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.jcabi.aspects.Tv;
-import javax.validation.constraints.NotNull;
 
 /**
  * Throughput of a table.
@@ -49,8 +48,7 @@ public final class Throughput {
      * Public ctor.
      * @param tbl The table.
      */
-    public Throughput(@NotNull(message = "table can't be NULL")
-        final Table tbl) {
+    public Throughput(final Table tbl) {
         this.table = tbl;
     }
 
@@ -72,7 +70,6 @@ public final class Throughput {
      * certain parameters of elasticity/scalability.
      * @return Throughput settings.
      */
-    @NotNull(message = "ProvisionedThroughput cannot be null")
     private ProvisionedThroughput suitableThroughput() {
         /* @todo #10 The exact algorithm for figuring out read and write
          * capacities should be based on a CloudWatch metric accessed with

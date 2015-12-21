@@ -35,7 +35,6 @@ import com.jcabi.aspects.Tv;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -45,6 +44,7 @@ import lombok.ToString;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.9
+ * @param <T> Type of items
  */
 @ToString
 @EqualsAndHashCode(of = "origin")
@@ -60,9 +60,7 @@ public final class ReIterator<T> implements Iterator<T> {
      * Public ctor.
      * @param iterator Origin iterator
      */
-    public ReIterator(
-        @NotNull(message = "attribute iterator cannot be null")
-        final Iterator<T> iterator) {
+    public ReIterator(final Iterator<T> iterator) {
         this.origin = iterator;
     }
 
@@ -73,11 +71,11 @@ public final class ReIterator<T> implements Iterator<T> {
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS,
-        ignore = NoSuchElementException.class
-    )
-    @NotNull(message = "T cannot be null")
+    @RetryOnFailure
+        (
+            verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS,
+            ignore = NoSuchElementException.class
+        )
     public T next() {
         return this.origin.next();
     }

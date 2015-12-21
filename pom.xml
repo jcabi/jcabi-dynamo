@@ -35,7 +35,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi</artifactId>
-        <version>1.17</version>
+        <version>1.21</version>
     </parent>
     <artifactId>jcabi-dynamo</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -80,17 +80,6 @@
             <artifactId>jcabi-immutable</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.jcabi</groupId>
-            <artifactId>jcabi-jdbc</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.182</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-core</artifactId>
             <version>1.9.8</version>
@@ -105,8 +94,8 @@
             <artifactId>guava</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -114,13 +103,25 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-jdbc</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.182</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
         </dependency>
     </dependencies>
     <build>

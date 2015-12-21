@@ -43,6 +43,7 @@ import com.amazonaws.services.dynamodbv2.model.TableDescription;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.hamcrest.MockitoHamcrest;
 
 /**
  * Test case for {@link AwsTable}.
@@ -91,7 +92,7 @@ public final class AwsTableTest {
         table.put(new Attributes().with(attr, value));
         Mockito.verify(aws).putItem(
             PutItemRequest.class.cast(
-                Mockito.argThat(
+                MockitoHamcrest.argThat(
                     Matchers.allOf(
                         Matchers.hasProperty(
                             TABLE_NAME,
@@ -140,7 +141,7 @@ public final class AwsTableTest {
         table.delete(new Attributes().with(attr, value));
         Mockito.verify(aws).deleteItem(
             DeleteItemRequest.class.cast(
-                Mockito.argThat(
+                MockitoHamcrest.argThat(
                     Matchers.allOf(
                         Matchers.hasProperty(
                             TABLE_NAME,

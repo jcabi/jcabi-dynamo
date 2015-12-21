@@ -51,7 +51,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -89,12 +88,7 @@ final class AwsTable implements Table {
      * @param region Region
      * @param table Table name
      */
-    AwsTable(
-        @NotNull(message = "attribute creds cannot be null")
-        final Credentials creds,
-        @NotNull(message = "attribute region cannot be null")
-        final Region region,
-        @NotNull(message = "attribute table cannot be null")
+    AwsTable(final Credentials creds, final Region region,
         final String table) {
         this.credentials = creds;
         this.reg = region;
@@ -102,9 +96,8 @@ final class AwsTable implements Table {
     }
 
     @Override
-    @NotNull(message = "Item cannot be null")
-    public Item put(@NotNull(message = "map of attributes can't be NULL")
-        final Map<String, AttributeValue> attributes) throws IOException {
+    public Item put(final Map<String, AttributeValue> attributes)
+        throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
             final PutItemRequest request = new PutItemRequest();
@@ -135,19 +128,16 @@ final class AwsTable implements Table {
     }
 
     @Override
-    @NotNull(message = "region is never NULL")
     public Region region() {
         return this.reg;
     }
 
     @Override
-    @NotNull(message = "frame is never NULL")
     public AwsFrame frame() {
         return new AwsFrame(this.credentials, this, this.self);
     }
 
     @Override
-    @NotNull(message = "name of table is never NULL")
     public String name() {
         return this.self;
     }
@@ -158,7 +148,6 @@ final class AwsTable implements Table {
      * @throws IOException If DynamoDB fails
      */
     @Cacheable(forever = true)
-    @NotNull(message = "collection of keys is never NULL")
     public Collection<String> keys() throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
@@ -188,7 +177,6 @@ final class AwsTable implements Table {
      * @param capacity Consumed capacity or NULL
      * @return Suffix to add to a log line
      */
-    @NotNull(message = "String cannot be null")
     public static String print(
         final ConsumedCapacity capacity) {
         final String txt;
@@ -201,8 +189,8 @@ final class AwsTable implements Table {
     }
 
     @Override
-    public void delete(@NotNull(message = "map of attributes can't be NULL")
-        final Map<String, AttributeValue> attributes) throws IOException {
+    public void delete(final Map<String, AttributeValue> attributes)
+        throws IOException {
         final AmazonDynamoDB aws = this.credentials.aws();
         try {
             final DeleteItemRequest request = new DeleteItemRequest();

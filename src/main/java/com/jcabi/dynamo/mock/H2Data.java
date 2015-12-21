@@ -295,7 +295,7 @@ public final class H2Data implements MkData {
      * @throws IOException If fails
      */
     public H2Data with(final String table, final String[] keys,
-        final String[] attrs) throws IOException {
+        final String... attrs) throws IOException {
         if (keys.length == 0) {
             throw new IllegalArgumentException(
                 String.format("empty list of keys for %s table", table)

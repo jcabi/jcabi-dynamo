@@ -33,7 +33,6 @@ import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.aspects.Immutable;
 import java.util.Collection;
 import java.util.Map;
-import javax.validation.constraints.NotNull;
 
 /**
  * DynamoDB frame (subset of a table).
@@ -68,9 +67,7 @@ public interface Frame extends Collection<Item> {
      * @return New frame
      * @since 0.7.21
      */
-    @NotNull(message = "frame is never NULL")
-    Frame where(@NotNull(message = "attribute name can't be NULL") String name,
-        @NotNull(message = "value can't be NULL") String value);
+    Frame where(String name, String value);
 
     /**
      * Refine using this condition.
@@ -83,9 +80,7 @@ public interface Frame extends Collection<Item> {
      * @param condition The condition
      * @return New frame
      */
-    @NotNull(message = "new frame is never NULL")
-    Frame where(@NotNull(message = "attribute name can't be NULL") String name,
-        @NotNull(message = "condition can't be NULL") Condition condition);
+    Frame where(String name, Condition condition);
 
     /**
      * Refine using these conditions.
@@ -97,15 +92,12 @@ public interface Frame extends Collection<Item> {
      * @return New frame
      * @see Conditions
      */
-    @NotNull(message = "frame is never NULL")
-    Frame where(@NotNull(message = "conditions can't be NULL")
-        Map<String, Condition> conditions);
+    Frame where(Map<String, Condition> conditions);
 
     /**
      * Get back to the table this frame came from.
      * @return The table
      */
-    @NotNull(message = "table is never NULL")
     Table table();
 
     /**
@@ -114,7 +106,6 @@ public interface Frame extends Collection<Item> {
      * @return New frame
      * @since 0.7.21
      */
-    @NotNull(message = "frame is never NULL")
-    Frame through(@NotNull(message = "valve can't be NULL") Valve valve);
+    Frame through(Valve valve);
 
 }
