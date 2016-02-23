@@ -95,11 +95,6 @@ public final class ReTable implements Table {
         return this.origin.name();
     }
 
-    /**
-     * Delete item from aws table.
-     * @param attributes Attributes
-     * @throws IOException In case of DynamoDB failure
-     */
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public void delete(final Map<String, AttributeValue> attributes)

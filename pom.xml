@@ -35,7 +35,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi</artifactId>
-        <version>1.21</version>
+        <version>1.22</version>
     </parent>
     <artifactId>jcabi-dynamo</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -215,6 +215,7 @@
                     <plugin>
                         <groupId>com.qulice</groupId>
                         <artifactId>qulice-maven-plugin</artifactId>
+                        <version>0.16.2</version>
                         <configuration>
                             <excludes>
                                 <exclude>findbugs:.*</exclude>

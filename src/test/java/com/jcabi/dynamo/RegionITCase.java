@@ -44,13 +44,15 @@ import org.junit.Test;
  * Integration case for {@link Region}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
 public final class RegionITCase {
 
     /**
      * Region.Simple can work with AWS.
      * @throws Exception If some problem inside
-     * @todo #56:30mins/DEV integration test fails when adding @notnull to constraints
+     * @todo #56:30mins/DEV integration test fails when
+     *  adding @notnull to constraints
      *  this needs to be fixed in methods RegionITCase.worksWithAmazon() and
      *  RegionITCase.retrievesAttributesFromDynamo(). Also see
      *  AwsIteratorITCase.
@@ -60,21 +62,22 @@ public final class RegionITCase {
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void worksWithAmazon() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
-        final Table tbl = new RegionMock().get(name).table(name);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
         final String attr = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final String value = RandomStringUtils.randomAlphanumeric(Tv.TEN);
         final String hash = RandomStringUtils.randomAlphanumeric(Tv.TEN);
         for (int idx = 0; idx < Tv.FIVE; ++idx) {
             tbl.put(
                 new Attributes()
-                    .with(RegionMock.HASH, hash)
-                    .with(RegionMock.RANGE, idx)
+                    .with(mock.hash(), hash)
+                    .with(mock.range(), idx)
                     .with(attr, value)
             );
         }
         MatcherAssert.assertThat(
             tbl.frame()
-                .where(RegionMock.HASH, Conditions.equalTo(hash))
+                .where(mock.hash(), Conditions.equalTo(hash))
                 .through(new QueryValve().withLimit(1)),
             Matchers.hasSize(Tv.FIVE)
         );
@@ -88,7 +91,7 @@ public final class RegionITCase {
         MatcherAssert.assertThat(frame, Matchers.hasSize(Tv.FIVE));
         final Iterator<Item> items = frame.iterator();
         final Item item = items.next();
-        final int range = Integer.parseInt(item.get(RegionMock.RANGE).getN());
+        final int range = Integer.parseInt(item.get(mock.range()).getN());
         MatcherAssert.assertThat(
             item.get(attr).getS(),
             Matchers.equalTo(value)
@@ -102,8 +105,8 @@ public final class RegionITCase {
         );
         MatcherAssert.assertThat(
             tbl.frame()
-                .where(RegionMock.HASH, hash)
-                .where(RegionMock.RANGE, Conditions.equalTo(range))
+                .where(mock.hash(), hash)
+                .where(mock.range(), Conditions.equalTo(range))
                 .through(new ScanValve())
                 .iterator().next()
                 .get(attr).getS(),
@@ -121,20 +124,21 @@ public final class RegionITCase {
     @Test
     public void retrievesAttributesFromDynamo() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
-        final Table tbl = new RegionMock().get(name).table(name);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
         final int idx = Tv.TEN;
         final String hash = "7afe5efa";
         final String attr = "some-attribute";
         tbl.put(
             new Attributes()
-                .with(RegionMock.HASH, hash)
-                .with(RegionMock.RANGE, idx)
+                .with(mock.hash(), hash)
+                .with(mock.range(), idx)
                 .with(attr, "test-value")
         );
         MatcherAssert.assertThat(
             tbl.frame()
-                .where(RegionMock.HASH, hash)
-                .where(RegionMock.RANGE, Conditions.equalTo(idx))
+                .where(mock.hash(), hash)
+                .where(mock.range(), Conditions.equalTo(idx))
                 .through(
                     new QueryValve()
                         .withAttributeToGet(attr)

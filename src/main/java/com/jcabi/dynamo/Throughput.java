@@ -61,7 +61,7 @@ public final class Throughput {
             .aws()
             .updateTable(
                 this.table.name(),
-                this.suitableThroughput()
+                Throughput.suitableThroughput()
             );
     }
 
@@ -69,12 +69,11 @@ public final class Throughput {
      * Decides which throughput value is the most suitable according to
      * certain parameters of elasticity/scalability.
      * @return Throughput settings.
+     * @todo #10 The exact algorithm for figuring out read and write
+     *  capacities should be based on a CloudWatch metric accessed with
+     *  credentials of this.table.region().aws().
      */
-    private ProvisionedThroughput suitableThroughput() {
-        /* @todo #10 The exact algorithm for figuring out read and write
-         * capacities should be based on a CloudWatch metric accessed with
-         * credentials of this.table.region().aws().
-         */
+    private static ProvisionedThroughput suitableThroughput() {
         return new ProvisionedThroughput(
             (long) Tv.HUNDRED,
             (long) Tv.HUNDRED

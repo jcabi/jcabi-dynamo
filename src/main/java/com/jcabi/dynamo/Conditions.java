@@ -58,6 +58,7 @@ import lombok.EqualsAndHashCode;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
@@ -88,15 +89,7 @@ public final class Conditions implements Map<String, Condition> {
      * @param map Map of them
      */
     public Conditions(final Map<String, Condition> map) {
-        final ConcurrentMap<String, Condition> cnds =
-            new ConcurrentHashMap<String, Condition>(map.size());
-        for (final Map.Entry<String, Condition> entry : map.entrySet()) {
-            cnds.put(
-                String.format(Locale.ENGLISH, entry.getKey()),
-                entry.getValue()
-            );
-        }
-        this.conds = new ArrayMap<String, Condition>(cnds);
+        this.conds = Conditions.array(map);
     }
 
     /**
@@ -251,4 +244,21 @@ public final class Conditions implements Map<String, Condition> {
         );
     }
 
+    /**
+     * Convert map to ArrayMap.
+     * @param map Map of them
+     * @return Array map
+     */
+    private static ArrayMap<String, Condition> array(
+        final Map<String, Condition> map) {
+        final ConcurrentMap<String, Condition> cnds =
+            new ConcurrentHashMap<String, Condition>(map.size());
+        for (final Map.Entry<String, Condition> entry : map.entrySet()) {
+            cnds.put(
+                String.format(Locale.ENGLISH, entry.getKey()),
+                entry.getValue()
+            );
+        }
+        return new ArrayMap<String, Condition>(cnds);
+    }
 }

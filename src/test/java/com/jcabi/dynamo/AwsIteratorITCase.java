@@ -51,11 +51,12 @@ public final class AwsIteratorITCase {
     @Test
     public void iteratesItems() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
-        final Table tbl = new RegionMock().get(name).table(name);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
         tbl.put(
             new Attributes()
-                .with(RegionMock.HASH, "test")
-                .with(RegionMock.RANGE, 1L)
+                .with(mock.hash(), "test")
+                .with(mock.range(), 1L)
         );
         MatcherAssert.assertThat(
             tbl.frame(),
@@ -70,10 +71,11 @@ public final class AwsIteratorITCase {
     @Test
     public void iteratesItemsAndDeletes() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
-        final Table tbl = new RegionMock().get(name).table(name);
-        final Attributes attrs = new Attributes().with(RegionMock.RANGE, 1L);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final Attributes attrs = new Attributes().with(mock.range(), 1L);
         for (int idx = 0; idx < Tv.SIX; ++idx) {
-            tbl.put(attrs.with(RegionMock.HASH, String.format("i%d", idx)));
+            tbl.put(attrs.with(mock.hash(), String.format("i%d", idx)));
         }
         final Iterator<Item> items = tbl.frame().iterator();
         int cnt = 0;

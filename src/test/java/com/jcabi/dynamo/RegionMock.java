@@ -50,19 +50,66 @@ final class RegionMock {
     /**
      * Dynamo table hash key.
      */
-    public static final String HASH = "hash-key";
+    private final transient String ahash;
 
     /**
      * Dynamo table range key.
      */
-    public static final String RANGE = "range-key";
+    private final transient String arange;
 
     /**
      * DynamoDB Local port.
      */
-    private static final int PORT = Integer.parseInt(
-        System.getProperty("failsafe.port")
-    );
+    private final transient int prt;
+
+    /**
+     * Ctor.
+     */
+    RegionMock() {
+        this(
+            "hash-key",
+            "range-key",
+            Integer.parseInt(
+                System.getProperty("failsafe.port")
+            )
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param hash Hash
+     * @param range Range
+     * @param port Port
+     */
+    RegionMock(final String hash, final String range, final int port) {
+        this.ahash = hash;
+        this.arange = range;
+        this.prt = port;
+    }
+
+    /**
+     * Get DynamoDB server port.
+     * @return TCP port
+     */
+    public int port() {
+        return this.prt;
+    }
+
+    /**
+     * Get hash of the table.
+     * @return Hash attribute name
+     */
+    public String hash() {
+        return this.ahash;
+    }
+
+    /**
+     * Get range of the table.
+     * @return Hash attribute name
+     */
+    public String range() {
+        return this.arange;
+    }
 
     /**
      * Get region with a table.
@@ -72,7 +119,7 @@ final class RegionMock {
      */
     public Region get(final String table) throws Exception {
         final Region region = new Region.Simple(
-            new Credentials.Direct(Credentials.TEST, RegionMock.PORT)
+            new Credentials.Direct(Credentials.TEST, this.prt)
         );
         final MadeTable mocker = new MadeTable(
             region,
@@ -85,18 +132,18 @@ final class RegionMock {
                 )
                 .withAttributeDefinitions(
                     new AttributeDefinition()
-                        .withAttributeName(RegionMock.HASH)
+                        .withAttributeName(this.ahash)
                         .withAttributeType(ScalarAttributeType.S),
                     new AttributeDefinition()
-                        .withAttributeName(RegionMock.RANGE)
+                        .withAttributeName(this.arange)
                         .withAttributeType(ScalarAttributeType.N)
                 )
                 .withKeySchema(
                     new KeySchemaElement()
-                        .withAttributeName(RegionMock.HASH)
+                        .withAttributeName(this.ahash)
                         .withKeyType(KeyType.HASH),
                     new KeySchemaElement()
-                        .withAttributeName(RegionMock.RANGE)
+                        .withAttributeName(this.arange)
                         .withKeyType(KeyType.RANGE)
                 )
         );

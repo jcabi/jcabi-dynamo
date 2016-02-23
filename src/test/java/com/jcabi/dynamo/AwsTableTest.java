@@ -49,6 +49,7 @@ import org.mockito.hamcrest.MockitoHamcrest;
  * Test case for {@link AwsTable}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
 public final class AwsTableTest {
@@ -79,7 +80,7 @@ public final class AwsTableTest {
         Mockito.doReturn(
             new DescribeTableResult().withTable(
                 new TableDescription().withKeySchema(
-                    new KeySchemaElement().withAttributeName(KEY)
+                    new KeySchemaElement().withAttributeName(AwsTableTest.KEY)
                 )
             )
         ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
@@ -95,7 +96,7 @@ public final class AwsTableTest {
                 MockitoHamcrest.argThat(
                     Matchers.allOf(
                         Matchers.hasProperty(
-                            TABLE_NAME,
+                            AwsTableTest.TABLE_NAME,
                             Matchers.equalTo(name)
                         ),
                         Matchers.hasProperty(
@@ -128,7 +129,7 @@ public final class AwsTableTest {
         Mockito.doReturn(
             new DescribeTableResult().withTable(
                 new TableDescription().withKeySchema(
-                    new KeySchemaElement().withAttributeName(KEY)
+                    new KeySchemaElement().withAttributeName(AwsTableTest.KEY)
                 )
             )
         ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
@@ -144,11 +145,11 @@ public final class AwsTableTest {
                 MockitoHamcrest.argThat(
                     Matchers.allOf(
                         Matchers.hasProperty(
-                            TABLE_NAME,
+                            AwsTableTest.TABLE_NAME,
                             Matchers.equalTo(name)
                         ),
                         Matchers.hasProperty(
-                            KEY,
+                            AwsTableTest.KEY,
                             Matchers.hasEntry(
                                 Matchers.equalTo(attr),
                                 Matchers.equalTo(value)

@@ -58,6 +58,7 @@ import lombok.ToString;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
 @Immutable
 @ToString
@@ -180,8 +181,8 @@ public final class QueryValve implements Valve {
      * With consistent read.
      * @param cnst Consistent read
      * @return New query valve
-     * @since 0.12
      * @see QueryRequest#withConsistentRead(Boolean)
+     * @since 0.12
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withConsistentRead(final boolean cnst) {
@@ -196,8 +197,8 @@ public final class QueryValve implements Valve {
      * With index name.
      * @param idx Index name
      * @return New query valve
-     * @since 0.10.2
      * @see QueryRequest#withIndexName(String)
+     * @since 0.10.2
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withIndexName(final String idx) {
@@ -212,8 +213,8 @@ public final class QueryValve implements Valve {
      * With attributes to select.
      * @param slct Select to use
      * @return New query valve
-     * @since 0.10.2
      * @see QueryRequest#withSelect(Select)
+     * @since 0.10.2
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withSelect(final Select slct) {

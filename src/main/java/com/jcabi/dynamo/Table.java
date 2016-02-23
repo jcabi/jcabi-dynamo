@@ -53,6 +53,7 @@ import java.util.Map;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
 @Immutable
 public interface Table {
@@ -65,8 +66,8 @@ public interface Table {
      *
      * @param attributes Attributes to save
      * @return Item just created
-     * @see Attributes
      * @throws IOException In case of DynamoDB failure
+     * @see Attributes
      */
     Item put(Map<String, AttributeValue> attributes) throws IOException;
 
@@ -93,8 +94,8 @@ public interface Table {
      * <p>It is recommended to use {@link Attributes} supplementary class,
      * instead of a raw {@link Map}.
      * @param attributes Attributes containing item key and value
-     * @see Attributes
      * @throws IOException In case of DynamoDB failure
+     * @see Attributes
      */
     void delete(Map<String, AttributeValue> attributes) throws IOException;
 

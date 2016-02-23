@@ -37,6 +37,7 @@ import org.junit.Test;
  * Test case for {@link Credentials}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
 public final class CredentialsTest {
 
