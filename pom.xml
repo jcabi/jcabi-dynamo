@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-aspects</artifactId>
-            <version>0.22.2</version>
+            <version>0.22.3</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.190</version>
+            <version>1.4.191</version>
             <optional>true</optional>
         </dependency>
         <dependency>
