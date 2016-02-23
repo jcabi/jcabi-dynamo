@@ -108,7 +108,7 @@ final class AwsTable implements Table {
             final PutItemResult result = aws.putItem(request);
             final long start = System.currentTimeMillis();
             Logger.info(
-                this, "#put('%[text]s'): created item in '%s'%s, in %[ms]s",
+                this, "#put('%[text]s'): created item in '%s', %s, in %[ms]s",
                 attributes, this.self,
                 AwsTable.print(result.getConsumedCapacity()),
                 System.currentTimeMillis() - start
@@ -121,7 +121,13 @@ final class AwsTable implements Table {
                 new Array<String>(this.keys())
             );
         } catch (final AmazonClientException ex) {
-            throw new IOException(ex);
+            throw new IOException(
+                String.format(
+                    "failed to put into \"%s\" with %s",
+                    this.self, attributes
+                ),
+                ex
+            );
         } finally {
             aws.shutdown();
         }
@@ -166,7 +172,13 @@ final class AwsTable implements Table {
             );
             return keys;
         } catch (final AmazonClientException ex) {
-            throw new IOException(ex);
+            throw new IOException(
+                String.format(
+                    "failed to describe \"%s\"",
+                    this.self
+                ),
+                ex
+            );
         } finally {
             aws.shutdown();
         }
@@ -201,13 +213,20 @@ final class AwsTable implements Table {
             final DeleteItemResult result = aws.deleteItem(request);
             final long start = System.currentTimeMillis();
             Logger.info(
-                this, "#delete('%[text]s'): deleted item in '%s'%s, in %[ms]s",
+                this,
+                "#delete('%[text]s'): deleted item in '%s', %s, in %[ms]s",
                 attributes, this.self,
                 AwsTable.print(result.getConsumedCapacity()),
                 System.currentTimeMillis() - start
             );
         } catch (final AmazonClientException ex) {
-            throw new IOException(ex);
+            throw new IOException(
+                String.format(
+                    "failed to delete at \"%s\" by keys %s",
+                    this.self, attributes
+                ),
+                ex
+            );
         } finally {
             aws.shutdown();
         }

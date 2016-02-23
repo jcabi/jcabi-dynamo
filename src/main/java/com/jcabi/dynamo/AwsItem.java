@@ -124,12 +124,18 @@ final class AwsItem implements Item {
                 final GetItemResult result = aws.getItem(request);
                 has = result.getItem().get(attrib) != null;
                 Logger.info(
-                    this, "#has('%s'): %B from DynamoDB%s, in %[ms]s",
+                    this, "#has('%s'): %B from DynamoDB, %s, in %[ms]s",
                     attr, has, AwsTable.print(result.getConsumedCapacity()),
                     System.currentTimeMillis() - start
                 );
             } catch (final AmazonClientException ex) {
-                throw new IOException(ex);
+                throw new IOException(
+                    String.format(
+                        "failed to check existence of \"%s\" at \"%s\" by %s",
+                        attr, this.name, this.keys
+                    ),
+                    ex
+                );
             } finally {
                 aws.shutdown();
             }
@@ -161,7 +167,13 @@ final class AwsItem implements Item {
                     System.currentTimeMillis() - start
                 );
             } catch (final AmazonClientException ex) {
-                throw new IOException(ex);
+                throw new IOException(
+                    String.format(
+                        "failed to get \"%s\" from \"%s\" by %s",
+                        attr, this.name, this.keys
+                    ),
+                    ex
+                );
             } finally {
                 aws.shutdown();
             }
@@ -202,7 +214,13 @@ final class AwsItem implements Item {
             );
             return result.getAttributes();
         } catch (final AmazonClientException ex) {
-            throw new IOException(ex);
+            throw new IOException(
+                String.format(
+                    "failed to put %s into \"%s\" with %s",
+                    attrs, this.name, this.keys
+                ),
+                ex
+            );
         } finally {
             aws.shutdown();
         }

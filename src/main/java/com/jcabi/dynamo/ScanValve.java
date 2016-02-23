@@ -113,14 +113,20 @@ public final class ScanValve implements Valve {
             final ScanResult result = aws.scan(request);
             Logger.info(
                 this,
-                "#items(): loaded %d item(s) from '%s' using %s%s, in %[ms]s",
+                "#items(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                 result.getCount(), table, conditions,
                 AwsTable.print(result.getConsumedCapacity()),
                 System.currentTimeMillis() - start
             );
             return new ScanValve.NextDosage(credentials, request, result);
         } catch (final AmazonClientException ex) {
-            throw new IOException(ex);
+            throw new IOException(
+                String.format(
+                    "failed to fetch from \"%s\" by %s and %s",
+                    table, conditions, keys
+                ),
+                ex
+            );
         } finally {
             aws.shutdown();
         }
@@ -221,7 +227,7 @@ public final class ScanValve implements Valve {
                 Logger.info(
                     this,
                     // @checkstyle LineLength (1 line)
-                    "#next(): loaded %d item(s) from '%s' using %s%s, in %[ms]s",
+                    "#next(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                     rslt.getCount(), rqst.getTableName(), rqst.getScanFilter(),
                     AwsTable.print(rslt.getConsumedCapacity()),
                     System.currentTimeMillis() - start
