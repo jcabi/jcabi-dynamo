@@ -181,7 +181,7 @@ final class AwsItem implements Item {
         }
         if (value == null) {
             throw new NoSuchElementException(
-                String.format("attribute %s not found", attr)
+                String.format("attribute \"%s\" not found", attr)
             );
         }
         return value;
