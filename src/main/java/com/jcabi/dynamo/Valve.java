@@ -59,4 +59,15 @@ public interface Valve {
         Map<String, Condition> conditions, Collection<String> keys)
         throws IOException;
 
+    /**
+     * Count items.
+     * @param credentials Credentials to AWS
+     * @param table Table name
+     * @param conditions Conditions
+     * @return Total count of the
+     * @throws IOException In case of DynamoDB failure
+     */
+    int count(Credentials credentials, String table,
+        Map<String, Condition> conditions) throws IOException;
+
 }

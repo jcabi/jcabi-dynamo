@@ -52,12 +52,35 @@ public final class AwsFrameITCase {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
-        final Attributes attrs = new Attributes().with(mock.range(), 1L);
+        final String hash = "hello";
+        final Attributes attrs = new Attributes().with(mock.hash(), hash);
         for (int idx = 0; idx < Tv.TEN; ++idx) {
-            tbl.put(attrs.with(mock.hash(), String.format("i%d", idx)));
+            tbl.put(attrs.with(mock.range(), idx));
         }
         MatcherAssert.assertThat(
-            tbl.frame().through(new ScanValve().withLimit(1)).size(),
+            tbl.frame()
+                .through(new ScanValve().withLimit(1))
+                .size(),
+            Matchers.equalTo(Tv.TEN)
+        );
+        MatcherAssert.assertThat(
+            tbl.frame()
+                .through(new ScanValve().withLimit(Tv.HUNDRED))
+                .size(),
+            Matchers.equalTo(Tv.TEN)
+        );
+        MatcherAssert.assertThat(
+            tbl.frame()
+                .through(new QueryValve().withLimit(1))
+                .where(mock.hash(), hash)
+                .size(),
+            Matchers.equalTo(Tv.TEN)
+        );
+        MatcherAssert.assertThat(
+            tbl.frame()
+                .through(new QueryValve().withLimit(Tv.HUNDRED))
+                .where(mock.hash(), hash)
+                .size(),
             Matchers.equalTo(Tv.TEN)
         );
     }

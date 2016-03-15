@@ -62,7 +62,7 @@ import lombok.ToString;
 @Immutable
 @ToString
 @Loggable(Loggable.DEBUG)
-@EqualsAndHashCode(of = { "limit" })
+@EqualsAndHashCode(of = { "limit", "attributes" })
 public final class ScanValve implements Valve {
 
     /**
@@ -131,6 +131,23 @@ public final class ScanValve implements Valve {
         } finally {
             aws.shutdown();
         }
+    }
+
+    @Override
+    public int count(final Credentials credentials, final String table,
+        final Map<String, Condition> conditions) throws IOException {
+        Dosage dosage = this.fetch(
+            credentials, table, conditions, Collections.<String>emptyList()
+        );
+        int count = 0;
+        while (true) {
+            count += dosage.items().size();
+            if (!dosage.hasNext()) {
+                break;
+            }
+            dosage = dosage.next();
+        }
+        return count;
     }
 
     /**

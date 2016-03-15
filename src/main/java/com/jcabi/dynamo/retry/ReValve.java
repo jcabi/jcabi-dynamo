@@ -81,4 +81,11 @@ public final class ReValve implements Valve {
         );
     }
 
+    @Override
+    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    public int count(final Credentials credentials, final String table,
+        final Map<String, Condition> conditions) throws IOException {
+        return this.origin.count(credentials, table, conditions);
+    }
+
 }

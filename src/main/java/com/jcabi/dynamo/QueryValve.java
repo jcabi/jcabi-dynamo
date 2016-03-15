@@ -177,6 +177,38 @@ public final class QueryValve implements Valve {
         }
     }
 
+    @Override
+    public int count(final Credentials credentials, final String table,
+        final Map<String, Condition> conditions) throws IOException {
+        final AmazonDynamoDB aws = credentials.aws();
+        try {
+            QueryRequest request = new QueryRequest()
+                .withTableName(table)
+                .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .withKeyConditions(conditions)
+                .withConsistentRead(true)
+                .withSelect(Select.COUNT)
+                .withLimit(Integer.MAX_VALUE);
+            if (!this.index.isEmpty()) {
+                request = request.withIndexName(this.index);
+            }
+            final long start = System.currentTimeMillis();
+            final QueryResult rslt = aws.query(request);
+            final int count = rslt.getCount();
+            Logger.info(
+                this,
+                // @checkstyle LineLength (1 line)
+                "#total(): COUNT=%d in '%s' using %s, %s, in %[ms]s",
+                count, request.getTableName(), request.getQueryFilter(),
+                AwsTable.print(rslt.getConsumedCapacity()),
+                System.currentTimeMillis() - start
+            );
+            return count;
+        } finally {
+            aws.shutdown();
+        }
+    }
+
     /**
      * With consistent read.
      * @param cnst Consistent read

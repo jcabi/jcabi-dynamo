@@ -30,7 +30,6 @@
 package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.Condition;
-import com.google.common.collect.Iterators;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import java.io.IOException;
@@ -130,7 +129,16 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
 
     @Override
     public int size() {
-        return Iterators.size(this.iterator());
+        try {
+            return this.valve.count(
+                this.credentials, this.name, this.conditions
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(
+                String.format("can't count items in \"%s\"", this.name),
+                ex
+            );
+        }
     }
 
     @Override
