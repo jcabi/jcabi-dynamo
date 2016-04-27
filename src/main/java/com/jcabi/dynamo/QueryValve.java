@@ -186,7 +186,7 @@ public final class QueryValve implements Valve {
                 .withTableName(table)
                 .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .withKeyConditions(conditions)
-                .withConsistentRead(true)
+                .withConsistentRead(this.consistent)
                 .withSelect(Select.COUNT)
                 .withLimit(Integer.MAX_VALUE);
             if (!this.index.isEmpty()) {
