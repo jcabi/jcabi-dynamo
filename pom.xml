@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-aspects</artifactId>
-            <version>0.22.3</version>
+            <version>0.22.4</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -82,12 +82,12 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-core</artifactId>
-            <version>1.10.60</version>
+            <version>1.10.73</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
-            <version>1.10.60</version>
+            <version>1.10.73</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
