@@ -35,6 +35,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -120,7 +121,7 @@ public final class AttributeUpdatesTest {
     }
 
     /**
-     * AttributesUpdates can return its key Set.
+     * AttributesUpdates can return its values.
      */
     @Test
     public void returnsValues() {
@@ -229,37 +230,56 @@ public final class AttributeUpdatesTest {
     }
 
     /**
-     * AttributesUpdates.put(...) throws exception when called.
+     * AttributesUpdates can throw exception when put is called.
      */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void putThrowsException() {
-        new AttributeUpdates().put(
-            "key9",
-            Mockito.mock(AttributeValueUpdate.class)
-        );
+        try {
+            new AttributeUpdates().put(
+                "key9", Mockito.mock(AttributeValueUpdate.class)
+            );
+            Assert.fail("#put should not be supported");
+        } catch (final UnsupportedOperationException ex) {
+            MatcherAssert.assertThat("passed test", Matchers.notNullValue());
+        }
     }
 
     /**
-     * AttributesUpdates.putAll(...) throws exception when called.
+     * AttributesUpdates can throw exception when putAll is called.
      */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void putAllThrowsException() {
-        new AttributeUpdates().putAll(new AttributeUpdates());
+        try {
+            new AttributeUpdates().putAll(new AttributeUpdates());
+            Assert.fail("#putAll should not be supported.");
+        } catch (final UnsupportedOperationException ex) {
+            MatcherAssert.assertThat("test ok", Matchers.notNullValue());
+        }
     }
 
     /**
-     * AttributesUpdates.remove(...) throws exception when called.
+     * AttributesUpdates can throw exception when remove is called.
      */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void removeThrowsException() {
-        new AttributeUpdates().remove("object to remove");
+        try {
+            new AttributeUpdates().remove("object to remove");
+            Assert.fail("#remove should not be supported.");
+        } catch (final UnsupportedOperationException ex) {
+            MatcherAssert.assertThat("passed", Matchers.notNullValue());
+        }
     }
 
     /**
-     * AttributesUpdates.clear() throws exception when called.
+     * AttributesUpdates can throw exception when clear is called.
      */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void clearThrowsException() {
-        new AttributeUpdates().clear();
+        try {
+            new AttributeUpdates().clear();
+            Assert.fail("#clear should not be supported.");
+        } catch (final UnsupportedOperationException ex) {
+            MatcherAssert.assertThat("test passed", Matchers.notNullValue());
+        }
     }
 }
