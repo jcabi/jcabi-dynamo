@@ -234,13 +234,17 @@ public final class AttributeUpdatesTest {
      */
     @Test
     public void putThrowsException() {
+        boolean passed;
         try {
             new AttributeUpdates().put(
                 "key9", Mockito.mock(AttributeValueUpdate.class)
             );
-            Assert.fail("#put should not be supported");
+            passed = false;
         } catch (final UnsupportedOperationException ex) {
-            MatcherAssert.assertThat("passed test", Matchers.notNullValue());
+            passed = true;
+        }
+        if (!passed) {
+            Assert.fail("#put should not be supported");
         }
     }
 
@@ -249,11 +253,15 @@ public final class AttributeUpdatesTest {
      */
     @Test
     public void putAllThrowsException() {
+        boolean passed;
         try {
             new AttributeUpdates().putAll(new AttributeUpdates());
-            Assert.fail("#putAll should not be supported.");
+            passed = false;
         } catch (final UnsupportedOperationException ex) {
-            MatcherAssert.assertThat("test ok", Matchers.notNullValue());
+            passed = true;
+        }
+        if (!passed) {
+            Assert.fail("#putAll should not be supported.");
         }
     }
 
@@ -262,11 +270,15 @@ public final class AttributeUpdatesTest {
      */
     @Test
     public void removeThrowsException() {
+        boolean passed;
         try {
             new AttributeUpdates().remove("object to remove");
-            Assert.fail("#remove should not be supported.");
+            passed = false;
         } catch (final UnsupportedOperationException ex) {
-            MatcherAssert.assertThat("passed", Matchers.notNullValue());
+            passed = true;
+        }
+        if (!passed) {
+            Assert.fail("#remove should not be supported.");
         }
     }
 
@@ -275,11 +287,15 @@ public final class AttributeUpdatesTest {
      */
     @Test
     public void clearThrowsException() {
+        boolean passed;
         try {
             new AttributeUpdates().clear();
-            Assert.fail("#clear should not be supported.");
+            passed = false;
         } catch (final UnsupportedOperationException ex) {
-            MatcherAssert.assertThat("test passed", Matchers.notNullValue());
+            passed = true;
+        }
+        if (!passed) {
+            Assert.fail("#clear should not be supported.");
         }
     }
 }
