@@ -126,7 +126,10 @@ final class AwsItem implements Item {
                 has = result.getItem().get(attrib) != null;
                 Logger.info(
                     this, "#has('%s'): %B from DynamoDB, %s, in %[ms]s",
-                    attr, has, AwsTable.print(result.getConsumedCapacity()),
+                    attr, has,
+                    new PrintableConsumedCapacity(
+                        result.getConsumedCapacity()
+                    ).print(),
                     System.currentTimeMillis() - start
                 );
             } catch (final AmazonClientException ex) {
@@ -164,7 +167,10 @@ final class AwsItem implements Item {
                     this,
                     // @checkstyle LineLength (1 line)
                     "#get('%s'): loaded '%[text]s' from DynamoDB, %s, in %[ms]s",
-                    attrib, value, AwsTable.print(result.getConsumedCapacity()),
+                    attrib, value,
+                    new PrintableConsumedCapacity(
+                        result.getConsumedCapacity()
+                    ).print(),
                     System.currentTimeMillis() - start
                 );
             } catch (final AmazonClientException ex) {
@@ -210,7 +216,10 @@ final class AwsItem implements Item {
             final UpdateItemResult result = aws.updateItem(request);
             Logger.info(
                 this, "#put('%s'): updated item to DynamoDB, %s, in %[ms]s",
-                attrs, AwsTable.print(result.getConsumedCapacity()),
+                attrs,
+                new PrintableConsumedCapacity(
+                    result.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
             return result.getAttributes();

@@ -116,7 +116,9 @@ public final class ScanValve implements Valve {
                 this,
                 "#items(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                 result.getCount(), table, conditions,
-                AwsTable.print(result.getConsumedCapacity()),
+                new PrintableConsumedCapacity(
+                    result.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
             return new ScanValve.NextDosage(credentials, request, result);
@@ -247,7 +249,9 @@ public final class ScanValve implements Valve {
                     // @checkstyle LineLength (1 line)
                     "#next(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                     rslt.getCount(), rqst.getTableName(), rqst.getScanFilter(),
-                    AwsTable.print(rslt.getConsumedCapacity()),
+                    new PrintableConsumedCapacity(
+                        rslt.getConsumedCapacity()
+                    ).print(),
                     System.currentTimeMillis() - start
                 );
                 return new ScanValve.NextDosage(this.credentials, rqst, rslt);

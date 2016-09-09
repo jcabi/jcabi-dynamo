@@ -32,7 +32,6 @@ package com.jcabi.dynamo;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
 import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
 import com.amazonaws.services.dynamodbv2.model.DeleteItemResult;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
@@ -111,7 +110,9 @@ final class AwsTable implements Table {
             Logger.info(
                 this, "#put('%[text]s'): created item in '%s', %s, in %[ms]s",
                 attributes, this.self,
-                AwsTable.print(result.getConsumedCapacity()),
+                new PrintableConsumedCapacity(
+                    result.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
             return new AwsItem(
@@ -185,22 +186,6 @@ final class AwsTable implements Table {
         }
     }
 
-    /**
-     * Print consumed capacity nicely.
-     * @param capacity Consumed capacity or NULL
-     * @return Suffix to add to a log line
-     */
-    public static String print(
-        final ConsumedCapacity capacity) {
-        final String txt;
-        if (capacity == null) {
-            txt = "";
-        } else {
-            txt = String.format("%.2f units", capacity.getCapacityUnits());
-        }
-        return txt;
-    }
-
     @Override
     public void delete(final Map<String, AttributeValue> attributes)
         throws IOException {
@@ -217,7 +202,9 @@ final class AwsTable implements Table {
                 this,
                 "#delete('%[text]s'): deleted item in '%s', %s, in %[ms]s",
                 attributes, this.self,
-                AwsTable.print(result.getConsumedCapacity()),
+                new PrintableConsumedCapacity(
+                    result.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
         } catch (final AmazonClientException ex) {

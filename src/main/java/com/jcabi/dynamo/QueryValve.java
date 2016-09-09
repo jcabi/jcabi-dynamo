@@ -160,7 +160,9 @@ public final class QueryValve implements Valve {
                 this,
                 "#items(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                 result.getCount(), table, conditions,
-                AwsTable.print(result.getConsumedCapacity()),
+                new PrintableConsumedCapacity(
+                    result.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
             return new QueryValve.NextDosage(credentials, request, result);
@@ -200,7 +202,9 @@ public final class QueryValve implements Valve {
                 // @checkstyle LineLength (1 line)
                 "#total(): COUNT=%d in '%s' using %s, %s, in %[ms]s",
                 count, request.getTableName(), request.getQueryFilter(),
-                AwsTable.print(rslt.getConsumedCapacity()),
+                new PrintableConsumedCapacity(
+                    rslt.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
             return count;
@@ -384,7 +388,9 @@ public final class QueryValve implements Valve {
                     "#next(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                     rslt.getCount(), rqst.getTableName(),
                     rqst.getKeyConditions(),
-                    AwsTable.print(rslt.getConsumedCapacity()),
+                    new PrintableConsumedCapacity(
+                        rslt.getConsumedCapacity()
+                    ).print(),
                     System.currentTimeMillis() - start
                 );
                 return new QueryValve.NextDosage(this.credentials, rqst, rslt);
