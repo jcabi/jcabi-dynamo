@@ -7,7 +7,7 @@
 [![Build Status](https://travis-ci.org/jcabi/jcabi-dynamo.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-dynamo)
 [![Build status](https://ci.appveyor.com/api/projects/status/6hiv73p1f55qttdy/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-dynamo/branch/master)
 [![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-dynamo/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/jcabi/jcabi-dynamo?branch=__rultor)
-[![JavaDoc](https://img.shields.io/badge/javadoc-html-blue.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-dynamo)
+[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.jcabi/jcabi-dynamo/badge.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-dynamo)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo)
 [![Dependencies](https://www.versioneye.com/user/projects/561aa22ba193340f280010b7/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561aa22ba193340f280010b7)
