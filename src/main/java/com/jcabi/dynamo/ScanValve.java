@@ -36,6 +36,7 @@ import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
+import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
@@ -136,18 +137,29 @@ public final class ScanValve implements Valve {
     @Override
     public int count(final Credentials credentials, final String table,
         final Map<String, Condition> conditions) throws IOException {
-        Dosage dosage = this.fetch(
-            credentials, table, conditions, Collections.<String>emptyList()
-        );
-        int count = 0;
-        while (true) {
-            count += dosage.items().size();
-            if (!dosage.hasNext()) {
-                break;
-            }
-            dosage = dosage.next();
+        final AmazonDynamoDB aws = credentials.aws();
+        try {
+            final ScanRequest request = new ScanRequest()
+                .withTableName(table)
+                .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .withScanFilter(conditions)
+                .withSelect(Select.COUNT)
+                .withLimit(Integer.MAX_VALUE);
+            final long start = System.currentTimeMillis();
+            final ScanResult rslt = aws.scan(request);
+            final int count = rslt.getCount();
+            Logger.info(
+                this,
+                // @checkstyle LineLength (1 line)
+                "#total(): COUNT=%d in '%s' using %s, %s, in %[ms]s",
+                count, request.getTableName(), request.getFilterExpression(),
+                AwsTable.print(rslt.getConsumedCapacity()),
+                System.currentTimeMillis() - start
+            );
+            return count;
+        } finally {
+            aws.shutdown();
         }
-        return count;
     }
 
     /**

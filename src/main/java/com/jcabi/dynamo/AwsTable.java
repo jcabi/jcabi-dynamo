@@ -194,7 +194,7 @@ final class AwsTable implements Table {
         final ConsumedCapacity capacity) {
         final String txt;
         if (capacity == null) {
-            txt = "";
+            txt = "no units";
         } else {
             txt = String.format("%.2f units", capacity.getCapacityUnits());
         }
