@@ -117,7 +117,9 @@ public final class ScanValve implements Valve {
                 this,
                 "#items(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                 result.getCount(), table, conditions,
-                AwsTable.print(result.getConsumedCapacity()),
+                new PrintableConsumedCapacity(
+                    result.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
             return new ScanValve.NextDosage(credentials, request, result);
@@ -146,14 +148,16 @@ public final class ScanValve implements Valve {
                 .withSelect(Select.COUNT)
                 .withLimit(Integer.MAX_VALUE);
             final long start = System.currentTimeMillis();
-            final ScanResult rslt = aws.scan(request);
-            final int count = rslt.getCount();
+            final ScanResult result = aws.scan(request);
+            final int count = result.getCount();
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
                 "#total(): COUNT=%d in '%s' using %s, %s, in %[ms]s",
                 count, request.getTableName(), request.getFilterExpression(),
-                AwsTable.print(rslt.getConsumedCapacity()),
+                new PrintableConsumedCapacity(
+                    result.getConsumedCapacity()
+                ).print(),
                 System.currentTimeMillis() - start
             );
             return count;
@@ -259,7 +263,9 @@ public final class ScanValve implements Valve {
                     // @checkstyle LineLength (1 line)
                     "#next(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
                     rslt.getCount(), rqst.getTableName(), rqst.getScanFilter(),
-                    AwsTable.print(rslt.getConsumedCapacity()),
+                    new PrintableConsumedCapacity(
+                        rslt.getConsumedCapacity()
+                    ).print(),
                     System.currentTimeMillis() - start
                 );
                 return new ScanValve.NextDosage(this.credentials, rqst, rslt);

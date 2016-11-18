@@ -208,7 +208,10 @@ final class AwsIterator implements Iterator<Item> {
                 Logger.info(
                     this,
                     "#remove(): item #%d removed from DynamoDB, %s, in %[ms]s",
-                    this.position, AwsTable.print(res.getConsumedCapacity()),
+                    this.position,
+                    new PrintableConsumedCapacity(
+                        res.getConsumedCapacity()
+                    ).print(),
                     System.currentTimeMillis() - start
                 );
             } finally {
