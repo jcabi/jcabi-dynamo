@@ -82,12 +82,12 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-core</artifactId>
-            <version>1.10.73</version>
+            <version>1.11.57</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
-            <version>1.10.73</version>
+            <version>1.11.57</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.191</version>
+            <version>1.4.193</version>
             <optional>true</optional>
         </dependency>
         <dependency>
