@@ -66,6 +66,7 @@ public final class MkRegionTest {
                 .with(attr, "first value to \n\t€ save")
         );
         final Item item = table.frame().iterator().next();
+        MatcherAssert.assertThat(item.has(attr), Matchers.is(true));
         MatcherAssert.assertThat(
             item.get(attr).getS(),
             Matchers.containsString("\n\t\u20ac save")

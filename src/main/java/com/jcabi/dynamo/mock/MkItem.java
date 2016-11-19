@@ -99,8 +99,13 @@ final class MkItem implements Item {
     }
 
     @Override
-    public boolean has(final String name) {
-        return this.attributes.containsKey(name.toUpperCase(Locale.ENGLISH));
+    public boolean has(final String name) throws IOException {
+        return this.data.iterate(
+            this.table,
+            new Conditions().withAttributes(
+                this.attributes.only(this.data.keys(this.table))
+            )
+        ).iterator().next().containsKey(name.toLowerCase(Locale.ENGLISH));
     }
 
     @Override
