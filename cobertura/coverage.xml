@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.4969262295081967" branch-rate="0.13271604938271606" lines-covered="485" lines-valid="976" branches-covered="86" branches-valid="648" complexity="1.4960629921259843" version="2.1.1" timestamp="1479483829136">
+<coverage line-rate="0.5184815184815185" branch-rate="0.14176829268292682" lines-covered="519" lines-valid="1001" branches-covered="93" branches-valid="656" complexity="1.5173745173745175" version="2.1.1" timestamp="1479583245400">
 	<sources>
 		<source>/home/r/repo/src/main/java</source>
 		<source>--source</source>
 		<source>/home/r/repo/target/generated-sources/annotations</source>
 	</sources>
 	<packages>
-		<package name="com.jcabi.dynamo" line-rate="0.5533661740558292" branch-rate="0.1409090909090909" complexity="1.509090909090909">
+		<package name="com.jcabi.dynamo" line-rate="0.5609756097560976" branch-rate="0.14479638009049775" complexity="1.5120481927710843">
 			<classes>
 				<class name="com.jcabi.dynamo.AttributeUpdates" filename="com/jcabi/dynamo/AttributeUpdates.java" line-rate="0.7777777777777778" branch-rate="0.2" complexity="1.4210526315789473">
 					<methods>
@@ -18,15 +18,15 @@
 						</method>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="77" hits="19" branch="false"/>
-								<line number="78" hits="19" branch="false"/>
+								<line number="77" hits="20" branch="false"/>
+								<line number="78" hits="20" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/util/Map;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="84" hits="39" branch="false"/>
-								<line number="85" hits="39" branch="false"/>
-								<line number="86" hits="39" branch="false"/>
+								<line number="84" hits="43" branch="false"/>
+								<line number="85" hits="43" branch="false"/>
+								<line number="86" hits="43" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -117,7 +117,7 @@
 						</method>
 						<method name="keySet_aroundBody18" signature="(Lcom/jcabi/dynamo/AttributeUpdates;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="199" hits="6" branch="false"/>
+								<line number="199" hits="12" branch="false"/>
 							</lines>
 						</method>
 						<method name="put" signature="(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -166,15 +166,15 @@
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="153" hits="60" branch="false"/>
-								<line number="156" hits="60" branch="true" condition-coverage="100% (2/2)">
+								<line number="153" hits="66" branch="false"/>
+								<line number="156" hits="66" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="157" hits="78" branch="false"/>
-								<line number="164" hits="78" branch="false"/>
-								<line number="165" hits="60" branch="false"/>
+								<line number="157" hits="84" branch="false"/>
+								<line number="164" hits="84" branch="false"/>
+								<line number="165" hits="66" branch="false"/>
 							</lines>
 						</method>
 						<method name="values" signature="()Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -183,7 +183,7 @@
 						</method>
 						<method name="values_aroundBody20" signature="(Lcom/jcabi/dynamo/AttributeUpdates;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="204" hits="6" branch="false"/>
+								<line number="204" hits="12" branch="false"/>
 							</lines>
 						</method>
 						<method name="with" signature="(Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;)Lcom/jcabi/dynamo/AttributeUpdates;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -204,25 +204,25 @@
 						</method>
 						<method name="with_aroundBody0" signature="(Lcom/jcabi/dynamo/AttributeUpdates;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValueUpdate;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/AttributeUpdates;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="96" hits="40" branch="false"/>
+								<line number="96" hits="42" branch="false"/>
 							</lines>
 						</method>
 						<method name="with_aroundBody2" signature="(Lcom/jcabi/dynamo/AttributeUpdates;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/AttributeUpdates;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="110" hits="36" branch="false"/>
+								<line number="110" hits="38" branch="false"/>
 							</lines>
 						</method>
 						<method name="with_aroundBody4" signature="(Lcom/jcabi/dynamo/AttributeUpdates;Ljava/lang/String;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/AttributeUpdates;" line-rate="0.75" branch-rate="0.5" complexity="0">
 							<lines>
-								<line number="125" hits="34" branch="true" condition-coverage="50% (2/4)">
+								<line number="125" hits="36" branch="true" condition-coverage="50% (2/4)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 										<condition number="1" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
 								<line number="126" hits="0" branch="false"/>
-								<line number="128" hits="17" branch="false"/>
-								<line number="130" hits="17" branch="false"/>
+								<line number="128" hits="18" branch="false"/>
+								<line number="130" hits="18" branch="false"/>
 							</lines>
 						</method>
 						<method name="with_aroundBody6" signature="(Lcom/jcabi/dynamo/AttributeUpdates;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/AttributeUpdates;" line-rate="0.0" branch-rate="0.0" complexity="0">
@@ -252,22 +252,22 @@
 								<condition number="5" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="77" hits="19" branch="false"/>
-						<line number="78" hits="19" branch="false"/>
-						<line number="84" hits="39" branch="false"/>
-						<line number="85" hits="39" branch="false"/>
-						<line number="86" hits="39" branch="false"/>
-						<line number="96" hits="40" branch="false"/>
-						<line number="110" hits="36" branch="false"/>
-						<line number="125" hits="34" branch="true" condition-coverage="50% (2/4)">
+						<line number="77" hits="20" branch="false"/>
+						<line number="78" hits="20" branch="false"/>
+						<line number="84" hits="43" branch="false"/>
+						<line number="85" hits="43" branch="false"/>
+						<line number="86" hits="43" branch="false"/>
+						<line number="96" hits="42" branch="false"/>
+						<line number="110" hits="38" branch="false"/>
+						<line number="125" hits="36" branch="true" condition-coverage="50% (2/4)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 								<condition number="1" type="jump" coverage="50%"/>
 							</conditions>
 						</line>
 						<line number="126" hits="0" branch="false"/>
-						<line number="128" hits="17" branch="false"/>
-						<line number="130" hits="17" branch="false"/>
+						<line number="128" hits="18" branch="false"/>
+						<line number="130" hits="18" branch="false"/>
 						<line number="139" hits="0" branch="false"/>
 						<line number="142" hits="0" branch="true" condition-coverage="0% (0/2)">
 							<conditions>
@@ -277,22 +277,22 @@
 						<line number="143" hits="0" branch="false"/>
 						<line number="147" hits="0" branch="false"/>
 						<line number="148" hits="0" branch="false"/>
-						<line number="153" hits="60" branch="false"/>
-						<line number="156" hits="60" branch="true" condition-coverage="100% (2/2)">
+						<line number="153" hits="66" branch="false"/>
+						<line number="156" hits="66" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="157" hits="78" branch="false"/>
-						<line number="164" hits="78" branch="false"/>
-						<line number="165" hits="60" branch="false"/>
+						<line number="157" hits="84" branch="false"/>
+						<line number="164" hits="84" branch="false"/>
+						<line number="165" hits="66" branch="false"/>
 						<line number="170" hits="16" branch="false"/>
 						<line number="175" hits="4" branch="false"/>
 						<line number="180" hits="2" branch="false"/>
 						<line number="187" hits="2" branch="false"/>
 						<line number="192" hits="2" branch="false"/>
-						<line number="199" hits="6" branch="false"/>
-						<line number="204" hits="6" branch="false"/>
+						<line number="199" hits="12" branch="false"/>
+						<line number="204" hits="12" branch="false"/>
 						<line number="209" hits="2" branch="false"/>
 						<line number="215" hits="2" branch="false"/>
 						<line number="222" hits="2" branch="false"/>
@@ -308,12 +308,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="40" branch="false"/>
+								<line number="1" hits="42" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="40" branch="false"/>
+						<line number="1" hits="42" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.AttributeUpdates$AjcClosure11" filename="com/jcabi/dynamo/AttributeUpdates.java" line-rate="1.0" branch-rate="1.0" complexity="1.4210526315789473">
@@ -388,12 +388,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="6" branch="false"/>
+								<line number="1" hits="12" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="6" branch="false"/>
+						<line number="1" hits="12" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.AttributeUpdates$AjcClosure21" filename="com/jcabi/dynamo/AttributeUpdates.java" line-rate="1.0" branch-rate="1.0" complexity="1.4210526315789473">
@@ -404,12 +404,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="6" branch="false"/>
+								<line number="1" hits="12" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="6" branch="false"/>
+						<line number="1" hits="12" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.AttributeUpdates$AjcClosure23" filename="com/jcabi/dynamo/AttributeUpdates.java" line-rate="1.0" branch-rate="1.0" complexity="1.4210526315789473">
@@ -484,12 +484,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="36" branch="false"/>
+								<line number="1" hits="38" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="36" branch="false"/>
+						<line number="1" hits="38" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.AttributeUpdates$AjcClosure31" filename="com/jcabi/dynamo/AttributeUpdates.java" line-rate="1.0" branch-rate="1.0" complexity="1.4210526315789473">
@@ -516,12 +516,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="34" branch="false"/>
+								<line number="1" hits="36" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="34" branch="false"/>
+						<line number="1" hits="36" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.AttributeUpdates$AjcClosure7" filename="com/jcabi/dynamo/AttributeUpdates.java" line-rate="0.0" branch-rate="1.0" complexity="1.4210526315789473">
@@ -556,7 +556,7 @@
 						<line number="1" hits="16" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Attributes" filename="com/jcabi/dynamo/Attributes.java" line-rate="0.84" branch-rate="0.6785714285714286" complexity="1.6">
+				<class name="com.jcabi.dynamo.Attributes" filename="com/jcabi/dynamo/Attributes.java" line-rate="0.86" branch-rate="0.6785714285714286" complexity="1.6">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -564,15 +564,15 @@
 						</method>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="85" hits="25" branch="false"/>
-								<line number="86" hits="25" branch="false"/>
+								<line number="84" hits="33" branch="false"/>
+								<line number="85" hits="33" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/util/Map;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="92" hits="62" branch="false"/>
-								<line number="93" hits="62" branch="false"/>
-								<line number="94" hits="62" branch="false"/>
+								<line number="91" hits="99" branch="false"/>
+								<line number="92" hits="99" branch="false"/>
+								<line number="93" hits="99" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -586,15 +586,15 @@
 						</method>
 						<method name="asKeys_aroundBody4" signature="(Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Map;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="130" hits="2" branch="false"/>
-								<line number="133" hits="1" branch="true" condition-coverage="100% (2/2)">
+								<line number="124" hits="2" branch="false"/>
+								<line number="127" hits="1" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="134" hits="1" branch="false"/>
-								<line number="138" hits="1" branch="false"/>
-								<line number="139" hits="1" branch="false"/>
+								<line number="128" hits="1" branch="false"/>
+								<line number="132" hits="1" branch="false"/>
+								<line number="133" hits="1" branch="false"/>
 							</lines>
 						</method>
 						<method name="clear" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -603,16 +603,16 @@
 						</method>
 						<method name="clear_aroundBody32" signature="(Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="264" hits="0" branch="false"/>
+								<line number="257" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="containsKey" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="containsKey_aroundBody14" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="containsKey_aroundBody14" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="208" hits="0" branch="false"/>
+								<line number="205" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="containsValue" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -621,7 +621,7 @@
 						</method>
 						<method name="containsValue_aroundBody16" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="215" hits="0" branch="false"/>
+								<line number="210" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="entrySet" signature="()Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -630,7 +630,7 @@
 						</method>
 						<method name="entrySet_aroundBody24" signature="(Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="237" hits="38" branch="false"/>
+								<line number="230" hits="60" branch="false"/>
 							</lines>
 						</method>
 						<method name="equals" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -643,17 +643,17 @@
 						</method>
 						<method name="get" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="64" hits="0" branch="false"/>
+								<line number="63" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="get_aroundBody18" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="220" hits="8" branch="false"/>
+								<line number="215" hits="18" branch="false"/>
 							</lines>
 						</method>
 						<method name="hashCode" signature="()I" line-rate="1.0" branch-rate="0.3333333333333333" complexity="0">
 							<lines>
-								<line number="66" hits="1" branch="true" condition-coverage="33% (4/12)">
+								<line number="65" hits="1" branch="true" condition-coverage="33% (4/12)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 										<condition number="1" type="jump" coverage="50%"/>
@@ -671,7 +671,7 @@
 						</method>
 						<method name="isEmpty_aroundBody12" signature="(Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="203" hits="0" branch="false"/>
+								<line number="200" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="keySet" signature="()Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -680,37 +680,37 @@
 						</method>
 						<method name="keySet_aroundBody20" signature="(Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="227" hits="20" branch="false"/>
+								<line number="220" hits="28" branch="false"/>
 							</lines>
 						</method>
-						<method name="only" signature="(Ljava/util/Collection;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="only" signature="(Ljava/lang/Iterable;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="only_aroundBody8" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/util/Collection;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="only_aroundBody8" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/Iterable;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="165" hits="6" branch="false"/>
-								<line number="167" hits="3" branch="false"/>
-								<line number="168" hits="3" branch="true" condition-coverage="100% (2/2)">
+								<line number="159" hits="16" branch="false"/>
+								<line number="161" hits="8" branch="false"/>
+								<line number="162" hits="8" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="169" hits="3" branch="false"/>
-								<line number="170" hits="3" branch="false"/>
-								<line number="171" hits="3" branch="true" condition-coverage="100% (2/2)">
+								<line number="163" hits="8" branch="false"/>
+								<line number="164" hits="8" branch="false"/>
+								<line number="165" hits="8" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="172" hits="4" branch="true" condition-coverage="100% (2/2)">
+								<line number="166" hits="18" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="173" hits="1" branch="false"/>
-								<line number="175" hits="4" branch="false"/>
-								<line number="176" hits="3" branch="false"/>
+								<line number="167" hits="6" branch="false"/>
+								<line number="172" hits="18" branch="false"/>
+								<line number="173" hits="8" branch="false"/>
 							</lines>
 						</method>
 						<method name="put" signature="(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -727,12 +727,12 @@
 						</method>
 						<method name="putAll_aroundBody30" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="257" hits="0" branch="false"/>
+								<line number="250" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="put_aroundBody26" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="242" hits="0" branch="false"/>
+								<line number="235" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="remove" signature="(Ljava/lang/Object;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -745,7 +745,7 @@
 						</method>
 						<method name="remove_aroundBody28" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="249" hits="0" branch="false"/>
+								<line number="242" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="size" signature="()I" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -754,20 +754,20 @@
 						</method>
 						<method name="size_aroundBody10" signature="(Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)I" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="198" hits="10" branch="false"/>
+								<line number="195" hits="22" branch="false"/>
 							</lines>
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="181" hits="78" branch="false"/>
-								<line number="184" hits="78" branch="true" condition-coverage="100% (2/2)">
+								<line number="178" hits="129" branch="false"/>
+								<line number="181" hits="129" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="185" hits="97" branch="false"/>
-								<line number="192" hits="97" branch="false"/>
-								<line number="193" hits="78" branch="false"/>
+								<line number="182" hits="199" branch="false"/>
+								<line number="189" hits="199" branch="false"/>
+								<line number="190" hits="129" branch="false"/>
 							</lines>
 						</method>
 						<method name="values" signature="()Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -776,7 +776,7 @@
 						</method>
 						<method name="values_aroundBody22" signature="(Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="232" hits="14" branch="false"/>
+								<line number="225" hits="22" branch="false"/>
 							</lines>
 						</method>
 						<method name="with" signature="(Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -793,40 +793,40 @@
 						</method>
 						<method name="with_aroundBody0" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="103" hits="56" branch="false"/>
+								<line number="102" hits="98" branch="false"/>
 							</lines>
 						</method>
 						<method name="with_aroundBody2" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="114" hits="2" branch="false"/>
-								<line number="116" hits="1" branch="true" condition-coverage="100% (2/2)">
+								<line number="111" hits="2" branch="false"/>
+								<line number="113" hits="1" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="117" hits="2" branch="false"/>
-								<line number="121" hits="2" branch="false"/>
-								<line number="122" hits="1" branch="false"/>
+								<line number="114" hits="2" branch="false"/>
+								<line number="115" hits="2" branch="false"/>
+								<line number="116" hits="1" branch="false"/>
 							</lines>
 						</method>
 						<method name="with_aroundBody6" signature="(Lcom/jcabi/dynamo/Attributes;Ljava/lang/String;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="0.75" complexity="0">
 							<lines>
-								<line number="151" hits="48" branch="true" condition-coverage="75% (3/4)">
+								<line number="145" hits="44" branch="true" condition-coverage="75% (3/4)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 										<condition number="1" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="152" hits="3" branch="false"/>
-								<line number="154" hits="21" branch="false"/>
-								<line number="156" hits="24" branch="false"/>
+								<line number="146" hits="4" branch="false"/>
+								<line number="148" hits="18" branch="false"/>
+								<line number="150" hits="22" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="1" hits="2" branch="false"/>
-						<line number="64" hits="0" branch="false"/>
-						<line number="66" hits="1" branch="true" condition-coverage="33% (4/12)">
+						<line number="63" hits="0" branch="false"/>
+						<line number="65" hits="1" branch="true" condition-coverage="33% (4/12)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 								<condition number="1" type="jump" coverage="50%"/>
@@ -836,82 +836,82 @@
 								<condition number="5" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="85" hits="25" branch="false"/>
-						<line number="86" hits="25" branch="false"/>
-						<line number="92" hits="62" branch="false"/>
-						<line number="93" hits="62" branch="false"/>
-						<line number="94" hits="62" branch="false"/>
-						<line number="103" hits="56" branch="false"/>
+						<line number="84" hits="33" branch="false"/>
+						<line number="85" hits="33" branch="false"/>
+						<line number="91" hits="99" branch="false"/>
+						<line number="92" hits="99" branch="false"/>
+						<line number="93" hits="99" branch="false"/>
+						<line number="102" hits="98" branch="false"/>
+						<line number="111" hits="2" branch="false"/>
+						<line number="113" hits="1" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
 						<line number="114" hits="2" branch="false"/>
-						<line number="116" hits="1" branch="true" condition-coverage="100% (2/2)">
+						<line number="115" hits="2" branch="false"/>
+						<line number="116" hits="1" branch="false"/>
+						<line number="124" hits="2" branch="false"/>
+						<line number="127" hits="1" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="117" hits="2" branch="false"/>
-						<line number="121" hits="2" branch="false"/>
-						<line number="122" hits="1" branch="false"/>
-						<line number="130" hits="2" branch="false"/>
-						<line number="133" hits="1" branch="true" condition-coverage="100% (2/2)">
-							<conditions>
-								<condition number="0" type="jump" coverage="100%"/>
-							</conditions>
-						</line>
-						<line number="134" hits="1" branch="false"/>
-						<line number="138" hits="1" branch="false"/>
-						<line number="139" hits="1" branch="false"/>
-						<line number="151" hits="48" branch="true" condition-coverage="75% (3/4)">
+						<line number="128" hits="1" branch="false"/>
+						<line number="132" hits="1" branch="false"/>
+						<line number="133" hits="1" branch="false"/>
+						<line number="145" hits="44" branch="true" condition-coverage="75% (3/4)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 								<condition number="1" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="152" hits="3" branch="false"/>
-						<line number="154" hits="21" branch="false"/>
-						<line number="156" hits="24" branch="false"/>
-						<line number="165" hits="6" branch="false"/>
-						<line number="167" hits="3" branch="false"/>
-						<line number="168" hits="3" branch="true" condition-coverage="100% (2/2)">
+						<line number="146" hits="4" branch="false"/>
+						<line number="148" hits="18" branch="false"/>
+						<line number="150" hits="22" branch="false"/>
+						<line number="159" hits="16" branch="false"/>
+						<line number="161" hits="8" branch="false"/>
+						<line number="162" hits="8" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="169" hits="3" branch="false"/>
-						<line number="170" hits="3" branch="false"/>
-						<line number="171" hits="3" branch="true" condition-coverage="100% (2/2)">
+						<line number="163" hits="8" branch="false"/>
+						<line number="164" hits="8" branch="false"/>
+						<line number="165" hits="8" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="172" hits="4" branch="true" condition-coverage="100% (2/2)">
+						<line number="166" hits="18" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="173" hits="1" branch="false"/>
-						<line number="175" hits="4" branch="false"/>
-						<line number="176" hits="3" branch="false"/>
-						<line number="181" hits="78" branch="false"/>
-						<line number="184" hits="78" branch="true" condition-coverage="100% (2/2)">
+						<line number="167" hits="6" branch="false"/>
+						<line number="172" hits="18" branch="false"/>
+						<line number="173" hits="8" branch="false"/>
+						<line number="178" hits="129" branch="false"/>
+						<line number="181" hits="129" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="185" hits="97" branch="false"/>
-						<line number="192" hits="97" branch="false"/>
-						<line number="193" hits="78" branch="false"/>
-						<line number="198" hits="10" branch="false"/>
-						<line number="203" hits="0" branch="false"/>
-						<line number="208" hits="0" branch="false"/>
-						<line number="215" hits="0" branch="false"/>
-						<line number="220" hits="8" branch="false"/>
-						<line number="227" hits="20" branch="false"/>
-						<line number="232" hits="14" branch="false"/>
-						<line number="237" hits="38" branch="false"/>
+						<line number="182" hits="199" branch="false"/>
+						<line number="189" hits="199" branch="false"/>
+						<line number="190" hits="129" branch="false"/>
+						<line number="195" hits="22" branch="false"/>
+						<line number="200" hits="0" branch="false"/>
+						<line number="205" hits="2" branch="false"/>
+						<line number="210" hits="0" branch="false"/>
+						<line number="215" hits="18" branch="false"/>
+						<line number="220" hits="28" branch="false"/>
+						<line number="225" hits="22" branch="false"/>
+						<line number="230" hits="60" branch="false"/>
+						<line number="235" hits="0" branch="false"/>
 						<line number="242" hits="0" branch="false"/>
-						<line number="249" hits="0" branch="false"/>
+						<line number="250" hits="0" branch="false"/>
 						<line number="257" hits="0" branch="false"/>
-						<line number="264" hits="0" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure1" filename="com/jcabi/dynamo/Attributes.java" line-rate="1.0" branch-rate="1.0" complexity="1.6">
@@ -922,12 +922,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="56" branch="false"/>
+								<line number="1" hits="98" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="56" branch="false"/>
+						<line number="1" hits="98" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure11" filename="com/jcabi/dynamo/Attributes.java" line-rate="1.0" branch-rate="1.0" complexity="1.6">
@@ -938,12 +938,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="10" branch="false"/>
+								<line number="1" hits="22" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="10" branch="false"/>
+						<line number="1" hits="22" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure13" filename="com/jcabi/dynamo/Attributes.java" line-rate="0.0" branch-rate="1.0" complexity="1.6">
@@ -962,20 +962,20 @@
 						<line number="1" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Attributes$AjcClosure15" filename="com/jcabi/dynamo/Attributes.java" line-rate="0.0" branch-rate="1.0" complexity="1.6">
+				<class name="com.jcabi.dynamo.Attributes$AjcClosure15" filename="com/jcabi/dynamo/Attributes.java" line-rate="1.0" branch-rate="1.0" complexity="1.6">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="0" branch="false"/>
+								<line number="1" hits="2" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="0" branch="false"/>
+						<line number="1" hits="2" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure17" filename="com/jcabi/dynamo/Attributes.java" line-rate="0.0" branch-rate="1.0" complexity="1.6">
@@ -1002,12 +1002,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="8" branch="false"/>
+								<line number="1" hits="18" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="8" branch="false"/>
+						<line number="1" hits="18" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure21" filename="com/jcabi/dynamo/Attributes.java" line-rate="1.0" branch-rate="1.0" complexity="1.6">
@@ -1018,12 +1018,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="20" branch="false"/>
+								<line number="1" hits="28" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="20" branch="false"/>
+						<line number="1" hits="28" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure23" filename="com/jcabi/dynamo/Attributes.java" line-rate="1.0" branch-rate="1.0" complexity="1.6">
@@ -1034,12 +1034,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="14" branch="false"/>
+								<line number="1" hits="22" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="14" branch="false"/>
+						<line number="1" hits="22" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure25" filename="com/jcabi/dynamo/Attributes.java" line-rate="1.0" branch-rate="1.0" complexity="1.6">
@@ -1050,12 +1050,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="38" branch="false"/>
+								<line number="1" hits="60" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="38" branch="false"/>
+						<line number="1" hits="60" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure27" filename="com/jcabi/dynamo/Attributes.java" line-rate="0.0" branch-rate="1.0" complexity="1.6">
@@ -1162,12 +1162,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="48" branch="false"/>
+								<line number="1" hits="44" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="48" branch="false"/>
+						<line number="1" hits="44" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Attributes$AjcClosure9" filename="com/jcabi/dynamo/Attributes.java" line-rate="1.0" branch-rate="1.0" complexity="1.6">
@@ -1178,12 +1178,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="6" branch="false"/>
+								<line number="1" hits="16" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="6" branch="false"/>
+						<line number="1" hits="16" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.AwsFrame" filename="com/jcabi/dynamo/AwsFrame.java" line-rate="0.5217391304347826" branch-rate="0.021739130434782608" complexity="1.6666666666666667">
@@ -2516,7 +2516,7 @@
 						<line number="1" hits="2" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.6842105263157895" branch-rate="0.3" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.7209302325581395" branch-rate="0.36363636363636365" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2524,15 +2524,15 @@
 						</method>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="84" hits="13" branch="false"/>
-								<line number="85" hits="13" branch="false"/>
+								<line number="83" hits="19" branch="false"/>
+								<line number="84" hits="19" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/util/Map;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="91" hits="17" branch="false"/>
-								<line number="92" hits="17" branch="false"/>
-								<line number="93" hits="17" branch="false"/>
+								<line number="90" hits="28" branch="false"/>
+								<line number="91" hits="28" branch="false"/>
+								<line number="92" hits="28" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2542,51 +2542,51 @@
 						</method>
 						<method name="array" signature="(Ljava/util/Map;)Lcom/jcabi/immutable/ArrayMap;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="254" hits="17" branch="false"/>
-								<line number="256" hits="17" branch="true" condition-coverage="100% (2/2)">
+								<line number="266" hits="28" branch="false"/>
+								<line number="268" hits="28" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="257" hits="4" branch="false"/>
-								<line number="261" hits="4" branch="false"/>
-								<line number="262" hits="17" branch="false"/>
+								<line number="269" hits="9" branch="false"/>
+								<line number="273" hits="9" branch="false"/>
+								<line number="274" hits="28" branch="false"/>
 							</lines>
 						</method>
 						<method name="clear" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="clear_aroundBody32" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="clear_aroundBody34" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="242" hits="0" branch="false"/>
+								<line number="254" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="containsKey" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="containsKey_aroundBody14" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="containsKey_aroundBody16" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="187" hits="0" branch="false"/>
+								<line number="203" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="containsValue" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="containsValue_aroundBody16" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="containsValue_aroundBody18" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="194" hits="0" branch="false"/>
+								<line number="208" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="entrySet" signature="()Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="entrySet_aroundBody24" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="entrySet_aroundBody26" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="216" hits="6" branch="false"/>
+								<line number="228" hits="6" branch="false"/>
 							</lines>
 						</method>
 						<method name="equalTo" signature="(Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2599,20 +2599,20 @@
 						</method>
 						<method name="equalTo_aroundBody0" signature="(Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="0.75" branch-rate="0.5" complexity="0">
 							<lines>
-								<line number="102" hits="4" branch="true" condition-coverage="50% (2/4)">
+								<line number="101" hits="4" branch="true" condition-coverage="50% (2/4)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 										<condition number="1" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
-								<line number="103" hits="2" branch="false"/>
-								<line number="105" hits="0" branch="false"/>
-								<line number="107" hits="2" branch="false"/>
+								<line number="102" hits="2" branch="false"/>
+								<line number="104" hits="0" branch="false"/>
+								<line number="106" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="equalTo_aroundBody2" signature="(Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="116" hits="4" branch="false"/>
+								<line number="115" hits="14" branch="false"/>
 							</lines>
 						</method>
 						<method name="equals" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2625,17 +2625,17 @@
 						</method>
 						<method name="get" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="63" hits="0" branch="false"/>
+								<line number="62" hits="0" branch="false"/>
 							</lines>
 						</method>
-						<method name="get_aroundBody18" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="get_aroundBody20" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="199" hits="0" branch="false"/>
+								<line number="213" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="hashCode" signature="()I" line-rate="0.0" branch-rate="0.0" complexity="0">
 							<lines>
-								<line number="65" hits="0" branch="true" condition-coverage="0% (0/12)">
+								<line number="64" hits="0" branch="true" condition-coverage="0% (0/12)">
 									<conditions>
 										<condition number="0" type="jump" coverage="0%"/>
 										<condition number="1" type="jump" coverage="0%"/>
@@ -2651,18 +2651,18 @@
 							<lines>
 							</lines>
 						</method>
-						<method name="isEmpty_aroundBody12" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="isEmpty_aroundBody14" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="182" hits="8" branch="false"/>
+								<line number="198" hits="20" branch="false"/>
 							</lines>
 						</method>
 						<method name="keySet" signature="()Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="keySet_aroundBody20" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="keySet_aroundBody22" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Set;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="206" hits="6" branch="false"/>
+								<line number="218" hits="16" branch="false"/>
 							</lines>
 						</method>
 						<method name="put" signature="(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2677,14 +2677,14 @@
 							<lines>
 							</lines>
 						</method>
-						<method name="putAll_aroundBody30" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="putAll_aroundBody32" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="235" hits="0" branch="false"/>
+								<line number="247" hits="0" branch="false"/>
 							</lines>
 						</method>
-						<method name="put_aroundBody26" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/Condition;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="put_aroundBody28" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/Condition;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="221" hits="0" branch="false"/>
+								<line number="233" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="remove" signature="(Ljava/lang/Object;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2695,40 +2695,40 @@
 							<lines>
 							</lines>
 						</method>
-						<method name="remove_aroundBody28" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="remove_aroundBody30" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/Condition;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="228" hits="0" branch="false"/>
+								<line number="240" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="size" signature="()I" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="size_aroundBody10" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)I" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="size_aroundBody12" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)I" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="177" hits="2" branch="false"/>
+								<line number="193" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="160" hits="18" branch="false"/>
-								<line number="162" hits="18" branch="true" condition-coverage="100% (2/2)">
+								<line number="176" hits="30" branch="false"/>
+								<line number="178" hits="30" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="163" hits="5" branch="false"/>
-								<line number="171" hits="5" branch="false"/>
-								<line number="172" hits="18" branch="false"/>
+								<line number="179" hits="15" branch="false"/>
+								<line number="187" hits="15" branch="false"/>
+								<line number="188" hits="30" branch="false"/>
 							</lines>
 						</method>
 						<method name="values" signature="()Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="values_aroundBody22" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="values_aroundBody24" signature="(Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Collection;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="211" hits="8" branch="false"/>
+								<line number="223" hits="20" branch="false"/>
 							</lines>
 						</method>
 						<method name="with" signature="(Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/Condition;)Lcom/jcabi/dynamo/Conditions;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2743,26 +2743,43 @@
 							<lines>
 							</lines>
 						</method>
+						<method name="withAttributes" signature="(Ljava/util/Map;)Lcom/jcabi/dynamo/Conditions;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="withAttributes_aroundBody8" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Conditions;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="154" hits="10" branch="false"/>
+								<line number="156" hits="5" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="157" hits="5" branch="false"/>
+								<line number="161" hits="5" branch="false"/>
+								<line number="162" hits="5" branch="false"/>
+							</lines>
+						</method>
+						<method name="with_aroundBody10" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Conditions;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="171" hits="0" branch="false"/>
+							</lines>
+						</method>
 						<method name="with_aroundBody4" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/Condition;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Conditions;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="128" hits="6" branch="false"/>
+								<line number="127" hits="6" branch="false"/>
 							</lines>
 						</method>
 						<method name="with_aroundBody6" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/lang/String;Ljava/lang/Object;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Conditions;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="141" hits="0" branch="false"/>
-							</lines>
-						</method>
-						<method name="with_aroundBody8" signature="(Lcom/jcabi/dynamo/Conditions;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Conditions;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="155" hits="0" branch="false"/>
+								<line number="140" hits="0" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="1" hits="2" branch="false"/>
-						<line number="63" hits="0" branch="false"/>
-						<line number="65" hits="0" branch="true" condition-coverage="0% (0/12)">
+						<line number="62" hits="0" branch="false"/>
+						<line number="64" hits="0" branch="true" condition-coverage="0% (0/12)">
 							<conditions>
 								<condition number="0" type="jump" coverage="0%"/>
 								<condition number="1" type="jump" coverage="0%"/>
@@ -2772,57 +2789,66 @@
 								<condition number="5" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="84" hits="13" branch="false"/>
-						<line number="85" hits="13" branch="false"/>
-						<line number="91" hits="17" branch="false"/>
-						<line number="92" hits="17" branch="false"/>
-						<line number="93" hits="17" branch="false"/>
-						<line number="102" hits="4" branch="true" condition-coverage="50% (2/4)">
+						<line number="83" hits="19" branch="false"/>
+						<line number="84" hits="19" branch="false"/>
+						<line number="90" hits="28" branch="false"/>
+						<line number="91" hits="28" branch="false"/>
+						<line number="92" hits="28" branch="false"/>
+						<line number="101" hits="4" branch="true" condition-coverage="50% (2/4)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 								<condition number="1" type="jump" coverage="50%"/>
 							</conditions>
 						</line>
-						<line number="103" hits="2" branch="false"/>
-						<line number="105" hits="0" branch="false"/>
-						<line number="107" hits="2" branch="false"/>
-						<line number="116" hits="4" branch="false"/>
-						<line number="128" hits="6" branch="false"/>
-						<line number="141" hits="0" branch="false"/>
-						<line number="155" hits="0" branch="false"/>
-						<line number="160" hits="18" branch="false"/>
-						<line number="162" hits="18" branch="true" condition-coverage="100% (2/2)">
+						<line number="102" hits="2" branch="false"/>
+						<line number="104" hits="0" branch="false"/>
+						<line number="106" hits="2" branch="false"/>
+						<line number="115" hits="14" branch="false"/>
+						<line number="127" hits="6" branch="false"/>
+						<line number="140" hits="0" branch="false"/>
+						<line number="154" hits="10" branch="false"/>
+						<line number="156" hits="5" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="163" hits="5" branch="false"/>
-						<line number="171" hits="5" branch="false"/>
-						<line number="172" hits="18" branch="false"/>
-						<line number="177" hits="2" branch="false"/>
-						<line number="182" hits="8" branch="false"/>
-						<line number="187" hits="0" branch="false"/>
-						<line number="194" hits="0" branch="false"/>
-						<line number="199" hits="0" branch="false"/>
-						<line number="206" hits="6" branch="false"/>
-						<line number="211" hits="8" branch="false"/>
-						<line number="216" hits="6" branch="false"/>
-						<line number="221" hits="0" branch="false"/>
-						<line number="228" hits="0" branch="false"/>
-						<line number="235" hits="0" branch="false"/>
-						<line number="242" hits="0" branch="false"/>
-						<line number="254" hits="17" branch="false"/>
-						<line number="256" hits="17" branch="true" condition-coverage="100% (2/2)">
+						<line number="157" hits="5" branch="false"/>
+						<line number="161" hits="5" branch="false"/>
+						<line number="162" hits="5" branch="false"/>
+						<line number="171" hits="0" branch="false"/>
+						<line number="176" hits="30" branch="false"/>
+						<line number="178" hits="30" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="257" hits="4" branch="false"/>
-						<line number="261" hits="4" branch="false"/>
-						<line number="262" hits="17" branch="false"/>
+						<line number="179" hits="15" branch="false"/>
+						<line number="187" hits="15" branch="false"/>
+						<line number="188" hits="30" branch="false"/>
+						<line number="193" hits="2" branch="false"/>
+						<line number="198" hits="20" branch="false"/>
+						<line number="203" hits="0" branch="false"/>
+						<line number="208" hits="0" branch="false"/>
+						<line number="213" hits="0" branch="false"/>
+						<line number="218" hits="16" branch="false"/>
+						<line number="223" hits="20" branch="false"/>
+						<line number="228" hits="6" branch="false"/>
+						<line number="233" hits="0" branch="false"/>
+						<line number="240" hits="0" branch="false"/>
+						<line number="247" hits="0" branch="false"/>
+						<line number="254" hits="0" branch="false"/>
+						<line number="266" hits="28" branch="false"/>
+						<line number="268" hits="28" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="269" hits="9" branch="false"/>
+						<line number="273" hits="9" branch="false"/>
+						<line number="274" hits="28" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure1" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure1" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2838,7 +2864,23 @@
 						<line number="1" hits="4" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure11" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure11" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure13" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2854,7 +2896,7 @@
 						<line number="1" hits="2" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure13" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure15" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2862,15 +2904,15 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="8" branch="false"/>
+								<line number="1" hits="20" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="8" branch="false"/>
+						<line number="1" hits="20" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure15" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure17" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2886,7 +2928,7 @@
 						<line number="1" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure17" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure19" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2902,7 +2944,7 @@
 						<line number="1" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure19" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure21" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2918,7 +2960,7 @@
 						<line number="1" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure21" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure23" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2926,15 +2968,15 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="6" branch="false"/>
+								<line number="1" hits="16" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="6" branch="false"/>
+						<line number="1" hits="16" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure23" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure25" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -2942,111 +2984,15 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="8" branch="false"/>
+								<line number="1" hits="20" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="8" branch="false"/>
+						<line number="1" hits="20" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure25" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="6" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="6" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure27" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="0" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="0" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure29" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="0" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="0" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure3" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="4" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="4" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure31" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="0" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="0" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure33" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="0" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="0" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure5" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure27" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -3062,7 +3008,7 @@
 						<line number="1" hits="6" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure7" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure29" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -3078,7 +3024,23 @@
 						<line number="1" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.Conditions$AjcClosure9" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.380952380952381">
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure3" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="14" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="14" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure31" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -3092,6 +3054,86 @@
 					</methods>
 					<lines>
 						<line number="1" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure33" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure35" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure5" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="6" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="6" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure7" filename="com/jcabi/dynamo/Conditions.java" line-rate="0.0" branch-rate="1.0" complexity="1.4090909090909092">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.Conditions$AjcClosure9" filename="com/jcabi/dynamo/Conditions.java" line-rate="1.0" branch-rate="1.0" complexity="1.4090909090909092">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="10" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="10" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.Credentials" filename="com/jcabi/dynamo/Credentials.java" line-rate="1.0" branch-rate="1.0" complexity="1.3076923076923077">
@@ -4906,29 +4948,29 @@
 				</class>
 			</classes>
 		</package>
-		<package name="com.jcabi.dynamo.mock" line-rate="0.5701754385964912" branch-rate="0.17647058823529413" complexity="1.84">
+		<package name="com.jcabi.dynamo.mock" line-rate="0.631578947368421" branch-rate="0.20422535211267606" complexity="1.9074074074074074">
 			<classes>
-				<class name="com.jcabi.dynamo.mock.H2Data" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="0.8170731707317073" branch-rate="0.5555555555555556" complexity="2.933333333333333">
+				<class name="com.jcabi.dynamo.mock.H2Data" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="0.8" branch-rate="0.5555555555555556" complexity="2.9444444444444446">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="81" hits="1" branch="false"/>
-								<line number="116" hits="1" branch="false"/>
-								<line number="127" hits="1" branch="false"/>
-								<line number="138" hits="1" branch="false"/>
+								<line number="85" hits="1" branch="false"/>
+								<line number="125" hits="1" branch="false"/>
+								<line number="136" hits="1" branch="false"/>
+								<line number="147" hits="1" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="161" hits="7" branch="false"/>
-								<line number="162" hits="7" branch="false"/>
+								<line number="170" hits="8" branch="false"/>
+								<line number="171" hits="8" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/io/File;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="168" hits="7" branch="false"/>
-								<line number="169" hits="7" branch="false"/>
-								<line number="173" hits="7" branch="false"/>
+								<line number="177" hits="8" branch="false"/>
+								<line number="178" hits="8" branch="false"/>
+								<line number="182" hits="8" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -4938,34 +4980,34 @@
 						</method>
 						<method name="connection" signature="()Ljava/sql/Connection;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="331" hits="19" branch="false"/>
+								<line number="381" hits="37" branch="false"/>
 							</lines>
 						</method>
 						<method name="delete" signature="(Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="delete_aroundBody6" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.8" branch-rate="1.0" complexity="0">
+						<method name="delete_aroundBody8" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.8" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="270" hits="2" branch="false"/>
-								<line number="271" hits="1" branch="true" condition-coverage="100% (2/2)">
+								<line number="320" hits="2" branch="false"/>
+								<line number="321" hits="1" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="272" hits="1" branch="false"/>
-								<line number="273" hits="1" branch="false"/>
-								<line number="274" hits="1" branch="false"/>
-								<line number="283" hits="1" branch="false"/>
-								<line number="284" hits="0" branch="false"/>
-								<line number="285" hits="0" branch="false"/>
-								<line number="286" hits="1" branch="false"/>
-								<line number="287" hits="1" branch="false"/>
+								<line number="322" hits="1" branch="false"/>
+								<line number="323" hits="1" branch="false"/>
+								<line number="324" hits="1" branch="false"/>
+								<line number="333" hits="1" branch="false"/>
+								<line number="334" hits="0" branch="false"/>
+								<line number="335" hits="0" branch="false"/>
+								<line number="336" hits="1" branch="false"/>
+								<line number="337" hits="1" branch="false"/>
 							</lines>
 						</method>
 						<method name="encodeTableName" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="358" hits="19" branch="false"/>
+								<line number="408" hits="37" branch="false"/>
 							</lines>
 						</method>
 						<method name="equals" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -4974,7 +5016,7 @@
 						</method>
 						<method name="hashCode" signature="()I" line-rate="0.0" branch-rate="0.0" complexity="0">
 							<lines>
-								<line number="74" hits="0" branch="true" condition-coverage="0% (0/12)">
+								<line number="78" hits="0" branch="true" condition-coverage="0% (0/12)">
 									<conditions>
 										<condition number="0" type="jump" coverage="0%"/>
 										<condition number="1" type="jump" coverage="0%"/>
@@ -4990,150 +5032,161 @@
 							<lines>
 							</lines>
 						</method>
-						<method name="iterate_aroundBody0" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/lang/Iterable;" line-rate="0.75" branch-rate="0.75" complexity="0">
+						<method name="iterate_aroundBody2" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Conditions;Lorg/aspectj/lang/JoinPoint;)Ljava/lang/Iterable;" line-rate="0.75" branch-rate="0.75" complexity="0">
 							<lines>
-								<line number="179" hits="8" branch="false"/>
-								<line number="181" hits="4" branch="true" condition-coverage="100% (2/2)">
+								<line number="229" hits="20" branch="false"/>
+								<line number="231" hits="10" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="182" hits="2" branch="false"/>
-								<line number="183" hits="2" branch="false"/>
-								<line number="188" hits="4" branch="false"/>
-								<line number="190" hits="4" branch="true" condition-coverage="100% (2/2)">
+								<line number="232" hits="7" branch="false"/>
+								<line number="233" hits="7" branch="false"/>
+								<line number="238" hits="10" branch="false"/>
+								<line number="240" hits="10" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="191" hits="2" branch="true" condition-coverage="50% (1/2)">
+								<line number="241" hits="7" branch="true" condition-coverage="50% (1/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
-								<line number="192" hits="0" branch="false"/>
-								<line number="196" hits="2" branch="true" condition-coverage="50% (1/2)">
+								<line number="242" hits="0" branch="false"/>
+								<line number="246" hits="7" branch="true" condition-coverage="50% (1/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
-								<line number="198" hits="0" branch="false"/>
-								<line number="205" hits="2" branch="false"/>
-								<line number="206" hits="2" branch="false"/>
-								<line number="207" hits="2" branch="false"/>
-								<line number="208" hits="4" branch="false"/>
-								<line number="209" hits="0" branch="false"/>
-								<line number="210" hits="0" branch="false"/>
+								<line number="248" hits="0" branch="false"/>
+								<line number="255" hits="7" branch="false"/>
+								<line number="256" hits="7" branch="false"/>
+								<line number="257" hits="7" branch="false"/>
+								<line number="258" hits="10" branch="false"/>
+								<line number="259" hits="0" branch="false"/>
+								<line number="260" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="keys" signature="(Ljava/lang/String;)Ljava/lang/Iterable;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="keys_aroundBody0" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lorg/aspectj/lang/JoinPoint;)Ljava/lang/Iterable;" line-rate="0.3333333333333333" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="187" hits="14" branch="false"/>
+								<line number="220" hits="0" branch="false"/>
+								<line number="221" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="put" signature="(Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="put_aroundBody2" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.8" branch-rate="1.0" complexity="0">
+						<method name="put_aroundBody4" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.8" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="218" hits="10" branch="false"/>
-								<line number="219" hits="5" branch="true" condition-coverage="100% (2/2)">
+								<line number="268" hits="12" branch="false"/>
+								<line number="269" hits="6" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="220" hits="8" branch="false"/>
-								<line number="221" hits="8" branch="false"/>
-								<line number="222" hits="5" branch="false"/>
-								<line number="230" hits="5" branch="false"/>
-								<line number="231" hits="0" branch="false"/>
-								<line number="232" hits="0" branch="false"/>
-								<line number="233" hits="5" branch="false"/>
-								<line number="234" hits="5" branch="false"/>
+								<line number="270" hits="11" branch="false"/>
+								<line number="271" hits="11" branch="false"/>
+								<line number="272" hits="6" branch="false"/>
+								<line number="280" hits="6" branch="false"/>
+								<line number="281" hits="0" branch="false"/>
+								<line number="282" hits="0" branch="false"/>
+								<line number="283" hits="6" branch="false"/>
+								<line number="284" hits="6" branch="false"/>
 							</lines>
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="72" hits="11" branch="false"/>
+								<line number="76" hits="15" branch="false"/>
 							</lines>
 						</method>
 						<method name="update" signature="(Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;Lcom/jcabi/dynamo/AttributeUpdates;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="update_aroundBody4" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;Lcom/jcabi/dynamo/AttributeUpdates;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.8461538461538461" branch-rate="1.0" complexity="0">
+						<method name="update_aroundBody6" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;Lcom/jcabi/dynamo/AttributeUpdates;Lorg/aspectj/lang/JoinPoint;)V" line-rate="0.8461538461538461" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="241" hits="2" branch="false"/>
-								<line number="242" hits="1" branch="true" condition-coverage="100% (2/2)">
+								<line number="291" hits="8" branch="false"/>
+								<line number="292" hits="4" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="243" hits="1" branch="false"/>
-								<line number="244" hits="1" branch="false"/>
-								<line number="245" hits="1" branch="true" condition-coverage="100% (2/2)">
+								<line number="293" hits="4" branch="false"/>
+								<line number="294" hits="4" branch="false"/>
+								<line number="295" hits="4" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="246" hits="1" branch="false"/>
-								<line number="247" hits="1" branch="false"/>
-								<line number="248" hits="1" branch="false"/>
-								<line number="260" hits="1" branch="false"/>
-								<line number="261" hits="0" branch="false"/>
-								<line number="262" hits="0" branch="false"/>
-								<line number="263" hits="1" branch="false"/>
-								<line number="264" hits="1" branch="false"/>
+								<line number="296" hits="4" branch="false"/>
+								<line number="297" hits="4" branch="false"/>
+								<line number="298" hits="4" branch="false"/>
+								<line number="310" hits="4" branch="false"/>
+								<line number="311" hits="0" branch="false"/>
+								<line number="312" hits="0" branch="false"/>
+								<line number="313" hits="4" branch="false"/>
+								<line number="314" hits="4" branch="false"/>
 							</lines>
 						</method>
 						<method name="value" signature="(Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;)Ljava/lang/String;" line-rate="0.8333333333333334" branch-rate="0.75" complexity="0">
 							<lines>
-								<line number="340" hits="13" branch="false"/>
-								<line number="341" hits="13" branch="true" condition-coverage="100% (2/2)">
+								<line number="390" hits="27" branch="false"/>
+								<line number="391" hits="27" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="342" hits="5" branch="false"/>
-								<line number="344" hits="13" branch="true" condition-coverage="50% (1/2)">
+								<line number="392" hits="7" branch="false"/>
+								<line number="394" hits="27" branch="true" condition-coverage="50% (1/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
-								<line number="345" hits="0" branch="false"/>
-								<line number="349" hits="13" branch="false"/>
+								<line number="395" hits="0" branch="false"/>
+								<line number="399" hits="27" branch="false"/>
 							</lines>
 						</method>
 						<method name="with" signature="(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)Lcom/jcabi/dynamo/mock/H2Data;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="with_aroundBody8" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/mock/H2Data;" line-rate="0.7692307692307693" branch-rate="0.75" complexity="0">
+						<method name="with_aroundBody10" signature="(Lcom/jcabi/dynamo/mock/H2Data;Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/mock/H2Data;" line-rate="0.7692307692307693" branch-rate="0.75" complexity="0">
 							<lines>
-								<line number="299" hits="16" branch="true" condition-coverage="50% (1/2)">
+								<line number="349" hits="18" branch="true" condition-coverage="50% (1/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
-								<line number="300" hits="0" branch="false"/>
-								<line number="304" hits="8" branch="false"/>
-								<line number="306" hits="8" branch="false"/>
-								<line number="310" hits="8" branch="true" condition-coverage="100% (2/2)">
+								<line number="350" hits="0" branch="false"/>
+								<line number="354" hits="9" branch="false"/>
+								<line number="356" hits="9" branch="false"/>
+								<line number="360" hits="9" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="311" hits="3" branch="false"/>
-								<line number="312" hits="3" branch="false"/>
-								<line number="317" hits="8" branch="false"/>
-								<line number="319" hits="8" branch="false"/>
-								<line number="320" hits="0" branch="false"/>
-								<line number="321" hits="0" branch="false"/>
-								<line number="322" hits="8" branch="false"/>
-								<line number="323" hits="8" branch="false"/>
+								<line number="361" hits="4" branch="false"/>
+								<line number="362" hits="4" branch="false"/>
+								<line number="367" hits="9" branch="false"/>
+								<line number="369" hits="9" branch="false"/>
+								<line number="370" hits="0" branch="false"/>
+								<line number="371" hits="0" branch="false"/>
+								<line number="372" hits="9" branch="false"/>
+								<line number="373" hits="9" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="1" hits="1" branch="false"/>
-						<line number="72" hits="11" branch="false"/>
-						<line number="74" hits="0" branch="true" condition-coverage="0% (0/12)">
+						<line number="76" hits="15" branch="false"/>
+						<line number="78" hits="0" branch="true" condition-coverage="0% (0/12)">
 							<conditions>
 								<condition number="0" type="jump" coverage="0%"/>
 								<condition number="1" type="jump" coverage="0%"/>
@@ -5143,136 +5196,139 @@
 								<condition number="5" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="81" hits="1" branch="false"/>
-						<line number="116" hits="1" branch="false"/>
-						<line number="127" hits="1" branch="false"/>
-						<line number="138" hits="1" branch="false"/>
-						<line number="161" hits="7" branch="false"/>
-						<line number="162" hits="7" branch="false"/>
-						<line number="168" hits="7" branch="false"/>
-						<line number="169" hits="7" branch="false"/>
-						<line number="173" hits="7" branch="false"/>
-						<line number="179" hits="8" branch="false"/>
-						<line number="181" hits="4" branch="true" condition-coverage="100% (2/2)">
+						<line number="85" hits="1" branch="false"/>
+						<line number="125" hits="1" branch="false"/>
+						<line number="136" hits="1" branch="false"/>
+						<line number="147" hits="1" branch="false"/>
+						<line number="170" hits="8" branch="false"/>
+						<line number="171" hits="8" branch="false"/>
+						<line number="177" hits="8" branch="false"/>
+						<line number="178" hits="8" branch="false"/>
+						<line number="182" hits="8" branch="false"/>
+						<line number="187" hits="14" branch="false"/>
+						<line number="220" hits="0" branch="false"/>
+						<line number="221" hits="0" branch="false"/>
+						<line number="229" hits="20" branch="false"/>
+						<line number="231" hits="10" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="182" hits="2" branch="false"/>
-						<line number="183" hits="2" branch="false"/>
-						<line number="188" hits="4" branch="false"/>
-						<line number="190" hits="4" branch="true" condition-coverage="100% (2/2)">
+						<line number="232" hits="7" branch="false"/>
+						<line number="233" hits="7" branch="false"/>
+						<line number="238" hits="10" branch="false"/>
+						<line number="240" hits="10" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="191" hits="2" branch="true" condition-coverage="50% (1/2)">
+						<line number="241" hits="7" branch="true" condition-coverage="50% (1/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 							</conditions>
 						</line>
-						<line number="192" hits="0" branch="false"/>
-						<line number="196" hits="2" branch="true" condition-coverage="50% (1/2)">
+						<line number="242" hits="0" branch="false"/>
+						<line number="246" hits="7" branch="true" condition-coverage="50% (1/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 							</conditions>
 						</line>
-						<line number="198" hits="0" branch="false"/>
-						<line number="205" hits="2" branch="false"/>
-						<line number="206" hits="2" branch="false"/>
-						<line number="207" hits="2" branch="false"/>
-						<line number="208" hits="4" branch="false"/>
-						<line number="209" hits="0" branch="false"/>
-						<line number="210" hits="0" branch="false"/>
-						<line number="218" hits="10" branch="false"/>
-						<line number="219" hits="5" branch="true" condition-coverage="100% (2/2)">
+						<line number="248" hits="0" branch="false"/>
+						<line number="255" hits="7" branch="false"/>
+						<line number="256" hits="7" branch="false"/>
+						<line number="257" hits="7" branch="false"/>
+						<line number="258" hits="10" branch="false"/>
+						<line number="259" hits="0" branch="false"/>
+						<line number="260" hits="0" branch="false"/>
+						<line number="268" hits="12" branch="false"/>
+						<line number="269" hits="6" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="220" hits="8" branch="false"/>
-						<line number="221" hits="8" branch="false"/>
-						<line number="222" hits="5" branch="false"/>
-						<line number="230" hits="5" branch="false"/>
-						<line number="231" hits="0" branch="false"/>
-						<line number="232" hits="0" branch="false"/>
-						<line number="233" hits="5" branch="false"/>
-						<line number="234" hits="5" branch="false"/>
-						<line number="241" hits="2" branch="false"/>
-						<line number="242" hits="1" branch="true" condition-coverage="100% (2/2)">
+						<line number="270" hits="11" branch="false"/>
+						<line number="271" hits="11" branch="false"/>
+						<line number="272" hits="6" branch="false"/>
+						<line number="280" hits="6" branch="false"/>
+						<line number="281" hits="0" branch="false"/>
+						<line number="282" hits="0" branch="false"/>
+						<line number="283" hits="6" branch="false"/>
+						<line number="284" hits="6" branch="false"/>
+						<line number="291" hits="8" branch="false"/>
+						<line number="292" hits="4" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="243" hits="1" branch="false"/>
-						<line number="244" hits="1" branch="false"/>
-						<line number="245" hits="1" branch="true" condition-coverage="100% (2/2)">
+						<line number="293" hits="4" branch="false"/>
+						<line number="294" hits="4" branch="false"/>
+						<line number="295" hits="4" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="246" hits="1" branch="false"/>
-						<line number="247" hits="1" branch="false"/>
-						<line number="248" hits="1" branch="false"/>
-						<line number="260" hits="1" branch="false"/>
-						<line number="261" hits="0" branch="false"/>
-						<line number="262" hits="0" branch="false"/>
-						<line number="263" hits="1" branch="false"/>
-						<line number="264" hits="1" branch="false"/>
-						<line number="270" hits="2" branch="false"/>
-						<line number="271" hits="1" branch="true" condition-coverage="100% (2/2)">
+						<line number="296" hits="4" branch="false"/>
+						<line number="297" hits="4" branch="false"/>
+						<line number="298" hits="4" branch="false"/>
+						<line number="310" hits="4" branch="false"/>
+						<line number="311" hits="0" branch="false"/>
+						<line number="312" hits="0" branch="false"/>
+						<line number="313" hits="4" branch="false"/>
+						<line number="314" hits="4" branch="false"/>
+						<line number="320" hits="2" branch="false"/>
+						<line number="321" hits="1" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="272" hits="1" branch="false"/>
-						<line number="273" hits="1" branch="false"/>
-						<line number="274" hits="1" branch="false"/>
-						<line number="283" hits="1" branch="false"/>
-						<line number="284" hits="0" branch="false"/>
-						<line number="285" hits="0" branch="false"/>
-						<line number="286" hits="1" branch="false"/>
-						<line number="287" hits="1" branch="false"/>
-						<line number="299" hits="16" branch="true" condition-coverage="50% (1/2)">
+						<line number="322" hits="1" branch="false"/>
+						<line number="323" hits="1" branch="false"/>
+						<line number="324" hits="1" branch="false"/>
+						<line number="333" hits="1" branch="false"/>
+						<line number="334" hits="0" branch="false"/>
+						<line number="335" hits="0" branch="false"/>
+						<line number="336" hits="1" branch="false"/>
+						<line number="337" hits="1" branch="false"/>
+						<line number="349" hits="18" branch="true" condition-coverage="50% (1/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 							</conditions>
 						</line>
-						<line number="300" hits="0" branch="false"/>
-						<line number="304" hits="8" branch="false"/>
-						<line number="306" hits="8" branch="false"/>
-						<line number="310" hits="8" branch="true" condition-coverage="100% (2/2)">
+						<line number="350" hits="0" branch="false"/>
+						<line number="354" hits="9" branch="false"/>
+						<line number="356" hits="9" branch="false"/>
+						<line number="360" hits="9" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="311" hits="3" branch="false"/>
-						<line number="312" hits="3" branch="false"/>
-						<line number="317" hits="8" branch="false"/>
-						<line number="319" hits="8" branch="false"/>
-						<line number="320" hits="0" branch="false"/>
-						<line number="321" hits="0" branch="false"/>
-						<line number="322" hits="8" branch="false"/>
-						<line number="323" hits="8" branch="false"/>
-						<line number="331" hits="19" branch="false"/>
-						<line number="340" hits="13" branch="false"/>
-						<line number="341" hits="13" branch="true" condition-coverage="100% (2/2)">
+						<line number="361" hits="4" branch="false"/>
+						<line number="362" hits="4" branch="false"/>
+						<line number="367" hits="9" branch="false"/>
+						<line number="369" hits="9" branch="false"/>
+						<line number="370" hits="0" branch="false"/>
+						<line number="371" hits="0" branch="false"/>
+						<line number="372" hits="9" branch="false"/>
+						<line number="373" hits="9" branch="false"/>
+						<line number="381" hits="37" branch="false"/>
+						<line number="390" hits="27" branch="false"/>
+						<line number="391" hits="27" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="342" hits="5" branch="false"/>
-						<line number="344" hits="13" branch="true" condition-coverage="50% (1/2)">
+						<line number="392" hits="7" branch="false"/>
+						<line number="394" hits="27" branch="true" condition-coverage="50% (1/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 							</conditions>
 						</line>
-						<line number="345" hits="0" branch="false"/>
-						<line number="349" hits="13" branch="false"/>
-						<line number="358" hits="19" branch="false"/>
+						<line number="395" hits="0" branch="false"/>
+						<line number="399" hits="27" branch="false"/>
+						<line number="408" hits="37" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$1" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
+				<class name="com.jcabi.dynamo.mock.H2Data$1" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -5280,57 +5336,73 @@
 						</method>
 						<method name="fetch" signature="(Ljava/sql/ResultSet;)Lcom/jcabi/dynamo/Attributes;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="101" hits="4" branch="false"/>
-								<line number="102" hits="4" branch="false"/>
-								<line number="103" hits="11" branch="true" condition-coverage="100% (2/2)">
+								<line number="105" hits="10" branch="false"/>
+								<line number="106" hits="10" branch="false"/>
+								<line number="107" hits="34" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="104" hits="7" branch="false"/>
-								<line number="109" hits="4" branch="false"/>
+								<line number="108" hits="24" branch="false"/>
+								<line number="109" hits="24" branch="false"/>
+								<line number="110" hits="24" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="111" hits="16" branch="false"/>
+								<line number="113" hits="24" branch="false"/>
+								<line number="118" hits="10" branch="false"/>
 							</lines>
 						</method>
 						<method name="handle" signature="(Ljava/sql/ResultSet;Ljava/sql/Statement;)Ljava/lang/Iterable;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="87" hits="4" branch="false"/>
-								<line number="89" hits="8" branch="true" condition-coverage="100% (2/2)">
+								<line number="91" hits="10" branch="false"/>
+								<line number="93" hits="20" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
-								<line number="90" hits="4" branch="false"/>
-								<line number="92" hits="4" branch="false"/>
+								<line number="94" hits="10" branch="false"/>
+								<line number="96" hits="10" branch="false"/>
 							</lines>
 						</method>
 						<method name="handle" signature="(Ljava/sql/ResultSet;Ljava/sql/Statement;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="83" hits="5" branch="false"/>
+								<line number="87" hits="11" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="83" hits="5" branch="false"/>
-						<line number="87" hits="4" branch="false"/>
-						<line number="89" hits="8" branch="true" condition-coverage="100% (2/2)">
+						<line number="87" hits="11" branch="false"/>
+						<line number="91" hits="10" branch="false"/>
+						<line number="93" hits="20" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="90" hits="4" branch="false"/>
-						<line number="92" hits="4" branch="false"/>
-						<line number="101" hits="4" branch="false"/>
-						<line number="102" hits="4" branch="false"/>
-						<line number="103" hits="11" branch="true" condition-coverage="100% (2/2)">
+						<line number="94" hits="10" branch="false"/>
+						<line number="96" hits="10" branch="false"/>
+						<line number="105" hits="10" branch="false"/>
+						<line number="106" hits="10" branch="false"/>
+						<line number="107" hits="34" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="104" hits="7" branch="false"/>
-						<line number="109" hits="4" branch="false"/>
+						<line number="108" hits="24" branch="false"/>
+						<line number="109" hits="24" branch="false"/>
+						<line number="110" hits="24" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="111" hits="16" branch="false"/>
+						<line number="113" hits="24" branch="false"/>
+						<line number="118" hits="10" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$2" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
+				<class name="com.jcabi.dynamo.mock.H2Data$2" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -5338,21 +5410,21 @@
 						</method>
 						<method name="apply" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="117" hits="6" branch="false"/>
+								<line number="126" hits="17" branch="false"/>
 							</lines>
 						</method>
 						<method name="apply" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="120" hits="5" branch="false"/>
+								<line number="129" hits="16" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="117" hits="6" branch="false"/>
-						<line number="120" hits="5" branch="false"/>
+						<line number="126" hits="17" branch="false"/>
+						<line number="129" hits="16" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$3" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
+				<class name="com.jcabi.dynamo.mock.H2Data$3" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -5360,21 +5432,21 @@
 						</method>
 						<method name="apply" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="128" hits="9" branch="false"/>
+								<line number="137" hits="10" branch="false"/>
 							</lines>
 						</method>
 						<method name="apply" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="131" hits="8" branch="false"/>
+								<line number="140" hits="9" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="128" hits="9" branch="false"/>
-						<line number="131" hits="8" branch="false"/>
+						<line number="137" hits="10" branch="false"/>
+						<line number="140" hits="9" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$4" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
+				<class name="com.jcabi.dynamo.mock.H2Data$4" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -5382,21 +5454,143 @@
 						</method>
 						<method name="apply" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="139" hits="4" branch="false"/>
+								<line number="148" hits="6" branch="false"/>
 							</lines>
 						</method>
 						<method name="apply" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="142" hits="3" branch="false"/>
+								<line number="151" hits="5" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="139" hits="4" branch="false"/>
-						<line number="142" hits="3" branch="false"/>
+						<line number="148" hits="6" branch="false"/>
+						<line number="151" hits="5" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure1" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
+				<class name="com.jcabi.dynamo.mock.H2Data$5" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/H2Data;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="map" signature="(Ljava/sql/ResultSet;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="194" hits="14" branch="false"/>
+							</lines>
+						</method>
+						<method name="map" signature="(Ljava/sql/ResultSet;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="198" hits="7" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="194" hits="14" branch="false"/>
+						<line number="198" hits="7" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.mock.H2Data$6" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="0.8" branch-rate="0.5" complexity="2.9444444444444446">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/H2Data;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="apply" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="203" hits="26" branch="false"/>
+							</lines>
+						</method>
+						<method name="apply" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="0.75" branch-rate="0.5" complexity="0">
+							<lines>
+								<line number="206" hits="19" branch="false"/>
+								<line number="209" hits="19" branch="true" condition-coverage="50% (1/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="50%"/>
+									</conditions>
+								</line>
+								<line number="210" hits="0" branch="false"/>
+								<line number="216" hits="19" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="203" hits="26" branch="false"/>
+						<line number="206" hits="19" branch="false"/>
+						<line number="209" hits="19" branch="true" condition-coverage="50% (1/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="50%"/>
+							</conditions>
+						</line>
+						<line number="210" hits="0" branch="false"/>
+						<line number="216" hits="19" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure1" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="14" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="14" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure11" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="18" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="18" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure3" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="20" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="20" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure5" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="12" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="12" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure7" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -5412,23 +5606,7 @@
 						<line number="1" hits="8" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure3" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="10" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="10" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure5" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
+				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure9" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.9444444444444446">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -5442,38 +5620,6 @@
 					</methods>
 					<lines>
 						<line number="1" hits="2" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure7" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="2" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="2" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.mock.H2Data$AjcClosure9" filename="com/jcabi/dynamo/mock/H2Data.java" line-rate="1.0" branch-rate="1.0" complexity="2.933333333333333">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="16" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="16" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.mock.MadeTable" filename="com/jcabi/dynamo/mock/MadeTable.java" line-rate="0.0" branch-rate="0.0" complexity="2.0">
@@ -5618,17 +5764,17 @@
 						</method>
 						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/MkData;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="85" hits="1" branch="false"/>
-								<line number="86" hits="1" branch="false"/>
+								<line number="85" hits="2" branch="false"/>
+								<line number="86" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/MkData;Ljava/lang/String;Lcom/jcabi/dynamo/Conditions;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="95" hits="1" branch="false"/>
-								<line number="96" hits="1" branch="false"/>
-								<line number="97" hits="1" branch="false"/>
-								<line number="98" hits="1" branch="false"/>
-								<line number="99" hits="1" branch="false"/>
+								<line number="95" hits="2" branch="false"/>
+								<line number="96" hits="2" branch="false"/>
+								<line number="97" hits="2" branch="false"/>
+								<line number="98" hits="2" branch="false"/>
+								<line number="99" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="access$000" signature="(Lcom/jcabi/dynamo/mock/MkFrame;)Lcom/jcabi/dynamo/mock/MkData;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -5637,7 +5783,7 @@
 						</method>
 						<method name="access$100" signature="(Lcom/jcabi/dynamo/mock/MkFrame;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="62" hits="2" branch="false"/>
+								<line number="62" hits="4" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -5682,7 +5828,7 @@
 						</method>
 						<method name="iterator_aroundBody0" signature="(Lcom/jcabi/dynamo/mock/MkFrame;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Iterator;" line-rate="0.3333333333333333" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="104" hits="2" branch="false"/>
+								<line number="104" hits="4" branch="false"/>
 								<line number="117" hits="0" branch="false"/>
 								<line number="118" hits="0" branch="false"/>
 							</lines>
@@ -5716,7 +5862,7 @@
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="59" hits="1" branch="false"/>
+								<line number="59" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="where" signature="(Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/Condition;)Lcom/jcabi/dynamo/Frame;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -5749,7 +5895,7 @@
 					</methods>
 					<lines>
 						<line number="1" hits="2" branch="false"/>
-						<line number="59" hits="1" branch="false"/>
+						<line number="59" hits="2" branch="false"/>
 						<line number="61" hits="0" branch="true" condition-coverage="0% (0/30)">
 							<conditions>
 								<condition number="0" type="jump" coverage="0%"/>
@@ -5769,15 +5915,15 @@
 								<condition number="14" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="62" hits="2" branch="false"/>
-						<line number="85" hits="1" branch="false"/>
-						<line number="86" hits="1" branch="false"/>
-						<line number="95" hits="1" branch="false"/>
-						<line number="96" hits="1" branch="false"/>
-						<line number="97" hits="1" branch="false"/>
-						<line number="98" hits="1" branch="false"/>
-						<line number="99" hits="1" branch="false"/>
-						<line number="104" hits="2" branch="false"/>
+						<line number="62" hits="4" branch="false"/>
+						<line number="85" hits="2" branch="false"/>
+						<line number="86" hits="2" branch="false"/>
+						<line number="95" hits="2" branch="false"/>
+						<line number="96" hits="2" branch="false"/>
+						<line number="97" hits="2" branch="false"/>
+						<line number="98" hits="2" branch="false"/>
+						<line number="99" hits="2" branch="false"/>
+						<line number="104" hits="4" branch="false"/>
 						<line number="117" hits="0" branch="false"/>
 						<line number="118" hits="0" branch="false"/>
 						<line number="124" hits="0" branch="false"/>
@@ -5796,18 +5942,18 @@
 						</method>
 						<method name="apply" signature="(Lcom/jcabi/dynamo/Attributes;)Lcom/jcabi/dynamo/Item;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="109" hits="1" branch="false"/>
+								<line number="109" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="apply" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="106" hits="2" branch="false"/>
+								<line number="106" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="106" hits="2" branch="false"/>
-						<line number="109" hits="1" branch="false"/>
+						<line number="106" hits="4" branch="false"/>
+						<line number="109" hits="2" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.mock.MkFrame$AjcClosure1" filename="com/jcabi/dynamo/mock/MkFrame.java" line-rate="1.0" branch-rate="1.0" complexity="1.3">
@@ -5818,12 +5964,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="2" branch="false"/>
+								<line number="1" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="2" branch="false"/>
+						<line number="1" hits="4" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.mock.MkFrame$AjcClosure11" filename="com/jcabi/dynamo/mock/MkFrame.java" line-rate="0.0" branch-rate="1.0" complexity="1.3">
@@ -5922,7 +6068,7 @@
 						<line number="1" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.MkItem" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.47058823529411764" branch-rate="0.0" complexity="1.2857142857142858">
+				<class name="com.jcabi.dynamo.mock.MkItem" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.8095238095238095" branch-rate="0.06666666666666667" complexity="1.4285714285714286">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -5930,11 +6076,11 @@
 						</method>
 						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/MkData;Ljava/lang/String;Lcom/jcabi/dynamo/Attributes;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="82" hits="2" branch="false"/>
-								<line number="83" hits="2" branch="false"/>
-								<line number="84" hits="2" branch="false"/>
-								<line number="85" hits="2" branch="false"/>
-								<line number="86" hits="2" branch="false"/>
+								<line number="85" hits="4" branch="false"/>
+								<line number="86" hits="4" branch="false"/>
+								<line number="87" hits="4" branch="false"/>
+								<line number="88" hits="4" branch="false"/>
+								<line number="89" hits="4" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -5952,7 +6098,7 @@
 						</method>
 						<method name="frame_aroundBody8" signature="(Lcom/jcabi/dynamo/mock/MkItem;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Frame;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="130" hits="0" branch="false"/>
+								<line number="151" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="get" signature="(Ljava/lang/String;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -5961,21 +6107,21 @@
 						</method>
 						<method name="get_aroundBody0" signature="(Lcom/jcabi/dynamo/mock/MkItem;Ljava/lang/String;Lorg/aspectj/lang/JoinPoint;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="90" hits="2" branch="false"/>
+								<line number="93" hits="8" branch="false"/>
 							</lines>
 						</method>
 						<method name="has" signature="(Ljava/lang/String;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="has_aroundBody2" signature="(Lcom/jcabi/dynamo/mock/MkItem;Ljava/lang/String;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="has_aroundBody2" signature="(Lcom/jcabi/dynamo/mock/MkItem;Ljava/lang/String;Lorg/aspectj/lang/JoinPoint;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="95" hits="0" branch="false"/>
+								<line number="103" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="hashCode" signature="()I" line-rate="0.0" branch-rate="0.0" complexity="0">
 							<lines>
-								<line number="58" hits="0" branch="true" condition-coverage="0% (0/28)">
+								<line number="61" hits="0" branch="true" condition-coverage="0% (0/28)">
 									<conditions>
 										<condition number="0" type="jump" coverage="0%"/>
 										<condition number="1" type="jump" coverage="0%"/>
@@ -6003,30 +6149,38 @@
 							<lines>
 							</lines>
 						</method>
-						<method name="put_aroundBody4" signature="(Lcom/jcabi/dynamo/mock/MkItem;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValueUpdate;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Map;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="put_aroundBody4" signature="(Lcom/jcabi/dynamo/mock/MkItem;Ljava/lang/String;Lcom/amazonaws/services/dynamodbv2/model/AttributeValueUpdate;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Map;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="101" hits="0" branch="false"/>
+								<line number="115" hits="4" branch="false"/>
 							</lines>
 						</method>
-						<method name="put_aroundBody6" signature="(Lcom/jcabi/dynamo/mock/MkItem;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Map;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="put_aroundBody6" signature="(Lcom/jcabi/dynamo/mock/MkItem;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Ljava/util/Map;" line-rate="0.7777777777777778" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="111" hits="0" branch="false"/>
-								<line number="114" hits="0" branch="false"/>
-								<line number="115" hits="0" branch="false"/>
-								<line number="116" hits="0" branch="false"/>
-								<line number="117" hits="0" branch="false"/>
+								<line number="124" hits="4" branch="false"/>
+								<line number="126" hits="2" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="127" hits="2" branch="false"/>
+								<line number="128" hits="2" branch="false"/>
+								<line number="130" hits="2" branch="false"/>
+								<line number="135" hits="0" branch="false"/>
+								<line number="136" hits="0" branch="false"/>
+								<line number="137" hits="2" branch="false"/>
+								<line number="138" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="56" hits="1" branch="false"/>
+								<line number="59" hits="2" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="1" hits="2" branch="false"/>
-						<line number="56" hits="1" branch="false"/>
-						<line number="58" hits="0" branch="true" condition-coverage="0% (0/28)">
+						<line number="59" hits="2" branch="false"/>
+						<line number="61" hits="0" branch="true" condition-coverage="0% (0/28)">
 							<conditions>
 								<condition number="0" type="jump" coverage="0%"/>
 								<condition number="1" type="jump" coverage="0%"/>
@@ -6044,45 +6198,69 @@
 								<condition number="13" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="82" hits="2" branch="false"/>
-						<line number="83" hits="2" branch="false"/>
-						<line number="84" hits="2" branch="false"/>
-						<line number="85" hits="2" branch="false"/>
-						<line number="86" hits="2" branch="false"/>
-						<line number="90" hits="2" branch="false"/>
-						<line number="95" hits="0" branch="false"/>
-						<line number="101" hits="0" branch="false"/>
-						<line number="111" hits="0" branch="false"/>
-						<line number="114" hits="0" branch="false"/>
-						<line number="115" hits="0" branch="false"/>
-						<line number="116" hits="0" branch="false"/>
-						<line number="117" hits="0" branch="false"/>
-						<line number="130" hits="0" branch="false"/>
+						<line number="85" hits="4" branch="false"/>
+						<line number="86" hits="4" branch="false"/>
+						<line number="87" hits="4" branch="false"/>
+						<line number="88" hits="4" branch="false"/>
+						<line number="89" hits="4" branch="false"/>
+						<line number="93" hits="8" branch="false"/>
+						<line number="103" hits="2" branch="false"/>
+						<line number="115" hits="4" branch="false"/>
+						<line number="124" hits="4" branch="false"/>
+						<line number="126" hits="2" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="127" hits="2" branch="false"/>
+						<line number="128" hits="2" branch="false"/>
+						<line number="130" hits="2" branch="false"/>
+						<line number="135" hits="0" branch="false"/>
+						<line number="136" hits="0" branch="false"/>
+						<line number="137" hits="2" branch="false"/>
+						<line number="138" hits="2" branch="false"/>
+						<line number="151" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.MkItem$1" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.0" branch-rate="1.0" complexity="1.2857142857142858">
+				<class name="com.jcabi.dynamo.mock.MkItem$1" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="1.0" branch-rate="1.0" complexity="1.4285714285714286">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/MkItem;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="apply" signature="(Lcom/amazonaws/services/dynamodbv2/model/AttributeValueUpdate;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="apply" signature="(Lcom/amazonaws/services/dynamodbv2/model/AttributeValueUpdate;)Lcom/amazonaws/services/dynamodbv2/model/AttributeValue;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="122" hits="0" branch="false"/>
+								<line number="143" hits="4" branch="false"/>
 							</lines>
 						</method>
-						<method name="apply" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="apply" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="119" hits="0" branch="false"/>
+								<line number="140" hits="6" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="119" hits="0" branch="false"/>
-						<line number="122" hits="0" branch="false"/>
+						<line number="140" hits="6" branch="false"/>
+						<line number="143" hits="4" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure1" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="1.0" branch-rate="1.0" complexity="1.2857142857142858">
+				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure1" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="1.0" branch-rate="1.0" complexity="1.4285714285714286">
+					<methods>
+						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+							</lines>
+						</method>
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="1" hits="8" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="1" hits="8" branch="false"/>
+					</lines>
+				</class>
+				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure3" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="1.0" branch-rate="1.0" complexity="1.4285714285714286">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -6098,55 +6276,39 @@
 						<line number="1" hits="2" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure3" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.0" branch-rate="1.0" complexity="1.2857142857142858">
+				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure5" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="1.0" branch-rate="1.0" complexity="1.4285714285714286">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="0" branch="false"/>
+								<line number="1" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="0" branch="false"/>
+						<line number="1" hits="4" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure5" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.0" branch-rate="1.0" complexity="1.2857142857142858">
+				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure7" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="1.0" branch-rate="1.0" complexity="1.4285714285714286">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 							</lines>
 						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="0" branch="false"/>
+								<line number="1" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="0" branch="false"/>
+						<line number="1" hits="4" branch="false"/>
 					</lines>
 				</class>
-				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure7" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.0" branch-rate="1.0" complexity="1.2857142857142858">
-					<methods>
-						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
-							<lines>
-							</lines>
-						</method>
-						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="1" hits="0" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="1" hits="0" branch="false"/>
-					</lines>
-				</class>
-				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure9" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.0" branch-rate="1.0" complexity="1.2857142857142858">
+				<class name="com.jcabi.dynamo.mock.MkItem$AjcClosure9" filename="com/jcabi/dynamo/mock/MkItem.java" line-rate="0.0" branch-rate="1.0" complexity="1.4285714285714286">
 					<methods>
 						<method name="&lt;init&gt;" signature="([Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -6170,9 +6332,9 @@
 						</method>
 						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/MkData;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="62" hits="1" branch="false"/>
-								<line number="63" hits="1" branch="false"/>
-								<line number="64" hits="1" branch="false"/>
+								<line number="62" hits="2" branch="false"/>
+								<line number="63" hits="2" branch="false"/>
+								<line number="64" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -6213,7 +6375,7 @@
 						</method>
 						<method name="table_aroundBody2" signature="(Lcom/jcabi/dynamo/mock/MkRegion;Ljava/lang/String;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Table;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="75" hits="2" branch="false"/>
+								<line number="75" hits="4" branch="false"/>
 							</lines>
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
@@ -6235,11 +6397,11 @@
 								<condition number="5" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="62" hits="1" branch="false"/>
-						<line number="63" hits="1" branch="false"/>
-						<line number="64" hits="1" branch="false"/>
+						<line number="62" hits="2" branch="false"/>
+						<line number="63" hits="2" branch="false"/>
+						<line number="64" hits="2" branch="false"/>
 						<line number="68" hits="0" branch="false"/>
-						<line number="75" hits="2" branch="false"/>
+						<line number="75" hits="4" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.mock.MkRegion$AjcClosure1" filename="com/jcabi/dynamo/mock/MkRegion.java" line-rate="0.0" branch-rate="1.0" complexity="1.3333333333333333">
@@ -6266,12 +6428,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="2" branch="false"/>
+								<line number="1" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="2" branch="false"/>
+						<line number="1" hits="4" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.mock.MkTable" filename="com/jcabi/dynamo/mock/MkTable.java" line-rate="0.6111111111111112" branch-rate="0.0" complexity="1.3333333333333333">
@@ -6282,10 +6444,10 @@
 						</method>
 						<method name="&lt;init&gt;" signature="(Lcom/jcabi/dynamo/mock/MkData;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="73" hits="1" branch="false"/>
-								<line number="74" hits="1" branch="false"/>
-								<line number="75" hits="1" branch="false"/>
-								<line number="76" hits="1" branch="false"/>
+								<line number="73" hits="2" branch="false"/>
+								<line number="74" hits="2" branch="false"/>
+								<line number="75" hits="2" branch="false"/>
+								<line number="76" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="ajc$preClinit" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -6313,7 +6475,7 @@
 						</method>
 						<method name="frame_aroundBody2" signature="(Lcom/jcabi/dynamo/mock/MkTable;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Frame;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="91" hits="2" branch="false"/>
+								<line number="91" hits="4" branch="false"/>
 							</lines>
 						</method>
 						<method name="hashCode" signature="()I" line-rate="0.0" branch-rate="0.0" complexity="0">
@@ -6349,12 +6511,12 @@
 						</method>
 						<method name="put_aroundBody0" signature="(Lcom/jcabi/dynamo/mock/MkTable;Ljava/util/Map;Lorg/aspectj/lang/JoinPoint;)Lcom/jcabi/dynamo/Item;" line-rate="0.6666666666666666" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="80" hits="2" branch="false"/>
-								<line number="82" hits="1" branch="false"/>
+								<line number="80" hits="4" branch="false"/>
+								<line number="82" hits="2" branch="false"/>
 								<line number="83" hits="0" branch="false"/>
 								<line number="84" hits="0" branch="false"/>
-								<line number="85" hits="1" branch="false"/>
-								<line number="86" hits="1" branch="false"/>
+								<line number="85" hits="2" branch="false"/>
+								<line number="86" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="region" signature="()Lcom/jcabi/dynamo/Region;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -6368,13 +6530,13 @@
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="53" hits="1" branch="false"/>
+								<line number="53" hits="2" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="1" hits="2" branch="false"/>
-						<line number="53" hits="1" branch="false"/>
+						<line number="53" hits="2" branch="false"/>
 						<line number="55" hits="0" branch="true" condition-coverage="0% (0/20)">
 							<conditions>
 								<condition number="0" type="jump" coverage="0%"/>
@@ -6389,17 +6551,17 @@
 								<condition number="9" type="jump" coverage="0%"/>
 							</conditions>
 						</line>
-						<line number="73" hits="1" branch="false"/>
-						<line number="74" hits="1" branch="false"/>
-						<line number="75" hits="1" branch="false"/>
-						<line number="76" hits="1" branch="false"/>
-						<line number="80" hits="2" branch="false"/>
-						<line number="82" hits="1" branch="false"/>
+						<line number="73" hits="2" branch="false"/>
+						<line number="74" hits="2" branch="false"/>
+						<line number="75" hits="2" branch="false"/>
+						<line number="76" hits="2" branch="false"/>
+						<line number="80" hits="4" branch="false"/>
+						<line number="82" hits="2" branch="false"/>
 						<line number="83" hits="0" branch="false"/>
 						<line number="84" hits="0" branch="false"/>
-						<line number="85" hits="1" branch="false"/>
-						<line number="86" hits="1" branch="false"/>
-						<line number="91" hits="2" branch="false"/>
+						<line number="85" hits="2" branch="false"/>
+						<line number="86" hits="2" branch="false"/>
+						<line number="91" hits="4" branch="false"/>
 						<line number="96" hits="0" branch="false"/>
 						<line number="101" hits="0" branch="false"/>
 						<line number="107" hits="0" branch="false"/>
@@ -6414,12 +6576,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="2" branch="false"/>
+								<line number="1" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="2" branch="false"/>
+						<line number="1" hits="4" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.mock.MkTable$AjcClosure3" filename="com/jcabi/dynamo/mock/MkTable.java" line-rate="1.0" branch-rate="1.0" complexity="1.3333333333333333">
@@ -6430,12 +6592,12 @@
 						</method>
 						<method name="run" signature="([Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="1" hits="2" branch="false"/>
+								<line number="1" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="1" hits="2" branch="false"/>
+						<line number="1" hits="4" branch="false"/>
 					</lines>
 				</class>
 				<class name="com.jcabi.dynamo.mock.MkTable$AjcClosure5" filename="com/jcabi/dynamo/mock/MkTable.java" line-rate="0.0" branch-rate="1.0" complexity="1.3333333333333333">

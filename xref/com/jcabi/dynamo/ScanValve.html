@@ -65,7 +65,7 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * Scan-based valve.</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: d877cade679c2cfc09bab43b3fe17efd5a205e88 $</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: 551405bd21e92b9bd602ef8a9443b38e499c3663 $</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  @Immutable
@@ -146,7 +146,7 @@
 <a class="jxr_linenumber" name="L138" href="#L138">138</a> 
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>     @Override
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> count(<strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/Credentials.html">Credentials</a> credentials, <strong class="jxr_keyword">final</strong> String table,
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">final</strong> Map&lt;String, Condition&gt; conditions) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">final</strong> Map&lt;String, Condition&gt; conditions) {
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">final</strong> AmazonDynamoDB aws = credentials.aws();
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>             <strong class="jxr_keyword">final</strong> ScanRequest request = <strong class="jxr_keyword">new</strong> ScanRequest()
