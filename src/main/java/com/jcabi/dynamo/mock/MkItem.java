@@ -110,7 +110,8 @@ final class MkItem implements Item {
 
     @Override
     public Map<String, AttributeValue> put(
-        final String name, final AttributeValueUpdate value) {
+        final String name, final AttributeValueUpdate value)
+        throws IOException {
         return this.put(
             new ImmutableMap.Builder<String, AttributeValueUpdate>()
                 .put(name, value).build()
@@ -119,12 +120,11 @@ final class MkItem implements Item {
 
     @Override
     public Map<String, AttributeValue> put(
-        final Map<String, AttributeValueUpdate> attrs) {
+        final Map<String, AttributeValueUpdate> attrs) throws IOException {
         final Map<String, AttributeValue> keys =
-            new HashMap<String, AttributeValue>();
-        keys.putAll(this.attributes);
-        for (final String attr : attrs.keySet()) {
-            keys.remove(attr);
+            new HashMap<String, AttributeValue>(0);
+        for (final String attr : this.data.keys(this.table)) {
+            keys.put(attr, this.attributes.get(attr));
         }
         try {
             this.data.update(

@@ -213,7 +213,7 @@ public final class H2Data implements MkData {
                                 )
                             );
                         }
-                        return matcher.group(1);
+                        return matcher.group(1).toLowerCase(Locale.ENGLISH);
                     }
                 }
             );

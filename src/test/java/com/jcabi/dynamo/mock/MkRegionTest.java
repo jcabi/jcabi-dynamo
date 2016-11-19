@@ -29,6 +29,7 @@
  */
 package com.jcabi.dynamo.mock;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.dynamo.Attributes;
@@ -44,6 +45,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.10
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 public final class MkRegionTest {
 
@@ -56,14 +58,16 @@ public final class MkRegionTest {
         final String name = "users";
         final String key = "id";
         final String attr = "description";
+        final String nattr = "thenumber";
         final Region region = new MkRegion(
-            new H2Data().with(name, new String[] {key}, attr)
+            new H2Data().with(name, new String[] {key}, attr, nattr)
         );
         final Table table = region.table(name);
         table.put(
             new Attributes()
                 .with(key, "32443")
                 .with(attr, "first value to \n\t€ save")
+                .with(nattr, "150")
         );
         final Item item = table.frame().iterator().next();
         MatcherAssert.assertThat(item.has(attr), Matchers.is(true));
@@ -81,6 +85,38 @@ public final class MkRegionTest {
             item.get(attr).getS(),
             Matchers.containsString("another value")
         );
+        MatcherAssert.assertThat(
+            item.get(nattr).getN(),
+            Matchers.endsWith("50")
+        );
+    }
+
+    /**
+     * MkRegion can store and read items.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void storesAndReadsSingleAttribute() throws Exception {
+        final String table = "ideas";
+        final String key = "number";
+        final String attr = "total";
+        final Region region = new MkRegion(
+            new H2Data().with(table, new String[] {key}, attr)
+        );
+        final Table tbl = region.table(table);
+        tbl.put(
+            new Attributes()
+                .with(key, "32443")
+                .with(attr, "0")
+        );
+        final Item item = tbl.frame().iterator().next();
+        item.put(
+            attr,
+            new AttributeValueUpdate().withValue(
+                new AttributeValue().withN("2")
+            ).withAction(AttributeAction.PUT)
+        );
+        MatcherAssert.assertThat(item.get(attr).getN(), Matchers.equalTo("2"));
     }
 
 }
