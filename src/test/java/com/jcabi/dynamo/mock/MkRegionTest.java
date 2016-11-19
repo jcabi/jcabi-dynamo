@@ -30,7 +30,9 @@
 package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import org.hamcrest.MatcherAssert;
@@ -53,20 +55,30 @@ public final class MkRegionTest {
     public void storesAndReadsAttributes() throws Exception {
         final String name = "users";
         final String key = "id";
-        final String attr = "DESCRIPTION";
+        final String attr = "description";
         final Region region = new MkRegion(
-            new H2Data().with(name, new String[] {key}, new String[] {attr})
+            new H2Data().with(name, new String[] {key}, attr)
         );
         final Table table = region.table(name);
-        final AttributeValue value = new AttributeValue("some\n\t\u20ac text");
         table.put(
             new Attributes()
                 .with(key, "32443")
-                .with(attr, value)
+                .with(attr, "first value to \n\t€ save")
+        );
+        final Item item = table.frame().iterator().next();
+        MatcherAssert.assertThat(
+            item.get(attr).getS(),
+            Matchers.containsString("\n\t\u20ac save")
+        );
+        item.put(
+            attr,
+            new AttributeValueUpdate().withValue(
+                new AttributeValue("this is another value")
+            )
         );
         MatcherAssert.assertThat(
-            table.frame().iterator().next().get(attr),
-            Matchers.equalTo(value)
+            item.get(attr).getS(),
+            Matchers.containsString("another value")
         );
     }
 

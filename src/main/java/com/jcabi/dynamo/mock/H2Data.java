@@ -42,6 +42,7 @@ import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.jdbc.JdbcSession;
+import com.jcabi.jdbc.ListOutcome;
 import com.jcabi.jdbc.Outcome;
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +55,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.codec.binary.Base32;
@@ -101,9 +105,14 @@ public final class H2Data implements MkData {
                 final ResultSetMetaData meta = rset.getMetaData();
                 Attributes attrs = new Attributes();
                 for (int idx = 0; idx < meta.getColumnCount(); ++idx) {
+                    final String text = rset.getString(idx + 1);
+                    AttributeValue value = new AttributeValue().withS(text);
+                    if (text.matches("[0-9]+")) {
+                        value = value.withN(text);
+                    }
                     attrs = attrs.with(
-                        meta.getColumnName(idx + 1),
-                        rset.getString(idx + 1)
+                        meta.getColumnName(idx + 1).toLowerCase(Locale.ENGLISH),
+                        value
                     );
                 }
                 return attrs;
@@ -170,6 +179,47 @@ public final class H2Data implements MkData {
             "jdbc:h2:file:%s",
             file.getAbsolutePath()
         );
+    }
+
+    @Override
+    public Iterable<String> keys(final String table) throws IOException {
+        try {
+            return Iterables.transform(
+                new JdbcSession(this.connection())
+                    // @checkstyle LineLength (1 line)
+                    .sql("SELECT SQL FROM INFORMATION_SCHEMA.CONSTRAINTS WHERE TABLE_NAME = ?")
+                    .set(H2Data.encodeTableName(table))
+                    .select(
+                        new ListOutcome<String>(
+                            new ListOutcome.Mapping<String>() {
+                                @Override
+                                public String map(final ResultSet rset)
+                                    throws SQLException {
+                                    return rset.getString(1);
+                                }
+                            }
+                        )
+                    ),
+                new Function<String, String>() {
+                    @Override
+                    public String apply(final String input) {
+                        final Matcher matcher = Pattern.compile(
+                            "PRIMARY KEY\\((.*)\\)"
+                        ).matcher(input);
+                        if (!matcher.find()) {
+                            throw new IllegalStateException(
+                                String.format(
+                                    "something is wrong here: \"%s\"", input
+                                )
+                            );
+                        }
+                        return matcher.group(1);
+                    }
+                }
+            );
+        } catch (final SQLException ex) {
+            throw new IOException(ex);
+        }
     }
 
     @Override

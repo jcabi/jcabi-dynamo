@@ -38,7 +38,6 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.ArrayMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -126,7 +125,7 @@ public final class Conditions implements Map<String, Condition> {
      */
     public Conditions with(final String name, final Condition value) {
         return new Conditions(
-            this.conds.with(String.format(Locale.ENGLISH, name), value)
+            this.conds.with(name, value)
         );
     }
 
@@ -140,10 +139,27 @@ public final class Conditions implements Map<String, Condition> {
     public Conditions with(final String name, final Object value) {
         return new Conditions(
             this.conds.with(
-                String.format(Locale.ENGLISH, name),
+                name,
                 Conditions.equalTo(value)
             )
         );
+    }
+
+    /**
+     * With these conditions.
+     * @param map The conditions
+     * @return New map of conditions
+     */
+    public Conditions withAttributes(final Map<String, AttributeValue> map) {
+        final ConcurrentMap<String, Condition> cnds =
+            new ConcurrentHashMap<String, Condition>(map.size());
+        for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
+            cnds.put(
+                entry.getKey(),
+                Conditions.equalTo(entry.getValue())
+            );
+        }
+        return new Conditions(this.conds.with(cnds));
     }
 
     /**
@@ -184,9 +200,7 @@ public final class Conditions implements Map<String, Condition> {
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.conds.containsKey(
-            String.format(Locale.ENGLISH, key.toString())
-        );
+        return this.conds.containsKey(key.toString());
     }
 
     @Override
@@ -196,9 +210,7 @@ public final class Conditions implements Map<String, Condition> {
 
     @Override
     public Condition get(final Object key) {
-        return this.conds.get(
-            String.format(Locale.ENGLISH, key.toString())
-        );
+        return this.conds.get(key.toString());
     }
 
     @Override
@@ -255,10 +267,11 @@ public final class Conditions implements Map<String, Condition> {
             new ConcurrentHashMap<String, Condition>(map.size());
         for (final Map.Entry<String, Condition> entry : map.entrySet()) {
             cnds.put(
-                String.format(Locale.ENGLISH, entry.getKey()),
+                entry.getKey(),
                 entry.getValue()
             );
         }
         return new ArrayMap<String, Condition>(cnds);
     }
+
 }

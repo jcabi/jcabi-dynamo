@@ -38,9 +38,12 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -55,7 +58,7 @@ import lombok.ToString;
 @Immutable
 @ToString
 @Loggable(Loggable.DEBUG)
-@EqualsAndHashCode(of = { "data", "table", "coords" })
+@EqualsAndHashCode(of = { "data", "table", "attributes" })
 final class MkItem implements Item {
 
     /**
@@ -71,7 +74,7 @@ final class MkItem implements Item {
     /**
      * Attributes.
      */
-    private final transient Attributes coords;
+    private final transient Attributes attributes;
 
     /**
      * Public ctor.
@@ -82,17 +85,22 @@ final class MkItem implements Item {
     MkItem(final MkData dta, final String tbl, final Attributes attribs) {
         this.data = dta;
         this.table = tbl;
-        this.coords = attribs;
+        this.attributes = attribs;
     }
 
     @Override
-    public AttributeValue get(final String name) {
-        return this.coords.get(name);
+    public AttributeValue get(final String name) throws IOException {
+        return this.data.iterate(
+            this.table,
+            new Conditions().withAttributes(
+                this.attributes.only(this.data.keys(this.table))
+            )
+        ).iterator().next().get(name);
     }
 
     @Override
     public boolean has(final String name) {
-        return this.coords.containsKey(name);
+        return this.attributes.containsKey(name.toUpperCase(Locale.ENGLISH));
     }
 
     @Override
@@ -107,9 +115,17 @@ final class MkItem implements Item {
     @Override
     public Map<String, AttributeValue> put(
         final Map<String, AttributeValueUpdate> attrs) {
+        final Map<String, AttributeValue> keys =
+            new HashMap<String, AttributeValue>();
+        keys.putAll(this.attributes);
+        for (final String attr : attrs.keySet()) {
+            keys.remove(attr);
+        }
         try {
             this.data.update(
-                this.table, this.coords, new AttributeUpdates(attrs)
+                this.table,
+                new Attributes(keys),
+                new AttributeUpdates(attrs)
             );
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);

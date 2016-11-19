@@ -138,7 +138,7 @@ public final class ScanValve implements Valve {
 
     @Override
     public int count(final Credentials credentials, final String table,
-        final Map<String, Condition> conditions) throws IOException {
+        final Map<String, Condition> conditions) {
         final AmazonDynamoDB aws = credentials.aws();
         try {
             final ScanRequest request = new ScanRequest()

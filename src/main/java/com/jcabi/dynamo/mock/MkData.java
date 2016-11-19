@@ -46,6 +46,14 @@ import java.io.IOException;
 public interface MkData {
 
     /**
+     * Get keys for the given table.
+     * @param table Name of the table
+     * @return All keys of the table
+     * @throws IOException If fails
+     */
+    Iterable<String> keys(String table) throws IOException;
+
+    /**
      * Iterate everything for the given table.
      * @param table Name of the table
      * @param conds Conditions
