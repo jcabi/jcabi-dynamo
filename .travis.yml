@@ -9,6 +9,9 @@ env:
 jdk:
   - oraclejdk7
   - openjdk7
+before_install:
+  - rvm install 2.2.2
+  - rvm use 2.2.2
 install:
   - set -e
   - travis_retry sudo apt-get install -y --fix-missing libmagic1 libmagic-dev
