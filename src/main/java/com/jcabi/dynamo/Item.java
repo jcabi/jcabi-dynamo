@@ -102,6 +102,13 @@ public interface Item {
         throws IOException;
 
     /**
+     * Remove item
+     * @throws IOException In case of DynamoDB failure
+     */
+    void remove()
+            throws IOException;
+
+    /**
      * Get back to the frame it is from.
      * @return Frame
      */
