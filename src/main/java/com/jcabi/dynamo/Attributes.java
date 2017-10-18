@@ -140,14 +140,30 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @return Attributes
      * @
      */
+    public Attributes with(final String name, final Long value) {
+        return this.with(name, new AttributeValue().withN(value.toString()));
+    }
+
+    /**
+     * With this attribute.
+     * @param name Attribute name
+     * @param value The value
+     * @return Attributes
+     * @
+     */
+    public Attributes with(final String name, final Integer value) {
+        return this.with(name, new AttributeValue().withN(value.toString()));
+    }
+
+    /**
+     * With this attribute.
+     * @param name Attribute name
+     * @param value The value
+     * @return Attributes
+     * @
+     */
     public Attributes with(final String name, final Object value) {
-        final AttributeValue attr;
-        if (value instanceof Long || value instanceof Integer) {
-            attr = new AttributeValue().withN(value.toString());
-        } else {
-            attr = new AttributeValue(value.toString());
-        }
-        return this.with(name, attr);
+        return this.with(name, new AttributeValue(value.toString()));
     }
 
     /**

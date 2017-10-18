@@ -96,14 +96,32 @@ public final class Conditions implements Map<String, Condition> {
      * @param value The value to equal to
      * @return The condition just created
      */
+    public static Condition equalTo(final Long value) {
+        return Conditions.equalTo(
+            new AttributeValue().withN(value.toString())
+        );
+    }
+
+    /**
+     * Equal to static condition builder (factory method).
+     * @param value The value to equal to
+     * @return The condition just created
+     */
+    public static Condition equalTo(final Integer value) {
+        return Conditions.equalTo(
+            new AttributeValue().withN(value.toString())
+        );
+    }
+
+    /**
+     * Equal to static condition builder (factory method).
+     * @param value The value to equal to
+     * @return The condition just created
+     */
     public static Condition equalTo(final Object value) {
-        final AttributeValue attr;
-        if (value instanceof Long || value instanceof Integer) {
-            attr = new AttributeValue().withN(value.toString());
-        } else {
-            attr = new AttributeValue().withS(value.toString());
-        }
-        return Conditions.equalTo(attr);
+        return Conditions.equalTo(
+            new AttributeValue().withS(value.toString())
+        );
     }
 
     /**
