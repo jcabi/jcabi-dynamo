@@ -115,12 +115,7 @@ final class AwsItem implements Item {
         if (!has) {
             final AmazonDynamoDB aws = this.credentials.aws();
             try {
-                final GetItemRequest request = new GetItemRequest();
-                request.setTableName(this.name);
-                request.setAttributesToGet(Collections.singletonList(attr));
-                request.setKey(this.attributes.only(this.keys));
-                request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
-                request.setConsistentRead(true);
+                final GetItemRequest request = this.makeItemRequestFor(attr);
                 final long start = System.currentTimeMillis();
                 final GetItemResult result = aws.getItem(request);
                 has = result.getItem().get(attrib) != null;
@@ -154,12 +149,7 @@ final class AwsItem implements Item {
         if (value == null) {
             final AmazonDynamoDB aws = this.credentials.aws();
             try {
-                final GetItemRequest request = new GetItemRequest();
-                request.setTableName(this.name);
-                request.setAttributesToGet(Collections.singletonList(attrib));
-                request.setKey(this.attributes.only(this.keys));
-                request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
-                request.setConsistentRead(true);
+                final GetItemRequest request = this.makeItemRequestFor(attrib);
                 final long start = System.currentTimeMillis();
                 final GetItemResult result = aws.getItem(request);
                 value = result.getItem().get(attrib);
@@ -239,6 +229,21 @@ final class AwsItem implements Item {
     @Override
     public Frame frame() {
         return this.frm;
+    }
+
+    /**
+     * Makes a GetItemRequest for a given attribute.
+     * @param attr Attribute name
+     * @return GetItemRequest
+     */
+    private GetItemRequest makeItemRequestFor(final String attr) {
+        final GetItemRequest request = new GetItemRequest();
+        request.setTableName(this.name);
+        request.setAttributesToGet(Collections.singletonList(attr));
+        request.setKey(this.attributes.only(this.keys));
+        request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
+        request.setConsistentRead(true);
+        return request;
     }
 
 }
