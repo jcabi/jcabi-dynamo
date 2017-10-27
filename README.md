@@ -10,6 +10,7 @@
 [![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-dynamo/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/jcabi/jcabi-dynamo?branch=__rultor)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.jcabi/jcabi-dynamo/badge.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-dynamo)
 
+[![jpeek report](http://i.jpeek.org/com.jcabi/jcabi-dynamo/badge.svg)](http://i.jpeek.org/com.jcabi/jcabi-dynamo/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo)
 [![Dependencies](https://www.versioneye.com/user/projects/561aa22ba193340f280010b7/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561aa22ba193340f280010b7)
 
