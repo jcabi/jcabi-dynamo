@@ -65,6 +65,12 @@ public final class AwsFrameITCase {
         );
         MatcherAssert.assertThat(
             tbl.frame()
+                .through(new ScanValve().withLimit(1))
+                .isEmpty(),
+            Matchers.equalTo(false)
+        );
+        MatcherAssert.assertThat(
+            tbl.frame()
                 .through(new ScanValve().withLimit(Tv.HUNDRED))
                 .size(),
             Matchers.equalTo(Tv.TEN)

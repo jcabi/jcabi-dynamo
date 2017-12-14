@@ -113,7 +113,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
 
     @Override
     public boolean isEmpty() {
-        return this.iterator().hasNext();
+        return !this.iterator().hasNext();
     }
 
     @Override
