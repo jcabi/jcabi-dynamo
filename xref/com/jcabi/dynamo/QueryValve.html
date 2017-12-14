@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../apidocs/com/jcabi/dynamo/QueryValve.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Copyright (c) 2012-2016, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Copyright (c) 2012-2017, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -65,7 +65,7 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * Query-based valve.</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: 6b61c33dfec8eddb030f320f015503ceb7a26000 $</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: 333a550df81dcd497b619eedd91b84bfd2945e34 $</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  @Immutable
@@ -342,7 +342,7 @@
 <a class="jxr_linenumber" name="L334" href="#L334">334</a>     @ToString
 <a class="jxr_linenumber" name="L335" href="#L335">335</a>     @Loggable(Loggable.DEBUG)
 <a class="jxr_linenumber" name="L336" href="#L336">336</a>     @EqualsAndHashCode(of = { <span class="jxr_string">"credentials"</span>, <span class="jxr_string">"request"</span>, <span class="jxr_string">"result"</span> })
-<a class="jxr_linenumber" name="L337" href="#L337">337</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/dynamo/ScanValve.html">NextDosage</a> <strong class="jxr_keyword">implements</strong> <a href="../../../com/jcabi/dynamo/Dosage.html">Dosage</a> {
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/dynamo/QueryValve.html">NextDosage</a> <strong class="jxr_keyword">implements</strong> <a href="../../../com/jcabi/dynamo/Dosage.html">Dosage</a> {
 <a class="jxr_linenumber" name="L338" href="#L338">338</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L339" href="#L339">339</a> <em class="jxr_javadoccomment">         * AWS client.</em>
 <a class="jxr_linenumber" name="L340" href="#L340">340</a> <em class="jxr_javadoccomment">         */</em>
@@ -361,7 +361,7 @@
 <a class="jxr_linenumber" name="L353" href="#L353">353</a> <em class="jxr_javadoccomment">         * @param rqst Query request</em>
 <a class="jxr_linenumber" name="L354" href="#L354">354</a> <em class="jxr_javadoccomment">         * @param rslt Query result</em>
 <a class="jxr_linenumber" name="L355" href="#L355">355</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L356" href="#L356">356</a>         <a href="../../../com/jcabi/dynamo/ScanValve.html">NextDosage</a>(<strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/Credentials.html">Credentials</a> creds, <strong class="jxr_keyword">final</strong> QueryRequest rqst,
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>         <a href="../../../com/jcabi/dynamo/QueryValve.html">NextDosage</a>(<strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/Credentials.html">Credentials</a> creds, <strong class="jxr_keyword">final</strong> QueryRequest rqst,
 <a class="jxr_linenumber" name="L357" href="#L357">357</a>             <strong class="jxr_keyword">final</strong> QueryResult rslt) {
 <a class="jxr_linenumber" name="L358" href="#L358">358</a>             <strong class="jxr_keyword">this</strong>.credentials = creds;
 <a class="jxr_linenumber" name="L359" href="#L359">359</a>             <strong class="jxr_keyword">this</strong>.request = rqst;
@@ -410,6 +410,6 @@
 <a class="jxr_linenumber" name="L402" href="#L402">402</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2016 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2017 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>
