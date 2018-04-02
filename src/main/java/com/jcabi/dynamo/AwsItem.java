@@ -130,7 +130,7 @@ final class AwsItem implements Item {
             } catch (final AmazonClientException ex) {
                 throw new IOException(
                     String.format(
-                        "failed to check existence of \"%s\" at \"%s\" by %s",
+                        "Failed to check existence of \"%s\" at \"%s\" by %s",
                         attr, this.name, this.keys
                     ),
                     ex
@@ -166,7 +166,7 @@ final class AwsItem implements Item {
             } catch (final AmazonClientException ex) {
                 throw new IOException(
                     String.format(
-                        "failed to get \"%s\" from \"%s\" by %s",
+                        "Failed to get \"%s\" from \"%s\" by %s",
                         attr, this.name, this.keys
                     ),
                     ex
@@ -216,7 +216,7 @@ final class AwsItem implements Item {
         } catch (final AmazonClientException ex) {
             throw new IOException(
                 String.format(
-                    "failed to put %s into \"%s\" with %s",
+                    "Failed to put %s into \"%s\" with %s",
                     attrs, this.name, this.keys
                 ),
                 ex

@@ -164,7 +164,7 @@ final class AwsIterator implements Iterator<Item> {
             if (!this.hasNext()) {
                 throw new NoSuchElementException(
                     String.format(
-                        "no more items in the frame, position=%d",
+                        "No more items in the frame, position=%d",
                         this.position
                     )
                 );

@@ -125,7 +125,7 @@ final class AwsTable implements Table {
         } catch (final AmazonClientException ex) {
             throw new IOException(
                 String.format(
-                    "failed to put into \"%s\" with %s",
+                    "Failed to put into \"%s\" with %s",
                     this.self, attributes
                 ),
                 ex
@@ -176,7 +176,7 @@ final class AwsTable implements Table {
         } catch (final AmazonClientException ex) {
             throw new IOException(
                 String.format(
-                    "failed to describe \"%s\"",
+                    "Failed to describe \"%s\"",
                     this.self
                 ),
                 ex
@@ -210,7 +210,7 @@ final class AwsTable implements Table {
         } catch (final AmazonClientException ex) {
             throw new IOException(
                 String.format(
-                    "failed to delete at \"%s\" by keys %s",
+                    "Failed to delete at \"%s\" by keys %s",
                     this.self, attributes
                 ),
                 ex

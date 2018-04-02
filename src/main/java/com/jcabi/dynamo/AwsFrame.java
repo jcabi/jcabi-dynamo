@@ -140,7 +140,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
             );
         } catch (final IOException ex) {
             throw new IllegalStateException(
-                String.format("can't count items in \"%s\"", this.name),
+                String.format("Can't count items in \"%s\"", this.name),
                 ex
             );
         }

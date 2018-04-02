@@ -115,8 +115,11 @@ public final class ScanValve implements Valve {
             final ScanResult result = aws.scan(request);
             Logger.info(
                 this,
-                "#items(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
-                result.getCount(), table, conditions,
+                // @checkstyle LineLength (1 line)
+                "#items(): loaded %d item(s) from '%s' and stooped at %s, using %s, %s, in %[ms]s",
+                result.getCount(), table,
+                result.getLastEvaluatedKey(),
+                conditions,
                 new PrintableConsumedCapacity(
                     result.getConsumedCapacity()
                 ).print(),
@@ -126,7 +129,7 @@ public final class ScanValve implements Valve {
         } catch (final AmazonClientException ex) {
             throw new IOException(
                 String.format(
-                    "failed to fetch from \"%s\" by %s and %s",
+                    "Failed to fetch from \"%s\" by %s and %s",
                     table, conditions, keys
                 ),
                 ex
@@ -248,7 +251,7 @@ public final class ScanValve implements Valve {
         public Dosage next() {
             if (!this.hasNext()) {
                 throw new IllegalStateException(
-                    "nothing left in the iterator"
+                    "Nothing left in the iterator"
                 );
             }
             final AmazonDynamoDB aws = this.credentials.aws();
