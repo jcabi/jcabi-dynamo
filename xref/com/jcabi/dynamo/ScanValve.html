@@ -65,7 +65,7 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * Scan-based valve.</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: 4dbbdd338f0517627f1840d51767bcf9152eb29e $</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: b65ea98c5a4b92b906eb26f2144bfa5358cf7283 $</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  @Immutable
@@ -272,20 +272,21 @@
 <a class="jxr_linenumber" name="L264" href="#L264">264</a>                 Logger.info(
 <a class="jxr_linenumber" name="L265" href="#L265">265</a>                     <strong class="jxr_keyword">this</strong>,
 <a class="jxr_linenumber" name="L266" href="#L266">266</a>                     <em class="jxr_comment">// @checkstyle LineLength (1 line)</em>
-<a class="jxr_linenumber" name="L267" href="#L267">267</a>                     <span class="jxr_string">"#next(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s"</span>,
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>                     <span class="jxr_string">"#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s, in %[ms]s"</span>,
 <a class="jxr_linenumber" name="L268" href="#L268">268</a>                     rslt.getCount(), rqst.getTableName(), rqst.getScanFilter(),
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>                     <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/PrintableConsumedCapacity.html">PrintableConsumedCapacity</a>(
-<a class="jxr_linenumber" name="L270" href="#L270">270</a>                         rslt.getConsumedCapacity()
-<a class="jxr_linenumber" name="L271" href="#L271">271</a>                     ).print(),
-<a class="jxr_linenumber" name="L272" href="#L272">272</a>                     System.currentTimeMillis() - start
-<a class="jxr_linenumber" name="L273" href="#L273">273</a>                 );
-<a class="jxr_linenumber" name="L274" href="#L274">274</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ScanValve.NextDosage(<strong class="jxr_keyword">this</strong>.credentials, rqst, rslt);
-<a class="jxr_linenumber" name="L275" href="#L275">275</a>             } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L276" href="#L276">276</a>                 aws.shutdown();
-<a class="jxr_linenumber" name="L277" href="#L277">277</a>             }
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>         }
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>     }
-<a class="jxr_linenumber" name="L280" href="#L280">280</a> }
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>                     rslt.getLastEvaluatedKey(),
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>                     <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/PrintableConsumedCapacity.html">PrintableConsumedCapacity</a>(
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>                         rslt.getConsumedCapacity()
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>                     ).print(),
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>                     System.currentTimeMillis() - start
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>                 );
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ScanValve.NextDosage(<strong class="jxr_keyword">this</strong>.credentials, rqst, rslt);
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>             } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L277" href="#L277">277</a>                 aws.shutdown();
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>             }
+<a class="jxr_linenumber" name="L279" href="#L279">279</a>         }
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>     }
+<a class="jxr_linenumber" name="L281" href="#L281">281</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2012&#x2013;2018 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
