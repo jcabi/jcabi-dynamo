@@ -264,8 +264,9 @@ public final class ScanValve implements Valve {
                 Logger.info(
                     this,
                     // @checkstyle LineLength (1 line)
-                    "#next(): loaded %d item(s) from '%s' using %s, %s, in %[ms]s",
+                    "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s, in %[ms]s",
                     rslt.getCount(), rqst.getTableName(), rqst.getScanFilter(),
+                    rslt.getLastEvaluatedKey(),
                     new PrintableConsumedCapacity(
                         rslt.getConsumedCapacity()
                     ).print(),
