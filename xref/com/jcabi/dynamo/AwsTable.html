@@ -65,7 +65,7 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * Single table in Dynamo, through AWS SDK.</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: 4f5298d3b143197d0fa27632d9ef4c8fdfae8cbd $</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @version $Id: 67b4ccd73d1b3b63dfa9c6073365b1296d2500ef $</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment"> * @checkstyle ClassDataAbstractionCoupling (150 lines)</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment"> */</em>
@@ -133,7 +133,7 @@
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> AmazonClientException ex) {
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>                 String.format(
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>                     <span class="jxr_string">"failed to put into \&quot;%s\&quot; with %s"</span>,
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>                     <span class="jxr_string">"Failed to put into \&quot;%s\&quot; with %s"</span>,
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>                     <strong class="jxr_keyword">this</strong>.self, attributes
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>                 ),
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>                 ex
@@ -184,7 +184,7 @@
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> AmazonClientException ex) {
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>                 String.format(
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>                     <span class="jxr_string">"failed to describe \&quot;%s\&quot;"</span>,
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>                     <span class="jxr_string">"Failed to describe \&quot;%s\&quot;"</span>,
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>                     <strong class="jxr_keyword">this</strong>.self
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>                 ),
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>                 ex
@@ -218,7 +218,7 @@
 <a class="jxr_linenumber" name="L210" href="#L210">210</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> AmazonClientException ex) {
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>                 String.format(
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>                     <span class="jxr_string">"failed to delete at \&quot;%s\&quot; by keys %s"</span>,
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>                     <span class="jxr_string">"Failed to delete at \&quot;%s\&quot; by keys %s"</span>,
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>                     <strong class="jxr_keyword">this</strong>.self, attributes
 <a class="jxr_linenumber" name="L215" href="#L215">215</a>                 ),
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>                 ex
@@ -230,6 +230,6 @@
 <a class="jxr_linenumber" name="L222" href="#L222">222</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2017 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2018 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

@@ -63,7 +63,7 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment"> * Single item/row in a DynamoDB table.</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> * @version $Id: 19fcf89a8c08b3dd79231e7d7197a05fae5f71f2 $</em>
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> * @version $Id: 00415c519256063d0968ae501eb8acd31ef00dca $</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  @Immutable
@@ -138,7 +138,7 @@
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> AmazonClientException ex) {
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>                     String.format(
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>                         <span class="jxr_string">"failed to check existence of \&quot;%s\&quot; at \&quot;%s\&quot; by %s"</span>,
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>                         <span class="jxr_string">"Failed to check existence of \&quot;%s\&quot; at \&quot;%s\&quot; by %s"</span>,
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>                         attr, <strong class="jxr_keyword">this</strong>.name, <strong class="jxr_keyword">this</strong>.keys
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>                     ),
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>                     ex
@@ -174,7 +174,7 @@
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> AmazonClientException ex) {
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>                     String.format(
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>                         <span class="jxr_string">"failed to get \&quot;%s\&quot; from \&quot;%s\&quot; by %s"</span>,
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>                         <span class="jxr_string">"Failed to get \&quot;%s\&quot; from \&quot;%s\&quot; by %s"</span>,
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>                         attr, <strong class="jxr_keyword">this</strong>.name, <strong class="jxr_keyword">this</strong>.keys
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>                     ),
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>                     ex
@@ -224,7 +224,7 @@
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> AmazonClientException ex) {
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(
 <a class="jxr_linenumber" name="L218" href="#L218">218</a>                 String.format(
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>                     <span class="jxr_string">"failed to put %s into \&quot;%s\&quot; with %s"</span>,
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>                     <span class="jxr_string">"Failed to put %s into \&quot;%s\&quot; with %s"</span>,
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>                     attrs, <strong class="jxr_keyword">this</strong>.name, <strong class="jxr_keyword">this</strong>.keys
 <a class="jxr_linenumber" name="L221" href="#L221">221</a>                 ),
 <a class="jxr_linenumber" name="L222" href="#L222">222</a>                 ex
@@ -257,6 +257,6 @@
 <a class="jxr_linenumber" name="L249" href="#L249">249</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2017 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2018 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>
