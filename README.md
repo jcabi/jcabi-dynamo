@@ -20,6 +20,7 @@ Also, read this blog post: [Object-Oriented DynamoDB API](http://www.yegor256.co
 Set of classes in `com.jcabi.dynamo`
 is an object layer on top of
 [AWS SDK for Dynamo DB](http://aws.amazon.com/sdkforjava/).
+
 For example, to read an item from your Dynamo table:
 
 ```java
@@ -35,11 +36,6 @@ public class Main {
   }
 }
 ```
-
-## Questions?
-
-If you have any questions about the framework, or something doesn't work as expected,
-please [submit an issue here](https://github.com/jcabi/jcabi-dynamo/issues/new).
 
 ## How to contribute?
 
