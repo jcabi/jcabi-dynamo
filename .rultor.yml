@@ -1,6 +1,3 @@
-architect:
-- yegor256
-- dmarkov
 install:
 - sudo gem install pdd -v 0.20.5
 - sudo gem install xcop -v 0.6
@@ -8,35 +5,22 @@ assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   settings.xml: yegor256/home#assets/jcabi/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
-  s3cfg: yegor256/home#assets/s3cfg
-merge:
-  script: |-
-    mvn clean install -Pqulice --errors --settings ../settings.xml
-    mvn clean
-    pdd --source=$(pwd) --verbose --file=/dev/null
-  commanders:
-  - carlosmiranda
-  - darkled
-  - dmzaytsev
-  - ggajos
-  - hdouss
-  - krzyk
-  - longtimeago
-  - mkordas
-  - pinaf
-deploy:
-  script: |-
-    mvn clean deploy -Pqulice --errors --settings ../settings.xml
-    mvn clean
-    pdd --source=$(pwd) --verbose --file=jcabi-dynamo.xml
-    s3cmd --no-progress put jcabi-dynamo.xml --config=../s3cfg s3://pdd.teamed.io/jcabi-dynamo.xml
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
+merge:
+  script: |-
+    pdd -f /dev/null
+    mvn clean install -Pqulice --errors --settings ../settings.xml
+deploy:
+  script: |-
+    pdd -f /dev/null
+    mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
   script: |-
+    pdd -f /dev/null
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml
-    mvn clean site-deploy -Pjcabi -Psite --errors --settings ../settings.xml
+    # mvn clean site-deploy -Pjcabi -Psite --errors --settings ../settings.xml
   commanders:
   - yegor256
