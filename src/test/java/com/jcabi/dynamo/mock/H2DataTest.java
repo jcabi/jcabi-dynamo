@@ -30,6 +30,8 @@
 package com.jcabi.dynamo.mock;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.jcabi.dynamo.AttributeUpdates;
@@ -155,7 +157,7 @@ public final class H2DataTest {
         final String key = "0-.col.-0";
         final String table = "test";
         new H2Data().with(
-            table, new String[] {key}, new String[0]
+            table, new String[] {key}
         ).put(table, new Attributes().with(key, "value"));
     }
 
@@ -170,7 +172,7 @@ public final class H2DataTest {
         final String man = "Kevin";
         final String woman = "Helen";
         final H2Data data = new H2Data()
-            .with(table, new String[]{field}, new String[0]);
+            .with(table, new String[]{field});
         data.put(
             table,
             new Attributes().with(field, man)
@@ -234,4 +236,37 @@ public final class H2DataTest {
             Matchers.<Attributes>iterableWithSize(1)
         );
     }
+
+    /**
+     * H2Data can fetch with comparison.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void fetchesWithComparison() throws Exception {
+        final String table = "x12";
+        final String key = "foo1";
+        final String value = "bar2";
+        final MkData data = new H2Data().with(table, new String[] {key}, value);
+        data.put(table, new Attributes().with(key, "101").with(value, 0));
+        data.put(table, new Attributes().with(key, "102").with(value, 1));
+        MatcherAssert.assertThat(
+            data.iterate(table, new Conditions()),
+            Matchers.<Attributes>iterableWithSize(2)
+        );
+        MatcherAssert.assertThat(
+            data.iterate(
+                table,
+                new Conditions().with(
+                    value,
+                    new Condition()
+                        .withAttributeValueList(
+                            new AttributeValue().withN("0")
+                        )
+                        .withComparisonOperator(ComparisonOperator.GT)
+                )
+            ).iterator().next().get(value).getN(),
+            Matchers.equalTo("1")
+        );
+    }
+
 }

@@ -56,6 +56,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -127,6 +128,40 @@ public final class H2Data implements MkData {
             @Override
             public String apply(final String key) {
                 return String.format("%s = ?", key);
+            }
+        };
+
+    /**
+     * Select WHERE.
+     * @checkstyle AnonInnerLengthCheck (100 lines)
+     * @checkstyle LineLength (3 lines)
+     */
+    private static final Function<Map.Entry<String, Condition>, String> SELECT_WHERE =
+        new Function<Map.Entry<String, Condition>, String>() {
+            @Override
+            public String apply(final Map.Entry<String, Condition> cnd) {
+                final String opr;
+                if (cnd.getValue().getComparisonOperator()
+                    .equals(ComparisonOperator.GT.toString())) {
+                    opr = ">";
+                } else if (cnd.getValue().getComparisonOperator()
+                    .equals(ComparisonOperator.LT.toString())) {
+                    opr = "<";
+                } else if (cnd.getValue().getComparisonOperator()
+                    .equals(ComparisonOperator.EQ.toString())) {
+                    opr = "=";
+                } else {
+                    throw new UnsupportedOperationException(
+                        String.format(
+                            // @checkstyle LineLength (1 line)
+                            "At the moment only EQ/GT/LT operators are supported: %s",
+                            cnd.getValue().getComparisonOperator()
+                        )
+                    );
+                }
+                return String.format(
+                    "%s %s ?", cnd.getKey(), opr
+                );
             }
         };
 
@@ -232,7 +267,7 @@ public final class H2Data implements MkData {
                 sql.append(" WHERE ");
                 Joiner.on(H2Data.AND).appendTo(
                     sql,
-                    Iterables.transform(conds.keySet(), H2Data.WHERE)
+                    Iterables.transform(conds.entrySet(), H2Data.SELECT_WHERE)
                 );
             }
             JdbcSession session = new JdbcSession(this.connection())
@@ -241,15 +276,6 @@ public final class H2Data implements MkData {
                 if (cond.getAttributeValueList().size() != 1) {
                     throw new UnsupportedOperationException(
                         "at the moment only one value of condition is supported"
-                    );
-                }
-                if (!cond.getComparisonOperator()
-                    .equals(ComparisonOperator.EQ.toString())) {
-                    throw new UnsupportedOperationException(
-                        String.format(
-                            "at the moment only EQ operator is supported: %s",
-                            cond.getComparisonOperator()
-                        )
                     );
                 }
                 final AttributeValue val = cond.getAttributeValueList().get(0);
