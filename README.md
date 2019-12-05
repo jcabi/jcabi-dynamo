@@ -13,7 +13,6 @@
 
 [![jpeek report](http://i.jpeek.org/com.jcabi/jcabi-dynamo/badge.svg)](http://i.jpeek.org/com.jcabi/jcabi-dynamo/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo)
-[![Dependencies](https://www.versioneye.com/user/projects/561aa22ba193340f280010b7/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561aa22ba193340f280010b7)
 
 More details are here: [dynamo.jcabi.com](http://dynamo.jcabi.com/index.html).
 Also, read this blog post: [Object-Oriented DynamoDB API](http://www.yegor256.com/2014/04/14/jcabi-dynamo-java-api-of-aws-dynamodb.html).
