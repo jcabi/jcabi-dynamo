@@ -11,7 +11,7 @@
 [![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-dynamo/badge.svg?branch=__rultor&service=github)](https://coveralls.io/github/jcabi/jcabi-dynamo?branch=__rultor)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-dynamo.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-dynamo)
 
-[![jpeek report](http://i.jpeek.org/com.jcabi/jcabi-dynamo/badge.svg)](http://i.jpeek.org/com.jcabi/jcabi-dynamo/)
+[![jpeek report](https://i.jpeek.org/com.jcabi/jcabi-dynamo/badge.svg)](https://i.jpeek.org/com.jcabi/jcabi-dynamo/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo)
 
 More details are here: [dynamo.jcabi.com](http://dynamo.jcabi.com/index.html).
