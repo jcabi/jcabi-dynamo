@@ -85,7 +85,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-dynamodb</artifactId>
-      <version>1.11.57</version>
+      <version>1.11.909</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
