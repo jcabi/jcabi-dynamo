@@ -178,7 +178,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <plugin>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
-        <version>0.7.1</version>
+        <version>0.9.2</version>
         <configuration>
           <port>${dynamodb.port}</port>
           <dist>${project.build.directory}/dynamodb-dist</dist>
