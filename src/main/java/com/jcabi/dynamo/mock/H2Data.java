@@ -44,9 +44,9 @@ import com.jcabi.dynamo.Conditions;
 import com.jcabi.jdbc.JdbcSession;
 import com.jcabi.jdbc.ListOutcome;
 import com.jcabi.jdbc.Outcome;
+import com.jcabi.jdbc.StaticSource;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -60,6 +60,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.sql.DataSource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.codec.binary.Base32;
@@ -403,8 +404,10 @@ public final class H2Data implements MkData {
      * @return Data source for JDBC
      * @throws SQLException If fails
      */
-    private Connection connection() throws SQLException {
-        return new Driver().connect(this.jdbc, new Properties());
+    private DataSource connection() throws SQLException {
+        return new StaticSource(
+            new Driver().connect(this.jdbc, new Properties())
+        );
     }
 
     /**
