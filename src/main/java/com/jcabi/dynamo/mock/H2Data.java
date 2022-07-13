@@ -360,9 +360,8 @@ public final class H2Data implements MkData {
     /**
      * Make data source.
      * @return Data source for JDBC
-     * @throws SQLException If fails
      */
-    private DataSource connection() throws SQLException {
+    private DataSource connection() {
         final JdbcDataSource src = new JdbcDataSource();
         src.setURL(this.jdbc);
         return src;

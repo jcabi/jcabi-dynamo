@@ -110,7 +110,7 @@ final class AwsItem implements Item {
 
     @Override
     public boolean has(final String attr) throws IOException {
-        final String attrib = String.format(Locale.ENGLISH, attr);
+        final String attrib = attr;
         boolean has = this.attributes.containsKey(attrib);
         if (!has) {
             final AmazonDynamoDB aws = this.credentials.aws();
@@ -144,7 +144,7 @@ final class AwsItem implements Item {
 
     @Override
     public AttributeValue get(final String attr) throws IOException {
-        final String attrib = String.format(Locale.ENGLISH, attr);
+        final String attrib = attr;
         AttributeValue value = this.attributes.get(attrib);
         if (value == null) {
             final AmazonDynamoDB aws = this.credentials.aws();

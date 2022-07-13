@@ -67,8 +67,8 @@ public final class AttributeUpdatesTest {
      */
     @Test
     public void addsAttributeValueUpdate() {
+        MatcherAssert.assertThat(0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat(attr.size(), Matchers.is(0));
         MatcherAssert.assertThat(
             attr.with("testkey1", Mockito.mock(AttributeValueUpdate.class))
                 .size(),
@@ -81,8 +81,8 @@ public final class AttributeUpdatesTest {
      */
     @Test
     public void addsAttributeValue() {
+        MatcherAssert.assertThat(0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat(attr.size(), Matchers.is(0));
         MatcherAssert.assertThat(
             attr.with("testkey2", Mockito.mock(AttributeValue.class)).size(),
             Matchers.is(1)
@@ -94,8 +94,8 @@ public final class AttributeUpdatesTest {
      */
     @Test
     public void addsObject() {
+        MatcherAssert.assertThat(0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat(attr.size(), Matchers.is(0));
         MatcherAssert.assertThat(
             attr.with("testkey3", "value here").size(),
             Matchers.is(1)

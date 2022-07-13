@@ -46,10 +46,9 @@ public final class ConditionsTest {
 
     /**
      * Conditions can work as a map of conditions.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void workAsMapOfConditions() throws Exception {
+    public void workAsMapOfConditions() {
         final String name = "id";
         final Condition condition = new Condition();
         final Map<String, Condition> conds = new Conditions()

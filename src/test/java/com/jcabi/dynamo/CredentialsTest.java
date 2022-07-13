@@ -43,10 +43,9 @@ public final class CredentialsTest {
 
     /**
      * Credentials can instantiate AWS client.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void instantiatesAwsClient() throws Exception {
+    public void instantiatesAwsClient() {
         final Credentials creds = new Credentials.Simple(
             "ABABABABABABABABABEF",
             "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCEF"
@@ -56,10 +55,9 @@ public final class CredentialsTest {
 
     /**
      * Credentials can instantiate AWS client with custom region.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void instantiatesAwsClientWithCustomRegion() throws Exception {
+    public void instantiatesAwsClientWithCustomRegion() {
         final Credentials creds = new Credentials.Simple(
             "ABABABABABABABABABAB",
             "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE",

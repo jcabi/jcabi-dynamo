@@ -42,10 +42,9 @@ public final class RegionTest {
 
     /**
      * Region.Prefixed can add prefix to table names.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void appendsPrefixesToTableNames() throws Exception {
+    public void appendsPrefixesToTableNames() {
         final Table table = Mockito.mock(Table.class);
         final Region region = Mockito.mock(Region.class);
         Mockito.doReturn(table).when(region).table(Mockito.anyString());

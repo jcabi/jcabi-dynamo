@@ -94,7 +94,7 @@ public final class AttributeUpdates
     public AttributeUpdates with(final String name,
         final AttributeValueUpdate value) {
         return new AttributeUpdates(
-            this.attrs.with(String.format(Locale.ENGLISH, name), value)
+            this.attrs.with(name, value)
         );
     }
 
@@ -136,15 +136,9 @@ public final class AttributeUpdates
      * @return AttributeUpdates
      */
     public AttributeUpdates with(final Map<String, AttributeValueUpdate> map) {
-        final ConcurrentMap<String, AttributeValueUpdate> attribs =
+        final Map<String, AttributeValueUpdate> attribs =
             new ConcurrentHashMap<>(map.size());
-        for (final Map.Entry<String, AttributeValueUpdate> entry
-            : map.entrySet()) {
-            attribs.put(
-                String.format(Locale.ENGLISH, entry.getKey()),
-                entry.getValue()
-            );
-        }
+        attribs.putAll(map);
         return new AttributeUpdates(this.attrs.with(attribs));
     }
 
@@ -177,9 +171,7 @@ public final class AttributeUpdates
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.attrs.containsKey(
-            String.format(Locale.ENGLISH, key.toString())
-        );
+        return this.attrs.containsKey(key.toString());
     }
 
     @Override
@@ -189,9 +181,7 @@ public final class AttributeUpdates
 
     @Override
     public AttributeValueUpdate get(final Object key) {
-        return this.attrs.get(
-            String.format(Locale.ENGLISH, key.toString())
-        );
+        return this.attrs.get(key.toString());
     }
 
     @Override

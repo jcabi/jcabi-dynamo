@@ -49,10 +49,9 @@ public final class AttributesTest {
 
     /**
      * Attributes can work as a map of attributes.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void workAsMapOfAttributes() throws Exception {
+    public void workAsMapOfAttributes() {
         final String attr = "id";
         final AttributeValue value = new AttributeValue("some text value");
         final Map<String, AttributeValue> attrs = new Attributes()
@@ -67,10 +66,9 @@ public final class AttributesTest {
 
     /**
      * Attributes can build expected keys.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void buildsExpectedKeys() throws Exception {
+    public void buildsExpectedKeys() {
         final String attr = "attr-13";
         final String value = "some value \u20ac";
         MatcherAssert.assertThat(
@@ -84,10 +82,9 @@ public final class AttributesTest {
 
     /**
      * Attributes can filter out unnecessary keys.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void filtersOutUnnecessaryKeys() throws Exception {
+    public void filtersOutUnnecessaryKeys() {
         MatcherAssert.assertThat(
             new Attributes()
                 .with("first", "test-1")
@@ -100,10 +97,9 @@ public final class AttributesTest {
 
     /**
      * Attributes should be case-sensitive.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void caseSensitive() throws Exception {
+    public void caseSensitive() {
         final String first = "Alpha";
         final String second = "AlPha";
         final String third = "Beta";

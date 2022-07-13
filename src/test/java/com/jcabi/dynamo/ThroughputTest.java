@@ -43,10 +43,9 @@ import org.mockito.Mockito;
 public class ThroughputTest {
     /**
      * Throughput can change throughput of a table.
-     * @throws Exception If something went wrong
      */
     @Test
-    public final void adjustsThroughput() throws Exception {
+    public final void adjustsThroughput() {
         final Table table = Mockito.mock(Table.class);
         final Region region = Mockito.mock(Region.class);
         final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);

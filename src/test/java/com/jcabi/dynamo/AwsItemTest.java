@@ -45,10 +45,9 @@ public final class AwsItemTest {
 
     /**
      * AwsTable can compare to itself.
-     * @throws Exception If some problem inside
      */
     @Test
-    public void comparesToItself() throws Exception {
+    public void comparesToItself() {
         final Credentials creds = new Credentials.Simple("key", "secret");
         final Region region = new Region.Simple(creds);
         final AwsTable table = new AwsTable(creds, region, "table-name");

@@ -283,12 +283,7 @@ public final class Conditions implements Map<String, Condition> {
         final Map<String, Condition> map) {
         final ConcurrentMap<String, Condition> cnds =
             new ConcurrentHashMap<>(map.size());
-        for (final Map.Entry<String, Condition> entry : map.entrySet()) {
-            cnds.put(
-                entry.getKey(),
-                entry.getValue()
-            );
-        }
+        cnds.putAll(map);
         return new ArrayMap<>(cnds);
     }
 
