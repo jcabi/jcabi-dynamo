@@ -94,7 +94,7 @@ public final class AwsIteratorTest {
                 table
             ),
             table, new Conditions(),
-            new ArrayList<String>(0), valve
+            new ArrayList<>(0), valve
         );
         for (int idx = 0; idx < Tv.TEN; ++idx) {
             MatcherAssert.assertThat(iterator.hasNext(), Matchers.is(true));

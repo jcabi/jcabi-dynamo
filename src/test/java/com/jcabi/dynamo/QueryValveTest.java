@@ -76,7 +76,7 @@ public final class QueryValveTest {
         ).when(aws).query(Mockito.any(QueryRequest.class));
         final Dosage dosage = valve.fetch(
             credentials, "table",
-            new Conditions(), new ArrayList<String>(0)
+            new Conditions(), new ArrayList<>(0)
         );
         MatcherAssert.assertThat(dosage.hasNext(), Matchers.is(false));
         MatcherAssert.assertThat(dosage.items(), Matchers.hasItem(item));

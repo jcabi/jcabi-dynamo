@@ -127,7 +127,7 @@ final class AwsIterator implements Iterator<Item> {
         this.conditions = conds;
         this.keys = primary;
         this.valve = vlv;
-        this.dosage = new AtomicReference<Dosage>();
+        this.dosage = new AtomicReference<>();
         this.position = -1;
     }
 
@@ -175,7 +175,7 @@ final class AwsIterator implements Iterator<Item> {
                 this.frame,
                 this.name,
                 new Attributes(this.dosage.get().items().get(this.position)),
-                new Array<String>(this.keys)
+                new Array<>(this.keys)
             );
         }
     }
@@ -188,7 +188,7 @@ final class AwsIterator implements Iterator<Item> {
             try {
                 final Dosage prev = this.dosage.get();
                 final List<Map<String, AttributeValue>> items =
-                    new ArrayList<Map<String, AttributeValue>>(prev.items());
+                    new ArrayList<>(prev.items());
                 final Map<String, AttributeValue> item =
                     items.remove(this.position);
                 final long start = System.currentTimeMillis();
@@ -240,7 +240,7 @@ final class AwsIterator implements Iterator<Item> {
          */
         Fixed(final Dosage dsg, final List<Map<String, AttributeValue>> items) {
             this.prev = dsg;
-            this.list = new Array<Map<String, AttributeValue>>(items);
+            this.list = new Array<>(items);
         }
         @Override
         public List<Map<String, AttributeValue>> items() {

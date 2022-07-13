@@ -56,12 +56,12 @@ public final class AwsItemTest {
         MatcherAssert.assertThat(
             new AwsItem(
                 creds, frame, table.name(),
-                new Attributes(), new Array<String>()
+                new Attributes(), new Array<>()
             ),
             Matchers.equalTo(
                 new AwsItem(
                     creds, frame, table.name(),
-                    new Attributes(), new Array<String>()
+                    new Attributes(), new Array<>()
                 )
             )
         );

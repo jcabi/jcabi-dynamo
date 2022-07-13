@@ -81,7 +81,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      * Private ctor.
      */
     public Attributes() {
-        this(new ArrayMap<String, AttributeValue>());
+        this(new ArrayMap<>());
     }
 
     /**
@@ -89,7 +89,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param map Map of them
      */
     public Attributes(final Map<String, AttributeValue> map) {
-        this.attrs = new ArrayMap<String, AttributeValue>(map);
+        this.attrs = new ArrayMap<>(map);
     }
 
     /**
@@ -109,7 +109,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      */
     public Attributes with(final Map<String, AttributeValue> map) {
         final ConcurrentMap<String, AttributeValue> attribs =
-            new ConcurrentHashMap<String, AttributeValue>(map.size());
+            new ConcurrentHashMap<>(map.size());
         for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
             attribs.put(entry.getKey(), entry.getValue());
         }
@@ -122,7 +122,7 @@ public final class Attributes implements Map<String, AttributeValue> {
      */
     public Map<String, ExpectedAttributeValue> asKeys() {
         final ImmutableMap.Builder<String, ExpectedAttributeValue> map =
-            new ImmutableMap.Builder<String, ExpectedAttributeValue>();
+            new ImmutableMap.Builder<>();
         for (final Map.Entry<String, AttributeValue> attr
             : this.attrs.entrySet()) {
             map.put(
@@ -173,8 +173,8 @@ public final class Attributes implements Map<String, AttributeValue> {
      */
     public Attributes only(final Iterable<String> keys) {
         final ImmutableMap.Builder<String, AttributeValue> map =
-            new ImmutableMap.Builder<String, AttributeValue>();
-        final Collection<String> hash = new HashSet<String>(0);
+            new ImmutableMap.Builder<>();
+        final Collection<String> hash = new HashSet<>(0);
         for (final String key : keys) {
             hash.add(key);
         }
@@ -192,7 +192,7 @@ public final class Attributes implements Map<String, AttributeValue> {
     @Override
     public String toString() {
         final Collection<String> terms =
-            new ArrayList<String>(this.attrs.size());
+            new ArrayList<>(this.attrs.size());
         for (final Map.Entry<String, AttributeValue> attr
             : this.attrs.entrySet()) {
             terms.add(

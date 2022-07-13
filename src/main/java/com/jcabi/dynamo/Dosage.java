@@ -76,7 +76,7 @@ public interface Dosage {
     final class Empty implements Dosage {
         @Override
         public List<Map<String, AttributeValue>> items() {
-            return new ArrayList<Map<String, AttributeValue>>(0);
+            return new ArrayList<>(0);
         }
         @Override
         public Dosage next() {

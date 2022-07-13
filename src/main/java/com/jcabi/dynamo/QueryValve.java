@@ -103,7 +103,7 @@ public final class QueryValve implements Valve {
      */
     public QueryValve() {
         this(
-            Tv.TWENTY, true, new ArrayList<String>(0),
+            Tv.TWENTY, true, new ArrayList<>(0),
             "", Select.SPECIFIC_ATTRIBUTES.toString(), true
         );
     }
@@ -136,7 +136,7 @@ public final class QueryValve implements Valve {
         throws IOException {
         final AmazonDynamoDB aws = credentials.aws();
         try {
-            final Collection<String> attrs = new HashSet<String>(
+            final Collection<String> attrs = new HashSet<>(
                 Arrays.asList(this.attributes)
             );
             attrs.addAll(keys);

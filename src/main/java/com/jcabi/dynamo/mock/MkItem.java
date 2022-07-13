@@ -122,7 +122,7 @@ final class MkItem implements Item {
     public Map<String, AttributeValue> put(
         final Map<String, AttributeValueUpdate> attrs) throws IOException {
         final Map<String, AttributeValue> keys =
-            new HashMap<String, AttributeValue>(0);
+            new HashMap<>(0);
         for (final String attr : this.data.keys(this.table)) {
             keys.put(attr, this.attributes.get(attr));
         }

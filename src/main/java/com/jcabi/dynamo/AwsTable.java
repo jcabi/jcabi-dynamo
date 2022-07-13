@@ -120,7 +120,7 @@ final class AwsTable implements Table {
                 this.frame(),
                 this.self,
                 new Attributes(attributes).only(this.keys()),
-                new Array<String>(this.keys())
+                new Array<>(this.keys())
             );
         } catch (final AmazonClientException ex) {
             throw new IOException(
@@ -163,7 +163,7 @@ final class AwsTable implements Table {
             final DescribeTableResult result = aws.describeTable(
                 new DescribeTableRequest().withTableName(this.self)
             );
-            final Collection<String> keys = new LinkedList<String>();
+            final Collection<String> keys = new LinkedList<>();
             for (final KeySchemaElement key
                 : result.getTable().getKeySchema()) {
                 keys.add(key.getAttributeName());

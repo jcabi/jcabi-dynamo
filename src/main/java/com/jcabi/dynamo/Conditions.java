@@ -80,7 +80,7 @@ public final class Conditions implements Map<String, Condition> {
      * Public ctor.
      */
     public Conditions() {
-        this(new ArrayMap<String, Condition>());
+        this(new ArrayMap<>());
     }
 
     /**
@@ -170,7 +170,7 @@ public final class Conditions implements Map<String, Condition> {
      */
     public Conditions withAttributes(final Map<String, AttributeValue> map) {
         final ConcurrentMap<String, Condition> cnds =
-            new ConcurrentHashMap<String, Condition>(map.size());
+            new ConcurrentHashMap<>(map.size());
         for (final Map.Entry<String, AttributeValue> entry : map.entrySet()) {
             cnds.put(
                 entry.getKey(),
@@ -192,7 +192,7 @@ public final class Conditions implements Map<String, Condition> {
     @Override
     public String toString() {
         final Collection<String> terms =
-            new ArrayList<String>(this.conds.size());
+            new ArrayList<>(this.conds.size());
         for (final Map.Entry<String, Condition> cond : this.conds.entrySet()) {
             terms.add(
                 String.format(
@@ -282,14 +282,14 @@ public final class Conditions implements Map<String, Condition> {
     private static ArrayMap<String, Condition> array(
         final Map<String, Condition> map) {
         final ConcurrentMap<String, Condition> cnds =
-            new ConcurrentHashMap<String, Condition>(map.size());
+            new ConcurrentHashMap<>(map.size());
         for (final Map.Entry<String, Condition> entry : map.entrySet()) {
             cnds.put(
                 entry.getKey(),
                 entry.getValue()
             );
         }
-        return new ArrayMap<String, Condition>(cnds);
+        return new ArrayMap<>(cnds);
     }
 
 }

@@ -81,7 +81,7 @@ public final class ScanValve implements Valve {
      * Public ctor.
      */
     public ScanValve() {
-        this(Tv.HUNDRED, new ArrayList<String>(0));
+        this(Tv.HUNDRED, new ArrayList<>(0));
     }
 
     /**
@@ -101,7 +101,7 @@ public final class ScanValve implements Valve {
         final Collection<String> keys) throws IOException {
         final AmazonDynamoDB aws = credentials.aws();
         try {
-            final Collection<String> attrs = new HashSet<String>(
+            final Collection<String> attrs = new HashSet<>(
                 Arrays.asList(this.attributes)
             );
             attrs.addAll(keys);

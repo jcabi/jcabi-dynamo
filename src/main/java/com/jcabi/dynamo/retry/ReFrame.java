@@ -123,7 +123,7 @@ public final class ReFrame implements Frame {
     @Override
     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
     public Iterator<Item> iterator() {
-        return new ReIterator<Item>(this.origin.iterator());
+        return new ReIterator<>(this.origin.iterator());
     }
 
     @Override

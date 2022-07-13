@@ -74,7 +74,7 @@ public final class AttributeUpdates
      * Private ctor.
      */
     public AttributeUpdates() {
-        this(new ArrayMap<String, AttributeValueUpdate>());
+        this(new ArrayMap<>());
     }
 
     /**
@@ -82,7 +82,7 @@ public final class AttributeUpdates
      * @param map Map of them
      */
     public AttributeUpdates(final Map<String, AttributeValueUpdate> map) {
-        this.attrs = new ArrayMap<String, AttributeValueUpdate>(map);
+        this.attrs = new ArrayMap<>(map);
     }
 
     /**
@@ -137,7 +137,7 @@ public final class AttributeUpdates
      */
     public AttributeUpdates with(final Map<String, AttributeValueUpdate> map) {
         final ConcurrentMap<String, AttributeValueUpdate> attribs =
-            new ConcurrentHashMap<String, AttributeValueUpdate>(map.size());
+            new ConcurrentHashMap<>(map.size());
         for (final Map.Entry<String, AttributeValueUpdate> entry
             : map.entrySet()) {
             attribs.put(
@@ -151,7 +151,7 @@ public final class AttributeUpdates
     @Override
     public String toString() {
         final Collection<String> terms =
-            new ArrayList<String>(this.attrs.size());
+            new ArrayList<>(this.attrs.size());
         for (final Map.Entry<String, AttributeValueUpdate> attr
             : this.attrs.entrySet()) {
             terms.add(
