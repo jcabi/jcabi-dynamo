@@ -112,8 +112,6 @@ import java.util.concurrent.TimeUnit;
  *   ]
  * }</pre>
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.8
  */
 public final class MadeTable {

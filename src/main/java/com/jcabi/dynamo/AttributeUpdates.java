@@ -48,8 +48,6 @@ import lombok.EqualsAndHashCode;
 /**
  * DynamoDB item attribute updates.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.12
  */
 @Immutable

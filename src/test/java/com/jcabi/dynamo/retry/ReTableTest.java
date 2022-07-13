@@ -40,8 +40,6 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link ReTable}.
- * @author Jason Wong (super132j@yahoo.com)
- * @version $Id$
  * @since 0.1
  */
 public final class ReTableTest {

@@ -42,8 +42,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MkRegion}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.10
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */

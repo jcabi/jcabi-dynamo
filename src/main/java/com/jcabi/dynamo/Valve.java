@@ -38,8 +38,6 @@ import java.util.Map;
 /**
  * Provider of dosages of DynamoDB items.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.21
  */
 @Immutable

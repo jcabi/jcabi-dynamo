@@ -44,8 +44,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link Region}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
 public final class RegionITCase {

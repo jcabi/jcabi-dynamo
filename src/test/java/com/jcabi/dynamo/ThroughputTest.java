@@ -36,8 +36,6 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link Throughput}.
- * @author Georgy Vlasov (wlasowegor@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public class ThroughputTest {

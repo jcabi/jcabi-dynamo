@@ -44,8 +44,6 @@ import lombok.EqualsAndHashCode;
  *
  * <p>It is recommended to use {@link Credentials.Simple} in most cases.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
 @Immutable

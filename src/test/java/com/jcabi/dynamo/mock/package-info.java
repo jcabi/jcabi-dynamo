@@ -31,8 +31,6 @@
 /**
  * Amazon Dynamo DB Object Layer, mock version, tests.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.10
  */
 package com.jcabi.dynamo.mock;

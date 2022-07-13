@@ -54,8 +54,6 @@ import lombok.ToString;
  * forcibly terminate all pending asynchronous service calls. Once a client has
  * been shutdown, it should not be used to make any more requests.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
 @Immutable

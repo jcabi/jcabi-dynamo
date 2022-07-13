@@ -52,8 +52,6 @@ import java.util.Map;
  * you need something specific, just get an Amazon DynamoDB client from
  * a {@link Region} and use Amazon SDK methods directly.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  * @see Item
  * @see <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html">Query and Scan</a>

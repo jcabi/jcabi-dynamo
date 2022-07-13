@@ -56,8 +56,6 @@ import lombok.ToString;
 /**
  * Single table in Dynamo, through AWS SDK.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @checkstyle ClassDataAbstractionCoupling (150 lines)
  * @since 0.1
  */

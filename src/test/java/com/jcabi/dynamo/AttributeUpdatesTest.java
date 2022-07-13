@@ -41,8 +41,6 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link AttributesUpdates}.
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
  * @since 0.22
  */
 @SuppressWarnings("PMD.TooManyMethods")

@@ -39,8 +39,6 @@
  *   &lt;artifactId&gt;jcabi-dynamo&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.10
  * @see <a href="http://www.jcabi.com/jcabi-dynamo">project website</a>
  */

@@ -43,8 +43,6 @@ import java.util.Map;
  * data in Amazon, but doesn't change the object. The object will contain
  * dirty data right after PUT operation, and should not be used any more.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
 @Immutable

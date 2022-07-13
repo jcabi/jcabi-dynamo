@@ -34,8 +34,6 @@ import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
 /**
  * Printable consumed capacity.
  *
- * @author Piotr Pradzynski (prondzyn@gmail.com)
- * @version $Id$
  * @since 0.22
  */
 final class PrintableConsumedCapacity {

@@ -36,8 +36,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link AwsItem}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.21
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */

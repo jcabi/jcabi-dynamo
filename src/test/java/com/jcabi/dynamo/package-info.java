@@ -31,8 +31,6 @@
 /**
  * Amazon Dynamo DB Object Layer, tests.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.8
  */
 package com.jcabi.dynamo;

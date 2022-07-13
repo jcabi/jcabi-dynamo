@@ -67,8 +67,6 @@ import org.h2.jdbcx.JdbcDataSource;
 /**
  * Mock data in H2 database.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.10
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */

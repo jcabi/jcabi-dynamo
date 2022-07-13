@@ -47,8 +47,6 @@ import org.mockito.hamcrest.MockitoHamcrest;
 
 /**
  * Test case for {@link AwsTable}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */

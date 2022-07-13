@@ -39,8 +39,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link AwsFrame}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.21
  */
 public final class AwsFrameITCase {

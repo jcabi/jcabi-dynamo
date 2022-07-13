@@ -40,8 +40,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Attributes}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
 @SuppressWarnings("PMD.UseConcurrentHashMap")

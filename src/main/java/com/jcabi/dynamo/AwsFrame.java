@@ -42,8 +42,6 @@ import lombok.ToString;
 /**
  * Frame through AWS SDK.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
 @Immutable

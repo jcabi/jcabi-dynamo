@@ -47,8 +47,6 @@ import lombok.ToString;
 /**
  * Valve that retries on failure.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.9
  */
 @Immutable

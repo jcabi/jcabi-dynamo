@@ -49,8 +49,6 @@ import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test case for {@link H2Data}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.10
  */
 public final class H2DataTest {

@@ -31,8 +31,6 @@
 /**
  * Retry all AWS operations a few times, tests.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.9
  */
 package com.jcabi.dynamo.retry;

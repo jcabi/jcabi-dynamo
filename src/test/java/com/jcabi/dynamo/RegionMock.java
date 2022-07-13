@@ -40,8 +40,6 @@ import com.jcabi.dynamo.retry.ReRegion;
 
 /**
  * Mock of a {@link Region}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.16.2
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
