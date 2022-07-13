@@ -33,7 +33,9 @@ import com.jcabi.aspects.Tv;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link AwsFrame}.
@@ -43,10 +45,11 @@ import org.junit.Test;
  */
 public final class AwsFrameITCase {
 
-    /**
-     * AwsFrame can calculate size correctly.
-     * @throws Exception If some problem inside
-     */
+    @BeforeEach
+    public void itTestCheck() {
+        Assumptions.assumeFalse(System.getProperty("failsafe.port", "").isEmpty());
+    }
+
     @Test
     public void calculatesItems() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);

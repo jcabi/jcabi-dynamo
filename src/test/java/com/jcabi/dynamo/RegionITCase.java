@@ -37,8 +37,10 @@ import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link Region}.
@@ -48,10 +50,11 @@ import org.junit.Test;
  */
 public final class RegionITCase {
 
-    /**
-     * Region.Simple can work with AWS.
-     * @throws Exception If some problem inside
-     */
+    @BeforeEach
+    public void itTestCheck() {
+        Assumptions.assumeFalse(System.getProperty("failsafe.port", "").isEmpty());
+    }
+
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void worksWithAmazon() throws Exception {
@@ -109,13 +112,8 @@ public final class RegionITCase {
         items.remove();
     }
 
-    /**
-     * Region.Simple can retrieve attributes.
-     * @throws Exception If some problem inside
-     *  this needs to be fixed.
-     */
     @Test
-    @Ignore
+    @Disabled
     public void retrievesAttributesFromDynamo() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final RegionMock mock = new RegionMock();

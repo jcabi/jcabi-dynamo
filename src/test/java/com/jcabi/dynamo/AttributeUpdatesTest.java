@@ -35,8 +35,8 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
@@ -244,7 +244,7 @@ public final class AttributeUpdatesTest {
             passed = true;
         }
         if (!passed) {
-            Assert.fail("#put should not be supported");
+            Assertions.fail("#put should not be supported");
         }
     }
 
@@ -261,7 +261,7 @@ public final class AttributeUpdatesTest {
             passed = true;
         }
         if (!passed) {
-            Assert.fail("#putAll should not be supported.");
+            Assertions.fail("#putAll should not be supported.");
         }
     }
 
@@ -278,7 +278,7 @@ public final class AttributeUpdatesTest {
             passed = true;
         }
         if (!passed) {
-            Assert.fail("#remove should not be supported.");
+            Assertions.fail("#remove should not be supported.");
         }
     }
 
@@ -295,7 +295,7 @@ public final class AttributeUpdatesTest {
             passed = true;
         }
         if (!passed) {
-            Assert.fail("#clear should not be supported.");
+            Assertions.fail("#clear should not be supported.");
         }
     }
 }

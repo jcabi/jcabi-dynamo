@@ -29,7 +29,7 @@
  */
 package com.jcabi.dynamo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**

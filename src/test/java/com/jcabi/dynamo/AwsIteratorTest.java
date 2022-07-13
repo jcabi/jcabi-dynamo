@@ -39,7 +39,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
@@ -120,7 +121,7 @@ public final class AwsIteratorTest {
      * AwsIterator can iterate using valve.
      * @throws Exception If some problem inside
      */
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void throwsOnEmptyIterator() throws Exception {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final Dosage dosage = Mockito.mock(Dosage.class);
@@ -141,9 +142,12 @@ public final class AwsIteratorTest {
                 table
             ),
             table, new Conditions(),
-            new ArrayList<String>(0), valve
+            new ArrayList<>(0), valve
         );
-        iterator.next();
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            iterator::next
+        );
     }
 
 }

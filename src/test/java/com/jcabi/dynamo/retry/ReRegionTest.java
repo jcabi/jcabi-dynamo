@@ -34,8 +34,8 @@ import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
@@ -62,7 +62,7 @@ public final class ReRegionTest {
         final Region region = new ReRegion(origin);
         try {
             region.table("test").put(attrs);
-            Assert.fail("exception expected here");
+            Assertions.fail("exception expected here");
         } catch (final AmazonClientException ex) {
             assert ex.getMessage().equals(msg);
         }

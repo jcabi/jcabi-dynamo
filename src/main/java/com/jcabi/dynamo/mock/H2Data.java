@@ -46,7 +46,6 @@ import com.jcabi.jdbc.ListOutcome;
 import com.jcabi.jdbc.Outcome;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -57,13 +56,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.sql.DataSource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.codec.binary.Base32;
-import org.h2.Driver;
+import org.h2.jdbcx.JdbcDataSource;
 
 /**
  * Mock data in H2 database.
@@ -89,8 +88,7 @@ public final class H2Data implements MkData {
             @Override
             public Iterable<Attributes> handle(final ResultSet rset,
                 final Statement stmt) throws SQLException {
-                final Collection<Attributes> items =
-                    new LinkedList<Attributes>();
+                final Collection<Attributes> items = new LinkedList<>();
                 while (rset.next()) {
                     items.add(this.fetch(rset));
                 }
@@ -124,12 +122,7 @@ public final class H2Data implements MkData {
      * Where clause.
      */
     private static final Function<String, String> WHERE =
-        new Function<String, String>() {
-            @Override
-            public String apply(final String key) {
-                return String.format("%s = ?", key);
-            }
-        };
+        key -> String.format("%s = ?", key);
 
     /**
      * Select WHERE.
@@ -169,23 +162,13 @@ public final class H2Data implements MkData {
      * Create primary key.
      */
     private static final Function<String, String> CREATE_KEY =
-        new Function<String, String>() {
-            @Override
-            public String apply(final String key) {
-                return String.format("%s VARCHAR PRIMARY KEY", key);
-            }
-        };
+        key -> String.format("%s VARCHAR PRIMARY KEY", key);
 
     /**
      * Create attr.
      */
     private static final Function<String, String> CREATE_ATTR =
-        new Function<String, String>() {
-            @Override
-            public String apply(final String key) {
-                return String.format("%s CLOB", key);
-            }
-        };
+        key -> String.format("%s CLOB", key);
 
     /**
      * WHERE clauses are joined with this.
@@ -219,39 +202,15 @@ public final class H2Data implements MkData {
     @Override
     public Iterable<String> keys(final String table) throws IOException {
         try {
-            return Iterables.transform(
-                new JdbcSession(this.connection())
-                    // @checkstyle LineLength (1 line)
-                    .sql("SELECT SQL FROM INFORMATION_SCHEMA.CONSTRAINTS WHERE TABLE_NAME = ?")
-                    .set(H2Data.encodeTableName(table))
-                    .select(
-                        new ListOutcome<String>(
-                            new ListOutcome.Mapping<String>() {
-                                @Override
-                                public String map(final ResultSet rset)
-                                    throws SQLException {
-                                    return rset.getString(1);
-                                }
-                            }
-                        )
-                    ),
-                new Function<String, String>() {
-                    @Override
-                    public String apply(final String input) {
-                        final Matcher matcher = Pattern.compile(
-                            "PRIMARY KEY\\((.*)\\)"
-                        ).matcher(input);
-                        if (!matcher.find()) {
-                            throw new IllegalStateException(
-                                String.format(
-                                    "something is wrong here: \"%s\"", input
-                                )
-                            );
-                        }
-                        return matcher.group(1).toLowerCase(Locale.ENGLISH);
-                    }
-                }
-            );
+            return new JdbcSession(this.connection())
+                // @checkstyle LineLength (1 line)
+                .sql("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = ?")
+                .set(H2Data.encodeTableName(table))
+                .select(
+                    new ListOutcome<>(
+                        rset -> rset.getString(1).toLowerCase(Locale.ENGLISH)
+                    )
+                );
         } catch (final SQLException ex) {
             throw new IOException(ex);
         }
@@ -275,7 +234,7 @@ public final class H2Data implements MkData {
             for (final Condition cond : conds.values()) {
                 if (cond.getAttributeValueList().size() != 1) {
                     throw new UnsupportedOperationException(
-                        "at the moment only one value of condition is supported"
+                        "At the moment only one value of condition is supported"
                     );
                 }
                 final AttributeValue val = cond.getAttributeValueList().get(0);
@@ -374,7 +333,7 @@ public final class H2Data implements MkData {
         final String... attrs) throws IOException {
         if (keys.length == 0) {
             throw new IllegalArgumentException(
-                String.format("empty list of keys for %s table", table)
+                String.format("Empty list of keys for %s table", table)
             );
         }
         final StringBuilder sql = new StringBuilder("CREATE TABLE ")
@@ -403,8 +362,10 @@ public final class H2Data implements MkData {
      * @return Data source for JDBC
      * @throws SQLException If fails
      */
-    private Connection connection() throws SQLException {
-        return new Driver().connect(this.jdbc, new Properties());
+    private DataSource connection() throws SQLException {
+        final JdbcDataSource src = new JdbcDataSource();
+        src.setURL(this.jdbc);
+        return src;
     }
 
     /**
@@ -419,7 +380,7 @@ public final class H2Data implements MkData {
         }
         if (val == null) {
             throw new IllegalArgumentException(
-                "we support only N and S at the moment"
+                "We support only N and S at the moment"
             );
         }
         return val;

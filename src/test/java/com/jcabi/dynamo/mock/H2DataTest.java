@@ -38,14 +38,14 @@ import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test case for {@link H2Data}.
@@ -54,13 +54,6 @@ import org.junit.rules.TemporaryFolder;
  * @since 0.10
  */
 public final class H2DataTest {
-
-    /**
-     * Temp directory.
-     * @checkstyle VisibilityModifierCheck (5 lines)
-     */
-    @Rule
-    public final transient TemporaryFolder temp = new TemporaryFolder();
 
     /**
      * H2Data can store and fetch.
@@ -95,9 +88,9 @@ public final class H2DataTest {
      *  Google Code: DB file extension customizability</a>
      */
     @Test
-    @Ignore
-    public void storesToFile() throws Exception {
-        final File file = this.temp.newFile();
+    @Disabled
+    public void storesToFile(@TempDir final Path temp) throws Exception {
+        final File file = temp.resolve("foo.txt").toFile();
         final String table = "tbl";
         final String key = "key1";
         final MkData data = new H2Data(file).with(
@@ -129,15 +122,11 @@ public final class H2DataTest {
         new H2Data()
             .with(
                 //@checkstyle MagicNumberCheck (1 line)
-                Joiner.on("").join(Collections.nCopies(255, "a")),
-                new String[]{"key"}, new String[0]
+                Joiner.on("").join(Collections.nCopies(40, "X")),
+                new String[]{"k1"}, new String[0]
         );
     }
 
-    /**
-     * H2Data supports table names with characters illegal to H2.
-     * @throws Exception In case test fails
-     */
     @Test
     public void supportsTableNamesWithIllegalCharacters() throws Exception {
         new H2Data().with(".-.", new String[]{"pk"}, new String[0]);
@@ -152,7 +141,7 @@ public final class H2DataTest {
      *  when H2Data will be supporting mentioned symbols.
      */
     @Test
-    @Ignore
+    @Disabled
     public void supportsColumnNamesWithIllegalCharacters() throws Exception {
         final String key = "0-.col.-0";
         final String table = "test";
@@ -161,10 +150,6 @@ public final class H2DataTest {
         ).put(table, new Attributes().with(key, "value"));
     }
 
-    /**
-     * H2Data can delete records.
-     * @throws Exception In case test fails
-     */
     @Test
     public void deletesRecords() throws Exception {
         final String table = "customers";
@@ -233,7 +218,7 @@ public final class H2DataTest {
         );
         MatcherAssert.assertThat(
             result,
-            Matchers.<Attributes>iterableWithSize(1)
+            Matchers.iterableWithSize(1)
         );
     }
 
@@ -251,7 +236,7 @@ public final class H2DataTest {
         data.put(table, new Attributes().with(key, "102").with(value, 1));
         MatcherAssert.assertThat(
             data.iterate(table, new Conditions()),
-            Matchers.<Attributes>iterableWithSize(2)
+            Matchers.iterableWithSize(2)
         );
         MatcherAssert.assertThat(
             data.iterate(

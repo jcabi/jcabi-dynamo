@@ -35,7 +35,7 @@ import com.jcabi.dynamo.Table;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
@@ -46,10 +46,6 @@ import org.mockito.Mockito;
  */
 public final class ReTableTest {
 
-    /**
-     * ReTable can retry delete calls to method delete.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void retriesDelete() throws Exception {
         final Table table = Mockito.mock(Table.class);

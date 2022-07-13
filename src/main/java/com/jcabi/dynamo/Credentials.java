@@ -29,11 +29,12 @@
  */
 package com.jcabi.dynamo;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.RegionUtils;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import lombok.EqualsAndHashCode;
@@ -119,11 +120,14 @@ public interface Credentials {
                     String.format("Failed to find region '%s'", this.region)
                 );
             }
-            final AmazonDynamoDB aws = new AmazonDynamoDBClient(
-                new BasicAWSCredentials(this.key, this.secret)
-            );
-            aws.setRegion(reg);
-            return aws;
+            return AmazonDynamoDBClientBuilder.standard()
+                .withRegion(reg.getName())
+                .withCredentials(
+                    new AWSStaticCredentialsProvider(
+                        new BasicAWSCredentials(this.key, this.secret)
+                    )
+                )
+                .build();
         }
     }
 
@@ -166,9 +170,9 @@ public interface Credentials {
                     String.format("Failed to detect region '%s'", this.region)
                 );
             }
-            final AmazonDynamoDB aws = new AmazonDynamoDBClient();
-            aws.setRegion(reg);
-            return aws;
+            return AmazonDynamoDBClientBuilder.standard()
+                .withRegion(reg.getName())
+                .build();
         }
     }
 
@@ -209,6 +213,7 @@ public interface Credentials {
             return String.format("%s at %s", this.origin, this.endpoint);
         }
         @Override
+        @SuppressWarnings("deprecation")
         public AmazonDynamoDB aws() {
             final AmazonDynamoDB aws = this.origin.aws();
             aws.setEndpoint(this.endpoint);
