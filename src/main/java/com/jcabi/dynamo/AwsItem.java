@@ -45,7 +45,6 @@ import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import lombok.EqualsAndHashCode;
@@ -60,6 +59,7 @@ import lombok.ToString;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = { "credentials", "frm", "name", "attributes" })
+@SuppressWarnings("PMD.GuardLogStatement")
 final class AwsItem implements Item {
 
     /**

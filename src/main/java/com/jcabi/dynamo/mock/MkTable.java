@@ -65,8 +65,8 @@ final class MkTable implements Table {
 
     /**
      * Public ctor.
-     * @param name Name of the table
      * @param dta Data
+     * @param name Name of the table
      */
     MkTable(final MkData dta, final String name) {
         this.data = dta;

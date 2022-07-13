@@ -38,11 +38,9 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.ArrayMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import lombok.EqualsAndHashCode;
 
 /**

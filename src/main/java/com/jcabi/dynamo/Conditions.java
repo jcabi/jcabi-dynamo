@@ -64,6 +64,7 @@ import lombok.EqualsAndHashCode;
     (
         {
             "PMD.TooManyMethods",
+            "PMD.ProhibitPublicStaticMethods",
             "PMD.AvoidInstantiatingObjectsInLoops"
         }
     )

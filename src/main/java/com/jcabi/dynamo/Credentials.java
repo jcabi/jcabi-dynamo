@@ -29,7 +29,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -82,14 +81,17 @@ public interface Credentials {
          * AWS key.
          */
         private final transient String key;
+
         /**
          * AWS secret.
          */
         private final transient String secret;
+
         /**
          * Region name.
          */
         private final transient String region;
+
         /**
          * Public ctor, with "us-east-1" region.
          * @param akey AWS key
@@ -98,6 +100,7 @@ public interface Credentials {
         public Simple(final String akey, final String scrt) {
             this(akey, scrt, Regions.US_EAST_1.getName());
         }
+
         /**
          * Public ctor.
          * @param akey AWS key
@@ -109,10 +112,12 @@ public interface Credentials {
             this.secret = scrt;
             this.region = reg;
         }
+
         @Override
         public String toString() {
             return String.format("%s/%s", this.region, this.key);
         }
+
         @Override
         public AmazonDynamoDB aws() {
             final com.amazonaws.regions.Region reg =
@@ -147,12 +152,14 @@ public interface Credentials {
          * Region name.
          */
         private final transient String region;
+
         /**
          * Public ctor.
          */
         public Assumed() {
             this(Regions.US_EAST_1.getName());
         }
+
         /**
          * Public ctor.
          * @param reg Region
@@ -160,10 +167,12 @@ public interface Credentials {
         public Assumed(final String reg) {
             this.region = reg;
         }
+
         @Override
         public String toString() {
             return this.region;
         }
+
         @Override
         public AmazonDynamoDB aws() {
             final com.amazonaws.regions.Region reg =
@@ -192,10 +201,12 @@ public interface Credentials {
          * Original credentials.
          */
         private final transient Credentials.Simple origin;
+
         /**
          * Endpoint.
          */
         private final transient String endpoint;
+
         /**
          * Public ctor.
          * @param creds Original credentials
@@ -205,6 +216,7 @@ public interface Credentials {
             this.origin = creds;
             this.endpoint = pnt;
         }
+
         /**
          * Public ctor.
          * @param creds Original credentials
@@ -213,10 +225,12 @@ public interface Credentials {
         public Direct(final Credentials.Simple creds, final int port) {
             this(creds, String.format("http://localhost:%d", port));
         }
+
         @Override
         public String toString() {
             return String.format("%s at %s", this.origin, this.endpoint);
         }
+
         @Override
         public AmazonDynamoDB aws() {
             return AmazonDynamoDBClientBuilder.standard()

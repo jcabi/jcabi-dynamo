@@ -74,6 +74,8 @@ public interface Region {
 
     /**
      * Simple region, basic implementation.
+     *
+     * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)
@@ -84,6 +86,7 @@ public interface Region {
          * Credentials.
          */
         private final transient Credentials credentials;
+
         /**
          * Public ctor.
          * @param creds Credentials
@@ -91,10 +94,12 @@ public interface Region {
         public Simple(final Credentials creds) {
             this.credentials = creds;
         }
+
         @Override
         public AmazonDynamoDB aws() {
             return this.credentials.aws();
         }
+
         @Override
         public Table table(final String name) {
             return new AwsTable(this.credentials, this, name);
@@ -116,6 +121,8 @@ public interface Region {
      * instance pointing to the Dynamo DB table named {@code "foo-test"}. Could
      * be a convenient mechanism when you have many tables for different
      * projects in the same region.
+     *
+     * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)
@@ -126,10 +133,12 @@ public interface Region {
          * Original region.
          */
         private final transient Region origin;
+
         /**
          * Prefix to add.
          */
         private final transient String prefix;
+
         /**
          * Public ctor.
          * @param region Original region
@@ -139,10 +148,12 @@ public interface Region {
             this.origin = region;
             this.prefix = pfx;
         }
+
         @Override
         public AmazonDynamoDB aws() {
             return this.origin.aws();
         }
+
         @Override
         public Table table(final String name) {
             return this.origin.table(

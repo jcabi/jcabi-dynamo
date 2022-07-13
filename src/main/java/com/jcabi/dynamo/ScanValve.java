@@ -62,6 +62,7 @@ import lombok.ToString;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = { "limit", "attributes" })
+@SuppressWarnings("PMD.GuardLogStatement")
 public final class ScanValve implements Valve {
 
     /**
@@ -208,6 +209,8 @@ public final class ScanValve implements Valve {
 
     /**
      * Next dosage.
+     *
+     * @since 0.1
      */
     @ToString
     @Loggable(Loggable.DEBUG)
@@ -217,14 +220,17 @@ public final class ScanValve implements Valve {
          * AWS client.
          */
         private final transient Credentials credentials;
+
         /**
          * Query request.
          */
         private final transient ScanRequest request;
+
         /**
          * Query request.
          */
         private final transient ScanResult result;
+
         /**
          * Public ctor.
          * @param creds Credentials
@@ -237,14 +243,17 @@ public final class ScanValve implements Valve {
             this.request = rqst;
             this.result = rslt;
         }
+
         @Override
         public List<Map<String, AttributeValue>> items() {
             return this.result.getItems();
         }
+
         @Override
         public boolean hasNext() {
             return this.result.getLastEvaluatedKey() != null;
         }
+
         @Override
         public Dosage next() {
             if (!this.hasNext()) {

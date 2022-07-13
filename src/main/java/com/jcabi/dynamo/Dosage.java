@@ -66,6 +66,8 @@ public interface Dosage {
 
     /**
      * Always empty.
+     *
+     * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)
@@ -76,12 +78,14 @@ public interface Dosage {
         public List<Map<String, AttributeValue>> items() {
             return new ArrayList<>(0);
         }
+
         @Override
         public Dosage next() {
             throw new IllegalStateException(
                 "this is nothing left"
             );
         }
+
         @Override
         public boolean hasNext() {
             return false;

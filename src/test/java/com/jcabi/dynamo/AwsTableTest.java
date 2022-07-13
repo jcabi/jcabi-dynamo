@@ -56,6 +56,7 @@ public final class AwsTableTest {
      * Constant for 'tableName' attribute.
      */
     private static final String TABLE_NAME = "tableName";
+
     /**
      * Constant for 'key' attribute.
      */

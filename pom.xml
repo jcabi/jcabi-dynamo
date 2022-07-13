@@ -61,6 +61,12 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   </distributionManagement>
   <dependencies>
     <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>2.0.1.Final</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.24</version>
@@ -227,6 +233,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             <configuration>
               <excludes combine.children="append">
                 <exclude>findbugs:.*</exclude>
+                <exclude>duplicatefinder:.*</exclude>
               </excludes>
             </configuration>
           </plugin>

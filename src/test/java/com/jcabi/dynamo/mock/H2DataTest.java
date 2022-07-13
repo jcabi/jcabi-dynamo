@@ -81,6 +81,7 @@ public final class H2DataTest {
 
     /**
      * H2Data can store to a file.
+     * @param temp Temp dir
      * @throws Exception If some problem inside
      * @see <a href="https://code.google.com/p/h2database/issues/detail?id=447">
      *  Google Code: DB file extension customizability</a>

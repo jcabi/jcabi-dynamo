@@ -104,7 +104,7 @@ public final class MkRegionTest {
         final Table tbl = region.table(table);
         tbl.put(
             new Attributes()
-                .with(key, "32443")
+                .with(key, "324439")
                 .with(attr, "0")
         );
         final Item item = tbl.frame().iterator().next();

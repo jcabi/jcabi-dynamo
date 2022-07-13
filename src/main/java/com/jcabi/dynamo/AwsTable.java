@@ -63,6 +63,7 @@ import lombok.ToString;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = { "credentials", "reg", "self" })
+@SuppressWarnings("PMD.GuardLogStatement")
 final class AwsTable implements Table {
 
     /**

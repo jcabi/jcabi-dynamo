@@ -62,7 +62,7 @@ import lombok.ToString;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = { "limit", "forward" })
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.GuardLogStatement"})
 public final class QueryValve implements Valve {
 
     /**
@@ -339,6 +339,8 @@ public final class QueryValve implements Valve {
 
     /**
      * Next dosage.
+     *
+     * @since 0.1
      */
     @ToString
     @Loggable(Loggable.DEBUG)
@@ -348,14 +350,17 @@ public final class QueryValve implements Valve {
          * AWS client.
          */
         private final transient Credentials credentials;
+
         /**
          * Query request.
          */
         private final transient QueryRequest request;
+
         /**
          * Query request.
          */
         private final transient QueryResult result;
+
         /**
          * Public ctor.
          * @param creds Credentials
@@ -368,14 +373,17 @@ public final class QueryValve implements Valve {
             this.request = rqst;
             this.result = rslt;
         }
+
         @Override
         public List<Map<String, AttributeValue>> items() {
             return this.result.getItems();
         }
+
         @Override
         public boolean hasNext() {
             return this.result.getLastEvaluatedKey() != null;
         }
+
         @Override
         public Dosage next() {
             if (!this.hasNext()) {

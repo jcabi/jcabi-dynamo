@@ -76,28 +76,6 @@ import org.h2.jdbcx.JdbcDataSource;
 public final class H2Data implements MkData {
 
     /**
-     * Create primary key.
-     */
-    private static final Function<String, String> CREATE_KEY =
-        key -> String.format("%s VARCHAR PRIMARY KEY", key);
-
-    /**
-     * Create attr.
-     */
-    private static final Function<String, String> CREATE_ATTR =
-        key -> String.format("%s CLOB", key);
-
-    /**
-     * WHERE clauses are joined with this.
-     */
-    private static final String AND = " AND ";
-
-    /**
-     * JDBC URL.
-     */
-    private final transient String jdbc;
-
-    /**
      * Fetcher of rows.
      */
     private static final Outcome<Iterable<Attributes>> OUTCOME =
@@ -112,6 +90,7 @@ public final class H2Data implements MkData {
                 }
                 return items;
             }
+
             /**
              * Convert result set to Attributes.
              * @param rset Result set
@@ -171,6 +150,28 @@ public final class H2Data implements MkData {
             "%s %s ?", cnd.getKey(), opr
         );
     };
+
+    /**
+     * Create primary key.
+     */
+    private static final Function<String, String> CREATE_KEY =
+        key -> String.format("%s VARCHAR PRIMARY KEY", key);
+
+    /**
+     * Create attr.
+     */
+    private static final Function<String, String> CREATE_ATTR =
+        key -> String.format("%s CLOB", key);
+
+    /**
+     * WHERE clauses are joined with this.
+     */
+    private static final String AND = " AND ";
+
+    /**
+     * JDBC URL.
+     */
+    private final transient String jdbc;
 
     /**
      * Public ctor.
@@ -349,6 +350,7 @@ public final class H2Data implements MkData {
         }
         return this;
     }
+
     /**
      * Make data source.
      * @return Data source for JDBC

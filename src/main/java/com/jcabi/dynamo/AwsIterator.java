@@ -64,6 +64,7 @@ import lombok.ToString;
     (
         of = { "credentials", "conditions", "frame", "name", "keys", "valve" }
     )
+@SuppressWarnings("PMD.GuardLogStatement")
 final class AwsIterator implements Iterator<Item> {
 
     /**
@@ -220,6 +221,8 @@ final class AwsIterator implements Iterator<Item> {
 
     /**
      * Dosage with fixed list of items.
+     *
+     * @since 0.1
      */
     @Immutable
     private static final class Fixed implements Dosage {
@@ -227,10 +230,12 @@ final class AwsIterator implements Iterator<Item> {
          * List of items.
          */
         private final transient Array<Map<String, AttributeValue>> list;
+
         /**
          * Previous dosage.
          */
         private final transient Dosage prev;
+
         /**
          * Ctor.
          * @param dsg Dosage
@@ -240,14 +245,17 @@ final class AwsIterator implements Iterator<Item> {
             this.prev = dsg;
             this.list = new Array<>(items);
         }
+
         @Override
         public List<Map<String, AttributeValue>> items() {
             return Collections.unmodifiableList(this.list);
         }
+
         @Override
         public Dosage next() {
             return this.prev.next();
         }
+
         @Override
         public boolean hasNext() {
             return this.prev.hasNext();
