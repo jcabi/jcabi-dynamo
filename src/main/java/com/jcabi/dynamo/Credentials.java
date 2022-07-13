@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2022, jcabi.com
  * All rights reserved.
  *
@@ -29,8 +29,10 @@
  */
 package com.jcabi.dynamo;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.regions.RegionUtils;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -52,7 +54,7 @@ public interface Credentials {
     /**
      * Test credentials, for unit testing mostly.
      */
-    Credentials TEST = new Credentials.Simple(
+    Credentials.Simple TEST = new Credentials.Simple(
         "AAAAAAAAAAAAAAAAAAAA",
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     );
@@ -69,6 +71,8 @@ public interface Credentials {
 
     /**
      * Simple implementation.
+     *
+     * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)
@@ -132,6 +136,7 @@ public interface Credentials {
     /**
      * Assumed AWS IAM role.
      *
+     * @since 0.1
      * @see <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/role-usecase-ec2app.html">Granting Applications that Run on Amazon EC2 Instances Access to AWS Resources</a>
      */
     @Immutable
@@ -176,6 +181,8 @@ public interface Credentials {
 
     /**
      * With explicitly specified endpoint.
+     *
+     * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)
@@ -184,7 +191,7 @@ public interface Credentials {
         /**
          * Original credentials.
          */
-        private final transient Credentials origin;
+        private final transient Credentials.Simple origin;
         /**
          * Endpoint.
          */
@@ -194,7 +201,7 @@ public interface Credentials {
          * @param creds Original credentials
          * @param pnt Endpoint
          */
-        public Direct(final Credentials creds, final String pnt) {
+        public Direct(final Credentials.Simple creds, final String pnt) {
             this.origin = creds;
             this.endpoint = pnt;
         }
@@ -203,7 +210,7 @@ public interface Credentials {
          * @param creds Original credentials
          * @param port Port number for localhost
          */
-        public Direct(final Credentials creds, final int port) {
+        public Direct(final Credentials.Simple creds, final int port) {
             this(creds, String.format("http://localhost:%d", port));
         }
         @Override
@@ -211,11 +218,21 @@ public interface Credentials {
             return String.format("%s at %s", this.origin, this.endpoint);
         }
         @Override
-        @SuppressWarnings("deprecation")
         public AmazonDynamoDB aws() {
-            final AmazonDynamoDB aws = this.origin.aws();
-            aws.setEndpoint(this.endpoint);
-            return aws;
+            return AmazonDynamoDBClientBuilder.standard()
+                .withEndpointConfiguration(
+                    new AwsClientBuilder.EndpointConfiguration(
+                        this.endpoint, this.endpoint
+                    )
+                )
+                .withCredentials(
+                    new AWSStaticCredentialsProvider(
+                        new BasicAWSCredentials(
+                            this.origin.key, this.origin.secret
+                        )
+                    )
+                )
+                .build();
         }
     }
 }

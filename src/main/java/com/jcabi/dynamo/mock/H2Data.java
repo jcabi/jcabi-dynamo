@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2022, jcabi.com
  * All rights reserved.
  *
@@ -56,8 +56,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.sql.DataSource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -76,6 +74,28 @@ import org.h2.jdbcx.JdbcDataSource;
 @EqualsAndHashCode(of = "jdbc")
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports" })
 public final class H2Data implements MkData {
+
+    /**
+     * Create primary key.
+     */
+    private static final Function<String, String> CREATE_KEY =
+        key -> String.format("%s VARCHAR PRIMARY KEY", key);
+
+    /**
+     * Create attr.
+     */
+    private static final Function<String, String> CREATE_ATTR =
+        key -> String.format("%s CLOB", key);
+
+    /**
+     * WHERE clauses are joined with this.
+     */
+    private static final String AND = " AND ";
+
+    /**
+     * JDBC URL.
+     */
+    private final transient String jdbc;
 
     /**
      * Fetcher of rows.
@@ -127,56 +147,30 @@ public final class H2Data implements MkData {
      * @checkstyle AnonInnerLengthCheck (100 lines)
      * @checkstyle LineLength (3 lines)
      */
-    private static final Function<Map.Entry<String, Condition>, String> SELECT_WHERE =
-        new Function<Map.Entry<String, Condition>, String>() {
-            @Override
-            public String apply(final Map.Entry<String, Condition> cnd) {
-                final String opr;
-                if (cnd.getValue().getComparisonOperator()
-                    .equals(ComparisonOperator.GT.toString())) {
-                    opr = ">";
-                } else if (cnd.getValue().getComparisonOperator()
-                    .equals(ComparisonOperator.LT.toString())) {
-                    opr = "<";
-                } else if (cnd.getValue().getComparisonOperator()
-                    .equals(ComparisonOperator.EQ.toString())) {
-                    opr = "=";
-                } else {
-                    throw new UnsupportedOperationException(
-                        String.format(
-                            // @checkstyle LineLength (1 line)
-                            "At the moment only EQ/GT/LT operators are supported: %s",
-                            cnd.getValue().getComparisonOperator()
-                        )
-                    );
-                }
-                return String.format(
-                    "%s %s ?", cnd.getKey(), opr
-                );
-            }
-        };
-
-    /**
-     * Create primary key.
-     */
-    private static final Function<String, String> CREATE_KEY =
-        key -> String.format("%s VARCHAR PRIMARY KEY", key);
-
-    /**
-     * Create attr.
-     */
-    private static final Function<String, String> CREATE_ATTR =
-        key -> String.format("%s CLOB", key);
-
-    /**
-     * WHERE clauses are joined with this.
-     */
-    private static final String AND = " AND ";
-
-    /**
-     * JDBC URL.
-     */
-    private final transient String jdbc;
+    private static final Function<Map.Entry<String, Condition>, String> SELECT_WHERE = cnd -> {
+        final String opr;
+        if (cnd.getValue().getComparisonOperator()
+            .equals(ComparisonOperator.GT.toString())) {
+            opr = ">";
+        } else if (cnd.getValue().getComparisonOperator()
+            .equals(ComparisonOperator.LT.toString())) {
+            opr = "<";
+        } else if (cnd.getValue().getComparisonOperator()
+            .equals(ComparisonOperator.EQ.toString())) {
+            opr = "=";
+        } else {
+            throw new UnsupportedOperationException(
+                String.format(
+                    // @checkstyle LineLength (1 line)
+                    "At the moment only EQ/GT/LT operators are supported: %s",
+                    cnd.getValue().getComparisonOperator()
+                )
+            );
+        }
+        return String.format(
+            "%s %s ?", cnd.getKey(), opr
+        );
+    };
 
     /**
      * Public ctor.
