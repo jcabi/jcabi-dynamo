@@ -4,14 +4,14 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/jcabi/jcabi-dynamo)](http://www.rultor.com/p/jcabi/jcabi-dynamo)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
+[![mvn](https://github.com/jcabi/jcabi-dynamo/actions/workflows/mvn.yml/badge.svg)](https://github.com/jcabi/jcabi-dynamo/actions/workflows/mvn.yml)
 [![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-dynamo)](http://www.0pdd.com/p?name=jcabi/jcabi-dynamo)
-[![Build status](https://ci.appveyor.com/api/projects/status/6hiv73p1f55qttdy/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-dynamo/branch/master)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-dynamo.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-dynamo)
-
-[![jpeek report](https://i.jpeek.org/com.jcabi/jcabi-dynamo/badge.svg)](https://i.jpeek.org/com.jcabi/jcabi-dynamo/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo)
+[![codecov](https://codecov.io/gh/jcabi/jcabi-dynamo/branch/master/graph/badge.svg)](https://codecov.io/gh/jcabi/jcabi-dynamo)
 
 More details are here: [dynamo.jcabi.com](http://dynamo.jcabi.com/index.html).
+
 Also, read this blog post: [Object-Oriented DynamoDB API](http://www.yegor256.com/2014/04/14/jcabi-dynamo-java-api-of-aws-dynamodb.html).
 
 Set of classes in `com.jcabi.dynamo`
