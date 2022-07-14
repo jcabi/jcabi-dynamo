@@ -183,9 +183,14 @@ final class AwsIterator implements Iterator<Item> {
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void remove() {
         synchronized (this.dosage) {
+            final Dosage prev = this.dosage.get();
+            if (prev == null) {
+                throw new IllegalStateException(
+                    "You can't call remove() until you call next()"
+                );
+            }
             final AmazonDynamoDB aws = this.credentials.aws();
             try {
-                final Dosage prev = this.dosage.get();
                 final List<Map<String, AttributeValue>> items =
                     new ArrayList<>(prev.items());
                 final Map<String, AttributeValue> item =

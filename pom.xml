@@ -144,7 +144,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
-            <systemPropertyVariables>
+            <systemPropertyVariables combine.children="append">
               <failsafe.port>${dynamodb.port}</failsafe.port>
             </systemPropertyVariables>
           </configuration>
@@ -222,6 +222,95 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     </plugins>
   </build>
   <profiles>
+    <profile>
+      <id>dynamodb-local</id>
+      <activation>
+        <property>
+          <name>!skipTests</name>
+        </property>
+      </activation>
+      <properties>
+        <failsafe.ddl.key>AAAAABBBBBAAAAABBBBB</failsafe.ddl.key>
+        <failsafe.ddl.secret>ABCDABCDABCDABCDABCDABCDABCDABCDABCDABCD</failsafe.ddl.secret>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>com.jcabi</groupId>
+                      <artifactId>DynamoDBLocal</artifactId>
+                      <version>2014-01-08</version>
+                      <type>zip</type>
+                      <outputDirectory>${project.build.directory}/dynamodb-dist</outputDirectory>
+                      <overWrite>false</overWrite>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>reserver-dynamodb-port</id>
+                <goals>
+                  <goal>reserve-network-port</goal>
+                </goals>
+                <configuration>
+                  <portNames>
+                    <portName>failsafe.ddl.port</portName>
+                  </portNames>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>dynamodb-integration-test</id>
+                <goals>
+                  <goal>start</goal>
+                  <goal>create-tables</goal>
+                  <goal>stop</goal>
+                </goals>
+                <configuration>
+                  <port>${failsafe.ddl.port}</port>
+                  <dist>${project.build.directory}/dynamodb-dist</dist>
+                  <key>${failsafe.ddl.key}</key>
+                  <secret>${failsafe.ddl.secret}</secret>
+                  <tables>
+                    <table>${basedir}/src/test/dynamodb/talks.json</table>
+                  </tables>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <parallel>none</parallel>
+              <systemPropertyVariables combine.children="append">
+                <failsafe.ddl.port>${failsafe.ddl.port}</failsafe.ddl.port>
+                <failsafe.ddl.key>${failsafe.ddl.key}</failsafe.ddl.key>
+                <failsafe.ddl.secret>${failsafe.ddl.secret}</failsafe.ddl.secret>
+              </systemPropertyVariables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>qulice</id>
       <build>

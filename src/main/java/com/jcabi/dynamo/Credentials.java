@@ -236,7 +236,7 @@ public interface Credentials {
             return AmazonDynamoDBClientBuilder.standard()
                 .withEndpointConfiguration(
                     new AwsClientBuilder.EndpointConfiguration(
-                        this.endpoint, this.endpoint
+                        this.endpoint, Regions.US_EAST_1.getName()
                     )
                 )
                 .withCredentials(
