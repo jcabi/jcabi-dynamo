@@ -110,7 +110,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-jdbc</artifactId>
-      <version>0.17.8</version>
+      <version>0.18.0</version>
       <optional>true</optional>
     </dependency>
     <dependency>
