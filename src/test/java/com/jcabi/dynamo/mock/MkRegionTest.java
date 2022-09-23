@@ -45,14 +45,10 @@ import org.junit.jupiter.api.Test;
  * @since 0.10
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class MkRegionTest {
+final class MkRegionTest {
 
-    /**
-     * MkRegion can store and read items.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void storesAndReadsAttributes() throws Exception {
+    void storesAndReadsAttributes() throws Exception {
         final String name = "users";
         final String key = "id";
         final String attr = "description";
@@ -89,12 +85,8 @@ public final class MkRegionTest {
         );
     }
 
-    /**
-     * MkRegion can store and read items.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void storesAndReadsSingleAttribute() throws Exception {
+    void storesAndReadsSingleAttribute() throws Exception {
         final String table = "ideas";
         final String key = "number";
         final String attr = "total";

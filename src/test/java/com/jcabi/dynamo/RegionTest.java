@@ -36,13 +36,10 @@ import org.mockito.Mockito;
  * Test case for {@link Region}.
  * @since 0.1
  */
-public final class RegionTest {
+final class RegionTest {
 
-    /**
-     * Region.Prefixed can add prefix to table names.
-     */
     @Test
-    public void appendsPrefixesToTableNames() {
+    void appendsPrefixesToTableNames() {
         final Table table = Mockito.mock(Table.class);
         final Region region = Mockito.mock(Region.class);
         Mockito.doReturn(table).when(region).table(Mockito.anyString());

@@ -22,15 +22,15 @@ For example, to read an item from your Dynamo table:
 
 ```java
 public class Main {
-  public static void main(String[] args) {
-    Credentials credentials = new Credentials.Simple("AWS key", "AWS secret");
-    Region region = new Region.Simple(credentials);
-    Table table = region.table("foo");
-    Collection<Item> items = table.frame().where("id", Conditions.equalTo(123));
-    for (Item item : items) {
-      System.out.println(item.get("name").getS());
+    public static void main(final String[] args) {
+        final Credentials credentials = new Credentials.Simple("AWS key", "AWS secret");
+        final Region region = new Region.Simple(credentials);
+        final Table table = region.table("foo");
+        final Collection<Item> items = table.frame().where("id", Conditions.equalTo(123));
+        for (final Item item : items) {
+            System.out.println(item.get("name").getS());
+        }
     }
-  }
 }
 ```
 

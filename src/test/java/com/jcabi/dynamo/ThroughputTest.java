@@ -30,7 +30,6 @@
 package com.jcabi.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -38,12 +37,10 @@ import org.mockito.Mockito;
  * Test case for {@link Throughput}.
  * @since 0.1
  */
-public class ThroughputTest {
-    /**
-     * Throughput can change throughput of a table.
-     */
+final class ThroughputTest {
+
     @Test
-    public final void adjustsThroughput() {
+    void adjustsThroughput() {
         final Table table = Mockito.mock(Table.class);
         final Region region = Mockito.mock(Region.class);
         final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
@@ -55,7 +52,7 @@ public class ThroughputTest {
         Mockito.verify(aws, Mockito.times(1))
             .updateTable(
                 Mockito.eq(name),
-                Mockito.<ProvisionedThroughput>any()
+                Mockito.any()
             );
     }
 }

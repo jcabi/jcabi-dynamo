@@ -48,15 +48,10 @@ import org.mockito.Mockito;
  * @since 0.1
  */
 @SuppressWarnings("unchecked")
-public final class AwsIteratorTest {
+final class AwsIteratorTest {
 
-    /**
-     * AwsIterator can iterate using valve.
-     * @throws IOException If some problem inside
-     * @checkstyle ExecutableStatementCount (100 lines)
-     */
     @Test
-    public void iteratesValve() throws IOException {
+    void iteratesValve() throws IOException {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final String attr = "attribute-1";
         final String value = "value-1";
@@ -115,12 +110,8 @@ public final class AwsIteratorTest {
         Mockito.verify(second).next();
     }
 
-    /**
-     * AwsIterator can iterate using valve.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void throwsOnEmptyIterator() throws Exception {
+    void throwsOnEmptyIterator() throws Exception {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final Dosage dosage = Mockito.mock(Dosage.class);
         Mockito.doReturn(Collections.emptyList()).when(dosage).items();

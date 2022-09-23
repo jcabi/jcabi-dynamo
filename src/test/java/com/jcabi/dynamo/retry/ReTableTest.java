@@ -42,10 +42,10 @@ import org.mockito.Mockito;
  * Test case for {@link ReTable}.
  * @since 0.1
  */
-public final class ReTableTest {
+final class ReTableTest {
 
     @Test
-    public void retriesDelete() throws Exception {
+    void retriesDelete() throws Exception {
         final Table table = Mockito.mock(Table.class);
         final Attributes attrs = new Attributes();
         final String msg = "Exception!";

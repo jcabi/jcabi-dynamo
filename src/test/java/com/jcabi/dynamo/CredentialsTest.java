@@ -37,13 +37,10 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Credentials}.
  * @since 0.1
  */
-public final class CredentialsTest {
+final class CredentialsTest {
 
-    /**
-     * Credentials can instantiate AWS client.
-     */
     @Test
-    public void instantiatesAwsClient() {
+    void instantiatesAwsClient() {
         final Credentials creds = new Credentials.Simple(
             "ABABABABABABABABABEF",
             "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCEF"
@@ -51,11 +48,8 @@ public final class CredentialsTest {
         MatcherAssert.assertThat(creds.aws(), Matchers.notNullValue());
     }
 
-    /**
-     * Credentials can instantiate AWS client with custom region.
-     */
     @Test
-    public void instantiatesAwsClientWithCustomRegion() {
+    void instantiatesAwsClientWithCustomRegion() {
         final Credentials creds = new Credentials.Simple(
             "ABABABABABABABABABAB",
             "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE",

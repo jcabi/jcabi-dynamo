@@ -51,21 +51,18 @@ import org.junit.jupiter.api.io.TempDir;
  * Test case for {@link H2Data}.
  * @since 0.10
  */
-public final class H2DataTest {
+final class H2DataTest {
 
-    /**
-     * H2Data can store and fetch.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void storesAndReadsAttributes() throws Exception {
+    void storesAndReadsAttributes() throws Exception {
         final String table = "users";
         final String key = "id";
         final int number = 43;
         final String attr = "desc";
         final String value = "some\n\t\u20ac text";
         final MkData data = new H2Data().with(
-            table, new String[] {key}, new String[] {attr}
+            table, new String[] {key},
+            attr
         );
         data.put(table, new Attributes().with(key, number).with(attr, value));
         MatcherAssert.assertThat(
@@ -79,69 +76,43 @@ public final class H2DataTest {
         );
     }
 
-    /**
-     * H2Data can store to a file.
-     * @param temp Temp dir
-     * @throws Exception If some problem inside
-     * @see <a href="https://code.google.com/p/h2database/issues/detail?id=447">
-     *  Google Code: DB file extension customizability</a>
-     */
     @Test
     @Disabled
-    public void storesToFile(@TempDir final Path temp) throws Exception {
+    void storesToFile(@TempDir final Path temp) throws Exception {
         final File file = temp.resolve("foo.txt").toFile();
         final String table = "tbl";
         final String key = "key1";
         final MkData data = new H2Data(file).with(
-            table, new String[] {key}, new String[0]
+            table, new String[] {key}
         );
         data.put(table, new Attributes().with(key, "x2"));
         MatcherAssert.assertThat(file.exists(), Matchers.is(true));
         MatcherAssert.assertThat(file.length(), Matchers.greaterThan(0L));
     }
 
-    /**
-     * H2Data can create many tables.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void createsManyTables() throws Exception {
+    void createsManyTables() throws Exception {
         new H2Data()
-            .with("firsttable", new String[] {"firstid"}, new String[0])
-            .with("secondtable", new String[]{"secondid"}, new String[0]);
+            .with("firsttable", new String[] {"firstid"})
+            .with("secondtable", new String[]{"secondid"});
     }
 
-    /**
-     * H2Data can create tables with long names (max length of DynamoDb table
-     * name is 255 characters).
-     * @throws Exception In case test fails
-     */
     @Test
-    public void createsTablesWithLongNames() throws Exception {
-        new H2Data()
-            .with(
-                //@checkstyle MagicNumberCheck (1 line)
-                Joiner.on("").join(Collections.nCopies(40, "X")),
-                new String[]{"k1"}, new String[0]
+    void createsTablesWithLongNames() throws Exception {
+        new H2Data().with(
+            Joiner.on("").join(Collections.nCopies(40, "X")),
+            new String[]{"k1"}
         );
     }
 
     @Test
-    public void supportsTableNamesWithIllegalCharacters() throws Exception {
-        new H2Data().with(".-.", new String[]{"pk"}, new String[0]);
+    void supportsTableNamesWithIllegalCharacters() throws Exception {
+        new H2Data().with(".-.", new String[]{"pk"});
     }
 
-    /**
-     * H2Data supports column names with characters illegal to H2.
-     * @throws Exception In case test fails
-     * @todo #28:30min H2Data doesn't support COLUMNS with ".", "-" or digits
-     *  but I don't know for sure should it support these symbols or not.
-     *  It's needed to be confirmed and test should be uncommented
-     *  when H2Data will be supporting mentioned symbols.
-     */
     @Test
     @Disabled
-    public void supportsColumnNamesWithIllegalCharacters() throws Exception {
+    void supportsColumnNamesWithIllegalCharacters() throws Exception {
         final String key = "0-.col.-0";
         final String table = "test";
         new H2Data().with(
@@ -150,7 +121,7 @@ public final class H2DataTest {
     }
 
     @Test
-    public void deletesRecords() throws Exception {
+    void deletesRecords() throws Exception {
         final String table = "customers";
         final String field = "name";
         final String man = "Kevin";
@@ -179,12 +150,8 @@ public final class H2DataTest {
         );
     }
 
-    /**
-     * H2Data can update table attributes.
-     * @throws Exception In case test fails
-     */
     @Test
-    public void updatesTableAttributes() throws Exception {
+    void updatesTableAttributes() throws Exception {
         final String table = "tests";
         final String key = "tid";
         final int number = 43;
@@ -221,12 +188,8 @@ public final class H2DataTest {
         );
     }
 
-    /**
-     * H2Data can fetch with comparison.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void fetchesWithComparison() throws Exception {
+    void fetchesWithComparison() throws Exception {
         final String table = "x12";
         final String key = "foo1";
         final String value = "bar2";

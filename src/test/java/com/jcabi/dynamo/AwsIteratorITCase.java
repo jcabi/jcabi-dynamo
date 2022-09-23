@@ -42,15 +42,15 @@ import org.junit.jupiter.api.Test;
  * Integration case for {@link AwsIterator}.
  * @since 0.16.2
  */
-public final class AwsIteratorITCase {
+final class AwsIteratorITCase {
 
     @BeforeEach
-    public void itTestCheck() {
+    void itTestCheck() {
         Assumptions.assumeFalse(System.getProperty("failsafe.port", "").isEmpty());
     }
 
     @Test
-    public void iteratesItems() throws Exception {
+    void iteratesItems() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
@@ -65,12 +65,8 @@ public final class AwsIteratorITCase {
         );
     }
 
-    /**
-     * AwsIterator can iterate and delete items.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void iteratesItemsAndDeletes() throws Exception {
+    void iteratesItemsAndDeletes() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);

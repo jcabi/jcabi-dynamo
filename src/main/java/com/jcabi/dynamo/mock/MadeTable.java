@@ -173,7 +173,7 @@ public final class MadeTable {
                 "waiting for DynamoDB table '%s': %s",
                 name, result.getTable().getTableStatus()
             );
-            TimeUnit.SECONDS.sleep((long) Tv.TEN);
+            TimeUnit.SECONDS.sleep(Tv.TEN);
         }
     }
 
@@ -188,7 +188,7 @@ public final class MadeTable {
         Logger.info(this, "DynamoDB table '%s' deletion requested", name);
         while (this.exists()) {
             Logger.info(this, "DynamoDB table '%s' still exists", name);
-            TimeUnit.SECONDS.sleep((long) Tv.TEN);
+            TimeUnit.SECONDS.sleep(Tv.TEN);
         }
         Logger.info(this, "DynamoDB table '%s' deleted", name);
     }

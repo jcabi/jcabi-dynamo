@@ -44,10 +44,10 @@ import org.junit.jupiter.api.Test;
  * @since 0.23
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class DynamodbLocalITCase {
+final class DynamodbLocalITCase {
 
     @BeforeEach
-    public void itTestCheck() {
+    void itTestCheck() {
         Assumptions.assumeFalse(
             System.getProperty("failsafe.ddl.port", "").isEmpty()
                 || System.getProperty("failsafe.ddl.key", "").isEmpty()
@@ -58,7 +58,7 @@ public final class DynamodbLocalITCase {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void worksWithAmazon() throws Exception {
+    void worksWithAmazon() throws Exception {
         final Table tbl = new Region.Simple(
             new Credentials.Direct(
                 new Credentials.Simple(

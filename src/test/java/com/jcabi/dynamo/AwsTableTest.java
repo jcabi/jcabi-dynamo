@@ -48,9 +48,8 @@ import org.mockito.hamcrest.MockitoHamcrest;
 /**
  * Test case for {@link AwsTable}.
  * @since 0.1
- * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
-public final class AwsTableTest {
+final class AwsTableTest {
 
     /**
      * Constant for 'tableName' attribute.
@@ -62,12 +61,8 @@ public final class AwsTableTest {
      */
     private static final String KEY = "key";
 
-    /**
-     * AwsTable can save an item.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void savesItemToDynamo() throws Exception {
+    void savesItemToDynamo() throws Exception {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
         Mockito.doReturn(aws).when(credentials).aws();
@@ -91,19 +86,17 @@ public final class AwsTableTest {
         );
         table.put(new Attributes().with(attr, value));
         Mockito.verify(aws).putItem(
-            PutItemRequest.class.cast(
-                MockitoHamcrest.argThat(
-                    Matchers.allOf(
-                        Matchers.hasProperty(
-                            AwsTableTest.TABLE_NAME,
-                            Matchers.equalTo(name)
-                        ),
-                        Matchers.hasProperty(
-                            "item",
-                            Matchers.hasEntry(
-                                Matchers.equalTo(attr),
-                                Matchers.equalTo(value)
-                            )
+            (PutItemRequest) MockitoHamcrest.argThat(
+                Matchers.allOf(
+                    Matchers.hasProperty(
+                        AwsTableTest.TABLE_NAME,
+                        Matchers.equalTo(name)
+                    ),
+                    Matchers.hasProperty(
+                        "item",
+                        Matchers.hasEntry(
+                            Matchers.equalTo(attr),
+                            Matchers.equalTo(value)
                         )
                     )
                 )
@@ -111,12 +104,8 @@ public final class AwsTableTest {
         );
     }
 
-    /**
-     * AwsTable can delete an item.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void deletesItemFromDynamo() throws Exception {
+    void deletesItemFromDynamo() throws Exception {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
         Mockito.doReturn(aws).when(credentials).aws();
@@ -140,19 +129,17 @@ public final class AwsTableTest {
         );
         table.delete(new Attributes().with(attr, value));
         Mockito.verify(aws).deleteItem(
-            DeleteItemRequest.class.cast(
-                MockitoHamcrest.argThat(
-                    Matchers.allOf(
-                        Matchers.hasProperty(
-                            AwsTableTest.TABLE_NAME,
-                            Matchers.equalTo(name)
-                        ),
-                        Matchers.hasProperty(
-                            AwsTableTest.KEY,
-                            Matchers.hasEntry(
-                                Matchers.equalTo(attr),
-                                Matchers.equalTo(value)
-                            )
+            (DeleteItemRequest) MockitoHamcrest.argThat(
+                Matchers.allOf(
+                    Matchers.hasProperty(
+                        AwsTableTest.TABLE_NAME,
+                        Matchers.equalTo(name)
+                    ),
+                    Matchers.hasProperty(
+                        AwsTableTest.KEY,
+                        Matchers.hasEntry(
+                            Matchers.equalTo(attr),
+                            Matchers.equalTo(value)
                         )
                     )
                 )

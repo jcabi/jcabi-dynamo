@@ -55,7 +55,6 @@ import lombok.ToString;
  *
  * <p>The class is mutable and thread-safe.
  *
- * @checkstyle ClassDataAbstractionCoupling (500 lines)
  * @since 0.1
  */
 @Loggable(Loggable.DEBUG)

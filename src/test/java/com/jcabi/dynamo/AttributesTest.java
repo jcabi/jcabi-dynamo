@@ -43,13 +43,10 @@ import org.junit.jupiter.api.Test;
  * @since 0.1
  */
 @SuppressWarnings("PMD.UseConcurrentHashMap")
-public final class AttributesTest {
+final class AttributesTest {
 
-    /**
-     * Attributes can work as a map of attributes.
-     */
     @Test
-    public void workAsMapOfAttributes() {
+    void workAsMapOfAttributes() {
         final String attr = "id";
         final AttributeValue value = new AttributeValue("some text value");
         final Map<String, AttributeValue> attrs = new Attributes()
@@ -62,11 +59,8 @@ public final class AttributesTest {
         );
     }
 
-    /**
-     * Attributes can build expected keys.
-     */
     @Test
-    public void buildsExpectedKeys() {
+    void buildsExpectedKeys() {
         final String attr = "attr-13";
         final String value = "some value \u20ac";
         MatcherAssert.assertThat(
@@ -78,11 +72,8 @@ public final class AttributesTest {
         );
     }
 
-    /**
-     * Attributes can filter out unnecessary keys.
-     */
     @Test
-    public void filtersOutUnnecessaryKeys() {
+    void filtersOutUnnecessaryKeys() {
         MatcherAssert.assertThat(
             new Attributes()
                 .with("first", "test-1")
@@ -93,11 +84,8 @@ public final class AttributesTest {
         );
     }
 
-    /**
-     * Attributes should be case-sensitive.
-     */
     @Test
-    public void caseSensitive() {
+    void caseSensitive() {
         final String first = "Alpha";
         final String second = "AlPha";
         final String third = "Beta";

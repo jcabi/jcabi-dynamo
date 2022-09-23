@@ -44,13 +44,10 @@ import org.mockito.Mockito;
  * @since 0.22
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class AttributeUpdatesTest {
+final class AttributeUpdatesTest {
 
-    /**
-     * AttributesUpdates can tell if it's empty or not.
-     */
     @Test
-    public void tellsIfEmptyOrNot() {
+    void tellsIfEmptyOrNot() {
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(attr.isEmpty(), Matchers.is(Boolean.TRUE));
         MatcherAssert.assertThat(
@@ -60,11 +57,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can add a new AttributeValueUpdate.
-     */
     @Test
-    public void addsAttributeValueUpdate() {
+    void addsAttributeValueUpdate() {
         MatcherAssert.assertThat(0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
@@ -74,11 +68,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can add a new AttributeValue.
-     */
     @Test
-    public void addsAttributeValue() {
+    void addsAttributeValue() {
         MatcherAssert.assertThat(0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
@@ -87,11 +78,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can add a new Object.
-     */
     @Test
-    public void addsObject() {
+    void addsObject() {
         MatcherAssert.assertThat(0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
@@ -100,11 +88,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can return its key Set.
-     */
     @Test
-    public void returnsKeySet() {
+    void returnsKeySet() {
         final String firstkey = "key1";
         final AttributeUpdates attr = new AttributeUpdates()
             .with(firstkey, "valuediff").with("key2", "value2");
@@ -118,11 +103,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can return its values.
-     */
     @Test
-    public void returnsValues() {
+    void returnsValues() {
         final String firstvalue = "value3";
         final AttributeUpdates attr = new AttributeUpdates()
             .with("key3", firstvalue).with("key4", "value4");
@@ -136,11 +118,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can return its entry Set.
-     */
     @Test
-    public void returnsEntries() {
+    void returnsEntries() {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("key5", "value5").with("key6", "value7");
         MatcherAssert.assertThat(
@@ -149,11 +128,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can return an entry by the key.
-     */
     @Test
-    public void getsEntry() {
+    void getsEntry() {
         final String key = "key10";
         final AttributeUpdates attr = new AttributeUpdates()
             .with(key, "value10");
@@ -163,11 +139,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can tell if it contains a key.
-     */
     @Test
-    public void containsKey() {
+    void containsKey() {
         final String key = "key11";
         final AttributeUpdates attr = new AttributeUpdates()
             .with(key, "value11").with("otherkey1", "othervalue1");
@@ -177,11 +150,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can tell if it contains a value.
-     */
     @Test
-    public void containsValue() {
+    void containsValue() {
         final String value = "attrv";
         final AttributeUpdates attr = new AttributeUpdates()
             .with("attrkey", value).with("otherkey", "othervalue");
@@ -195,11 +165,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can return a string representation of itself.
-     */
     @Test
-    public void canTurnToString() {
+    void canTurnToString() {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("onekey", "onevalue").with("secondkey", "secondvalue");
         MatcherAssert.assertThat(
@@ -213,11 +180,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can add the content of another Map.
-     */
     @Test
-    public void addsMap() {
+    void addsMap() {
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(attr.size(), Matchers.is(0));
         MatcherAssert.assertThat(
@@ -227,11 +191,8 @@ public final class AttributeUpdatesTest {
         );
     }
 
-    /**
-     * AttributesUpdates can throw exception when put is called.
-     */
     @Test
-    public void putThrowsException() {
+    void putThrowsException() {
         boolean passed;
         try {
             new AttributeUpdates().put(
@@ -246,11 +207,8 @@ public final class AttributeUpdatesTest {
         }
     }
 
-    /**
-     * AttributesUpdates can throw exception when putAll is called.
-     */
     @Test
-    public void putAllThrowsException() {
+    void putAllThrowsException() {
         boolean passed;
         try {
             new AttributeUpdates().putAll(new AttributeUpdates());
@@ -263,11 +221,8 @@ public final class AttributeUpdatesTest {
         }
     }
 
-    /**
-     * AttributesUpdates can throw exception when remove is called.
-     */
     @Test
-    public void removeThrowsException() {
+    void removeThrowsException() {
         boolean passed;
         try {
             new AttributeUpdates().remove("object to remove");
@@ -280,11 +235,8 @@ public final class AttributeUpdatesTest {
         }
     }
 
-    /**
-     * AttributesUpdates can throw exception when clear is called.
-     */
     @Test
-    public void clearThrowsException() {
+    void clearThrowsException() {
         boolean passed;
         try {
             new AttributeUpdates().clear();

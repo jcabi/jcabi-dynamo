@@ -46,16 +46,16 @@ import org.junit.jupiter.api.Test;
  * Integration case for {@link Region}.
  * @since 0.1
  */
-public final class RegionITCase {
+final class RegionITCase {
 
     @BeforeEach
-    public void itTestCheck() {
+    void itTestCheck() {
         Assumptions.assumeFalse(System.getProperty("failsafe.port", "").isEmpty());
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void worksWithAmazon() throws Exception {
+    void worksWithAmazon() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
@@ -112,7 +112,7 @@ public final class RegionITCase {
 
     @Test
     @Disabled
-    public void retrievesAttributesFromDynamo() throws Exception {
+    void retrievesAttributesFromDynamo() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);

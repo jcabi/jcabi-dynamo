@@ -41,15 +41,15 @@ import org.junit.jupiter.api.Test;
  * Integration case for {@link AwsFrame}.
  * @since 0.21
  */
-public final class AwsFrameITCase {
+final class AwsFrameITCase {
 
     @BeforeEach
-    public void itTestCheck() {
+    void itTestCheck() {
         Assumptions.assumeFalse(System.getProperty("failsafe.port", "").isEmpty());
     }
 
     @Test
-    public void calculatesItems() throws Exception {
+    void calculatesItems() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);

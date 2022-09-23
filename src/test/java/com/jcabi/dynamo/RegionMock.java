@@ -41,7 +41,6 @@ import com.jcabi.dynamo.retry.ReRegion;
 /**
  * Mock of a {@link Region}.
  * @since 0.16.2
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class RegionMock {
 

@@ -42,14 +42,10 @@ import org.mockito.Mockito;
  * Test case for {@link ReRegion}.
  * @since 0.1
  */
-public final class ReRegionTest {
+final class ReRegionTest {
 
-    /**
-     * ReRegion can retry on some AWS calls.
-     * @throws Exception If some problem inside
-     */
     @Test
-    public void retriesAwsCalls() throws Exception {
+    void retriesAwsCalls() throws Exception {
         final Table table = Mockito.mock(Table.class);
         final Attributes attrs = new Attributes();
         final String msg = "hey you";

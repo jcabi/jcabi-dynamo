@@ -37,15 +37,11 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link AwsItem}.
  * @since 0.21
- * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
-public final class AwsItemTest {
+final class AwsItemTest {
 
-    /**
-     * AwsTable can compare to itself.
-     */
     @Test
-    public void comparesToItself() {
+    void comparesToItself() {
         final Credentials creds = new Credentials.Simple("key", "secret");
         final Region region = new Region.Simple(creds);
         final AwsTable table = new AwsTable(creds, region, "table-name");

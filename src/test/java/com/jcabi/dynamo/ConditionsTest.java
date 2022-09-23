@@ -40,13 +40,10 @@ import org.junit.jupiter.api.Test;
  * @since 0.1
  */
 @SuppressWarnings("PMD.UseConcurrentHashMap")
-public final class ConditionsTest {
+final class ConditionsTest {
 
-    /**
-     * Conditions can work as a map of conditions.
-     */
     @Test
-    public void workAsMapOfConditions() {
+    void workAsMapOfConditions() {
         final String name = "id";
         final Condition condition = new Condition();
         final Map<String, Condition> conds = new Conditions()

@@ -37,7 +37,6 @@ import com.amazonaws.services.dynamodbv2.model.QueryResult;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -47,15 +46,11 @@ import org.mockito.Mockito;
  * Test case for {@link QueryValve}.
  * @since 0.1
  */
-public final class QueryValveTest {
+final class QueryValveTest {
 
-    /**
-     * QueryValve can fetch data from AWS.
-     * @throws Exception If some problem inside
-     */
     @Test
     @SuppressWarnings("unchecked")
-    public void fetchesData() throws Exception {
+    void fetchesData() throws Exception {
         final Valve valve = new QueryValve();
         final Credentials credentials = Mockito.mock(Credentials.class);
         final ImmutableMap<String, AttributeValue> item =
@@ -66,7 +61,7 @@ public final class QueryValveTest {
         Mockito.doReturn(
             new QueryResult()
                 .withItems(
-                    Collections.<Map<String, AttributeValue>>singletonList(item)
+                    Collections.singletonList(item)
             )
                 .withConsumedCapacity(
                     new ConsumedCapacity().withCapacityUnits(1.0d)
