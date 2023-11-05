@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../apidocs/com/jcabi/dynamo/Attributes.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2022, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -76,7 +76,7 @@
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>              <span class="jxr_string">"PMD.AvoidInstantiatingObjectsInLoops"</span>
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          }
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      )
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> <strong class="jxr_keyword">implements</strong> Map&lt;String, AttributeValue&gt; {
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> Attributes <strong class="jxr_keyword">implements</strong> Map&lt;String, AttributeValue&gt; {
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * Encapsulated attributes.</em>
@@ -86,7 +86,7 @@
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * Private ctor.</em>
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a>() {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">public</strong> Attributes() {
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">this</strong>(<strong class="jxr_keyword">new</strong> ArrayMap&lt;&gt;());
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>      }
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
@@ -94,7 +94,7 @@
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * Private ctor.</em>
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     * @param map Map of them</em>
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a>(<strong class="jxr_keyword">final</strong> Map&lt;String, AttributeValue&gt; map) {
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">public</strong> Attributes(<strong class="jxr_keyword">final</strong> Map&lt;String, AttributeValue&gt; map) {
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>          <strong class="jxr_keyword">this</strong>.attrs = <strong class="jxr_keyword">new</strong> ArrayMap&lt;&gt;(map);
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>      }
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>  
@@ -104,8 +104,8 @@
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  <em class="jxr_javadoccomment">     * @param value The value</em>
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>  <em class="jxr_javadoccomment">     * @return Attributes</em>
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>      <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> AttributeValue value) {
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a>(<strong class="jxr_keyword">this</strong>.attrs.with(name, value));
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>      <strong class="jxr_keyword">public</strong> Attributes with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> AttributeValue value) {
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Attributes(<strong class="jxr_keyword">this</strong>.attrs.with(name, value));
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>     }
 <a class="jxr_linenumber" name="L102" href="#L102">102</a> 
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>     <em class="jxr_javadoccomment">/**</em>
@@ -113,13 +113,13 @@
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> <em class="jxr_javadoccomment">     * @param map Attributes to add</em>
 <a class="jxr_linenumber" name="L106" href="#L106">106</a> <em class="jxr_javadoccomment">     * @return Attributes</em>
 <a class="jxr_linenumber" name="L107" href="#L107">107</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> with(<strong class="jxr_keyword">final</strong> Map&lt;String, AttributeValue&gt; map) {
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     <strong class="jxr_keyword">public</strong> Attributes with(<strong class="jxr_keyword">final</strong> Map&lt;String, AttributeValue&gt; map) {
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         <strong class="jxr_keyword">final</strong> ConcurrentMap&lt;String, AttributeValue&gt; attribs =
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>             <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;(map.size());
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Map.Entry&lt;String, AttributeValue&gt; entry : map.entrySet()) {
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>             attribs.put(entry.getKey(), entry.getValue());
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>         }
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a>(<strong class="jxr_keyword">this</strong>.attrs.with(attribs));
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Attributes(<strong class="jxr_keyword">this</strong>.attrs.with(attribs));
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>     }
 <a class="jxr_linenumber" name="L116" href="#L116">116</a> 
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>     <em class="jxr_javadoccomment">/**</em>
@@ -146,7 +146,7 @@
 <a class="jxr_linenumber" name="L138" href="#L138">138</a> <em class="jxr_javadoccomment">     * @return Attributes</em>
 <a class="jxr_linenumber" name="L139" href="#L139">139</a> <em class="jxr_javadoccomment">     * @</em>
 <a class="jxr_linenumber" name="L140" href="#L140">140</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Long value) {
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> Attributes with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Long value) {
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.with(name, <strong class="jxr_keyword">new</strong> AttributeValue().withN(value.toString()));
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>     }
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> 
@@ -157,7 +157,7 @@
 <a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_javadoccomment">     * @return Attributes</em>
 <a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     * @</em>
 <a class="jxr_linenumber" name="L151" href="#L151">151</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Integer value) {
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>     <strong class="jxr_keyword">public</strong> Attributes with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Integer value) {
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.with(name, <strong class="jxr_keyword">new</strong> AttributeValue().withN(value.toString()));
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>     }
 <a class="jxr_linenumber" name="L155" href="#L155">155</a> 
@@ -168,7 +168,7 @@
 <a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     * @return Attributes</em>
 <a class="jxr_linenumber" name="L161" href="#L161">161</a> <em class="jxr_javadoccomment">     * @</em>
 <a class="jxr_linenumber" name="L162" href="#L162">162</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Object value) {
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>     <strong class="jxr_keyword">public</strong> Attributes with(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Object value) {
 <a class="jxr_linenumber" name="L164" href="#L164">164</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.with(name, <strong class="jxr_keyword">new</strong> AttributeValue(value.toString()));
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>     }
 <a class="jxr_linenumber" name="L166" href="#L166">166</a> 
@@ -177,7 +177,7 @@
 <a class="jxr_linenumber" name="L169" href="#L169">169</a> <em class="jxr_javadoccomment">     * @param keys Keys to leave in the map</em>
 <a class="jxr_linenumber" name="L170" href="#L170">170</a> <em class="jxr_javadoccomment">     * @return Attributes</em>
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a> only(<strong class="jxr_keyword">final</strong> Iterable&lt;String&gt; keys) {
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>     <strong class="jxr_keyword">public</strong> Attributes only(<strong class="jxr_keyword">final</strong> Iterable&lt;String&gt; keys) {
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>         <strong class="jxr_keyword">final</strong> ImmutableMap.Builder&lt;String, AttributeValue&gt; map =
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>             <strong class="jxr_keyword">new</strong> ImmutableMap.Builder&lt;&gt;();
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>         <strong class="jxr_keyword">final</strong> Collection&lt;String&gt; hash = <strong class="jxr_keyword">new</strong> HashSet&lt;&gt;(0);
@@ -192,7 +192,7 @@
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>                 );
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>             }
 <a class="jxr_linenumber" name="L186" href="#L186">186</a>         }
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/Attributes.html">Attributes</a>(map.build());
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Attributes(map.build());
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>     }
 <a class="jxr_linenumber" name="L189" href="#L189">189</a> 
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>     @Override
@@ -283,6 +283,6 @@
 <a class="jxr_linenumber" name="L275" href="#L275">275</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

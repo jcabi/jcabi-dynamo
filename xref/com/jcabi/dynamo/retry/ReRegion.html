@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/com/jcabi/dynamo/retry/ReRegion.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2022, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -57,18 +57,18 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  @Loggable(Loggable.DEBUG)
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  @ToString
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  @EqualsAndHashCode(of = <span class="jxr_string">"origin"</span>)
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/jcabi/dynamo/retry/ReRegion.html">ReRegion</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../com/jcabi/dynamo/Region.html">Region</a> {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="ReRegion" href="../../../../com/jcabi/dynamo/retry/ReRegion.html#ReRegion">ReRegion</a> <strong class="jxr_keyword">implements</strong> <a name="Region" href="../../../../com/jcabi/dynamo/Region.html#Region">Region</a> {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">     * Original region.</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <a href="../../../../com/jcabi/dynamo/Region.html">Region</a> origin;
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <a name="Region" href="../../../../com/jcabi/dynamo/Region.html#Region">Region</a> origin;
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     * Public ctor.</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * @param region Origin region</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/retry/ReRegion.html">ReRegion</a>(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/dynamo/Region.html">Region</a> region) {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <a name="ReRegion" href="../../../../com/jcabi/dynamo/retry/ReRegion.html#ReRegion">ReRegion</a>(<strong class="jxr_keyword">final</strong> <a name="Region" href="../../../../com/jcabi/dynamo/Region.html#Region">Region</a> region) {
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">this</strong>.origin = region;
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  
@@ -80,12 +80,12 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      @Override
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/Table.html">Table</a> table(<strong class="jxr_keyword">final</strong> String name) {
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReTable.html">ReTable</a>(<strong class="jxr_keyword">this</strong>.origin.table(name));
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <a name="Table" href="../../../../com/jcabi/dynamo/Table.html#Table">Table</a> table(<strong class="jxr_keyword">final</strong> String name) {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ReTable" href="../../../../com/jcabi/dynamo/retry/ReTable.html#ReTable">ReTable</a>(<strong class="jxr_keyword">this</strong>.origin.table(name));
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      }
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

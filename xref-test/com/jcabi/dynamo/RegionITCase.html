@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../testapidocs/com/jcabi/dynamo/RegionITCase.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2022, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -54,18 +54,18 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> * Integration case for {@link Region}.</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/dynamo/RegionITCase.html">RegionITCase</a> {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="RegionITCase" href="../../../com/jcabi/dynamo/RegionITCase.html#RegionITCase">RegionITCase</a> {
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      @BeforeEach
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> itTestCheck() {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">void</strong> itTestCheck() {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          Assumptions.assumeFalse(System.getProperty(<span class="jxr_string">"failsafe.port"</span>, <span class="jxr_string">""</span>).isEmpty());
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      }
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      @Test
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      @SuppressWarnings(<span class="jxr_string">"PMD.AvoidInstantiatingObjectsInLoops"</span>)
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> worksWithAmazon() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">void</strong> worksWithAmazon() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">final</strong> String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/RegionMock.html">RegionMock</a> mock = <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/RegionMock.html">RegionMock</a>();
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">final</strong> <a name="RegionMock" href="../../../com/jcabi/dynamo/RegionMock.html#RegionMock">RegionMock</a> mock = <strong class="jxr_keyword">new</strong> <a name="RegionMock" href="../../../com/jcabi/dynamo/RegionMock.html#RegionMock">RegionMock</a>();
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">final</strong> Table tbl = mock.get(name).table(name);
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">final</strong> String attr = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">final</strong> String value = RandomStringUtils.randomAlphanumeric(Tv.TEN);
@@ -120,9 +120,9 @@
 <a class="jxr_linenumber" name="L112" href="#L112">112</a> 
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>     @Test
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>     @Disabled
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retrievesAttributesFromDynamo() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>     <strong class="jxr_keyword">void</strong> retrievesAttributesFromDynamo() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         <strong class="jxr_keyword">final</strong> String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>         <strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/dynamo/RegionMock.html">RegionMock</a> mock = <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/dynamo/RegionMock.html">RegionMock</a>();
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         <strong class="jxr_keyword">final</strong> <a name="RegionMock" href="../../../com/jcabi/dynamo/RegionMock.html#RegionMock">RegionMock</a> mock = <strong class="jxr_keyword">new</strong> <a name="RegionMock" href="../../../com/jcabi/dynamo/RegionMock.html#RegionMock">RegionMock</a>();
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>         <strong class="jxr_keyword">final</strong> Table tbl = mock.get(name).table(name);
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> idx = Tv.TEN;
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>         <strong class="jxr_keyword">final</strong> String hash = <span class="jxr_string">"7afe5efa"</span>;
@@ -152,6 +152,6 @@
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

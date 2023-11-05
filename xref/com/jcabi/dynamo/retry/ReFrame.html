@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/com/jcabi/dynamo/retry/ReFrame.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2022, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -63,49 +63,49 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  @ToString
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  @EqualsAndHashCode(of = <span class="jxr_string">"origin"</span>)
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  @SuppressWarnings(<span class="jxr_string">"PMD.TooManyMethods"</span>)
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/jcabi/dynamo/retry/ReFrame.html">ReFrame</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../com/jcabi/dynamo/Frame.html">Frame</a> {
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="ReFrame" href="../../../../com/jcabi/dynamo/retry/ReFrame.html#ReFrame">ReFrame</a> <strong class="jxr_keyword">implements</strong> <a name="Frame" href="../../../../com/jcabi/dynamo/Frame.html#Frame">Frame</a> {
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * Original frame.</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <a href="../../../../com/jcabi/dynamo/Frame.html">Frame</a> origin;
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <a name="Frame" href="../../../../com/jcabi/dynamo/Frame.html#Frame">Frame</a> origin;
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * Public ctor.</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * @param frame Origin frame</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/retry/ReFrame.html">ReFrame</a>(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/dynamo/Frame.html">Frame</a> frame) {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a name="ReFrame" href="../../../../com/jcabi/dynamo/retry/ReFrame.html#ReFrame">ReFrame</a>(<strong class="jxr_keyword">final</strong> <a name="Frame" href="../../../../com/jcabi/dynamo/Frame.html#Frame">Frame</a> frame) {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">this</strong>.origin = frame;
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      @Override
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/Frame.html">Frame</a> where(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> String value) {
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReFrame.html">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.where(name, value));
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <a name="Frame" href="../../../../com/jcabi/dynamo/Frame.html#Frame">Frame</a> where(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> String value) {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ReFrame" href="../../../../com/jcabi/dynamo/retry/ReFrame.html#ReFrame">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.where(name, value));
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      }
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      @Override
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>      @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/Frame.html">Frame</a> where(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Condition condition) {
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReFrame.html">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.where(name, condition));
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">public</strong> <a name="Frame" href="../../../../com/jcabi/dynamo/Frame.html#Frame">Frame</a> where(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> Condition condition) {
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ReFrame" href="../../../../com/jcabi/dynamo/retry/ReFrame.html#ReFrame">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.where(name, condition));
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>      }
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      @Override
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>      @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/Frame.html">Frame</a> where(<strong class="jxr_keyword">final</strong> Map&lt;String, Condition&gt; conditions) {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReFrame.html">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.where(conditions));
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">public</strong> <a name="Frame" href="../../../../com/jcabi/dynamo/Frame.html#Frame">Frame</a> where(<strong class="jxr_keyword">final</strong> Map&lt;String, Condition&gt; conditions) {
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ReFrame" href="../../../../com/jcabi/dynamo/retry/ReFrame.html#ReFrame">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.where(conditions));
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>      @Override
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/Table.html">Table</a> table() {
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReTable.html">ReTable</a>(<strong class="jxr_keyword">this</strong>.origin.table());
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>      <strong class="jxr_keyword">public</strong> <a name="Table" href="../../../../com/jcabi/dynamo/Table.html#Table">Table</a> table() {
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ReTable" href="../../../../com/jcabi/dynamo/retry/ReTable.html#ReTable">ReTable</a>(<strong class="jxr_keyword">this</strong>.origin.table());
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      }
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>      @Override
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>      @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/dynamo/Frame.html">Frame</a> through(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/dynamo/Valve.html">Valve</a> valve) {
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReFrame.html">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.through(<strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/dynamo/retry/ReValve.html">ReValve</a>(valve)));
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>      <strong class="jxr_keyword">public</strong> <a name="Frame" href="../../../../com/jcabi/dynamo/Frame.html#Frame">Frame</a> through(<strong class="jxr_keyword">final</strong> <a name="Valve" href="../../../../com/jcabi/dynamo/Valve.html#Valve">Valve</a> valve) {
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ReFrame" href="../../../../com/jcabi/dynamo/retry/ReFrame.html#ReFrame">ReFrame</a>(<strong class="jxr_keyword">this</strong>.origin.through(<strong class="jxr_keyword">new</strong> <a name="ReValve" href="../../../../com/jcabi/dynamo/retry/ReValve.html#ReValve">ReValve</a>(valve)));
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>     }
 <a class="jxr_linenumber" name="L102" href="#L102">102</a> 
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>     @Override
@@ -147,7 +147,7 @@
 <a class="jxr_linenumber" name="L139" href="#L139">139</a> 
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>     @Override
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>     @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> add(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/dynamo/Item.html">Item</a> item) {
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> add(<strong class="jxr_keyword">final</strong> <a name="Item" href="../../../../com/jcabi/dynamo/Item.html#Item">Item</a> item) {
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.origin.add(item);
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>     }
 <a class="jxr_linenumber" name="L145" href="#L145">145</a> 
@@ -190,6 +190,6 @@
 <a class="jxr_linenumber" name="L182" href="#L182">182</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>
