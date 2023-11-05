@@ -56,9 +56,9 @@ final class H2DataTest {
     @Test
     void storesAndReadsAttributes() throws Exception {
         final String table = "users";
-        final String key = "id";
+        final String key = "user";
         final int number = 43;
-        final String attr = "desc";
+        final String attr = "user.name";
         final String value = "some\n\t\u20ac text";
         final MkData data = new H2Data().with(
             table, new String[] {key},
@@ -81,7 +81,7 @@ final class H2DataTest {
     void storesToFile(@TempDir final Path temp) throws Exception {
         final File file = temp.resolve("foo.txt").toFile();
         final String table = "tbl";
-        final String key = "key1";
+        final String key = "user";
         final MkData data = new H2Data(file).with(
             table, new String[] {key}
         );
@@ -93,7 +93,7 @@ final class H2DataTest {
     @Test
     void createsManyTables() throws Exception {
         new H2Data()
-            .with("firsttable", new String[] {"firstid"})
+            .with("firsttable", new String[] {"firstid"}, "test")
             .with("secondtable", new String[]{"secondid"});
     }
 

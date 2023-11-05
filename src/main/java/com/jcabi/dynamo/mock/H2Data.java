@@ -56,6 +56,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.sql.DataSource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -118,7 +119,7 @@ public final class H2Data implements MkData {
      * Where clause.
      */
     private static final Function<String, String> WHERE =
-        key -> String.format("%s = ?", key);
+        key -> String.format("`%s` = ?", key);
 
     /**
      * Select WHERE.
@@ -146,7 +147,7 @@ public final class H2Data implements MkData {
             );
         }
         return String.format(
-            "%s %s ?", cnd.getKey(), opr
+            "`%s` %s ?", cnd.getKey(), opr
         );
     };
 
@@ -154,13 +155,13 @@ public final class H2Data implements MkData {
      * Create primary key.
      */
     private static final Function<String, String> CREATE_KEY =
-        key -> String.format("%s VARCHAR PRIMARY KEY", key);
+        key -> String.format("`%s` VARCHAR PRIMARY KEY", key);
 
     /**
      * Create attr.
      */
     private static final Function<String, String> CREATE_ATTR =
-        key -> String.format("%s CLOB", key);
+        key -> String.format("`%s` CLOB", key);
 
     /**
      * WHERE clauses are joined with this.
@@ -250,7 +251,10 @@ public final class H2Data implements MkData {
                 String.format(
                     "INSERT INTO %s (%s) VALUES (%s)",
                     H2Data.encodeTableName(table),
-                    Joiner.on(',').join(attrs.keySet()),
+                    attrs.keySet()
+                        .stream()
+                        .map((a) -> String.format("`%s`", a))
+                        .collect(Collectors.joining(", ")),
                     Joiner.on(',').join(Collections.nCopies(attrs.size(), "?"))
                 )
             );
