@@ -253,7 +253,7 @@ public final class H2Data implements MkData {
                     H2Data.encodeTableName(table),
                     attrs.keySet()
                         .stream()
-                        .map((a) -> String.format("`%s`", a))
+                        .map(a -> String.format("`%s`", a))
                         .collect(Collectors.joining(", ")),
                     Joiner.on(',').join(Collections.nCopies(attrs.size(), "?"))
                 )
