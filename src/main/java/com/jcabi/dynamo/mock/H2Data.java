@@ -169,9 +169,9 @@ public final class H2Data implements MkData {
     private static final String AND = " AND ";
 
     /**
-     * JDBC URL.
+     * JDBC data source.
      */
-    private final transient String jdbc;
+    private final transient DataSource jdbc;
 
     /**
      * Public ctor.
@@ -186,16 +186,18 @@ public final class H2Data implements MkData {
      * @param file Where to keep the database
      */
     public H2Data(final File file) {
-        this.jdbc = String.format(
-            "jdbc:h2:file:%s",
-            file.getAbsolutePath()
+        this.jdbc = H2Data.connection(
+            String.format(
+                "jdbc:h2:file:%s",
+                file.getAbsolutePath()
+            )
         );
     }
 
     @Override
     public Iterable<String> keys(final String table) throws IOException {
         try {
-            return new JdbcSession(this.connection())
+            return new JdbcSession(this.jdbc)
                 // @checkstyle LineLength (1 line)
                 .sql("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = ?")
                 .set(H2Data.encodeTableName(table))
@@ -222,7 +224,7 @@ public final class H2Data implements MkData {
                     Iterables.transform(conds.entrySet(), H2Data.SELECT_WHERE)
                 );
             }
-            JdbcSession session = new JdbcSession(this.connection())
+            JdbcSession session = new JdbcSession(this.jdbc)
                 .sql(sql.toString());
             for (final Condition cond : conds.values()) {
                 if (cond.getAttributeValueList().size() != 1) {
@@ -243,7 +245,7 @@ public final class H2Data implements MkData {
     public void put(final String table, final Attributes attrs)
         throws IOException {
         try {
-            JdbcSession session = new JdbcSession(this.connection());
+            JdbcSession session = new JdbcSession(this.jdbc);
             for (final AttributeValue value : attrs.values()) {
                 session = session.set(H2Data.value(value));
             }
@@ -269,7 +271,7 @@ public final class H2Data implements MkData {
         final AttributeUpdates attrs)
         throws IOException {
         try {
-            JdbcSession session = new JdbcSession(this.connection());
+            JdbcSession session = new JdbcSession(this.jdbc);
             for (final AttributeValueUpdate value : attrs.values()) {
                 session = session.set(H2Data.value(value.getValue()));
             }
@@ -298,7 +300,7 @@ public final class H2Data implements MkData {
     public void delete(final String table, final Attributes keys)
         throws IOException {
         try {
-            JdbcSession session = new JdbcSession(this.connection());
+            JdbcSession session = new JdbcSession(this.jdbc);
             for (final AttributeValue value : keys.values()) {
                 session = session.set(H2Data.value(value));
             }
@@ -347,7 +349,7 @@ public final class H2Data implements MkData {
         }
         sql.append(')');
         try {
-            new JdbcSession(this.connection()).sql(sql.toString()).execute();
+            new JdbcSession(this.jdbc).sql(sql.toString()).execute();
         } catch (final SQLException ex) {
             throw new IOException(ex);
         }
@@ -356,11 +358,12 @@ public final class H2Data implements MkData {
 
     /**
      * Make data source.
+     * @param jdbc URL
      * @return Data source for JDBC
      */
-    private DataSource connection() {
+    private static DataSource connection(final String jdbc) {
         final JdbcDataSource src = new JdbcDataSource();
-        src.setURL(this.jdbc);
+        src.setURL(jdbc);
         return src;
     }
 
