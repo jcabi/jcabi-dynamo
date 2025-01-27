@@ -1,19 +1,19 @@
 {
-    "TableName": "talks",
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "room",
-            "AttributeType": "N"
-        }
-    ],
-    "KeySchema": [
-        {
-            "AttributeName": "room",
-            "KeyType": "HASH"
-        }
-    ],
-    "ProvisionedThroughput": {
-        "ReadCapacityUnits": "1",
-        "WriteCapacityUnits": "1"
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "room",
+      "AttributeType": "N"
     }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "room",
+      "KeyType": "HASH"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": "1",
+    "WriteCapacityUnits": "1"
+  },
+  "TableName": "talks"
 }
