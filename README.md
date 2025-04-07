@@ -1,12 +1,12 @@
 <img alt="logo" src="https://www.jcabi.com/logo-square.svg" width="64px" height="64px" />
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![DevOps By Rultor.com](http://www.rultor.com/b/jcabi/jcabi-dynamo)](http://www.rultor.com/p/jcabi/jcabi-dynamo)
+[![DevOps By Rultor.com](https://www.rultor.com/b/jcabi/jcabi-dynamo)](https://www.rultor.com/p/jcabi/jcabi-dynamo)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![mvn](https://github.com/jcabi/jcabi-dynamo/actions/workflows/mvn.yml/badge.svg)](https://github.com/jcabi/jcabi-dynamo/actions/workflows/mvn.yml)
-[![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-dynamo)](http://www.0pdd.com/p?name=jcabi/jcabi-dynamo)
-[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-dynamo.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-dynamo)
+[![PDD status](https://www.0pdd.com/svg?name=jcabi/jcabi-dynamo)](https://www.0pdd.com/p?name=jcabi/jcabi-dynamo)
+[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-dynamo.svg)](https://www.javadoc.io/doc/com.jcabi/jcabi-dynamo)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-dynamo)
 [![codecov](https://codecov.io/gh/jcabi/jcabi-dynamo/branch/master/graph/badge.svg)](https://codecov.io/gh/jcabi/jcabi-dynamo)
 
