@@ -34,24 +34,28 @@ final class AwsFrameITCase {
             tbl.put(attrs.with(mock.range(), idx));
         }
         MatcherAssert.assertThat(
+            "should equal to 10",
             tbl.frame()
                 .through(new ScanValve().withLimit(1))
                 .size(),
             Matchers.equalTo(Tv.TEN)
         );
         MatcherAssert.assertThat(
+            "should equal to false",
             tbl.frame()
                 .through(new ScanValve().withLimit(1))
                 .isEmpty(),
             Matchers.equalTo(false)
         );
         MatcherAssert.assertThat(
+            "should equal to 10",
             tbl.frame()
                 .through(new ScanValve().withLimit(Tv.HUNDRED))
                 .size(),
             Matchers.equalTo(Tv.TEN)
         );
         MatcherAssert.assertThat(
+            "should equal to 10",
             tbl.frame()
                 .through(new QueryValve().withLimit(1))
                 .where(mock.hash(), hash)
@@ -59,6 +63,7 @@ final class AwsFrameITCase {
             Matchers.equalTo(Tv.TEN)
         );
         MatcherAssert.assertThat(
+            "should equal to 10",
             tbl.frame()
                 .through(new QueryValve().withLimit(Tv.HUNDRED))
                 .where(mock.hash(), hash)
