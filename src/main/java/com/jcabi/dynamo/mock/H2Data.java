@@ -174,8 +174,9 @@ public final class H2Data implements MkData {
         try {
             return new JdbcSession(this.jdbc)
                 // @checkstyle LineLength (1 line)
-                .sql("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = ?")
-                .set(H2Data.encodeTableName(table))
+                .sql(
+                "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = ?"
+                ).set(H2Data.encodeTableName(table))
                 .select(
                     new ListOutcome<>(
                         rset -> rset.getString(1).toLowerCase(Locale.ENGLISH)
