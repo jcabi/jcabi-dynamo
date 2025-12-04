@@ -51,12 +51,14 @@ final class DynamodbLocalITCase {
             );
         }
         MatcherAssert.assertThat(
+            "should has size 1",
             tbl.frame()
                 .where("room", Conditions.equalTo(0))
                 .through(new QueryValve().withLimit(1)),
             Matchers.hasSize(1)
         );
         MatcherAssert.assertThat(
+            "should equals to 0",
             tbl.frame()
                 .where("room", Conditions.equalTo(0))
                 .through(new ScanValve())
