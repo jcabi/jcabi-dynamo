@@ -26,9 +26,10 @@ final class AttributesTest {
         final AttributeValue value = new AttributeValue("some text value");
         final Map<String, AttributeValue> attrs = new Attributes()
             .with(attr, value);
-        MatcherAssert.assertThat(attrs.keySet(), Matchers.hasSize(1));
-        MatcherAssert.assertThat(attrs, Matchers.hasEntry(attr, value));
+        MatcherAssert.assertThat("should has size 1", attrs.keySet(), Matchers.hasSize(1));
+        MatcherAssert.assertThat("should has some entry", attrs, Matchers.hasEntry(attr, value));
         MatcherAssert.assertThat(
+            "should has some text value",
             new Attributes(attrs),
             Matchers.hasEntry(attr, value)
         );
@@ -39,6 +40,7 @@ final class AttributesTest {
         final String attr = "attr-13";
         final String value = "some value \u20ac";
         MatcherAssert.assertThat(
+            "should has 'some value \u20ac'",
             new Attributes().with(attr, value).asKeys(),
             Matchers.hasEntry(
                 attr,
@@ -50,6 +52,7 @@ final class AttributesTest {
     @Test
     void filtersOutUnnecessaryKeys() {
         MatcherAssert.assertThat(
+            "should be empty match",
             new Attributes()
                 .with("first", "test-1")
                 .with("second", "test-2")
@@ -65,6 +68,7 @@ final class AttributesTest {
         final String second = "AlPha";
         final String third = "Beta";
         MatcherAssert.assertThat(
+            "should has size 2",
             new Attributes().with(
                 new ArrayMap<String, AttributeValue>()
                     .with("Gamma", new AttributeValue(""))
@@ -73,6 +77,7 @@ final class AttributesTest {
             Matchers.hasSize(2)
         );
         MatcherAssert.assertThat(
+            "should has keys 'Alpha', 'AlPha'",
             new Attributes()
                 .with(first, "val-1")
                 .with(second, "val-2"),
@@ -82,6 +87,7 @@ final class AttributesTest {
             )
         );
         MatcherAssert.assertThat(
+            "should has key 'Beta'",
             new Attributes()
                 .with(third, "some text to use")
                 .only(Collections.singletonList(third)),

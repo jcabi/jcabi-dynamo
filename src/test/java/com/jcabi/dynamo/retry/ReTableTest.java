@@ -33,7 +33,8 @@ final class ReTableTest {
             MatcherAssert.assertThat(
                 "should be equal to 'Exception!'",
                 ex.getMessage(),
-                Matchers.equalTo(msg));
+                Matchers.equalTo(msg)
+            );
         }
         Mockito.verify(table, Mockito.times(Tv.THREE)).delete(attrs);
     }
