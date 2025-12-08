@@ -39,8 +39,9 @@ final class MkRegionTest {
                 .with(nattr, "150")
         );
         final Item item = table.frame().iterator().next();
-        MatcherAssert.assertThat(item.has(attr), Matchers.is(true));
+        MatcherAssert.assertThat("should be true", item.has(attr), Matchers.is(true));
         MatcherAssert.assertThat(
+            "should contains '\n\t\u20ac save'",
             item.get(attr).getS(),
             Matchers.containsString("\n\t\u20ac save")
         );
@@ -51,10 +52,12 @@ final class MkRegionTest {
             )
         );
         MatcherAssert.assertThat(
+            "should contains 'another value'",
             item.get(attr).getS(),
             Matchers.containsString("another value")
         );
         MatcherAssert.assertThat(
+            "should ends with '50'",
             item.get(nattr).getN(),
             Matchers.endsWith("50")
         );
@@ -81,7 +84,7 @@ final class MkRegionTest {
                 new AttributeValue().withN("2")
             ).withAction(AttributeAction.PUT)
         );
-        MatcherAssert.assertThat(item.get(attr).getN(), Matchers.equalTo("2"));
+        MatcherAssert.assertThat("should equal to '2'", item.get(attr).getN(), Matchers.equalTo("2"));
     }
 
 }
