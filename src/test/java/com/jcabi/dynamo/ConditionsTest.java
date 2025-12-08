@@ -23,9 +23,10 @@ final class ConditionsTest {
         final Condition condition = new Condition();
         final Map<String, Condition> conds = new Conditions()
             .with(name, condition);
-        MatcherAssert.assertThat(conds.keySet(), Matchers.hasSize(1));
-        MatcherAssert.assertThat(conds, Matchers.hasEntry(name, condition));
+        MatcherAssert.assertThat("should has size 1", conds.keySet(), Matchers.hasSize(1));
+        MatcherAssert.assertThat("should has entry", conds, Matchers.hasEntry(name, condition));
         MatcherAssert.assertThat(
+            "should has entry",
             new Conditions(conds),
             Matchers.hasEntry(name, condition)
         );

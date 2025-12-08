@@ -63,7 +63,7 @@ final class H2DataTest {
         );
         data.put(table, new Attributes().with(key, "x2"));
         MatcherAssert.assertThat("should exists the file", file.exists(), Matchers.is(true));
-        MatcherAssert.assertThat("should the file length greater than 10", file.length(), Matchers.greaterThan(0L));
+        MatcherAssert.assertThat("should has length > 0", file.length(), Matchers.greaterThan(0L));
     }
 
     @Test

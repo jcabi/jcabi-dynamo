@@ -84,7 +84,7 @@ final class MkRegionTest {
                 new AttributeValue().withN("2")
             ).withAction(AttributeAction.PUT)
         );
-        MatcherAssert.assertThat("should equal to '2'", item.get(attr).getN(), Matchers.equalTo("2"));
+        MatcherAssert.assertThat("should equal 2", item.get(attr).getN(), Matchers.equalTo("2"));
     }
 
 }
