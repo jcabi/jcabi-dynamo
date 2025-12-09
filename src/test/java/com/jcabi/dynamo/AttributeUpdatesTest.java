@@ -24,8 +24,9 @@ final class AttributeUpdatesTest {
     @Test
     void tellsIfEmptyOrNot() {
         final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat(attr.isEmpty(), Matchers.is(Boolean.TRUE));
+        MatcherAssert.assertThat("should be true", attr.isEmpty(), Matchers.is(Boolean.TRUE));
         MatcherAssert.assertThat(
+            "should be false",
             attr.with("testkey", Mockito.mock(AttributeValueUpdate.class))
                 .isEmpty(),
             Matchers.is(Boolean.FALSE)
@@ -34,9 +35,10 @@ final class AttributeUpdatesTest {
 
     @Test
     void addsAttributeValueUpdate() {
-        MatcherAssert.assertThat(0, Matchers.is(0));
+        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
+            "should be 1",
             attr.with("testkey1", Mockito.mock(AttributeValueUpdate.class))
                 .size(),
             Matchers.is(1)
@@ -45,9 +47,10 @@ final class AttributeUpdatesTest {
 
     @Test
     void addsAttributeValue() {
-        MatcherAssert.assertThat(0, Matchers.is(0));
+        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
+            "should be 1",
             attr.with("testkey2", Mockito.mock(AttributeValue.class)).size(),
             Matchers.is(1)
         );
