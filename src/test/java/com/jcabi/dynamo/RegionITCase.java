@@ -95,9 +95,7 @@ final class RegionITCase {
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
         final int idx = Tv.TEN;
-        // typos: disable
         final String hash = "7abc5cba";
-        // typos: enable
         final String attr = "some-attribute";
         tbl.put(
             new Attributes()
