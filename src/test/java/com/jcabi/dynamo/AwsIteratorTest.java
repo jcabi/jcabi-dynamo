@@ -65,23 +65,25 @@ final class AwsIteratorTest {
             new ArrayList<>(0), valve
         );
         for (int idx = 0; idx < Tv.TEN; ++idx) {
-            MatcherAssert.assertThat(iterator.hasNext(), Matchers.is(true));
+            MatcherAssert.assertThat("should has next", iterator.hasNext(), Matchers.is(true));
         }
         Mockito.verify(valve).fetch(
             Mockito.eq(credentials), Mockito.anyString(),
             Mockito.any(Map.class), Mockito.any(Collection.class)
         );
         MatcherAssert.assertThat(
+            "should equal to 'value-1'",
             iterator.next().get(attr).getS(),
             Matchers.equalTo(value)
         );
-        MatcherAssert.assertThat(iterator.hasNext(), Matchers.is(true));
+        MatcherAssert.assertThat("should has next", iterator.hasNext(), Matchers.is(true));
         Mockito.verify(first).next();
         MatcherAssert.assertThat(
+            "should equal to 'value-1'",
             iterator.next().get(attr).getS(),
             Matchers.equalTo(value)
         );
-        MatcherAssert.assertThat(iterator.hasNext(), Matchers.is(false));
+        MatcherAssert.assertThat("should not has next", iterator.hasNext(), Matchers.is(false));
         Mockito.verify(second).next();
     }
 
