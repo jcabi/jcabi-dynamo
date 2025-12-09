@@ -171,7 +171,7 @@ final class AttributeUpdatesTest {
     @Test
     void addsMap() {
         final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat(attr.size(), Matchers.is(0));
+        MatcherAssert.assertThat("should be 0", attr.size(), Matchers.is(0));
         MatcherAssert.assertThat(
             "should be 1",
             attr.with("testkey8", new AttributeUpdates().with("key", "value"))
