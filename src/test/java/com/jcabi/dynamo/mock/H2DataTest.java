@@ -177,7 +177,7 @@ final class H2DataTest {
         data.put(table, new Attributes().with(key, "101").with(value, 0));
         data.put(table, new Attributes().with(key, "102").with(value, 1));
         MatcherAssert.assertThat(
-            "shpuld iterable with size 2",
+            "should iterable with size 2",
             data.iterate(table, new Conditions()),
             Matchers.iterableWithSize(2)
         );

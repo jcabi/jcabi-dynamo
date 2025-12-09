@@ -90,7 +90,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("key3", firstvalue).with("key4", "value4");
         MatcherAssert.assertThat(
-            "shpuld be 2",
+            "should be 2",
             attr.values().size(),
             Matchers.is(2)
         );
@@ -142,7 +142,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("attrkey", value).with("otherkey", "othervalue");
         MatcherAssert.assertThat(
-            "shpuld contains value 'attrv'",
+            "should contains value 'attrv'",
             attr.containsValue(
                 new AttributeValueUpdate(
                     new AttributeValue(value), AttributeAction.PUT
