@@ -29,7 +29,7 @@ public interface Dosage {
 
     /**
      * Has next dosage?
-     * @return TRUE if next storage is avaiable
+     * @return TRUE if next storage is available
      */
     boolean hasNext();
 

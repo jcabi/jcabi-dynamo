@@ -46,6 +46,7 @@ final class RegionITCase {
             );
         }
         MatcherAssert.assertThat(
+            "should has size 5",
             tbl.frame()
                 .where(mock.hash(), Conditions.equalTo(hash))
                 .through(new QueryValve().withLimit(1)),
@@ -58,11 +59,12 @@ final class RegionITCase {
                     .withLimit(Tv.TEN)
                     .withAttributeToGet(attr)
             );
-        MatcherAssert.assertThat(frame, Matchers.hasSize(Tv.FIVE));
+        MatcherAssert.assertThat("should has size 5", frame, Matchers.hasSize(Tv.FIVE));
         final Iterator<Item> items = frame.iterator();
         final Item item = items.next();
         final int range = Integer.parseInt(item.get(mock.range()).getN());
         MatcherAssert.assertThat(
+            "should equal to random alphanumeric value",
             item.get(attr).getS(),
             Matchers.equalTo(value)
         );
@@ -74,6 +76,7 @@ final class RegionITCase {
             )
         );
         MatcherAssert.assertThat(
+            "should not equal to random alphanumeric value",
             tbl.frame()
                 .where(mock.hash(), hash)
                 .where(mock.range(), Conditions.equalTo(range))
@@ -92,7 +95,7 @@ final class RegionITCase {
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
         final int idx = Tv.TEN;
-        final String hash = "7afe5efa";
+        final String hash = "7abc5cba";
         final String attr = "some-attribute";
         tbl.put(
             new Attributes()
@@ -101,6 +104,7 @@ final class RegionITCase {
                 .with(attr, "test-value")
         );
         MatcherAssert.assertThat(
+            "should not retrieve something",
             tbl.frame()
                 .where(mock.hash(), hash)
                 .where(mock.range(), Conditions.equalTo(idx))

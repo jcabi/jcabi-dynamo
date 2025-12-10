@@ -46,8 +46,8 @@ final class ScanValveTest {
             credentials, "table",
             new Conditions(), new ArrayList<>(0)
         );
-        MatcherAssert.assertThat(dosage.hasNext(), Matchers.is(false));
-        MatcherAssert.assertThat(dosage.items(), Matchers.hasItem(item));
+        MatcherAssert.assertThat("should not has next", dosage.hasNext(), Matchers.is(false));
+        MatcherAssert.assertThat("should has items", dosage.items(), Matchers.hasItem(item));
     }
 
 }

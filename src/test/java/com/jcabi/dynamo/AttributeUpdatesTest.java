@@ -24,8 +24,9 @@ final class AttributeUpdatesTest {
     @Test
     void tellsIfEmptyOrNot() {
         final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat(attr.isEmpty(), Matchers.is(Boolean.TRUE));
+        MatcherAssert.assertThat("should be true", attr.isEmpty(), Matchers.is(Boolean.TRUE));
         MatcherAssert.assertThat(
+            "should be false",
             attr.with("testkey", Mockito.mock(AttributeValueUpdate.class))
                 .isEmpty(),
             Matchers.is(Boolean.FALSE)
@@ -34,9 +35,10 @@ final class AttributeUpdatesTest {
 
     @Test
     void addsAttributeValueUpdate() {
-        MatcherAssert.assertThat(0, Matchers.is(0));
+        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
+            "should be 1",
             attr.with("testkey1", Mockito.mock(AttributeValueUpdate.class))
                 .size(),
             Matchers.is(1)
@@ -45,9 +47,10 @@ final class AttributeUpdatesTest {
 
     @Test
     void addsAttributeValue() {
-        MatcherAssert.assertThat(0, Matchers.is(0));
+        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
+            "should be 1",
             attr.with("testkey2", Mockito.mock(AttributeValue.class)).size(),
             Matchers.is(1)
         );
@@ -55,9 +58,10 @@ final class AttributeUpdatesTest {
 
     @Test
     void addsObject() {
-        MatcherAssert.assertThat(0, Matchers.is(0));
+        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
+            "should be 1",
             attr.with("testkey3", "value here").size(),
             Matchers.is(1)
         );
@@ -69,10 +73,12 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with(firstkey, "valuediff").with("key2", "value2");
         MatcherAssert.assertThat(
+            "should be 2",
             attr.keySet().size(),
             Matchers.is(2)
         );
         MatcherAssert.assertThat(
+            "should be equal to 'key1'",
             attr.keySet().iterator().next(),
             Matchers.equalTo(firstkey)
         );
@@ -84,10 +90,12 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("key3", firstvalue).with("key4", "value4");
         MatcherAssert.assertThat(
+            "should be 2",
             attr.values().size(),
             Matchers.is(2)
         );
         MatcherAssert.assertThat(
+            "should be equal to 'value3'",
             attr.values().iterator().next().getValue().getS(),
             Matchers.equalTo(firstvalue)
         );
@@ -98,6 +106,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("key5", "value5").with("key6", "value7");
         MatcherAssert.assertThat(
+            "should be 2",
             attr.entrySet().size(),
             Matchers.is(2)
         );
@@ -109,6 +118,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with(key, "value10");
         MatcherAssert.assertThat(
+            "should be not null",
             attr.get(key),
             Matchers.notNullValue()
         );
@@ -120,6 +130,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with(key, "value11").with("otherkey1", "othervalue1");
         MatcherAssert.assertThat(
+            "should contains key 'key11'",
             attr.containsKey(key),
             Matchers.is(Boolean.TRUE)
         );
@@ -131,6 +142,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("attrkey", value).with("otherkey", "othervalue");
         MatcherAssert.assertThat(
+            "should contains value 'attrv'",
             attr.containsValue(
                 new AttributeValueUpdate(
                     new AttributeValue(value), AttributeAction.PUT
@@ -145,6 +157,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("onekey", "onevalue").with("secondkey", "secondvalue");
         MatcherAssert.assertThat(
+            "should equal to updated attribute",
             attr.toString(),
             Matchers.equalTo(
                 StringUtils.join(
@@ -158,8 +171,9 @@ final class AttributeUpdatesTest {
     @Test
     void addsMap() {
         final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat(attr.size(), Matchers.is(0));
+        MatcherAssert.assertThat("should be 0", attr.size(), Matchers.is(0));
         MatcherAssert.assertThat(
+            "should be 1",
             attr.with("testkey8", new AttributeUpdates().with("key", "value"))
                 .size(),
             Matchers.is(1)

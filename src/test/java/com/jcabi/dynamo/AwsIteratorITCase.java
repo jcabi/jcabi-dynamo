@@ -35,6 +35,7 @@ final class AwsIteratorITCase {
                 .with(mock.range(), 1L)
         );
         MatcherAssert.assertThat(
+            "should has size 1",
             tbl.frame(),
             Matchers.hasSize(1)
         );
@@ -60,6 +61,7 @@ final class AwsIteratorITCase {
             }
         }
         MatcherAssert.assertThat(
+            "should has size 0",
             tbl.frame(),
             Matchers.hasSize(0)
         );

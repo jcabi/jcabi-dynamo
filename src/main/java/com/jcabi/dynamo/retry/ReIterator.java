@@ -16,8 +16,8 @@ import lombok.ToString;
 /**
  * Frame that retries on failure.
  *
- * @since 0.9
  * @param <T> Type of items
+ * @since 0.9
  */
 @ToString
 @EqualsAndHashCode(of = "origin")

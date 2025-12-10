@@ -30,7 +30,11 @@ final class ReTableTest {
         try {
             retry.delete(attrs);
         } catch (final IOException ex) {
-            MatcherAssert.assertThat(ex.getMessage(), Matchers.equalTo(msg));
+            MatcherAssert.assertThat(
+                "should be equal to 'Exception!'",
+                ex.getMessage(),
+                Matchers.equalTo(msg)
+            );
         }
         Mockito.verify(table, Mockito.times(Tv.THREE)).delete(attrs);
     }

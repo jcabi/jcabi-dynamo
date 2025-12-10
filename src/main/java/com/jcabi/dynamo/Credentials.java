@@ -116,8 +116,8 @@ public interface Credentials {
     /**
      * Assumed AWS IAM role.
      *
-     * @since 0.1
      * @see <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/role-usecase-ec2app.html">Granting Applications that Run on Amazon EC2 Instances Access to AWS Resources</a>
+     * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)

@@ -37,11 +37,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(of = "conds")
 @SuppressWarnings
     (
-        {
-            "PMD.TooManyMethods",
-            "PMD.ProhibitPublicStaticMethods",
-            "PMD.AvoidInstantiatingObjectsInLoops"
-        }
+    {
+        "PMD.TooManyMethods",
+        "PMD.ProhibitPublicStaticMethods",
+        "PMD.AvoidInstantiatingObjectsInLoops"
+    }
     )
 public final class Conditions implements Map<String, Condition> {
 

@@ -28,10 +28,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(of = "attrs")
 @SuppressWarnings
     (
-        {
-            "PMD.TooManyMethods",
-            "PMD.AvoidInstantiatingObjectsInLoops"
-        }
+    {
+        "PMD.TooManyMethods",
+        "PMD.AvoidInstantiatingObjectsInLoops"
+    }
     )
 public final class AttributeUpdates
     implements Map<String, AttributeValueUpdate> {

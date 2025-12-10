@@ -27,9 +27,9 @@ import java.util.Map;
  * you need something specific, just get an Amazon DynamoDB client from
  * a {@link Region} and use Amazon SDK methods directly.
  *
- * @since 0.1
  * @see Item
  * @see <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html">Query and Scan</a>
+ * @since 0.1
  */
 @Immutable
 public interface Frame extends Collection<Item> {

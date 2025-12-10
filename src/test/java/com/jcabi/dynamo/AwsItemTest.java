@@ -22,6 +22,7 @@ final class AwsItemTest {
         final AwsTable table = new AwsTable(creds, region, "table-name");
         final AwsFrame frame = new AwsFrame(creds, table, table.name());
         MatcherAssert.assertThat(
+            "should equal to itself",
             new AwsItem(
                 creds, frame, table.name(),
                 new Attributes(), new Array<>()

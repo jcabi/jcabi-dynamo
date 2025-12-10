@@ -27,7 +27,7 @@ final class RegionMock {
     /**
      * Dynamo table range key.
      */
-    private final transient String arange;
+    private final transient String arrange;
 
     /**
      * DynamoDB Local port.
@@ -55,7 +55,7 @@ final class RegionMock {
      */
     RegionMock(final String hash, final String range, final int port) {
         this.ahash = hash;
-        this.arange = range;
+        this.arrange = range;
         this.prt = port;
     }
 
@@ -80,7 +80,7 @@ final class RegionMock {
      * @return Hash attribute name
      */
     public String range() {
-        return this.arange;
+        return this.arrange;
     }
 
     /**
@@ -107,7 +107,7 @@ final class RegionMock {
                         .withAttributeName(this.ahash)
                         .withAttributeType(ScalarAttributeType.S),
                     new AttributeDefinition()
-                        .withAttributeName(this.arange)
+                        .withAttributeName(this.arrange)
                         .withAttributeType(ScalarAttributeType.N)
                 )
                 .withKeySchema(
@@ -115,7 +115,7 @@ final class RegionMock {
                         .withAttributeName(this.ahash)
                         .withKeyType(KeyType.HASH),
                     new KeySchemaElement()
-                        .withAttributeName(this.arange)
+                        .withAttributeName(this.arrange)
                         .withKeyType(KeyType.RANGE)
                 )
         );

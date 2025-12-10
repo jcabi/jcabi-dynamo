@@ -41,6 +41,7 @@ final class H2DataTest {
         );
         data.put(table, new Attributes().with(key, number).with(attr, value));
         MatcherAssert.assertThat(
+            "should stores and reads attributes",
             data.iterate(
                 table, new Conditions().with(key, Conditions.equalTo(number))
             ).iterator().next(),
@@ -61,8 +62,8 @@ final class H2DataTest {
             table, new String[] {key}
         );
         data.put(table, new Attributes().with(key, "x2"));
-        MatcherAssert.assertThat(file.exists(), Matchers.is(true));
-        MatcherAssert.assertThat(file.length(), Matchers.greaterThan(0L));
+        MatcherAssert.assertThat("should exists the file", file.exists(), Matchers.is(true));
+        MatcherAssert.assertThat("should has length > 0", file.length(), Matchers.greaterThan(0L));
     }
 
     @Test
@@ -116,10 +117,12 @@ final class H2DataTest {
             data.iterate(table, new Conditions())
         );
         MatcherAssert.assertThat(
+            "should equal to 1",
             rest.size(),
             Matchers.equalTo(1)
         );
         MatcherAssert.assertThat(
+            "should equal to 'Helen'",
             rest.get(0).get(field).getS(),
             Matchers.equalTo(woman)
         );
@@ -151,6 +154,7 @@ final class H2DataTest {
             table, new Conditions().with(key, Conditions.equalTo(number))
         );
         MatcherAssert.assertThat(
+            "should updates the attributes",
             result.iterator().next(),
             Matchers.hasEntry(
                 Matchers.equalTo(attr),
@@ -158,6 +162,7 @@ final class H2DataTest {
             )
         );
         MatcherAssert.assertThat(
+            "should iterable with size 1",
             result,
             Matchers.iterableWithSize(1)
         );
@@ -172,10 +177,12 @@ final class H2DataTest {
         data.put(table, new Attributes().with(key, "101").with(value, 0));
         data.put(table, new Attributes().with(key, "102").with(value, 1));
         MatcherAssert.assertThat(
+            "should iterable with size 2",
             data.iterate(table, new Conditions()),
             Matchers.iterableWithSize(2)
         );
         MatcherAssert.assertThat(
+            "should equal to '1'",
             data.iterate(
                 table,
                 new Conditions().with(
