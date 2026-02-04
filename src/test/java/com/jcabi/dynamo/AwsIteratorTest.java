@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.jcabi.aspects.Tv;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,7 +63,7 @@ final class AwsIteratorTest {
             table, new Conditions(),
             new ArrayList<>(0), valve
         );
-        for (int idx = 0; idx < Tv.TEN; ++idx) {
+        for (int idx = 0; idx < 10; ++idx) {
             MatcherAssert.assertThat("should has next", iterator.hasNext(), Matchers.is(true));
         }
         Mockito.verify(valve).fetch(
@@ -73,14 +72,14 @@ final class AwsIteratorTest {
         );
         MatcherAssert.assertThat(
             "should equal to 'value-1'",
-            iterator.next().get(attr).getS(),
+            iterator.next().get(attr).s(),
             Matchers.equalTo(value)
         );
         MatcherAssert.assertThat("should has next", iterator.hasNext(), Matchers.is(true));
         Mockito.verify(first).next();
         MatcherAssert.assertThat(
             "should equal to 'value-1'",
-            iterator.next().get(attr).getS(),
+            iterator.next().get(attr).s(),
             Matchers.equalTo(value)
         );
         MatcherAssert.assertThat("should not has next", iterator.hasNext(), Matchers.is(false));

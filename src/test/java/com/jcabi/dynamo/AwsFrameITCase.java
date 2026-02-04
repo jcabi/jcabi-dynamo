@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.jcabi.aspects.Tv;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -25,12 +24,12 @@ final class AwsFrameITCase {
 
     @Test
     void calculatesItems() throws Exception {
-        final String name = RandomStringUtils.randomAlphabetic(Tv.EIGHT);
+        final String name = RandomStringUtils.randomAlphabetic(8);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
         final String hash = "hello";
         final Attributes attrs = new Attributes().with(mock.hash(), hash);
-        for (int idx = 0; idx < Tv.TEN; ++idx) {
+        for (int idx = 0; idx < 10; ++idx) {
             tbl.put(attrs.with(mock.range(), idx));
         }
         MatcherAssert.assertThat(
@@ -38,7 +37,7 @@ final class AwsFrameITCase {
             tbl.frame()
                 .through(new ScanValve().withLimit(1))
                 .size(),
-            Matchers.equalTo(Tv.TEN)
+            Matchers.equalTo(10)
         );
         MatcherAssert.assertThat(
             "should equal to false",
@@ -50,9 +49,9 @@ final class AwsFrameITCase {
         MatcherAssert.assertThat(
             "should equal to 10",
             tbl.frame()
-                .through(new ScanValve().withLimit(Tv.HUNDRED))
+                .through(new ScanValve().withLimit(100))
                 .size(),
-            Matchers.equalTo(Tv.TEN)
+            Matchers.equalTo(10)
         );
         MatcherAssert.assertThat(
             "should equal to 10",
@@ -60,15 +59,15 @@ final class AwsFrameITCase {
                 .through(new QueryValve().withLimit(1))
                 .where(mock.hash(), hash)
                 .size(),
-            Matchers.equalTo(Tv.TEN)
+            Matchers.equalTo(10)
         );
         MatcherAssert.assertThat(
             "should equal to 10",
             tbl.frame()
-                .through(new QueryValve().withLimit(Tv.HUNDRED))
+                .through(new QueryValve().withLimit(100))
                 .where(mock.hash(), hash)
                 .size(),
-            Matchers.equalTo(Tv.TEN)
+            Matchers.equalTo(10)
         );
     }
 

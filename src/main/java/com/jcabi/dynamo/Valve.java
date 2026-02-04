@@ -4,11 +4,11 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Provider of dosages of DynamoDB items.

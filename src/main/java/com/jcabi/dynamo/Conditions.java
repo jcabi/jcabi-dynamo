@@ -4,9 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
@@ -18,6 +15,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import lombok.EqualsAndHashCode;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ComparisonOperator;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * DynamoDB query conditions.
@@ -72,7 +72,7 @@ public final class Conditions implements Map<String, Condition> {
      */
     public static Condition equalTo(final Long value) {
         return Conditions.equalTo(
-            new AttributeValue().withN(value.toString())
+            AttributeValue.builder().n(value.toString()).build()
         );
     }
 
@@ -83,7 +83,7 @@ public final class Conditions implements Map<String, Condition> {
      */
     public static Condition equalTo(final Integer value) {
         return Conditions.equalTo(
-            new AttributeValue().withN(value.toString())
+            AttributeValue.builder().n(value.toString()).build()
         );
     }
 
@@ -94,7 +94,7 @@ public final class Conditions implements Map<String, Condition> {
      */
     public static Condition equalTo(final Object value) {
         return Conditions.equalTo(
-            new AttributeValue().withS(value.toString())
+            AttributeValue.builder().s(value.toString()).build()
         );
     }
 
@@ -104,9 +104,10 @@ public final class Conditions implements Map<String, Condition> {
      * @return The condition just created
      */
     public static Condition equalTo(final AttributeValue value) {
-        return new Condition()
-            .withComparisonOperator(ComparisonOperator.EQ)
-            .withAttributeValueList(value);
+        return Condition.builder()
+            .comparisonOperator(ComparisonOperator.EQ)
+            .attributeValueList(value)
+            .build();
     }
 
     /**
@@ -172,8 +173,8 @@ public final class Conditions implements Map<String, Condition> {
                 String.format(
                     "%s %s %s",
                     cond.getKey(),
-                    cond.getValue().getComparisonOperator(),
-                    cond.getValue().getAttributeValueList()
+                    cond.getValue().comparisonOperatorAsString(),
+                    cond.getValue().attributeValueList()
                 )
             );
         }

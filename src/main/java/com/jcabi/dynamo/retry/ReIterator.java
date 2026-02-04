@@ -6,7 +6,6 @@ package com.jcabi.dynamo.retry;
 
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -38,7 +37,7 @@ public final class ReIterator<T> implements Iterator<T> {
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public boolean hasNext() {
         return this.origin.hasNext();
     }
@@ -46,7 +45,7 @@ public final class ReIterator<T> implements Iterator<T> {
     @Override
     @RetryOnFailure
         (
-            verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS,
+            verbose = false, delay = 5, unit = TimeUnit.SECONDS,
             ignore = NoSuchElementException.class
         )
     public T next() {
@@ -54,7 +53,7 @@ public final class ReIterator<T> implements Iterator<T> {
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public void remove() {
         this.origin.remove();
     }

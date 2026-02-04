@@ -4,11 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
-import com.amazonaws.services.dynamodbv2.model.QueryRequest;
-import com.amazonaws.services.dynamodbv2.model.QueryResult;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +11,11 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ConsumedCapacity;
+import software.amazon.awssdk.services.dynamodb.model.QueryRequest;
+import software.amazon.awssdk.services.dynamodb.model.QueryResponse;
 
 /**
  * Test case for {@link QueryValve}.
@@ -31,16 +31,17 @@ final class QueryValveTest {
         final ImmutableMap<String, AttributeValue> item =
             new ImmutableMap.Builder<String, AttributeValue>()
                 .build();
-        final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
-            new QueryResult()
-                .withItems(
+            QueryResponse.builder()
+                .items(
                     Collections.singletonList(item)
-            )
-                .withConsumedCapacity(
-                    new ConsumedCapacity().withCapacityUnits(1.0d)
                 )
+                .consumedCapacity(
+                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
+                )
+                .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         final Dosage dosage = valve.fetch(
             credentials, "table",

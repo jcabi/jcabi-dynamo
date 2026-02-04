@@ -4,8 +4,8 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
-import com.jcabi.aspects.Tv;
+import software.amazon.awssdk.services.dynamodb.model.ProvisionedThroughput;
+import software.amazon.awssdk.services.dynamodb.model.UpdateTableRequest;
 
 /**
  * Throughput of a table.
@@ -33,8 +33,12 @@ public final class Throughput {
             .region()
             .aws()
             .updateTable(
-                this.table.name(),
-                Throughput.suitableThroughput()
+                UpdateTableRequest.builder()
+                    .tableName(this.table.name())
+                    .provisionedThroughput(
+                        Throughput.suitableThroughput()
+                    )
+                    .build()
             );
     }
 
@@ -47,9 +51,9 @@ public final class Throughput {
      *  credentials of this.table.region().aws().
      */
     private static ProvisionedThroughput suitableThroughput() {
-        return new ProvisionedThroughput(
-            (long) Tv.HUNDRED,
-            (long) Tv.HUNDRED
-        );
+        return ProvisionedThroughput.builder()
+            .readCapacityUnits((long) 100)
+            .writeCapacityUnits((long) 100)
+            .build();
     }
 }

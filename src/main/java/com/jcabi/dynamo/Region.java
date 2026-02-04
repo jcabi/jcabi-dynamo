@@ -4,11 +4,11 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Amazon DynamoDB region.
@@ -24,7 +24,7 @@ import lombok.ToString;
  * <pre> Region region = new ReRegion(new Region.Simple(credentials));</pre>
  *
  * <p>After all operations with the region are finished, it can be optionally
- * shutdown invoking {@link AmazonDynamoDB#shutdown()}. Callers are not expected
+ * shutdown invoking {@link DynamoDbClient#close()}. Callers are not expected
  * to call it, but can if they want to explicitly release any open resources and
  * forcibly terminate all pending asynchronous service calls. Once a client has
  * been shutdown, it should not be used to make any more requests.
@@ -38,7 +38,7 @@ public interface Region {
      * Get DynamoDB client.
      * @return The client
      */
-    AmazonDynamoDB aws();
+    DynamoDbClient aws();
 
     /**
      * Get one table.
@@ -71,7 +71,7 @@ public interface Region {
         }
 
         @Override
-        public AmazonDynamoDB aws() {
+        public DynamoDbClient aws() {
             return this.credentials.aws();
         }
 
@@ -125,7 +125,7 @@ public interface Region {
         }
 
         @Override
-        public AmazonDynamoDB aws() {
+        public DynamoDbClient aws() {
             return this.origin.aws();
         }
 

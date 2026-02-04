@@ -4,9 +4,6 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeAction;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
@@ -14,6 +11,9 @@ import com.jcabi.dynamo.Table;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import software.amazon.awssdk.services.dynamodb.model.AttributeAction;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Test case for {@link MkRegion}.
@@ -42,23 +42,23 @@ final class MkRegionTest {
         MatcherAssert.assertThat("should be true", item.has(attr), Matchers.is(true));
         MatcherAssert.assertThat(
             "should contains '\n\t\u20ac save'",
-            item.get(attr).getS(),
+            item.get(attr).s(),
             Matchers.containsString("\n\t\u20ac save")
         );
         item.put(
             attr,
-            new AttributeValueUpdate().withValue(
-                new AttributeValue("this is another value")
-            )
+            AttributeValueUpdate.builder().value(
+                AttributeValue.builder().s("this is another value").build()
+            ).build()
         );
         MatcherAssert.assertThat(
             "should contains 'another value'",
-            item.get(attr).getS(),
+            item.get(attr).s(),
             Matchers.containsString("another value")
         );
         MatcherAssert.assertThat(
             "should ends with '50'",
-            item.get(nattr).getN(),
+            item.get(nattr).n(),
             Matchers.endsWith("50")
         );
     }
@@ -80,11 +80,11 @@ final class MkRegionTest {
         final Item item = tbl.frame().iterator().next();
         item.put(
             attr,
-            new AttributeValueUpdate().withValue(
-                new AttributeValue().withN("2")
-            ).withAction(AttributeAction.PUT)
+            AttributeValueUpdate.builder().value(
+                AttributeValue.builder().n("2").build()
+            ).action(AttributeAction.PUT).build()
         );
-        MatcherAssert.assertThat("should equal 2", item.get(attr).getN(), Matchers.equalTo("2"));
+        MatcherAssert.assertThat("should equal 2", item.get(attr).n(), Matchers.equalTo("2"));
     }
 
 }

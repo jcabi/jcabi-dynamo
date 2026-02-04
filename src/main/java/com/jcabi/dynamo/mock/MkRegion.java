@@ -4,13 +4,13 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Mock version of {@link Region}.
@@ -37,7 +37,7 @@ public final class MkRegion implements Region {
     }
 
     @Override
-    public AmazonDynamoDB aws() {
+    public DynamoDbClient aws() {
         throw new UnsupportedOperationException(
             "direct access to AWS DynamoDB client is not supported by MkRegion"
         );

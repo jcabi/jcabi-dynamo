@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.dynamo.Attributes;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Mock version of {@link Table}.

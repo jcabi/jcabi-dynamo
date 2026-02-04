@@ -4,16 +4,15 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import com.amazonaws.services.dynamodbv2.model.DeleteTableRequest;
-import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
-import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
-import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
-import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Region;
 import com.jcabi.log.Logger;
 import java.util.concurrent.TimeUnit;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.CreateTableRequest;
+import software.amazon.awssdk.services.dynamodb.model.DeleteTableRequest;
+import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
+import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
+import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
 
 /**
  * A Table that can be made and dropped.
@@ -127,28 +126,29 @@ public final class MadeTable {
      * @throws InterruptedException If something fails
      */
     public void create() throws InterruptedException {
-        final AmazonDynamoDB aws = this.region.aws();
-        final String name = this.request.getTableName();
+        final DynamoDbClient aws = this.region.aws();
+        final String name = this.request.tableName();
         aws.createTable(this.request);
         Logger.info(this, "DynamoDB table '%s' creation requested...", name);
-        final DescribeTableRequest req = new DescribeTableRequest()
-            .withTableName(name);
+        final DescribeTableRequest req = DescribeTableRequest.builder()
+            .tableName(name)
+            .build();
         while (true) {
-            final DescribeTableResult result = aws.describeTable(req);
-            if ("ACTIVE".equals(result.getTable().getTableStatus())) {
+            final DescribeTableResponse result = aws.describeTable(req);
+            if ("ACTIVE".equals(result.table().tableStatusAsString())) {
                 Logger.info(
                     this,
                     "DynamoDB table '%s' is %s",
-                    name, result.getTable().getTableStatus()
+                    name, result.table().tableStatusAsString()
                 );
                 break;
             }
             Logger.info(
                 this,
                 "waiting for DynamoDB table '%s': %s",
-                name, result.getTable().getTableStatus()
+                name, result.table().tableStatusAsString()
             );
-            TimeUnit.SECONDS.sleep(Tv.TEN);
+            TimeUnit.SECONDS.sleep(10);
         }
     }
 
@@ -157,13 +157,15 @@ public final class MadeTable {
      * @throws InterruptedException If something fails
      */
     public void drop() throws InterruptedException {
-        final AmazonDynamoDB aws = this.region.aws();
-        final String name = this.request.getTableName();
-        aws.deleteTable(new DeleteTableRequest().withTableName(name));
+        final DynamoDbClient aws = this.region.aws();
+        final String name = this.request.tableName();
+        aws.deleteTable(
+            DeleteTableRequest.builder().tableName(name).build()
+        );
         Logger.info(this, "DynamoDB table '%s' deletion requested", name);
         while (this.exists()) {
             Logger.info(this, "DynamoDB table '%s' still exists", name);
-            TimeUnit.SECONDS.sleep(Tv.TEN);
+            TimeUnit.SECONDS.sleep(10);
         }
         Logger.info(this, "DynamoDB table '%s' deleted", name);
     }
@@ -174,11 +176,13 @@ public final class MadeTable {
      * @since 0.9
      */
     public boolean exists() {
-        final AmazonDynamoDB aws = this.region.aws();
-        final String name = this.request.getTableName();
+        final DynamoDbClient aws = this.region.aws();
+        final String name = this.request.tableName();
         boolean exists;
         try {
-            aws.describeTable(name);
+            aws.describeTable(
+                DescribeTableRequest.builder().tableName(name).build()
+            );
             exists = true;
             Logger.info(this, "DynamoDB table '%s' already exists", name);
         } catch (final ResourceNotFoundException ex) {

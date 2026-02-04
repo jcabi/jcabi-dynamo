@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.jcabi.aspects.Immutable;
@@ -22,6 +21,7 @@ import java.util.Iterator;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Mock version of {@link Frame}.

@@ -4,14 +4,14 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
-import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
-import com.amazonaws.services.dynamodbv2.model.KeyType;
-import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
-import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import com.jcabi.dynamo.mock.MadeTable;
 import com.jcabi.dynamo.retry.ReRegion;
+import software.amazon.awssdk.services.dynamodb.model.AttributeDefinition;
+import software.amazon.awssdk.services.dynamodb.model.CreateTableRequest;
+import software.amazon.awssdk.services.dynamodb.model.KeySchemaElement;
+import software.amazon.awssdk.services.dynamodb.model.KeyType;
+import software.amazon.awssdk.services.dynamodb.model.ProvisionedThroughput;
+import software.amazon.awssdk.services.dynamodb.model.ScalarAttributeType;
 
 /**
  * Mock of a {@link Region}.
@@ -95,29 +95,35 @@ final class RegionMock {
         );
         final MadeTable mocker = new MadeTable(
             region,
-            new CreateTableRequest()
-                .withTableName(table)
-                .withProvisionedThroughput(
-                    new ProvisionedThroughput()
-                        .withReadCapacityUnits(1L)
-                        .withWriteCapacityUnits(1L)
+            CreateTableRequest.builder()
+                .tableName(table)
+                .provisionedThroughput(
+                    ProvisionedThroughput.builder()
+                        .readCapacityUnits(1L)
+                        .writeCapacityUnits(1L)
+                        .build()
                 )
-                .withAttributeDefinitions(
-                    new AttributeDefinition()
-                        .withAttributeName(this.ahash)
-                        .withAttributeType(ScalarAttributeType.S),
-                    new AttributeDefinition()
-                        .withAttributeName(this.arrange)
-                        .withAttributeType(ScalarAttributeType.N)
+                .attributeDefinitions(
+                    AttributeDefinition.builder()
+                        .attributeName(this.ahash)
+                        .attributeType(ScalarAttributeType.S)
+                        .build(),
+                    AttributeDefinition.builder()
+                        .attributeName(this.arrange)
+                        .attributeType(ScalarAttributeType.N)
+                        .build()
                 )
-                .withKeySchema(
-                    new KeySchemaElement()
-                        .withAttributeName(this.ahash)
-                        .withKeyType(KeyType.HASH),
-                    new KeySchemaElement()
-                        .withAttributeName(this.arrange)
-                        .withKeyType(KeyType.RANGE)
+                .keySchema(
+                    KeySchemaElement.builder()
+                        .attributeName(this.ahash)
+                        .keyType(KeyType.HASH)
+                        .build(),
+                    KeySchemaElement.builder()
+                        .attributeName(this.arrange)
+                        .keyType(KeyType.RANGE)
+                        .build()
                 )
+                .build()
         );
         mocker.create();
         mocker.createIfAbsent();

@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.util.Iterator;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Frame through AWS SDK.

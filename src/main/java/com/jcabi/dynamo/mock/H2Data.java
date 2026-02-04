@@ -4,10 +4,6 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
-import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
@@ -37,6 +33,10 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.codec.binary.Base32;
 import org.h2.jdbcx.JdbcDataSource;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
+import software.amazon.awssdk.services.dynamodb.model.ComparisonOperator;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Mock data in H2 database.
@@ -77,9 +77,11 @@ public final class H2Data implements MkData {
                 Attributes attrs = new Attributes();
                 for (int idx = 0; idx < meta.getColumnCount(); ++idx) {
                     final String text = rset.getString(idx + 1);
-                    AttributeValue value = new AttributeValue().withS(text);
+                    final AttributeValue value;
                     if (text.matches("[0-9]+")) {
-                        value = value.withN(text);
+                        value = AttributeValue.builder().s(text).n(text).build();
+                    } else {
+                        value = AttributeValue.builder().s(text).build();
                     }
                     attrs = attrs.with(
                         meta.getColumnName(idx + 1).toLowerCase(Locale.ENGLISH),
@@ -103,13 +105,13 @@ public final class H2Data implements MkData {
      */
     private static final Function<Map.Entry<String, Condition>, String> SELECT_WHERE = cnd -> {
         final String opr;
-        if (cnd.getValue().getComparisonOperator()
+        if (cnd.getValue().comparisonOperatorAsString()
             .equals(ComparisonOperator.GT.toString())) {
             opr = ">";
-        } else if (cnd.getValue().getComparisonOperator()
+        } else if (cnd.getValue().comparisonOperatorAsString()
             .equals(ComparisonOperator.LT.toString())) {
             opr = "<";
-        } else if (cnd.getValue().getComparisonOperator()
+        } else if (cnd.getValue().comparisonOperatorAsString()
             .equals(ComparisonOperator.EQ.toString())) {
             opr = "=";
         } else {
@@ -117,7 +119,7 @@ public final class H2Data implements MkData {
                 String.format(
                     // @checkstyle LineLength (1 line)
                     "At the moment only EQ/GT/LT operators are supported: %s",
-                    cnd.getValue().getComparisonOperator()
+                    cnd.getValue().comparisonOperatorAsString()
                 )
             );
         }
@@ -203,12 +205,12 @@ public final class H2Data implements MkData {
             JdbcSession session = new JdbcSession(this.jdbc)
                 .sql(sql.toString());
             for (final Condition cond : conds.values()) {
-                if (cond.getAttributeValueList().size() != 1) {
+                if (cond.attributeValueList().size() != 1) {
                     throw new UnsupportedOperationException(
                         "At the moment only one value of condition is supported"
                     );
                 }
-                final AttributeValue val = cond.getAttributeValueList().get(0);
+                final AttributeValue val = cond.attributeValueList().get(0);
                 session = session.set(H2Data.value(val));
             }
             return session.select(H2Data.OUTCOME);
@@ -249,7 +251,7 @@ public final class H2Data implements MkData {
         try {
             JdbcSession session = new JdbcSession(this.jdbc);
             for (final AttributeValueUpdate value : attrs.values()) {
-                session = session.set(H2Data.value(value.getValue()));
+                session = session.set(H2Data.value(value.value()));
             }
             for (final AttributeValue value : keys.values()) {
                 session = session.set(H2Data.value(value));
@@ -349,9 +351,9 @@ public final class H2Data implements MkData {
      * @return Text format
      */
     private static String value(final AttributeValue attr) {
-        String val = attr.getS();
+        String val = attr.s();
         if (val == null) {
-            val = attr.getN();
+            val = attr.n();
         }
         if (val == null) {
             throw new IllegalArgumentException(

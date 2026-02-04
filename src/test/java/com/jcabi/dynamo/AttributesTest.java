@@ -4,14 +4,14 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.jcabi.immutable.ArrayMap;
 import java.util.Collections;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
 
 /**
  * Test case for {@link Attributes}.
@@ -23,7 +23,7 @@ final class AttributesTest {
     @Test
     void workAsMapOfAttributes() {
         final String attr = "id";
-        final AttributeValue value = new AttributeValue("some text value");
+        final AttributeValue value = AttributeValue.builder().s("some text value").build();
         final Map<String, AttributeValue> attrs = new Attributes()
             .with(attr, value);
         MatcherAssert.assertThat("should has size 1", attrs.keySet(), Matchers.hasSize(1));
@@ -44,7 +44,9 @@ final class AttributesTest {
             new Attributes().with(attr, value).asKeys(),
             Matchers.hasEntry(
                 attr,
-                new ExpectedAttributeValue(new AttributeValue(value))
+                ExpectedAttributeValue.builder().value(
+                    AttributeValue.builder().s(value).build()
+                ).build()
             )
         );
     }
@@ -71,8 +73,8 @@ final class AttributesTest {
             "should has size 2",
             new Attributes().with(
                 new ArrayMap<String, AttributeValue>()
-                    .with("Gamma", new AttributeValue(""))
-                    .with("gAMma", new AttributeValue(""))
+                    .with("Gamma", AttributeValue.builder().s("").build())
+                    .with("gAMma", AttributeValue.builder().s("").build())
             ).keySet(),
             Matchers.hasSize(2)
         );

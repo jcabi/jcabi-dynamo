@@ -4,18 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
-import com.amazonaws.services.dynamodbv2.model.DeleteItemResult;
-import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
-import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
-import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
-import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
-import com.amazonaws.services.dynamodbv2.model.PutItemResult;
-import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
-import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
@@ -27,6 +15,18 @@ import java.util.LinkedList;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.core.exception.SdkClientException;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.DeleteItemResponse;
+import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
+import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
+import software.amazon.awssdk.services.dynamodb.model.KeySchemaElement;
+import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.PutItemResponse;
+import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
+import software.amazon.awssdk.services.dynamodb.model.ReturnValue;
 
 /**
  * Single table in Dynamo, through AWS SDK.
@@ -71,20 +71,21 @@ final class AwsTable implements Table {
     @Override
     public Item put(final Map<String, AttributeValue> attributes)
         throws IOException {
-        final AmazonDynamoDB aws = this.credentials.aws();
+        final DynamoDbClient aws = this.credentials.aws();
         try {
-            final PutItemRequest request = new PutItemRequest();
-            request.setTableName(this.self);
-            request.setItem(attributes);
-            request.setReturnValues(ReturnValue.NONE);
-            request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
-            final PutItemResult result = aws.putItem(request);
+            final PutItemRequest request = PutItemRequest.builder()
+                .tableName(this.self)
+                .item(attributes)
+                .returnValues(ReturnValue.NONE)
+                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .build();
+            final PutItemResponse result = aws.putItem(request);
             final long start = System.currentTimeMillis();
             Logger.info(
                 this, "#put('%[text]s'): created item in '%s', %s, in %[ms]s",
                 attributes, this.self,
                 new PrintableConsumedCapacity(
-                    result.getConsumedCapacity()
+                    result.consumedCapacity()
                 ).print(),
                 System.currentTimeMillis() - start
             );
@@ -95,7 +96,7 @@ final class AwsTable implements Table {
                 new Attributes(attributes).only(this.keys()),
                 new Array<>(this.keys())
             );
-        } catch (final AmazonClientException ex) {
+        } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
                     "Failed to put into \"%s\" with %s",
@@ -104,7 +105,7 @@ final class AwsTable implements Table {
                 ex
             );
         } finally {
-            aws.shutdown();
+            aws.close();
         }
     }
 
@@ -130,23 +131,23 @@ final class AwsTable implements Table {
      */
     @Cacheable(forever = true)
     public Collection<String> keys() throws IOException {
-        final AmazonDynamoDB aws = this.credentials.aws();
+        final DynamoDbClient aws = this.credentials.aws();
         try {
             final long start = System.currentTimeMillis();
-            final DescribeTableResult result = aws.describeTable(
-                new DescribeTableRequest().withTableName(this.self)
+            final DescribeTableResponse result = aws.describeTable(
+                DescribeTableRequest.builder().tableName(this.self).build()
             );
             final Collection<String> keys = new LinkedList<>();
             for (final KeySchemaElement key
-                : result.getTable().getKeySchema()) {
-                keys.add(key.getAttributeName());
+                : result.table().keySchema()) {
+                keys.add(key.attributeName());
             }
             Logger.info(
                 this, "#keys(): table %s described, in %[ms]s",
                 this.self, System.currentTimeMillis() - start
             );
             return keys;
-        } catch (final AmazonClientException ex) {
+        } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
                     "Failed to describe \"%s\"",
@@ -155,32 +156,33 @@ final class AwsTable implements Table {
                 ex
             );
         } finally {
-            aws.shutdown();
+            aws.close();
         }
     }
 
     @Override
     public void delete(final Map<String, AttributeValue> attributes)
         throws IOException {
-        final AmazonDynamoDB aws = this.credentials.aws();
+        final DynamoDbClient aws = this.credentials.aws();
         try {
-            final DeleteItemRequest request = new DeleteItemRequest();
-            request.setTableName(this.self);
-            request.setKey(attributes);
-            request.setReturnValues(ReturnValue.NONE);
-            request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
-            final DeleteItemResult result = aws.deleteItem(request);
+            final DeleteItemRequest request = DeleteItemRequest.builder()
+                .tableName(this.self)
+                .key(attributes)
+                .returnValues(ReturnValue.NONE)
+                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .build();
+            final DeleteItemResponse result = aws.deleteItem(request);
             final long start = System.currentTimeMillis();
             Logger.info(
                 this,
                 "#delete('%[text]s'): deleted item in '%s', %s, in %[ms]s",
                 attributes, this.self,
                 new PrintableConsumedCapacity(
-                    result.getConsumedCapacity()
+                    result.consumedCapacity()
                 ).print(),
                 System.currentTimeMillis() - start
             );
-        } catch (final AmazonClientException ex) {
+        } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
                     "Failed to delete at \"%s\" by keys %s",
@@ -189,7 +191,7 @@ final class AwsTable implements Table {
                 ex
             );
         } finally {
-            aws.shutdown();
+            aws.close();
         }
     }
 }

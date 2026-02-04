@@ -4,18 +4,9 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.Condition;
-import com.amazonaws.services.dynamodbv2.model.QueryRequest;
-import com.amazonaws.services.dynamodbv2.model.QueryResult;
-import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
-import com.amazonaws.services.dynamodbv2.model.Select;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +18,14 @@ import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.core.exception.SdkClientException;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
+import software.amazon.awssdk.services.dynamodb.model.QueryRequest;
+import software.amazon.awssdk.services.dynamodb.model.QueryResponse;
+import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
+import software.amazon.awssdk.services.dynamodb.model.Select;
 
 /**
  * Query-based valve.
@@ -76,7 +75,7 @@ public final class QueryValve implements Valve {
      */
     public QueryValve() {
         this(
-            Tv.TWENTY, true, new ArrayList<>(0),
+            20, true, new ArrayList<>(0),
             "", Select.SPECIFIC_ATTRIBUTES.toString(), true
         );
     }
@@ -107,42 +106,43 @@ public final class QueryValve implements Valve {
     public Dosage fetch(final Credentials credentials, final String table,
         final Map<String, Condition> conditions, final Collection<String> keys)
         throws IOException {
-        final AmazonDynamoDB aws = credentials.aws();
+        final DynamoDbClient aws = credentials.aws();
         try {
             final Collection<String> attrs = new HashSet<>(
                 Arrays.asList(this.attributes)
             );
             attrs.addAll(keys);
-            QueryRequest request = new QueryRequest()
-                .withTableName(table)
-                .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-                .withKeyConditions(conditions)
-                .withConsistentRead(this.consistent)
-                .withScanIndexForward(this.forward)
-                .withSelect(this.select)
-                .withLimit(this.limit);
+            QueryRequest.Builder bld = QueryRequest.builder()
+                .tableName(table)
+                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .keyConditions(conditions)
+                .consistentRead(this.consistent)
+                .scanIndexForward(this.forward)
+                .select(this.select)
+                .limit(this.limit);
             if (this.select.equals(Select.SPECIFIC_ATTRIBUTES.toString())) {
-                request = request.withAttributesToGet(attrs);
+                bld = bld.attributesToGet(attrs);
             }
             if (!this.index.isEmpty()) {
-                request = request.withIndexName(this.index);
+                bld = bld.indexName(this.index);
             }
+            final QueryRequest request = bld.build();
             final long start = System.currentTimeMillis();
-            final QueryResult result = aws.query(request);
+            final QueryResponse result = aws.query(request);
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
                 "#items(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s, in %[ms]s",
-                result.getCount(), table,
-                result.getLastEvaluatedKey(),
+                result.count(), table,
+                result.lastEvaluatedKey(),
                 conditions,
                 new PrintableConsumedCapacity(
-                    result.getConsumedCapacity()
+                    result.consumedCapacity()
                 ).print(),
                 System.currentTimeMillis() - start
             );
             return new QueryValve.NextDosage(credentials, request, result);
-        } catch (final AmazonClientException ex) {
+        } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
                     "Failed to fetch from \"%s\" by %s and %s",
@@ -151,40 +151,41 @@ public final class QueryValve implements Valve {
                 ex
             );
         } finally {
-            aws.shutdown();
+            aws.close();
         }
     }
 
     @Override
     public int count(final Credentials credentials, final String table,
         final Map<String, Condition> conditions) throws IOException {
-        final AmazonDynamoDB aws = credentials.aws();
+        final DynamoDbClient aws = credentials.aws();
         try {
-            QueryRequest request = new QueryRequest()
-                .withTableName(table)
-                .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-                .withKeyConditions(conditions)
-                .withConsistentRead(this.consistent)
-                .withSelect(Select.COUNT)
-                .withLimit(Integer.MAX_VALUE);
+            QueryRequest.Builder bld = QueryRequest.builder()
+                .tableName(table)
+                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .keyConditions(conditions)
+                .consistentRead(this.consistent)
+                .select(Select.COUNT)
+                .limit(Integer.MAX_VALUE);
             if (!this.index.isEmpty()) {
-                request = request.withIndexName(this.index);
+                bld = bld.indexName(this.index);
             }
+            final QueryRequest request = bld.build();
             final long start = System.currentTimeMillis();
-            final QueryResult rslt = aws.query(request);
-            final int count = rslt.getCount();
+            final QueryResponse rslt = aws.query(request);
+            final int count = rslt.count();
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
                 "#total(): COUNT=%d in '%s' using %s, %s, in %[ms]s",
-                count, request.getTableName(), request.getQueryFilter(),
+                count, request.tableName(), request.queryFilter(),
                 new PrintableConsumedCapacity(
-                    rslt.getConsumedCapacity()
+                    rslt.consumedCapacity()
                 ).print(),
                 System.currentTimeMillis() - start
             );
             return count;
-        } catch (final AmazonClientException ex) {
+        } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
                     "Failed to count from \"%s\" by %s",
@@ -193,7 +194,7 @@ public final class QueryValve implements Valve {
                 ex
             );
         } finally {
-            aws.shutdown();
+            aws.close();
         }
     }
 
@@ -201,7 +202,7 @@ public final class QueryValve implements Valve {
      * With consistent read.
      * @param cnst Consistent read
      * @return New query valve
-     * @see QueryRequest#withConsistentRead(Boolean)
+     * @see QueryRequest#consistentRead()
      * @since 0.12
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
@@ -217,7 +218,7 @@ public final class QueryValve implements Valve {
      * With index name.
      * @param idx Index name
      * @return New query valve
-     * @see QueryRequest#withIndexName(String)
+     * @see QueryRequest#indexName()
      * @since 0.10.2
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
@@ -233,7 +234,7 @@ public final class QueryValve implements Valve {
      * With attributes to select.
      * @param slct Select to use
      * @return New query valve
-     * @see QueryRequest#withSelect(Select)
+     * @see QueryRequest#select()
      * @since 0.10.2
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
@@ -249,7 +250,7 @@ public final class QueryValve implements Valve {
      * With given limit.
      * @param lmt Limit to use
      * @return New query valve
-     * @see QueryRequest#withLimit(Integer)
+     * @see QueryRequest#limit()
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withLimit(final int lmt) {
@@ -264,7 +265,7 @@ public final class QueryValve implements Valve {
      * With scan index forward flag.
      * @param fwd Forward flag
      * @return New query valve
-     * @see QueryRequest#withScanIndexForward(Boolean)
+     * @see QueryRequest#scanIndexForward()
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withScanIndexForward(final boolean fwd) {
@@ -279,7 +280,7 @@ public final class QueryValve implements Valve {
      * With this extra attribute to pre-fetch.
      * @param name Name of attribute to pre-load
      * @return New query valve
-     * @see QueryRequest#withAttributesToGet(Collection)
+     * @see QueryRequest#attributesToGet()
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withAttributeToGet(final String name) {
@@ -297,7 +298,7 @@ public final class QueryValve implements Valve {
      * With these extra attributes to pre-fetch.
      * @param names Name of attributes to pre-load
      * @return New query valve
-     * @see QueryRequest#withAttributesToGet(Collection)
+     * @see QueryRequest#attributesToGet()
      * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withAttributesToGet(final String... names) {
@@ -332,18 +333,18 @@ public final class QueryValve implements Valve {
         private final transient QueryRequest request;
 
         /**
-         * Query request.
+         * Query response.
          */
-        private final transient QueryResult result;
+        private final transient QueryResponse result;
 
         /**
          * Public ctor.
          * @param creds Credentials
          * @param rqst Query request
-         * @param rslt Query result
+         * @param rslt Query response
          */
         NextDosage(final Credentials creds, final QueryRequest rqst,
-            final QueryResult rslt) {
+            final QueryResponse rslt) {
             this.credentials = creds;
             this.request = rqst;
             this.result = rslt;
@@ -351,12 +352,12 @@ public final class QueryValve implements Valve {
 
         @Override
         public List<Map<String, AttributeValue>> items() {
-            return this.result.getItems();
+            return this.result.items();
         }
 
         @Override
         public boolean hasNext() {
-            return this.result.getLastEvaluatedKey() != null;
+            return !this.result.lastEvaluatedKey().isEmpty();
         }
 
         @Override
@@ -366,29 +367,30 @@ public final class QueryValve implements Valve {
                     "Nothing left in the iterator"
                 );
             }
-            final AmazonDynamoDB aws = this.credentials.aws();
+            final DynamoDbClient aws = this.credentials.aws();
             try {
-                final QueryRequest rqst =
-                    this.request.withExclusiveStartKey(
-                        this.result.getLastEvaluatedKey()
-                    );
+                final QueryRequest rqst = this.request.toBuilder()
+                    .exclusiveStartKey(
+                        this.result.lastEvaluatedKey()
+                    )
+                    .build();
                 final long start = System.currentTimeMillis();
-                final QueryResult rslt = aws.query(rqst);
+                final QueryResponse rslt = aws.query(rqst);
                 Logger.info(
                     this,
                     // @checkstyle LineLength (1 line)
                     "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s, in %[ms]s",
-                    rslt.getCount(), rqst.getTableName(),
-                    rslt.getLastEvaluatedKey(),
-                    rqst.getKeyConditions(),
+                    rslt.count(), rqst.tableName(),
+                    rslt.lastEvaluatedKey(),
+                    rqst.keyConditions(),
                     new PrintableConsumedCapacity(
-                        rslt.getConsumedCapacity()
+                        rslt.consumedCapacity()
                     ).print(),
                     System.currentTimeMillis() - start
                 );
                 return new QueryValve.NextDosage(this.credentials, rqst, rslt);
             } finally {
-                aws.shutdown();
+                aws.close();
             }
         }
     }

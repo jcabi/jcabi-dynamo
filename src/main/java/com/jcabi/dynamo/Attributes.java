@@ -4,8 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.jcabi.aspects.Immutable;
@@ -19,6 +17,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import lombok.EqualsAndHashCode;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
 
 /**
  * DynamoDB item attributes.
@@ -100,7 +100,9 @@ public final class Attributes implements Map<String, AttributeValue> {
             : this.attrs.entrySet()) {
             map.put(
                 attr.getKey(),
-                new ExpectedAttributeValue(attr.getValue())
+                ExpectedAttributeValue.builder()
+                    .value(attr.getValue())
+                    .build()
             );
         }
         return map.build();
@@ -114,7 +116,10 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @
      */
     public Attributes with(final String name, final Long value) {
-        return this.with(name, new AttributeValue().withN(value.toString()));
+        return this.with(
+            name,
+            AttributeValue.builder().n(value.toString()).build()
+        );
     }
 
     /**
@@ -125,7 +130,10 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @
      */
     public Attributes with(final String name, final Integer value) {
-        return this.with(name, new AttributeValue().withN(value.toString()));
+        return this.with(
+            name,
+            AttributeValue.builder().n(value.toString()).build()
+        );
     }
 
     /**
@@ -136,7 +144,10 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @
      */
     public Attributes with(final String name, final Object value) {
-        return this.with(name, new AttributeValue(value.toString()));
+        return this.with(
+            name,
+            AttributeValue.builder().s(value.toString()).build()
+        );
     }
 
     /**

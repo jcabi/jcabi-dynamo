@@ -4,9 +4,6 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.jcabi.dynamo.AttributeUpdates;
@@ -21,6 +18,9 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ComparisonOperator;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Test case for {@link H2Data}.
@@ -47,7 +47,7 @@ final class H2DataTest {
             ).iterator().next(),
             Matchers.hasEntry(
                 Matchers.equalTo(attr),
-                Matchers.equalTo(new AttributeValue(value))
+                Matchers.equalTo(AttributeValue.builder().s(value).build())
             )
         );
     }
@@ -123,7 +123,7 @@ final class H2DataTest {
         );
         MatcherAssert.assertThat(
             "should equal to 'Helen'",
-            rest.get(0).get(field).getS(),
+            rest.get(0).get(field).s(),
             Matchers.equalTo(woman)
         );
     }
@@ -158,7 +158,7 @@ final class H2DataTest {
             result.iterator().next(),
             Matchers.hasEntry(
                 Matchers.equalTo(attr),
-                Matchers.equalTo(new AttributeValue(updated))
+                Matchers.equalTo(AttributeValue.builder().s(updated).build())
             )
         );
         MatcherAssert.assertThat(
@@ -187,13 +187,14 @@ final class H2DataTest {
                 table,
                 new Conditions().with(
                     value,
-                    new Condition()
-                        .withAttributeValueList(
-                            new AttributeValue().withN("0")
+                    Condition.builder()
+                        .attributeValueList(
+                            AttributeValue.builder().n("0").build()
                         )
-                        .withComparisonOperator(ComparisonOperator.GT)
+                        .comparisonOperator(ComparisonOperator.GT)
+                        .build()
                 )
-            ).iterator().next().get(value).getN(),
+            ).iterator().next().get(value).n(),
             Matchers.equalTo("1")
         );
     }

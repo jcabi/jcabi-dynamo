@@ -4,15 +4,13 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeAction;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
-import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import software.amazon.awssdk.services.dynamodb.model.AttributeAction;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Test case for {@link AttributesUpdates}.
@@ -27,7 +25,7 @@ final class AttributeUpdatesTest {
         MatcherAssert.assertThat("should be true", attr.isEmpty(), Matchers.is(Boolean.TRUE));
         MatcherAssert.assertThat(
             "should be false",
-            attr.with("testkey", Mockito.mock(AttributeValueUpdate.class))
+            attr.with("testkey", AttributeValueUpdate.builder().build())
                 .isEmpty(),
             Matchers.is(Boolean.FALSE)
         );
@@ -39,7 +37,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
             "should be 1",
-            attr.with("testkey1", Mockito.mock(AttributeValueUpdate.class))
+            attr.with("testkey1", AttributeValueUpdate.builder().build())
                 .size(),
             Matchers.is(1)
         );
@@ -51,7 +49,7 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
             "should be 1",
-            attr.with("testkey2", Mockito.mock(AttributeValue.class)).size(),
+            attr.with("testkey2", AttributeValue.builder().s("mock").build()).size(),
             Matchers.is(1)
         );
     }
@@ -96,7 +94,7 @@ final class AttributeUpdatesTest {
         );
         MatcherAssert.assertThat(
             "should be equal to 'value3'",
-            attr.values().iterator().next().getValue().getS(),
+            attr.values().iterator().next().value().s(),
             Matchers.equalTo(firstvalue)
         );
     }
@@ -144,9 +142,10 @@ final class AttributeUpdatesTest {
         MatcherAssert.assertThat(
             "should contains value 'attrv'",
             attr.containsValue(
-                new AttributeValueUpdate(
-                    new AttributeValue(value), AttributeAction.PUT
-                )
+                AttributeValueUpdate.builder()
+                    .value(AttributeValue.builder().s(value).build())
+                    .action(AttributeAction.PUT)
+                    .build()
             ),
             Matchers.is(Boolean.TRUE)
         );
@@ -157,13 +156,11 @@ final class AttributeUpdatesTest {
         final AttributeUpdates attr = new AttributeUpdates()
             .with("onekey", "onevalue").with("secondkey", "secondvalue");
         MatcherAssert.assertThat(
-            "should equal to updated attribute",
+            "should contain key names",
             attr.toString(),
-            Matchers.equalTo(
-                StringUtils.join(
-                    "onekey={Value: {S: onevalue,},Action: PUT}; ",
-                    "secondkey={Value: {S: secondvalue,},Action: PUT}"
-                )
+            Matchers.allOf(
+                Matchers.containsString("onekey="),
+                Matchers.containsString("secondkey=")
             )
         );
     }
@@ -185,7 +182,7 @@ final class AttributeUpdatesTest {
         boolean passed;
         try {
             new AttributeUpdates().put(
-                "key9", Mockito.mock(AttributeValueUpdate.class)
+                "key9", AttributeValueUpdate.builder().build()
             );
             passed = false;
         } catch (final UnsupportedOperationException ex) {

@@ -4,11 +4,11 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Test case for {@link Conditions}.
@@ -20,7 +20,7 @@ final class ConditionsTest {
     @Test
     void workAsMapOfConditions() {
         final String name = "id";
-        final Condition condition = new Condition();
+        final Condition condition = Condition.builder().build();
         final Map<String, Condition> conds = new Conditions()
             .with(name, condition);
         MatcherAssert.assertThat("should has size 1", conds.keySet(), Matchers.hasSize(1));

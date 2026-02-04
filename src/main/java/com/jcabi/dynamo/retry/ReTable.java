@@ -4,11 +4,9 @@
  */
 package com.jcabi.dynamo.retry;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Frame;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
@@ -18,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Table that retries on failure.
@@ -44,32 +43,32 @@ public final class ReTable implements Table {
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public Item put(final Map<String, AttributeValue> attributes)
         throws IOException {
         return this.origin.put(attributes);
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public Frame frame() {
         return new ReFrame(this.origin.frame());
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public Region region() {
         return new ReRegion(this.origin.region());
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public String name() {
         return this.origin.name();
     }
 
     @Override
-    @RetryOnFailure(verbose = false, delay = Tv.FIVE, unit = TimeUnit.SECONDS)
+    @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public void delete(final Map<String, AttributeValue> attributes)
         throws IOException {
         this.origin.delete(attributes);

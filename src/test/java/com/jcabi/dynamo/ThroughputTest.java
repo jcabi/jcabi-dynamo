@@ -4,9 +4,10 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.UpdateTableRequest;
 
 /**
  * Test case for {@link Throughput}.
@@ -18,16 +19,13 @@ final class ThroughputTest {
     void adjustsThroughput() {
         final Table table = Mockito.mock(Table.class);
         final Region region = Mockito.mock(Region.class);
-        final AmazonDynamoDB aws = Mockito.mock(AmazonDynamoDB.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.when(table.region()).thenReturn(region);
         final String name = "Customers";
         Mockito.when(table.name()).thenReturn(name);
         Mockito.when(region.aws()).thenReturn(aws);
         new Throughput(table).adjust();
         Mockito.verify(aws, Mockito.times(1))
-            .updateTable(
-                Mockito.eq(name),
-                Mockito.any()
-            );
+            .updateTable(Mockito.any(UpdateTableRequest.class));
     }
 }

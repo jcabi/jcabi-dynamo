@@ -4,11 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
-import com.amazonaws.services.dynamodbv2.model.DeleteItemResult;
-import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
@@ -24,6 +19,11 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.DeleteItemResponse;
+import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
 
 /**
  * Iterator of items in AWS SDK.
@@ -163,23 +163,24 @@ final class AwsIterator implements Iterator<Item> {
                     "You can't call remove() until you call next()"
                 );
             }
-            final AmazonDynamoDB aws = this.credentials.aws();
+            final DynamoDbClient aws = this.credentials.aws();
             try {
                 final List<Map<String, AttributeValue>> items =
                     new ArrayList<>(prev.items());
                 final Map<String, AttributeValue> item =
                     items.remove(this.position);
                 final long start = System.currentTimeMillis();
-                final DeleteItemResult res = aws.deleteItem(
-                    new DeleteItemRequest()
-                        .withTableName(this.name)
-                        .withKey(new Attributes(item).only(this.keys))
-                        .withReturnConsumedCapacity(
+                final DeleteItemResponse res = aws.deleteItem(
+                    DeleteItemRequest.builder()
+                        .tableName(this.name)
+                        .key(new Attributes(item).only(this.keys))
+                        .returnConsumedCapacity(
                             ReturnConsumedCapacity.TOTAL
                         )
-                        .withExpected(
+                        .expected(
                             new Attributes(item).only(this.keys).asKeys()
                         )
+                        .build()
                 );
                 this.dosage.set(new AwsIterator.Fixed(prev, items));
                 --this.position;
@@ -188,12 +189,12 @@ final class AwsIterator implements Iterator<Item> {
                     "#remove(): item #%d removed from DynamoDB, %s, in %[ms]s",
                     this.position,
                     new PrintableConsumedCapacity(
-                        res.getConsumedCapacity()
+                        res.consumedCapacity()
                     ).print(),
                     System.currentTimeMillis() - start
                 );
             } finally {
-                aws.shutdown();
+                aws.close();
             }
         }
     }

@@ -4,9 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeAction;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.google.common.base.Joiner;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
@@ -17,6 +14,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.EqualsAndHashCode;
+import software.amazon.awssdk.services.dynamodb.model.AttributeAction;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * DynamoDB item attribute updates.
@@ -80,7 +80,10 @@ public final class AttributeUpdates
         final AttributeValue value) {
         return this.with(
             name,
-            new AttributeValueUpdate(value, AttributeAction.PUT)
+            AttributeValueUpdate.builder()
+                .value(value)
+                .action(AttributeAction.PUT)
+                .build()
         );
     }
 
@@ -94,9 +97,9 @@ public final class AttributeUpdates
     public AttributeUpdates with(final String name, final Object value) {
         final AttributeValue attr;
         if (value instanceof Long || value instanceof Integer) {
-            attr = new AttributeValue().withN(value.toString());
+            attr = AttributeValue.builder().n(value.toString()).build();
         } else {
-            attr = new AttributeValue(value.toString());
+            attr = AttributeValue.builder().s(value.toString()).build();
         }
         return this.with(name, attr);
     }

@@ -4,16 +4,14 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.regions.RegionUtils;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import java.net.URI;
 import lombok.EqualsAndHashCode;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Amazon DynamoDB credentials.
@@ -37,11 +35,11 @@ public interface Credentials {
      * Build AWS client.
      *
      * <p>Don't forget to shut it down after use,
-     * using {@link AmazonDynamoDB#shutdown()}.
+     * using {@link DynamoDbClient#close()}.
      *
      * @return Amazon Dynamo DB client
      */
-    AmazonDynamoDB aws();
+    DynamoDbClient aws();
 
     /**
      * Simple implementation.
@@ -73,7 +71,7 @@ public interface Credentials {
          * @param scrt Secret
          */
         public Simple(final String akey, final String scrt) {
-            this(akey, scrt, Regions.US_EAST_1.getName());
+            this(akey, scrt, Region.US_EAST_1.id());
         }
 
         /**
@@ -94,19 +92,12 @@ public interface Credentials {
         }
 
         @Override
-        public AmazonDynamoDB aws() {
-            final com.amazonaws.regions.Region reg =
-                RegionUtils.getRegion(this.region);
-            if (reg == null) {
-                throw new IllegalStateException(
-                    String.format("Failed to find region '%s'", this.region)
-                );
-            }
-            return AmazonDynamoDBClientBuilder.standard()
-                .withRegion(reg.getName())
-                .withCredentials(
-                    new AWSStaticCredentialsProvider(
-                        new BasicAWSCredentials(this.key, this.secret)
+        public DynamoDbClient aws() {
+            return DynamoDbClient.builder()
+                .region(Region.of(this.region))
+                .credentialsProvider(
+                    StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(this.key, this.secret)
                     )
                 )
                 .build();
@@ -132,7 +123,7 @@ public interface Credentials {
          * Public ctor.
          */
         public Assumed() {
-            this(Regions.US_EAST_1.getName());
+            this(Region.US_EAST_1.id());
         }
 
         /**
@@ -149,16 +140,9 @@ public interface Credentials {
         }
 
         @Override
-        public AmazonDynamoDB aws() {
-            final com.amazonaws.regions.Region reg =
-                RegionUtils.getRegion(this.region);
-            if (reg == null) {
-                throw new IllegalStateException(
-                    String.format("Failed to detect region '%s'", this.region)
-                );
-            }
-            return AmazonDynamoDBClientBuilder.standard()
-                .withRegion(reg.getName())
+        public DynamoDbClient aws() {
+            return DynamoDbClient.builder()
+                .region(Region.of(this.region))
                 .build();
         }
     }
@@ -207,16 +191,13 @@ public interface Credentials {
         }
 
         @Override
-        public AmazonDynamoDB aws() {
-            return AmazonDynamoDBClientBuilder.standard()
-                .withEndpointConfiguration(
-                    new AwsClientBuilder.EndpointConfiguration(
-                        this.endpoint, Regions.US_EAST_1.getName()
-                    )
-                )
-                .withCredentials(
-                    new AWSStaticCredentialsProvider(
-                        new BasicAWSCredentials(
+        public DynamoDbClient aws() {
+            return DynamoDbClient.builder()
+                .endpointOverride(URI.create(this.endpoint))
+                .region(Region.US_EAST_1)
+                .credentialsProvider(
+                    StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(
                             this.origin.key, this.origin.secret
                         )
                     )

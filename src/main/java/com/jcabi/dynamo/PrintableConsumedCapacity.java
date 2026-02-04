@@ -4,7 +4,7 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.ConsumedCapacity;
+import software.amazon.awssdk.services.dynamodb.model.ConsumedCapacity;
 
 /**
  * Printable consumed capacity.
@@ -35,7 +35,7 @@ final class PrintableConsumedCapacity {
         if (this.capacity == null) {
             txt = "";
         } else {
-            txt = String.format("%.2f units", this.capacity.getCapacityUnits());
+            txt = String.format("%.2f units", this.capacity.capacityUnits());
         }
         return txt;
     }

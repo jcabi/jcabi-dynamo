@@ -4,10 +4,10 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 import java.util.Map;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Amazon DynamoDB table abstraction.
@@ -20,7 +20,7 @@ import java.util.Map;
  * Table table = region.table("employees");
  * table.put(new Attributes().with("name", "John Smith"));
  * for (Item item : table.frame()) {
- *   System.out.println("Name: " + item.get("name").getS());
+ *   System.out.println("Name: " + item.get("name").s());
  * }
  * table.frame()
  *   .where("name", Conditions.equalTo("John Smith"))

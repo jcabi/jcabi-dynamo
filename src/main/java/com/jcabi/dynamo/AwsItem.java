@@ -4,16 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
-import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
-import com.amazonaws.services.dynamodbv2.model.GetItemResult;
-import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
-import com.amazonaws.services.dynamodbv2.model.ReturnValue;
-import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
-import com.amazonaws.services.dynamodbv2.model.UpdateItemResult;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
@@ -24,6 +14,16 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.core.exception.SdkClientException;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
+import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.GetItemResponse;
+import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
+import software.amazon.awssdk.services.dynamodb.model.ReturnValue;
+import software.amazon.awssdk.services.dynamodb.model.UpdateItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
 
 /**
  * Single item/row in a DynamoDB table.
@@ -86,21 +86,21 @@ final class AwsItem implements Item {
         final String attrib = attr;
         boolean has = this.attributes.containsKey(attrib);
         if (!has) {
-            final AmazonDynamoDB aws = this.credentials.aws();
+            final DynamoDbClient aws = this.credentials.aws();
             try {
                 final GetItemRequest request = this.makeItemRequestFor(attr);
                 final long start = System.currentTimeMillis();
-                final GetItemResult result = aws.getItem(request);
-                has = result.getItem().get(attrib) != null;
+                final GetItemResponse result = aws.getItem(request);
+                has = result.item().get(attrib) != null;
                 Logger.info(
                     this, "#has('%s'): %B from DynamoDB, %s, in %[ms]s",
                     attr, has,
                     new PrintableConsumedCapacity(
-                        result.getConsumedCapacity()
+                        result.consumedCapacity()
                     ).print(),
                     System.currentTimeMillis() - start
                 );
-            } catch (final AmazonClientException ex) {
+            } catch (final SdkClientException ex) {
                 throw new IOException(
                     String.format(
                         "Failed to check existence of \"%s\" at \"%s\" by %s",
@@ -109,7 +109,7 @@ final class AwsItem implements Item {
                     ex
                 );
             } finally {
-                aws.shutdown();
+                aws.close();
             }
         }
         return has;
@@ -120,23 +120,23 @@ final class AwsItem implements Item {
         final String attrib = attr;
         AttributeValue value = this.attributes.get(attrib);
         if (value == null) {
-            final AmazonDynamoDB aws = this.credentials.aws();
+            final DynamoDbClient aws = this.credentials.aws();
             try {
                 final GetItemRequest request = this.makeItemRequestFor(attrib);
                 final long start = System.currentTimeMillis();
-                final GetItemResult result = aws.getItem(request);
-                value = result.getItem().get(attrib);
+                final GetItemResponse result = aws.getItem(request);
+                value = result.item().get(attrib);
                 Logger.info(
                     this,
                     // @checkstyle LineLength (1 line)
                     "#get('%s'): loaded '%[text]s' from DynamoDB, %s, in %[ms]s",
                     attrib, value,
                     new PrintableConsumedCapacity(
-                        result.getConsumedCapacity()
+                        result.consumedCapacity()
                     ).print(),
                     System.currentTimeMillis() - start
                 );
-            } catch (final AmazonClientException ex) {
+            } catch (final SdkClientException ex) {
                 throw new IOException(
                     String.format(
                         "Failed to get \"%s\" from \"%s\" by %s",
@@ -145,7 +145,7 @@ final class AwsItem implements Item {
                     ex
                 );
             } finally {
-                aws.shutdown();
+                aws.close();
             }
         }
         if (value == null) {
@@ -165,28 +165,29 @@ final class AwsItem implements Item {
     @Override
     public Map<String, AttributeValue> put(
         final Map<String, AttributeValueUpdate> attrs) throws IOException {
-        final AmazonDynamoDB aws = this.credentials.aws();
+        final DynamoDbClient aws = this.credentials.aws();
         final Attributes expected = this.attributes.only(this.keys);
         try {
-            final UpdateItemRequest request = new UpdateItemRequest()
-                .withTableName(this.name)
-                .withExpected(expected.asKeys())
-                .withKey(expected)
-                .withAttributeUpdates(attrs)
-                .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-                .withReturnValues(ReturnValue.UPDATED_NEW);
+            final UpdateItemRequest request = UpdateItemRequest.builder()
+                .tableName(this.name)
+                .expected(expected.asKeys())
+                .key(expected)
+                .attributeUpdates(attrs)
+                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                .returnValues(ReturnValue.UPDATED_NEW)
+                .build();
             final long start = System.currentTimeMillis();
-            final UpdateItemResult result = aws.updateItem(request);
+            final UpdateItemResponse result = aws.updateItem(request);
             Logger.info(
                 this, "#put('%s'): updated item to DynamoDB, %s, in %[ms]s",
                 attrs,
                 new PrintableConsumedCapacity(
-                    result.getConsumedCapacity()
+                    result.consumedCapacity()
                 ).print(),
                 System.currentTimeMillis() - start
             );
-            return result.getAttributes();
-        } catch (final AmazonClientException ex) {
+            return result.attributes();
+        } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
                     "Failed to put %s into \"%s\" with %s",
@@ -195,7 +196,7 @@ final class AwsItem implements Item {
                 ex
             );
         } finally {
-            aws.shutdown();
+            aws.close();
         }
     }
 
@@ -210,13 +211,13 @@ final class AwsItem implements Item {
      * @return GetItemRequest
      */
     private GetItemRequest makeItemRequestFor(final String attr) {
-        final GetItemRequest request = new GetItemRequest();
-        request.setTableName(this.name);
-        request.setAttributesToGet(Collections.singletonList(attr));
-        request.setKey(this.attributes.only(this.keys));
-        request.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
-        request.setConsistentRead(true);
-        return request;
+        return GetItemRequest.builder()
+            .tableName(this.name)
+            .attributesToGet(Collections.singletonList(attr))
+            .key(this.attributes.only(this.keys))
+            .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+            .consistentRead(true)
+            .build();
     }
 
 }

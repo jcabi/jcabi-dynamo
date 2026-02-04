@@ -4,8 +4,6 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -22,6 +20,8 @@ import java.util.Locale;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Mock version of {@link Item}.
@@ -113,7 +113,7 @@ final class MkItem implements Item {
             new Function<AttributeValueUpdate, AttributeValue>() {
                 @Override
                 public AttributeValue apply(final AttributeValueUpdate update) {
-                    return update.getValue();
+                    return update.value();
                 }
             }
         );

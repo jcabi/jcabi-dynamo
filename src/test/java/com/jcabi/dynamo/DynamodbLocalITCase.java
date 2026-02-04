@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo;
 
-import com.jcabi.aspects.Tv;
 import java.util.Iterator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.MatcherAssert;
@@ -43,11 +42,11 @@ final class DynamodbLocalITCase {
                 Integer.parseInt(System.getProperty("failsafe.ddl.port"))
             )
         ).table("talks");
-        for (int idx = 0; idx < Tv.FIVE; ++idx) {
+        for (int idx = 0; idx < 5; ++idx) {
             tbl.put(
                 new Attributes()
                     .with("room", idx)
-                    .with("title", RandomStringUtils.randomAlphanumeric(Tv.TEN))
+                    .with("title", RandomStringUtils.randomAlphanumeric(10))
             );
         }
         MatcherAssert.assertThat(
@@ -64,7 +63,7 @@ final class DynamodbLocalITCase {
                 .through(new ScanValve())
                 .iterator().next()
                 .get("room")
-                .getN(),
+                .n(),
             Matchers.equalTo("0")
         );
         final Iterator<Item> items = tbl.frame().iterator();

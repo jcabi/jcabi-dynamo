@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo.retry;
 
-import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Table;
 import java.io.IOException;
@@ -36,6 +35,6 @@ final class ReTableTest {
                 Matchers.equalTo(msg)
             );
         }
-        Mockito.verify(table, Mockito.times(Tv.THREE)).delete(attrs);
+        Mockito.verify(table, Mockito.times(3)).delete(attrs);
     }
 }
