@@ -11,7 +11,7 @@
     <version>1.41.0</version>
   </parent>
   <artifactId>jcabi-dynamo</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
   <name>jcabi-dynamo</name>
   <description>Object Oriented Wrapper of Amazon DynamoDB SDK</description>
