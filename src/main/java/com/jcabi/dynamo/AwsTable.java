@@ -19,12 +19,9 @@ import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
-import software.amazon.awssdk.services.dynamodb.model.DeleteItemResponse;
 import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest;
-import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
 import software.amazon.awssdk.services.dynamodb.model.KeySchemaElement;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
-import software.amazon.awssdk.services.dynamodb.model.PutItemResponse;
 import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
 import software.amazon.awssdk.services.dynamodb.model.ReturnValue;
 
@@ -37,7 +34,6 @@ import software.amazon.awssdk.services.dynamodb.model.ReturnValue;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = { "credentials", "reg", "self" })
-@SuppressWarnings("PMD.GuardLogStatement")
 final class AwsTable implements Table {
 
     /**
@@ -73,21 +69,21 @@ final class AwsTable implements Table {
         throws IOException {
         final DynamoDbClient aws = this.credentials.aws();
         try {
-            final PutItemRequest request = PutItemRequest.builder()
-                .tableName(this.self)
-                .item(attributes)
-                .returnValues(ReturnValue.NONE)
-                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-                .build();
-            final PutItemResponse result = aws.putItem(request);
-            final long start = System.currentTimeMillis();
             Logger.info(
-                this, "#put('%[text]s'): created item in '%s', %s, in %[ms]s",
+                this, "#put('%[text]s'): created item in '%s', %s",
                 attributes, this.self,
                 new PrintableConsumedCapacity(
-                    result.consumedCapacity()
-                ).print(),
-                System.currentTimeMillis() - start
+                    aws.putItem(
+                        PutItemRequest.builder()
+                            .tableName(this.self)
+                            .item(attributes)
+                            .returnValues(ReturnValue.NONE)
+                            .returnConsumedCapacity(
+                                ReturnConsumedCapacity.TOTAL
+                            )
+                            .build()
+                    ).consumedCapacity()
+                ).print()
             );
             return new AwsItem(
                 this.credentials,
@@ -133,18 +129,17 @@ final class AwsTable implements Table {
     public Collection<String> keys() throws IOException {
         final DynamoDbClient aws = this.credentials.aws();
         try {
-            final long start = System.currentTimeMillis();
-            final DescribeTableResponse result = aws.describeTable(
-                DescribeTableRequest.builder().tableName(this.self).build()
-            );
             final Collection<String> keys = new LinkedList<>();
             for (final KeySchemaElement key
-                : result.table().keySchema()) {
+                : aws.describeTable(
+                    DescribeTableRequest.builder()
+                        .tableName(this.self).build()
+                ).table().keySchema()) {
                 keys.add(key.attributeName());
             }
             Logger.info(
-                this, "#keys(): table %s described, in %[ms]s",
-                this.self, System.currentTimeMillis() - start
+                this, "#keys(): table %s described",
+                this.self
             );
             return keys;
         } catch (final SdkClientException ex) {
@@ -165,22 +160,22 @@ final class AwsTable implements Table {
         throws IOException {
         final DynamoDbClient aws = this.credentials.aws();
         try {
-            final DeleteItemRequest request = DeleteItemRequest.builder()
-                .tableName(this.self)
-                .key(attributes)
-                .returnValues(ReturnValue.NONE)
-                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-                .build();
-            final DeleteItemResponse result = aws.deleteItem(request);
-            final long start = System.currentTimeMillis();
             Logger.info(
                 this,
-                "#delete('%[text]s'): deleted item in '%s', %s, in %[ms]s",
+                "#delete('%[text]s'): deleted item in '%s', %s",
                 attributes, this.self,
                 new PrintableConsumedCapacity(
-                    result.consumedCapacity()
-                ).print(),
-                System.currentTimeMillis() - start
+                    aws.deleteItem(
+                        DeleteItemRequest.builder()
+                            .tableName(this.self)
+                            .key(attributes)
+                            .returnValues(ReturnValue.NONE)
+                            .returnConsumedCapacity(
+                                ReturnConsumedCapacity.TOTAL
+                            )
+                            .build()
+                    ).consumedCapacity()
+                ).print()
             );
         } catch (final SdkClientException ex) {
             throw new IOException(

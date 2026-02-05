@@ -36,7 +36,6 @@ import software.amazon.awssdk.services.dynamodb.model.Select;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = { "limit", "attributes" })
-@SuppressWarnings("PMD.GuardLogStatement")
 public final class ScanValve implements Valve {
 
     /**
@@ -85,19 +84,17 @@ public final class ScanValve implements Valve {
                 .scanFilter(conditions)
                 .limit(this.limit)
                 .build();
-            final long start = System.currentTimeMillis();
             final ScanResponse result = aws.scan(request);
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
-                "#items(): loaded %d item(s) from '%s' and stooped at %s, using %s, %s, in %[ms]s",
+                "#items(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                 result.count(), table,
                 result.lastEvaluatedKey(),
                 conditions,
                 new PrintableConsumedCapacity(
                     result.consumedCapacity()
-                ).print(),
-                System.currentTimeMillis() - start
+                ).print()
             );
             return new ScanValve.NextDosage(credentials, request, result);
         } catch (final SdkClientException ex) {
@@ -125,20 +122,18 @@ public final class ScanValve implements Valve {
                 .select(Select.COUNT)
                 .limit(Integer.MAX_VALUE)
                 .build();
-            final long start = System.currentTimeMillis();
             final ScanResponse result = aws.scan(request);
-            final int count = result.count();
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
-                "#total(): COUNT=%d in '%s' using %s, %s, in %[ms]s",
-                count, request.tableName(), request.filterExpression(),
+                "#total(): COUNT=%d in '%s' using %s, %s",
+                result.count(), request.tableName(),
+                request.filterExpression(),
                 new PrintableConsumedCapacity(
                     result.consumedCapacity()
-                ).print(),
-                System.currentTimeMillis() - start
+                ).print()
             );
-            return count;
+            return result.count();
         } finally {
             aws.close();
         }
@@ -244,18 +239,16 @@ public final class ScanValve implements Valve {
                         this.result.lastEvaluatedKey()
                     )
                     .build();
-                final long start = System.currentTimeMillis();
                 final ScanResponse rslt = aws.scan(rqst);
                 Logger.info(
                     this,
                     // @checkstyle LineLength (1 line)
-                    "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s, in %[ms]s",
+                    "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                     rslt.count(), rqst.tableName(), rqst.scanFilter(),
                     rslt.lastEvaluatedKey(),
                     new PrintableConsumedCapacity(
                         rslt.consumedCapacity()
-                    ).print(),
-                    System.currentTimeMillis() - start
+                    ).print()
                 );
                 return new ScanValve.NextDosage(this.credentials, rqst, rslt);
             } finally {

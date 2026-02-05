@@ -4,9 +4,9 @@
  */
 package com.jcabi.dynamo;
 
-import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,35 @@ final class QueryValveTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void fetchesData() throws Exception {
-        final Valve valve = new QueryValve();
+    void fetchesDataWithNoNext() throws Exception {
         final Credentials credentials = Mockito.mock(Credentials.class);
-        final ImmutableMap<String, AttributeValue> item =
-            new ImmutableMap.Builder<String, AttributeValue>()
-                .build();
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            QueryResponse.builder()
+                .items(
+                    Collections.singletonList(Collections.emptyMap())
+                )
+                .consumedCapacity(
+                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
+                )
+                .build()
+        ).when(aws).query(Mockito.any(QueryRequest.class));
+        MatcherAssert.assertThat(
+            "should be false",
+            new QueryValve().fetch(
+                credentials, "table",
+                new Conditions(), new ArrayList<>(0)
+            ).hasNext(),
+            Matchers.is(false)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void fetchesDataWithItems() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final Map<String, AttributeValue> item = Collections.emptyMap();
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
@@ -43,12 +66,14 @@ final class QueryValveTest {
                 )
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
-        final Dosage dosage = valve.fetch(
-            credentials, "table",
-            new Conditions(), new ArrayList<>(0)
+        MatcherAssert.assertThat(
+            "should has item",
+            new QueryValve().fetch(
+                credentials, "table",
+                new Conditions(), new ArrayList<>(0)
+            ).items(),
+            Matchers.hasItem(item)
         );
-        MatcherAssert.assertThat("should be false", dosage.hasNext(), Matchers.is(false));
-        MatcherAssert.assertThat("should has item", dosage.items(), Matchers.hasItem(item));
     }
 
 }

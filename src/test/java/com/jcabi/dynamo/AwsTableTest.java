@@ -46,13 +46,15 @@ final class AwsTableTest {
                 ).build()
             ).build()
         ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
-        final String attr = "attribute-1";
-        final AttributeValue value = AttributeValue.builder().s("value-1").build();
-        final String name = "table-name";
         final Table table = new AwsTable(
-            credentials, Mockito.mock(Region.class), name
+            credentials, Mockito.mock(Region.class), "table-name"
         );
-        table.put(new Attributes().with(attr, value));
+        table.put(
+            new Attributes().with(
+                "attribute-1",
+                AttributeValue.builder().s("value-1").build()
+            )
+        );
         Mockito.verify(aws).putItem(Mockito.any(PutItemRequest.class));
     }
 
@@ -73,13 +75,15 @@ final class AwsTableTest {
                 ).build()
             ).build()
         ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
-        final String attr = "attribute-2";
-        final AttributeValue value = AttributeValue.builder().s("value-2").build();
-        final String name = "table-name-2";
         final Table table = new AwsTable(
-            credentials, Mockito.mock(Region.class), name
+            credentials, Mockito.mock(Region.class), "table-name-2"
         );
-        table.delete(new Attributes().with(attr, value));
+        table.delete(
+            new Attributes().with(
+                "attribute-2",
+                AttributeValue.builder().s("value-2").build()
+            )
+        );
         Mockito.verify(aws).deleteItem(Mockito.any(DeleteItemRequest.class));
     }
 }

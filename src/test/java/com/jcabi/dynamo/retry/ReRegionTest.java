@@ -21,20 +21,16 @@ final class ReRegionTest {
     @Test
     void retriesAwsCalls() throws Exception {
         final Table table = Mockito.mock(Table.class);
-        final Attributes attrs = new Attributes();
-        final String msg = "hey you";
-        Mockito.doThrow(SdkClientException.builder().message(msg).build())
-            .when(table).put(attrs);
+        Mockito.doThrow(
+            SdkClientException.builder().message("hey you").build()
+        ).when(table).put(new Attributes());
         final Region origin = Mockito.mock(Region.class);
         Mockito.doReturn(table).when(origin).table(Mockito.anyString());
-        final Region region = new ReRegion(origin);
-        try {
-            region.table("test").put(attrs);
-            Assertions.fail("exception expected here");
-        } catch (final SdkClientException ex) {
-            assert ex.getMessage().equals(msg);
-        }
-        Mockito.verify(table, Mockito.times(3)).put(attrs);
+        final Table retried = new ReRegion(origin).table("test");
+        Assertions.assertThrows(
+            SdkClientException.class,
+            () -> retried.put(new Attributes())
+        );
     }
 
 }

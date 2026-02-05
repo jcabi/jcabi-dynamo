@@ -30,7 +30,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
     (
     {
         "PMD.TooManyMethods",
-        "PMD.AvoidInstantiatingObjectsInLoops"
+        "PMD.LooseCoupling"
     }
     )
 public final class AttributeUpdates

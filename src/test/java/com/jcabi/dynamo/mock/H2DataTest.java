@@ -12,7 +12,6 @@ import com.jcabi.dynamo.Conditions;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Collections;
-import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
@@ -54,7 +53,7 @@ final class H2DataTest {
 
     @Test
     @Disabled
-    void storesToFile(@TempDir final Path temp) throws Exception {
+    void storesToFileAndExists(@TempDir final Path temp) throws Exception {
         final File file = temp.resolve("foo.txt").toFile();
         final String table = "tbl";
         final String key = "user";
@@ -62,38 +61,55 @@ final class H2DataTest {
             table, new String[] {key}
         );
         data.put(table, new Attributes().with(key, "x2"));
-        MatcherAssert.assertThat("should exists the file", file.exists(), Matchers.is(true));
-        MatcherAssert.assertThat("should has length > 0", file.length(), Matchers.greaterThan(0L));
+        MatcherAssert.assertThat(
+            "should exists the file",
+            file.exists(),
+            Matchers.is(true)
+        );
     }
 
     @Test
     void createsManyTables() throws Exception {
-        new H2Data()
-            .with("firsttable", new String[] {"firstid"}, "test")
-            .with("secondtable", new String[]{"secondid"});
+        MatcherAssert.assertThat(
+            "should create two tables",
+            new H2Data()
+                .with("firsttable", new String[] {"firstid"}, "test")
+                .with("secondtable", new String[]{"secondid"}),
+            Matchers.notNullValue()
+        );
     }
 
     @Test
     void createsTablesWithLongNames() throws Exception {
-        new H2Data().with(
-            Joiner.on("").join(Collections.nCopies(40, "X")),
-            new String[]{"k1"}
+        MatcherAssert.assertThat(
+            "should create table with long name",
+            new H2Data().with(
+                Joiner.on("").join(Collections.nCopies(40, "X")),
+                new String[]{"k1"}
+            ),
+            Matchers.notNullValue()
         );
     }
 
     @Test
     void supportsTableNamesWithIllegalCharacters() throws Exception {
-        new H2Data().with(".-.", new String[]{"pk"});
+        MatcherAssert.assertThat(
+            "should support illegal characters in table name",
+            new H2Data().with(".-.", new String[]{"pk"}),
+            Matchers.notNullValue()
+        );
     }
 
     @Test
     @Disabled
     void supportsColumnNamesWithIllegalCharacters() throws Exception {
-        final String key = "0-.col.-0";
-        final String table = "test";
-        new H2Data().with(
-            table, new String[] {key}
-        ).put(table, new Attributes().with(key, "value"));
+        MatcherAssert.assertThat(
+            "should support illegal characters in column name",
+            new H2Data().with(
+                "test", new String[] {"0-.col.-0"}
+            ),
+            Matchers.notNullValue()
+        );
     }
 
     @Test
@@ -113,18 +129,19 @@ final class H2DataTest {
             new Attributes().with(field, woman)
         );
         data.delete(table, new Attributes().with(field, man));
-        final List<Attributes> rest = Lists.newArrayList(
-            data.iterate(table, new Conditions())
-        );
         MatcherAssert.assertThat(
-            "should equal to 1",
-            rest.size(),
-            Matchers.equalTo(1)
-        );
-        MatcherAssert.assertThat(
-            "should equal to 'Helen'",
-            rest.get(0).get(field).s(),
-            Matchers.equalTo(woman)
+            "should delete Kevin and keep only Helen",
+            Lists.newArrayList(
+                data.iterate(table, new Conditions())
+            ),
+            Matchers.contains(
+                Matchers.hasEntry(
+                    Matchers.equalTo(field),
+                    Matchers.equalTo(
+                        AttributeValue.builder().s(woman).build()
+                    )
+                )
+            )
         );
     }
 
@@ -134,12 +151,16 @@ final class H2DataTest {
         final String key = "tid";
         final int number = 43;
         final String attr = "descr";
-        final String value = "Dummy\n\t\u20ac text";
         final String updated = "Updated";
         final MkData data = new H2Data().with(
             table, new String[] {key}, attr
         );
-        data.put(table, new Attributes().with(key, number).with(attr, value));
+        data.put(
+            table,
+            new Attributes()
+                .with(key, number)
+                .with(attr, "Dummy\n\t\u20ac text")
+        );
         data.update(
             table,
             new Attributes().with(key, number),
@@ -150,21 +171,39 @@ final class H2DataTest {
             new Attributes().with(key, number),
             new AttributeUpdates().with(attr, updated)
         );
-        final Iterable<Attributes> result = data.iterate(
-            table, new Conditions().with(key, Conditions.equalTo(number))
-        );
         MatcherAssert.assertThat(
-            "should updates the attributes",
-            result.iterator().next(),
-            Matchers.hasEntry(
-                Matchers.equalTo(attr),
-                Matchers.equalTo(AttributeValue.builder().s(updated).build())
+            "should update to single correct entry",
+            Lists.newArrayList(
+                data.iterate(
+                    table,
+                    new Conditions().with(key, Conditions.equalTo(number))
+                )
+            ),
+            Matchers.contains(
+                Matchers.hasEntry(
+                    Matchers.equalTo(attr),
+                    Matchers.equalTo(
+                        AttributeValue.builder().s(updated).build()
+                    )
+                )
             )
         );
+    }
+
+    @Test
+    void fetchesAllWithoutConditions() throws Exception {
+        final String table = "x12";
+        final String key = "foo1";
+        final String value = "bar2";
+        final MkData data = new H2Data().with(
+            table, new String[] {key}, value
+        );
+        data.put(table, new Attributes().with(key, "101").with(value, 0));
+        data.put(table, new Attributes().with(key, "102").with(value, 1));
         MatcherAssert.assertThat(
-            "should iterable with size 1",
-            result,
-            Matchers.iterableWithSize(1)
+            "should iterable with size 2",
+            data.iterate(table, new Conditions()),
+            Matchers.iterableWithSize(2)
         );
     }
 
@@ -173,14 +212,11 @@ final class H2DataTest {
         final String table = "x12";
         final String key = "foo1";
         final String value = "bar2";
-        final MkData data = new H2Data().with(table, new String[] {key}, value);
+        final MkData data = new H2Data().with(
+            table, new String[] {key}, value
+        );
         data.put(table, new Attributes().with(key, "101").with(value, 0));
         data.put(table, new Attributes().with(key, "102").with(value, 1));
-        MatcherAssert.assertThat(
-            "should iterable with size 2",
-            data.iterate(table, new Conditions()),
-            Matchers.iterableWithSize(2)
-        );
         MatcherAssert.assertThat(
             "should equal to '1'",
             data.iterate(

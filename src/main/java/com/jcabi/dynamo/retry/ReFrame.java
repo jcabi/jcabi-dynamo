@@ -106,7 +106,6 @@ public final class ReFrame implements Frame {
 
     @Override
     @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
-    @SuppressWarnings("PMD.UseVarargs")
     public <T> T[] toArray(final T[] arr) {
         return this.origin.toArray(arr);
     }

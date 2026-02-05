@@ -40,7 +40,7 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
     (
     {
         "PMD.TooManyMethods",
-        "PMD.AvoidInstantiatingObjectsInLoops"
+        "PMD.LooseCoupling"
     }
     )
 public final class Attributes implements Map<String, AttributeValue> {
@@ -113,7 +113,6 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param name Attribute name
      * @param value The value
      * @return Attributes
-     * @
      */
     public Attributes with(final String name, final Long value) {
         return this.with(
@@ -127,7 +126,6 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param name Attribute name
      * @param value The value
      * @return Attributes
-     * @
      */
     public Attributes with(final String name, final Integer value) {
         return this.with(
@@ -141,7 +139,6 @@ public final class Attributes implements Map<String, AttributeValue> {
      * @param name Attribute name
      * @param value The value
      * @return Attributes
-     * @
      */
     public Attributes with(final String name, final Object value) {
         return this.with(

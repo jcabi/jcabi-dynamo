@@ -23,7 +23,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 final class MkRegionTest {
 
     @Test
-    void storesAndReadsAttributes() throws Exception {
+    void checksAttributeExists() throws Exception {
         final String name = "users";
         final String key = "id";
         final String attr = "description";
@@ -38,13 +38,49 @@ final class MkRegionTest {
                 .with(attr, "first value to \n\t€ save")
                 .with(nattr, "150")
         );
-        final Item item = table.frame().iterator().next();
-        MatcherAssert.assertThat("should be true", item.has(attr), Matchers.is(true));
+        MatcherAssert.assertThat(
+            "should be true",
+            table.frame().iterator().next().has(attr),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
+    void readsAttributeValue() throws Exception {
+        final String name = "users";
+        final String key = "id";
+        final String attr = "description";
+        final Region region = new MkRegion(
+            new H2Data().with(name, new String[] {key}, attr)
+        );
+        final Table table = region.table(name);
+        table.put(
+            new Attributes()
+                .with(key, "32443")
+                .with(attr, "first value to \n\t€ save")
+        );
         MatcherAssert.assertThat(
             "should contains '\n\t\u20ac save'",
-            item.get(attr).s(),
+            table.frame().iterator().next().get(attr).s(),
             Matchers.containsString("\n\t\u20ac save")
         );
+    }
+
+    @Test
+    void updatesAttributeValue() throws Exception {
+        final String name = "users";
+        final String key = "id";
+        final String attr = "description";
+        final Region region = new MkRegion(
+            new H2Data().with(name, new String[] {key}, attr)
+        );
+        final Table table = region.table(name);
+        table.put(
+            new Attributes()
+                .with(key, "32443")
+                .with(attr, "first value to \n\t€ save")
+        );
+        final Item item = table.frame().iterator().next();
         item.put(
             attr,
             AttributeValueUpdate.builder().value(
@@ -56,9 +92,25 @@ final class MkRegionTest {
             item.get(attr).s(),
             Matchers.containsString("another value")
         );
+    }
+
+    @Test
+    void readsNumericAttribute() throws Exception {
+        final String name = "users";
+        final String key = "id";
+        final String nattr = "thenumber";
+        final Region region = new MkRegion(
+            new H2Data().with(name, new String[] {key}, nattr)
+        );
+        final Table table = region.table(name);
+        table.put(
+            new Attributes()
+                .with(key, "32443")
+                .with(nattr, "150")
+        );
         MatcherAssert.assertThat(
             "should ends with '50'",
-            item.get(nattr).n(),
+            table.frame().iterator().next().get(nattr).n(),
             Matchers.endsWith("50")
         );
     }

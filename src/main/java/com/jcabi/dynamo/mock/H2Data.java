@@ -17,6 +17,7 @@ import com.jcabi.jdbc.ListOutcome;
 import com.jcabi.jdbc.Outcome;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -47,7 +48,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = "jdbc")
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports" })
 public final class H2Data implements MkData {
 
     /**
@@ -210,8 +210,7 @@ public final class H2Data implements MkData {
                         "At the moment only one value of condition is supported"
                     );
                 }
-                final AttributeValue val = cond.attributeValueList().get(0);
-                session = session.set(H2Data.value(val));
+                session = session.set(H2Data.value(cond.attributeValueList().get(0)));
             }
             return session.select(H2Data.OUTCOME);
         } catch (final SQLException ex) {
@@ -371,7 +370,11 @@ public final class H2Data implements MkData {
     private static String encodeTableName(final String table) {
         return Joiner.on("").join(
             "_",
-            new Base32(true, (byte) '_').encodeAsString(table.getBytes())
+            Base32.builder()
+                .setHexEncodeTable(true)
+                .setPadding((byte) '_')
+                .get()
+                .encodeAsString(table.getBytes(StandardCharsets.UTF_8))
         );
     }
 

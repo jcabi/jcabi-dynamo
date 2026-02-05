@@ -25,7 +25,129 @@ import org.mockito.Mockito;
 final class AwsIteratorTest {
 
     @Test
-    void iteratesValve() throws IOException {
+    void hasNextOnFreshIterator() throws IOException {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final Dosage first = Mockito.mock(Dosage.class);
+        Mockito.doReturn(
+            Collections.singletonList(
+                new Attributes().with("attribute-1", "value-1")
+            )
+        ).when(first).items();
+        Mockito.doReturn(true).when(first).hasNext();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(first)
+            .when(valve)
+            .fetch(
+                Mockito.eq(credentials), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = "table-1";
+        MatcherAssert.assertThat(
+            "should has next",
+            new AwsIterator(
+                credentials,
+                new AwsFrame(
+                    credentials,
+                    new AwsTable(
+                        credentials,
+                        Mockito.mock(Region.class),
+                        table
+                    ),
+                    table
+                ),
+                table, new Conditions(),
+                new ArrayList<>(0), valve
+            ).hasNext(),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
+    void returnsFirstItemValue() throws IOException {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final String attr = "attribute-1";
+        final String value = "value-1";
+        final Dosage first = Mockito.mock(Dosage.class);
+        Mockito.doReturn(
+            Collections.singletonList(new Attributes().with(attr, value))
+        ).when(first).items();
+        Mockito.doReturn(true).when(first).hasNext();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(first)
+            .when(valve)
+            .fetch(
+                Mockito.eq(credentials), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = "table-1";
+        MatcherAssert.assertThat(
+            "should equal to 'value-1'",
+            new AwsIterator(
+                credentials,
+                new AwsFrame(
+                    credentials,
+                    new AwsTable(
+                        credentials,
+                        Mockito.mock(Region.class),
+                        table
+                    ),
+                    table
+                ),
+                table, new Conditions(),
+                new ArrayList<>(0), valve
+            ).next().get(attr).s(),
+            Matchers.equalTo(value)
+        );
+    }
+
+    @Test
+    void hasNextAfterFirstDosageConsumed() throws IOException {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final String attr = "attribute-1";
+        final String value = "value-1";
+        final Dosage first = Mockito.mock(Dosage.class);
+        Mockito.doReturn(
+            Collections.singletonList(new Attributes().with(attr, value))
+        ).when(first).items();
+        Mockito.doReturn(true).when(first).hasNext();
+        final Dosage second = Mockito.mock(Dosage.class);
+        Mockito.doReturn(second).when(first).next();
+        Mockito.doReturn(
+            Collections.singletonList(new Attributes().with(attr, value))
+        ).when(second).items();
+        Mockito.doReturn(false).when(second).hasNext();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(first)
+            .when(valve)
+            .fetch(
+                Mockito.eq(credentials), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = "table-1";
+        final Iterator<Item> iterator = new AwsIterator(
+            credentials,
+            new AwsFrame(
+                credentials,
+                new AwsTable(
+                    credentials,
+                    Mockito.mock(Region.class),
+                    table
+                ),
+                table
+            ),
+            table, new Conditions(),
+            new ArrayList<>(0), valve
+        );
+        iterator.next();
+        MatcherAssert.assertThat(
+            "should has next",
+            iterator.hasNext(),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
+    void hasNoNextAfterAllConsumed() throws IOException {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final String attr = "attribute-1";
         final String value = "value-1";
@@ -45,8 +167,6 @@ final class AwsIteratorTest {
         Mockito.doReturn(new ArrayList<Attributes>(0)).when(last).items();
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(first)
-            .doReturn(second)
-            .doReturn(last)
             .when(valve)
             .fetch(
                 Mockito.eq(credentials), Mockito.anyString(),
@@ -57,61 +177,54 @@ final class AwsIteratorTest {
             credentials,
             new AwsFrame(
                 credentials,
-                new AwsTable(credentials, Mockito.mock(Region.class), table),
+                new AwsTable(
+                    credentials,
+                    Mockito.mock(Region.class),
+                    table
+                ),
                 table
             ),
             table, new Conditions(),
             new ArrayList<>(0), valve
         );
-        for (int idx = 0; idx < 10; ++idx) {
-            MatcherAssert.assertThat("should has next", iterator.hasNext(), Matchers.is(true));
-        }
-        Mockito.verify(valve).fetch(
-            Mockito.eq(credentials), Mockito.anyString(),
-            Mockito.any(Map.class), Mockito.any(Collection.class)
-        );
+        iterator.next();
+        iterator.next();
         MatcherAssert.assertThat(
-            "should equal to 'value-1'",
-            iterator.next().get(attr).s(),
-            Matchers.equalTo(value)
+            "should not has next",
+            iterator.hasNext(),
+            Matchers.is(false)
         );
-        MatcherAssert.assertThat("should has next", iterator.hasNext(), Matchers.is(true));
-        Mockito.verify(first).next();
-        MatcherAssert.assertThat(
-            "should equal to 'value-1'",
-            iterator.next().get(attr).s(),
-            Matchers.equalTo(value)
-        );
-        MatcherAssert.assertThat("should not has next", iterator.hasNext(), Matchers.is(false));
-        Mockito.verify(second).next();
     }
 
     @Test
     void throwsOnEmptyIterator() throws Exception {
-        final Credentials credentials = Mockito.mock(Credentials.class);
+        final Credentials creds = Mockito.mock(Credentials.class);
         final Dosage dosage = Mockito.mock(Dosage.class);
         Mockito.doReturn(Collections.emptyList()).when(dosage).items();
-        final Valve valve = Mockito.mock(Valve.class);
+        final Valve vlv = Mockito.mock(Valve.class);
         Mockito.doReturn(dosage)
-            .when(valve)
+            .when(vlv)
             .fetch(
-                Mockito.eq(credentials), Mockito.anyString(),
+                Mockito.eq(creds), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
         final String table = "table-2";
-        final Iterator<Item> iterator = new AwsIterator(
-            credentials,
-            new AwsFrame(
-                credentials,
-                new AwsTable(credentials, Mockito.mock(Region.class), table),
-                table
-            ),
-            table, new Conditions(),
-            new ArrayList<>(0), valve
-        );
         Assertions.assertThrows(
             NoSuchElementException.class,
-            iterator::next
+            new AwsIterator(
+                creds,
+                new AwsFrame(
+                    creds,
+                    new AwsTable(
+                        creds,
+                        Mockito.mock(Region.class),
+                        table
+                    ),
+                    table
+                ),
+                table, new Conditions(),
+                new ArrayList<>(0), vlv
+            )::next
         );
     }
 

@@ -34,7 +34,6 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = { "credentials", "frm", "name", "attributes" })
-@SuppressWarnings("PMD.GuardLogStatement")
 final class AwsItem implements Item {
 
     /**
@@ -88,17 +87,16 @@ final class AwsItem implements Item {
         if (!has) {
             final DynamoDbClient aws = this.credentials.aws();
             try {
-                final GetItemRequest request = this.makeItemRequestFor(attr);
-                final long start = System.currentTimeMillis();
-                final GetItemResponse result = aws.getItem(request);
+                final GetItemResponse result = aws.getItem(
+                    this.makeItemRequestFor(attr)
+                );
                 has = result.item().get(attrib) != null;
                 Logger.info(
-                    this, "#has('%s'): %B from DynamoDB, %s, in %[ms]s",
+                    this, "#has('%s'): %B from DynamoDB, %s",
                     attr, has,
                     new PrintableConsumedCapacity(
                         result.consumedCapacity()
-                    ).print(),
-                    System.currentTimeMillis() - start
+                    ).print()
                 );
             } catch (final SdkClientException ex) {
                 throw new IOException(
@@ -122,19 +120,17 @@ final class AwsItem implements Item {
         if (value == null) {
             final DynamoDbClient aws = this.credentials.aws();
             try {
-                final GetItemRequest request = this.makeItemRequestFor(attrib);
-                final long start = System.currentTimeMillis();
-                final GetItemResponse result = aws.getItem(request);
+                final GetItemResponse result = aws.getItem(
+                    this.makeItemRequestFor(attrib)
+                );
                 value = result.item().get(attrib);
                 Logger.info(
                     this,
-                    // @checkstyle LineLength (1 line)
-                    "#get('%s'): loaded '%[text]s' from DynamoDB, %s, in %[ms]s",
+                    "#get('%s'): loaded '%[text]s' from DynamoDB, %s",
                     attrib, value,
                     new PrintableConsumedCapacity(
                         result.consumedCapacity()
-                    ).print(),
-                    System.currentTimeMillis() - start
+                    ).print()
                 );
             } catch (final SdkClientException ex) {
                 throw new IOException(
@@ -168,23 +164,22 @@ final class AwsItem implements Item {
         final DynamoDbClient aws = this.credentials.aws();
         final Attributes expected = this.attributes.only(this.keys);
         try {
-            final UpdateItemRequest request = UpdateItemRequest.builder()
-                .tableName(this.name)
-                .expected(expected.asKeys())
-                .key(expected)
-                .attributeUpdates(attrs)
-                .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
-                .returnValues(ReturnValue.UPDATED_NEW)
-                .build();
-            final long start = System.currentTimeMillis();
-            final UpdateItemResponse result = aws.updateItem(request);
+            final UpdateItemResponse result = aws.updateItem(
+                UpdateItemRequest.builder()
+                    .tableName(this.name)
+                    .expected(expected.asKeys())
+                    .key(expected)
+                    .attributeUpdates(attrs)
+                    .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                    .returnValues(ReturnValue.UPDATED_NEW)
+                    .build()
+            );
             Logger.info(
-                this, "#put('%s'): updated item to DynamoDB, %s, in %[ms]s",
+                this, "#put('%s'): updated item to DynamoDB, %s",
                 attrs,
                 new PrintableConsumedCapacity(
                     result.consumedCapacity()
-                ).print(),
-                System.currentTimeMillis() - start
+                ).print()
             );
             return result.attributes();
         } catch (final SdkClientException ex) {

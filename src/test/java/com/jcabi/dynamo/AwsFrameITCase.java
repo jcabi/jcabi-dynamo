@@ -23,14 +23,17 @@ final class AwsFrameITCase {
     }
 
     @Test
-    void calculatesItems() throws Exception {
-        final String name = RandomStringUtils.randomAlphabetic(8);
+    void calculatesSizeWithScanLimitOne() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
-        final String hash = "hello";
-        final Attributes attrs = new Attributes().with(mock.hash(), hash);
+        final String hash = RandomStringUtils.secure().nextAlphabetic(8);
         for (int idx = 0; idx < 10; ++idx) {
-            tbl.put(attrs.with(mock.range(), idx));
+            tbl.put(
+                new Attributes()
+                    .with(mock.hash(), hash)
+                    .with(mock.range(), idx)
+            );
         }
         MatcherAssert.assertThat(
             "should equal to 10",
@@ -39,6 +42,19 @@ final class AwsFrameITCase {
                 .size(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void checksNotEmptyWithScanLimitOne() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final String hash = RandomStringUtils.secure().nextAlphabetic(8);
+        tbl.put(
+            new Attributes()
+                .with(mock.hash(), hash)
+                .with(mock.range(), 0)
+        );
         MatcherAssert.assertThat(
             "should equal to false",
             tbl.frame()
@@ -46,6 +62,21 @@ final class AwsFrameITCase {
                 .isEmpty(),
             Matchers.equalTo(false)
         );
+    }
+
+    @Test
+    void calculatesSizeWithScanLimitHundred() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final String hash = RandomStringUtils.secure().nextAlphabetic(8);
+        for (int idx = 0; idx < 10; ++idx) {
+            tbl.put(
+                new Attributes()
+                    .with(mock.hash(), hash)
+                    .with(mock.range(), idx)
+            );
+        }
         MatcherAssert.assertThat(
             "should equal to 10",
             tbl.frame()
@@ -53,6 +84,21 @@ final class AwsFrameITCase {
                 .size(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void calculatesSizeWithQueryLimitOne() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final String hash = RandomStringUtils.secure().nextAlphabetic(8);
+        for (int idx = 0; idx < 10; ++idx) {
+            tbl.put(
+                new Attributes()
+                    .with(mock.hash(), hash)
+                    .with(mock.range(), idx)
+            );
+        }
         MatcherAssert.assertThat(
             "should equal to 10",
             tbl.frame()
@@ -61,6 +107,21 @@ final class AwsFrameITCase {
                 .size(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void calculatesSizeWithQueryLimitHundred() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final String hash = RandomStringUtils.secure().nextAlphabetic(8);
+        for (int idx = 0; idx < 10; ++idx) {
+            tbl.put(
+                new Attributes()
+                    .with(mock.hash(), hash)
+                    .with(mock.range(), idx)
+            );
+        }
         MatcherAssert.assertThat(
             "should equal to 10",
             tbl.frame()

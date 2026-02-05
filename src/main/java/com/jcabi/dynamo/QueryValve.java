@@ -36,7 +36,6 @@ import software.amazon.awssdk.services.dynamodb.model.Select;
 @ToString
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = { "limit", "forward" })
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.GuardLogStatement"})
 public final class QueryValve implements Valve {
 
     /**
@@ -127,19 +126,17 @@ public final class QueryValve implements Valve {
                 bld = bld.indexName(this.index);
             }
             final QueryRequest request = bld.build();
-            final long start = System.currentTimeMillis();
             final QueryResponse result = aws.query(request);
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
-                "#items(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s, in %[ms]s",
+                "#items(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                 result.count(), table,
                 result.lastEvaluatedKey(),
                 conditions,
                 new PrintableConsumedCapacity(
                     result.consumedCapacity()
-                ).print(),
-                System.currentTimeMillis() - start
+                ).print()
             );
             return new QueryValve.NextDosage(credentials, request, result);
         } catch (final SdkClientException ex) {
@@ -171,20 +168,17 @@ public final class QueryValve implements Valve {
                 bld = bld.indexName(this.index);
             }
             final QueryRequest request = bld.build();
-            final long start = System.currentTimeMillis();
             final QueryResponse rslt = aws.query(request);
-            final int count = rslt.count();
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
-                "#total(): COUNT=%d in '%s' using %s, %s, in %[ms]s",
-                count, request.tableName(), request.queryFilter(),
+                "#total(): COUNT=%d in '%s' using %s, %s",
+                rslt.count(), request.tableName(), request.queryFilter(),
                 new PrintableConsumedCapacity(
                     rslt.consumedCapacity()
-                ).print(),
-                System.currentTimeMillis() - start
+                ).print()
             );
-            return count;
+            return rslt.count();
         } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
@@ -374,19 +368,17 @@ public final class QueryValve implements Valve {
                         this.result.lastEvaluatedKey()
                     )
                     .build();
-                final long start = System.currentTimeMillis();
                 final QueryResponse rslt = aws.query(rqst);
                 Logger.info(
                     this,
                     // @checkstyle LineLength (1 line)
-                    "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s, in %[ms]s",
+                    "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                     rslt.count(), rqst.tableName(),
                     rslt.lastEvaluatedKey(),
                     rqst.keyConditions(),
                     new PrintableConsumedCapacity(
                         rslt.consumedCapacity()
-                    ).print(),
-                    System.currentTimeMillis() - start
+                    ).print()
                 );
                 return new QueryValve.NextDosage(this.credentials, rqst, rslt);
             } finally {

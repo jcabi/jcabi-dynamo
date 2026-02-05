@@ -18,8 +18,9 @@ final class AwsItemTest {
     @Test
     void comparesToItself() {
         final Credentials creds = new Credentials.Simple("key", "secret");
-        final Region region = new Region.Simple(creds);
-        final AwsTable table = new AwsTable(creds, region, "table-name");
+        final AwsTable table = new AwsTable(
+            creds, new Region.Simple(creds), "table-name"
+        );
         final AwsFrame frame = new AwsFrame(creds, table, table.name());
         MatcherAssert.assertThat(
             "should equal to itself",

@@ -20,12 +20,20 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 final class AttributeUpdatesTest {
 
     @Test
-    void tellsIfEmptyOrNot() {
-        final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat("should be true", attr.isEmpty(), Matchers.is(Boolean.TRUE));
+    void tellsIfEmpty() {
+        MatcherAssert.assertThat(
+            "should be true",
+            new AttributeUpdates().isEmpty(),
+            Matchers.is(Boolean.TRUE)
+        );
+    }
+
+    @Test
+    void tellsIfNotEmpty() {
         MatcherAssert.assertThat(
             "should be false",
-            attr.with("testkey", AttributeValueUpdate.builder().build())
+            new AttributeUpdates()
+                .with("testkey", AttributeValueUpdate.builder().build())
                 .isEmpty(),
             Matchers.is(Boolean.FALSE)
         );
@@ -33,11 +41,10 @@ final class AttributeUpdatesTest {
 
     @Test
     void addsAttributeValueUpdate() {
-        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
-        final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
             "should be 1",
-            attr.with("testkey1", AttributeValueUpdate.builder().build())
+            new AttributeUpdates()
+                .with("testkey1", AttributeValueUpdate.builder().build())
                 .size(),
             Matchers.is(1)
         );
@@ -45,67 +52,93 @@ final class AttributeUpdatesTest {
 
     @Test
     void addsAttributeValue() {
-        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
-        final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
             "should be 1",
-            attr.with("testkey2", AttributeValue.builder().s("mock").build()).size(),
+            new AttributeUpdates()
+                .with("testkey2", AttributeValue.builder().s("mock").build())
+                .size(),
             Matchers.is(1)
         );
     }
 
     @Test
     void addsObject() {
-        MatcherAssert.assertThat("should be 0", 0, Matchers.is(0));
-        final AttributeUpdates attr = new AttributeUpdates();
         MatcherAssert.assertThat(
             "should be 1",
-            attr.with("testkey3", "value here").size(),
+            new AttributeUpdates()
+                .with("testkey3", "value here")
+                .size(),
             Matchers.is(1)
         );
     }
 
     @Test
-    void returnsKeySet() {
-        final String firstkey = "key1";
-        final AttributeUpdates attr = new AttributeUpdates()
-            .with(firstkey, "valuediff").with("key2", "value2");
+    void returnsKeySetSize() {
         MatcherAssert.assertThat(
             "should be 2",
-            attr.keySet().size(),
+            new AttributeUpdates()
+                .with("key1", "valuediff")
+                .with("key2", "value2")
+                .keySet()
+                .size(),
             Matchers.is(2)
         );
+    }
+
+    @Test
+    void returnsKeySetContent() {
+        final String firstkey = "key1";
         MatcherAssert.assertThat(
             "should be equal to 'key1'",
-            attr.keySet().iterator().next(),
+            new AttributeUpdates()
+                .with(firstkey, "valuediff")
+                .with("key2", "value2")
+                .keySet()
+                .iterator()
+                .next(),
             Matchers.equalTo(firstkey)
         );
     }
 
     @Test
-    void returnsValues() {
-        final String firstvalue = "value3";
-        final AttributeUpdates attr = new AttributeUpdates()
-            .with("key3", firstvalue).with("key4", "value4");
+    void returnsValuesSize() {
         MatcherAssert.assertThat(
             "should be 2",
-            attr.values().size(),
+            new AttributeUpdates()
+                .with("key3", "value3")
+                .with("key4", "value4")
+                .values()
+                .size(),
             Matchers.is(2)
         );
+    }
+
+    @Test
+    void returnsValuesContent() {
+        final String firstvalue = "value3";
         MatcherAssert.assertThat(
             "should be equal to 'value3'",
-            attr.values().iterator().next().value().s(),
+            new AttributeUpdates()
+                .with("key3", firstvalue)
+                .with("key4", "value4")
+                .values()
+                .iterator()
+                .next()
+                .value()
+                .s(),
             Matchers.equalTo(firstvalue)
         );
     }
 
     @Test
     void returnsEntries() {
-        final AttributeUpdates attr = new AttributeUpdates()
-            .with("key5", "value5").with("key6", "value7");
         MatcherAssert.assertThat(
             "should be 2",
-            attr.entrySet().size(),
+            new AttributeUpdates()
+                .with("key5", "value5")
+                .with("key6", "value7")
+                .entrySet()
+                .size(),
             Matchers.is(2)
         );
     }
@@ -113,11 +146,11 @@ final class AttributeUpdatesTest {
     @Test
     void getsEntry() {
         final String key = "key10";
-        final AttributeUpdates attr = new AttributeUpdates()
-            .with(key, "value10");
         MatcherAssert.assertThat(
             "should be not null",
-            attr.get(key),
+            new AttributeUpdates()
+                .with(key, "value10")
+                .get(key),
             Matchers.notNullValue()
         );
     }
@@ -125,11 +158,12 @@ final class AttributeUpdatesTest {
     @Test
     void containsKey() {
         final String key = "key11";
-        final AttributeUpdates attr = new AttributeUpdates()
-            .with(key, "value11").with("otherkey1", "othervalue1");
         MatcherAssert.assertThat(
             "should contains key 'key11'",
-            attr.containsKey(key),
+            new AttributeUpdates()
+                .with(key, "value11")
+                .with("otherkey1", "othervalue1")
+                .containsKey(key),
             Matchers.is(Boolean.TRUE)
         );
     }
@@ -137,27 +171,29 @@ final class AttributeUpdatesTest {
     @Test
     void containsValue() {
         final String value = "attrv";
-        final AttributeUpdates attr = new AttributeUpdates()
-            .with("attrkey", value).with("otherkey", "othervalue");
         MatcherAssert.assertThat(
             "should contains value 'attrv'",
-            attr.containsValue(
-                AttributeValueUpdate.builder()
-                    .value(AttributeValue.builder().s(value).build())
-                    .action(AttributeAction.PUT)
-                    .build()
-            ),
+            new AttributeUpdates()
+                .with("attrkey", value)
+                .with("otherkey", "othervalue")
+                .containsValue(
+                    AttributeValueUpdate.builder()
+                        .value(AttributeValue.builder().s(value).build())
+                        .action(AttributeAction.PUT)
+                        .build()
+                ),
             Matchers.is(Boolean.TRUE)
         );
     }
 
     @Test
     void canTurnToString() {
-        final AttributeUpdates attr = new AttributeUpdates()
-            .with("onekey", "onevalue").with("secondkey", "secondvalue");
         MatcherAssert.assertThat(
             "should contain key names",
-            attr.toString(),
+            new AttributeUpdates()
+                .with("onekey", "onevalue")
+                .with("secondkey", "secondvalue")
+                .toString(),
             Matchers.allOf(
                 Matchers.containsString("onekey="),
                 Matchers.containsString("secondkey=")
@@ -166,12 +202,20 @@ final class AttributeUpdatesTest {
     }
 
     @Test
+    void addsMapReportsEmptySize() {
+        MatcherAssert.assertThat(
+            "should be 0",
+            new AttributeUpdates().size(),
+            Matchers.is(0)
+        );
+    }
+
+    @Test
     void addsMap() {
-        final AttributeUpdates attr = new AttributeUpdates();
-        MatcherAssert.assertThat("should be 0", attr.size(), Matchers.is(0));
         MatcherAssert.assertThat(
             "should be 1",
-            attr.with("testkey8", new AttributeUpdates().with("key", "value"))
+            new AttributeUpdates()
+                .with("testkey8", new AttributeUpdates().with("key", "value"))
                 .size(),
             Matchers.is(1)
         );

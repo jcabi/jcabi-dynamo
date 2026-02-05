@@ -16,21 +16,27 @@ final class CredentialsTest {
 
     @Test
     void instantiatesAwsClient() {
-        final Credentials creds = new Credentials.Simple(
-            "ABABABABABABABABABEF",
-            "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCEF"
+        MatcherAssert.assertThat(
+            "not null",
+            new Credentials.Simple(
+                "ABABABABABABABABABEF",
+                "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCEF"
+            ).aws(),
+            Matchers.notNullValue()
         );
-        MatcherAssert.assertThat("not null", creds.aws(), Matchers.notNullValue());
     }
 
     @Test
     void instantiatesAwsClientWithCustomRegion() {
-        final Credentials creds = new Credentials.Simple(
-            "ABABABABABABABABABAB",
-            "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE",
-            "eu-west-1"
+        MatcherAssert.assertThat(
+            "not null",
+            new Credentials.Simple(
+                "ABABABABABABABABABAB",
+                "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE",
+                "eu-west-1"
+            ).aws(),
+            Matchers.notNullValue()
         );
-        MatcherAssert.assertThat("not null", creds.aws(), Matchers.notNullValue());
     }
 
 }

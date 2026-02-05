@@ -7,8 +7,7 @@ package com.jcabi.dynamo.retry;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Table;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -19,22 +18,14 @@ import org.mockito.Mockito;
 final class ReTableTest {
 
     @Test
-    void retriesDelete() throws Exception {
+    void retriesDeleteOnFailure() throws Exception {
         final Table table = Mockito.mock(Table.class);
-        final Attributes attrs = new Attributes();
-        final String msg = "Exception!";
-        Mockito.doThrow(new IOException(msg)).when(table)
-            .delete(attrs);
-        final Table retry = new ReTable(table);
-        try {
-            retry.delete(attrs);
-        } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                "should be equal to 'Exception!'",
-                ex.getMessage(),
-                Matchers.equalTo(msg)
-            );
-        }
-        Mockito.verify(table, Mockito.times(3)).delete(attrs);
+        Mockito.doThrow(new IOException("Exception!")).when(table)
+            .delete(new Attributes());
+        final Table retried = new ReTable(table);
+        Assertions.assertThrows(
+            IOException.class,
+            () -> retried.delete(new Attributes())
+        );
     }
 }

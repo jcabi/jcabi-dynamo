@@ -25,7 +25,7 @@ final class AwsIteratorITCase {
 
     @Test
     void iteratesItems() throws Exception {
-        final String name = RandomStringUtils.randomAlphabetic(8);
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
         tbl.put(
@@ -42,12 +42,15 @@ final class AwsIteratorITCase {
 
     @Test
     void iteratesItemsAndDeletes() throws Exception {
-        final String name = RandomStringUtils.randomAlphabetic(8);
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
-        final Attributes attrs = new Attributes().with(mock.range(), 1L);
         for (int idx = 0; idx < 6; ++idx) {
-            tbl.put(attrs.with(mock.hash(), String.format("i%d", idx)));
+            tbl.put(
+                new Attributes()
+                    .with(mock.range(), 1L)
+                    .with(mock.hash(), String.format("i%d", idx))
+            );
         }
         final Iterator<Item> items = tbl.frame().iterator();
         int cnt = 0;

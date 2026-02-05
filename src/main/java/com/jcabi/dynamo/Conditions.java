@@ -40,7 +40,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
     {
         "PMD.TooManyMethods",
         "PMD.ProhibitPublicStaticMethods",
-        "PMD.AvoidInstantiatingObjectsInLoops"
+        "PMD.LooseCoupling"
     }
     )
 public final class Conditions implements Map<String, Condition> {

@@ -130,11 +130,10 @@ public final class MadeTable {
         final String name = this.request.tableName();
         aws.createTable(this.request);
         Logger.info(this, "DynamoDB table '%s' creation requested...", name);
-        final DescribeTableRequest req = DescribeTableRequest.builder()
-            .tableName(name)
-            .build();
         while (true) {
-            final DescribeTableResponse result = aws.describeTable(req);
+            final DescribeTableResponse result = aws.describeTable(
+                DescribeTableRequest.builder().tableName(name).build()
+            );
             if ("ACTIVE".equals(result.table().tableStatusAsString())) {
                 Logger.info(
                     this,

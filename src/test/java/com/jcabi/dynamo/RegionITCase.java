@@ -28,14 +28,36 @@ final class RegionITCase {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    void worksWithAmazon() throws Exception {
-        final String name = RandomStringUtils.randomAlphabetic(8);
+    void queriesFrameSize() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
-        final String attr = RandomStringUtils.randomAlphabetic(8);
-        final String value = RandomStringUtils.randomAlphanumeric(10);
-        final String hash = RandomStringUtils.randomAlphanumeric(10);
+        final String hash = RandomStringUtils.secure().nextAlphanumeric(10);
+        for (int idx = 0; idx < 5; ++idx) {
+            tbl.put(
+                new Attributes()
+                    .with(mock.hash(), hash)
+                    .with(mock.range(), idx)
+                    .with("some-attr", "val")
+            );
+        }
+        MatcherAssert.assertThat(
+            "should has size 5",
+            tbl.frame()
+                .where(mock.hash(), Conditions.equalTo(hash))
+                .through(new QueryValve().withLimit(1)),
+            Matchers.hasSize(5)
+        );
+    }
+
+    @Test
+    void scansFrameSize() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final String attr = RandomStringUtils.secure().nextAlphabetic(8);
+        final String value = RandomStringUtils.secure().nextAlphanumeric(10);
+        final String hash = RandomStringUtils.secure().nextAlphanumeric(10);
         for (int idx = 0; idx < 5; ++idx) {
             tbl.put(
                 new Attributes()
@@ -47,26 +69,65 @@ final class RegionITCase {
         MatcherAssert.assertThat(
             "should has size 5",
             tbl.frame()
-                .where(mock.hash(), Conditions.equalTo(hash))
-                .through(new QueryValve().withLimit(1)),
+                .where(attr, Conditions.equalTo(value))
+                .through(
+                    new ScanValve()
+                        .withLimit(10)
+                        .withAttributeToGet(attr)
+                ),
             Matchers.hasSize(5)
         );
-        final Frame frame = tbl.frame()
+    }
+
+    @Test
+    void readsAttributeFromItem() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final String attr = RandomStringUtils.secure().nextAlphabetic(8);
+        final String value = RandomStringUtils.secure().nextAlphanumeric(10);
+        tbl.put(
+            new Attributes()
+                .with(mock.hash(), "somehash")
+                .with(mock.range(), 0)
+                .with(attr, value)
+        );
+        MatcherAssert.assertThat(
+            "should equal to attribute value",
+            tbl.frame()
+                .where(attr, Conditions.equalTo(value))
+                .through(
+                    new ScanValve()
+                        .withLimit(10)
+                        .withAttributeToGet(attr)
+                )
+                .iterator().next().get(attr).s(),
+            Matchers.equalTo(value)
+        );
+    }
+
+    @Test
+    void updatesAndReadsModifiedAttribute() throws Exception {
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
+        final RegionMock mock = new RegionMock();
+        final Table tbl = mock.get(name).table(name);
+        final String attr = RandomStringUtils.secure().nextAlphabetic(8);
+        final String value = RandomStringUtils.secure().nextAlphanumeric(10);
+        final String hash = RandomStringUtils.secure().nextAlphanumeric(10);
+        tbl.put(
+            new Attributes()
+                .with(mock.hash(), hash)
+                .with(mock.range(), 0)
+                .with(attr, value)
+        );
+        final Iterator<Item> items = tbl.frame()
             .where(attr, Conditions.equalTo(value))
             .through(
                 new ScanValve()
                     .withLimit(10)
                     .withAttributeToGet(attr)
-            );
-        MatcherAssert.assertThat("should has size 5", frame, Matchers.hasSize(5));
-        final Iterator<Item> items = frame.iterator();
+            ).iterator();
         final Item item = items.next();
-        final int range = Integer.parseInt(item.get(mock.range()).n());
-        MatcherAssert.assertThat(
-            "should equal to random alphanumeric value",
-            item.get(attr).s(),
-            Matchers.equalTo(value)
-        );
         item.put(
             attr,
             AttributeValueUpdate.builder()
@@ -75,22 +136,21 @@ final class RegionITCase {
                 .build()
         );
         MatcherAssert.assertThat(
-            "should not equal to random alphanumeric value",
+            "should not equal to original value",
             tbl.frame()
                 .where(mock.hash(), hash)
-                .where(mock.range(), Conditions.equalTo(range))
+                .where(mock.range(), Conditions.equalTo(0))
                 .through(new ScanValve())
                 .iterator().next()
                 .get(attr).s(),
             Matchers.not(Matchers.equalTo(value))
         );
-        items.remove();
     }
 
     @Test
     @Disabled
     void retrievesAttributesFromDynamo() throws Exception {
-        final String name = RandomStringUtils.randomAlphabetic(8);
+        final String name = RandomStringUtils.secure().nextAlphabetic(8);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
         final int idx = 10;

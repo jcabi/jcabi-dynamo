@@ -21,6 +21,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
  * @since 0.1
  */
 @Immutable
+@FunctionalInterface
 public interface Credentials {
 
     /**

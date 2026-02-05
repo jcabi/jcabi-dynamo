@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
-import software.amazon.awssdk.services.dynamodb.model.DeleteItemResponse;
 import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
 
 /**
@@ -38,7 +38,6 @@ import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
     (
         of = { "credentials", "conditions", "frame", "name", "keys", "valve" }
     )
-@SuppressWarnings("PMD.GuardLogStatement")
 final class AwsIterator implements Iterator<Item> {
 
     /**
@@ -77,6 +76,11 @@ final class AwsIterator implements Iterator<Item> {
     private final transient AtomicReference<Dosage> dosage;
 
     /**
+     * Lock for thread safety.
+     */
+    private final transient ReentrantLock lock;
+
+    /**
      * Position inside the scan result, last seen, starts with -1 (mutable).
      */
     private transient int position;
@@ -100,13 +104,15 @@ final class AwsIterator implements Iterator<Item> {
         this.conditions = conds;
         this.keys = primary;
         this.valve = vlv;
+        this.lock = new ReentrantLock();
         this.dosage = new AtomicReference<>();
         this.position = -1;
     }
 
     @Override
     public boolean hasNext() {
-        synchronized (this.dosage) {
+        this.lock.lock();
+        try {
             if (this.dosage.get() == null) {
                 try {
                     this.dosage.set(
@@ -128,12 +134,15 @@ final class AwsIterator implements Iterator<Item> {
                 this.position = -1;
             }
             return this.dosage.get().items().size() - this.position > 1;
+        } finally {
+            this.lock.unlock();
         }
     }
 
     @Override
     public Item next() {
-        synchronized (this.dosage) {
+        this.lock.lock();
+        try {
             if (!this.hasNext()) {
                 throw new NoSuchElementException(
                     String.format(
@@ -150,13 +159,15 @@ final class AwsIterator implements Iterator<Item> {
                 new Attributes(this.dosage.get().items().get(this.position)),
                 new Array<>(this.keys)
             );
+        } finally {
+            this.lock.unlock();
         }
     }
 
     @Override
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void remove() {
-        synchronized (this.dosage) {
+        this.lock.lock();
+        try {
             final Dosage prev = this.dosage.get();
             if (prev == null) {
                 throw new IllegalStateException(
@@ -169,8 +180,7 @@ final class AwsIterator implements Iterator<Item> {
                     new ArrayList<>(prev.items());
                 final Map<String, AttributeValue> item =
                     items.remove(this.position);
-                final long start = System.currentTimeMillis();
-                final DeleteItemResponse res = aws.deleteItem(
+                aws.deleteItem(
                     DeleteItemRequest.builder()
                         .tableName(this.name)
                         .key(new Attributes(item).only(this.keys))
@@ -178,7 +188,8 @@ final class AwsIterator implements Iterator<Item> {
                             ReturnConsumedCapacity.TOTAL
                         )
                         .expected(
-                            new Attributes(item).only(this.keys).asKeys()
+                            new Attributes(item)
+                                .only(this.keys).asKeys()
                         )
                         .build()
                 );
@@ -186,16 +197,14 @@ final class AwsIterator implements Iterator<Item> {
                 --this.position;
                 Logger.info(
                     this,
-                    "#remove(): item #%d removed from DynamoDB, %s, in %[ms]s",
-                    this.position,
-                    new PrintableConsumedCapacity(
-                        res.consumedCapacity()
-                    ).print(),
-                    System.currentTimeMillis() - start
+                    "#remove(): item #%d removed from DynamoDB",
+                    this.position
                 );
             } finally {
                 aws.close();
             }
+        } finally {
+            this.lock.unlock();
         }
     }
 

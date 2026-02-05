@@ -6,7 +6,6 @@ package com.jcabi.dynamo;
 
 import com.jcabi.immutable.ArrayMap;
 import java.util.Collections;
-import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -17,20 +16,38 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
  * Test case for {@link Attributes}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.UseConcurrentHashMap")
 final class AttributesTest {
 
     @Test
-    void workAsMapOfAttributes() {
+    void worksAsMapWithCorrectKeySetSize() {
+        MatcherAssert.assertThat(
+            "should has size 1",
+            new Attributes().with(
+                "id",
+                AttributeValue.builder().s("some text value").build()
+            ).keySet(),
+            Matchers.hasSize(1)
+        );
+    }
+
+    @Test
+    void worksAsMapWithCorrectEntry() {
         final String attr = "id";
         final AttributeValue value = AttributeValue.builder().s("some text value").build();
-        final Map<String, AttributeValue> attrs = new Attributes()
-            .with(attr, value);
-        MatcherAssert.assertThat("should has size 1", attrs.keySet(), Matchers.hasSize(1));
-        MatcherAssert.assertThat("should has some entry", attrs, Matchers.hasEntry(attr, value));
+        MatcherAssert.assertThat(
+            "should has some entry",
+            new Attributes().with(attr, value),
+            Matchers.hasEntry(attr, value)
+        );
+    }
+
+    @Test
+    void worksAsMapFromExistingMap() {
+        final String attr = "id";
+        final AttributeValue value = AttributeValue.builder().s("some text value").build();
         MatcherAssert.assertThat(
             "should has some text value",
-            new Attributes(attrs),
+            new Attributes(new Attributes().with(attr, value)),
             Matchers.hasEntry(attr, value)
         );
     }
@@ -65,10 +82,7 @@ final class AttributesTest {
     }
 
     @Test
-    void caseSensitive() {
-        final String first = "Alpha";
-        final String second = "AlPha";
-        final String third = "Beta";
+    void caseSensitiveWithDifferentCase() {
         MatcherAssert.assertThat(
             "should has size 2",
             new Attributes().with(
@@ -78,6 +92,12 @@ final class AttributesTest {
             ).keySet(),
             Matchers.hasSize(2)
         );
+    }
+
+    @Test
+    void caseSensitivePreservesKeys() {
+        final String first = "Alpha";
+        final String second = "AlPha";
         MatcherAssert.assertThat(
             "should has keys 'Alpha', 'AlPha'",
             new Attributes()
@@ -88,6 +108,11 @@ final class AttributesTest {
                 Matchers.hasKey(second)
             )
         );
+    }
+
+    @Test
+    void caseSensitiveFiltersCorrectly() {
+        final String third = "Beta";
         MatcherAssert.assertThat(
             "should has key 'Beta'",
             new Attributes()
