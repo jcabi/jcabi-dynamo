@@ -81,7 +81,7 @@ final class AwsFrameTest {
             new AwsFrame(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsTable.class),
-                "thr\u00f6ugh-tbl"
+                "fl\u00f6w-tbl"
             ).through(Mockito.mock(Valve.class)),
             Matchers.instanceOf(Frame.class)
         );
