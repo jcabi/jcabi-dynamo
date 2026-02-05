@@ -57,7 +57,7 @@ final class ReIteratorTest {
 
     @Test
     void returnsFalseWhenOriginIsExhausted() {
-        final List<String> items = Arrays.asList("onl\u00ff");
+        final List<String> items = Arrays.asList("\u00f6nly");
         final Iterator<String> iter = items.iterator();
         iter.next();
         MatcherAssert.assertThat(

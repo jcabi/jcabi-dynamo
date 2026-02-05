@@ -77,7 +77,7 @@ final class MkFrameTest {
 
     @Test
     void ignoresValveInThrough() throws Exception {
-        final String name = "thr\u00f6ugh";
+        final String name = "d\u00fcrch";
         final String key = "k\u00e9y";
         final Region region = new MkRegion(
             new H2Data().with(name, new String[]{key})
