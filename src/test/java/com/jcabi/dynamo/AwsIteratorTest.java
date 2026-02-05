@@ -6,16 +6,20 @@ package com.jcabi.dynamo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
 
 /**
  * Test case for {@link AwsIterator}.
@@ -225,6 +229,113 @@ final class AwsIteratorTest {
                 table, new Conditions(),
                 new ArrayList<>(0), vlv
             )::next
+        );
+    }
+
+    @Test
+    void iteratesMultipleItemsInSingleDosage() throws IOException {
+        final Credentials creds = Mockito.mock(Credentials.class);
+        final String attr = UUID.randomUUID().toString();
+        final Dosage dosage = Mockito.mock(Dosage.class);
+        Mockito.doReturn(
+            Arrays.asList(
+                new Attributes().with(attr, "première"),
+                new Attributes().with(attr, "deuxième")
+            )
+        ).when(dosage).items();
+        Mockito.doReturn(false).when(dosage).hasNext();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(dosage)
+            .when(valve)
+            .fetch(
+                Mockito.eq(creds), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = UUID.randomUUID().toString();
+        final Iterator<Item> iter = new AwsIterator(
+            creds,
+            new AwsFrame(
+                creds,
+                new AwsTable(
+                    creds,
+                    Mockito.mock(Region.class),
+                    table
+                ),
+                table
+            ),
+            table, new Conditions(),
+            new ArrayList<>(0), valve
+        );
+        iter.next();
+        MatcherAssert.assertThat(
+            "did not find second item in single dosage",
+            iter.hasNext(),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
+    void throwsOnRemoveBeforeIteration() {
+        final String table = UUID.randomUUID().toString();
+        final Credentials creds = Mockito.mock(Credentials.class);
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            new AwsIterator(
+                creds,
+                new AwsFrame(
+                    creds,
+                    new AwsTable(
+                        creds,
+                        Mockito.mock(Region.class),
+                        table
+                    ),
+                    table
+                ),
+                table, new Conditions(),
+                new ArrayList<>(0), Mockito.mock(Valve.class)
+            )::remove
+        );
+    }
+
+    @Test
+    void removesCurrentItem() throws IOException {
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        final Credentials creds = Mockito.mock(Credentials.class);
+        Mockito.doReturn(aws).when(creds).aws();
+        final String attr = UUID.randomUUID().toString();
+        final Dosage dosage = Mockito.mock(Dosage.class);
+        Mockito.doReturn(
+            Collections.singletonList(
+                new Attributes().with(attr, "ünïcödé")
+            )
+        ).when(dosage).items();
+        Mockito.doReturn(false).when(dosage).hasNext();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(dosage)
+            .when(valve)
+            .fetch(
+                Mockito.eq(creds), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = UUID.randomUUID().toString();
+        final Iterator<Item> iter = new AwsIterator(
+            creds,
+            new AwsFrame(
+                creds,
+                new AwsTable(
+                    creds,
+                    Mockito.mock(Region.class),
+                    table
+                ),
+                table
+            ),
+            table, new Conditions(),
+            Collections.singletonList(attr), valve
+        );
+        iter.next();
+        iter.remove();
+        Mockito.verify(aws).deleteItem(
+            Mockito.any(DeleteItemRequest.class)
         );
     }
 

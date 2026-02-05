@@ -6,8 +6,11 @@ package com.jcabi.dynamo;
 
 import com.jcabi.immutable.ArrayMap;
 import java.util.Collections;
+import java.util.Random;
+import java.util.UUID;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
@@ -16,6 +19,7 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
  * Test case for {@link Attributes}.
  * @since 0.1
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class AttributesTest {
 
     @Test
@@ -119,6 +123,112 @@ final class AttributesTest {
                 .with(third, "some text to use")
                 .only(Collections.singletonList(third)),
             Matchers.hasKey(third)
+        );
+    }
+
+    @Test
+    void buildsWithLongValue() {
+        final String attr = UUID.randomUUID().toString();
+        final long number = new Random().nextLong();
+        MatcherAssert.assertThat(
+            "did not store long value as numeric attribute",
+            new Attributes().with(attr, number).get(attr).n(),
+            Matchers.equalTo(String.valueOf(number))
+        );
+    }
+
+    @Test
+    void buildsWithIntegerValue() {
+        final String attr = UUID.randomUUID().toString();
+        final int number = new Random().nextInt();
+        MatcherAssert.assertThat(
+            "did not store integer value as numeric attribute",
+            new Attributes().with(attr, number).get(attr).n(),
+            Matchers.equalTo(String.valueOf(number))
+        );
+    }
+
+    @Test
+    void rejectsDirectPut() {
+        Assertions.assertThrows(
+            UnsupportedOperationException.class,
+            () -> new Attributes().put(
+                UUID.randomUUID().toString(),
+                AttributeValue.builder().s("ü").build()
+            )
+        );
+    }
+
+    @Test
+    void rejectsDirectRemove() {
+        Assertions.assertThrows(
+            UnsupportedOperationException.class,
+            () -> new Attributes().remove(UUID.randomUUID().toString())
+        );
+    }
+
+    @Test
+    void rejectsDirectClear() {
+        Assertions.assertThrows(
+            UnsupportedOperationException.class,
+            () -> new Attributes().clear()
+        );
+    }
+
+    @Test
+    void rejectsDirectPutAll() {
+        Assertions.assertThrows(
+            UnsupportedOperationException.class,
+            () -> new Attributes().putAll(
+                Collections.singletonMap(
+                    UUID.randomUUID().toString(),
+                    AttributeValue.builder().s("ö").build()
+                )
+            )
+        );
+    }
+
+    @Test
+    void retainsOnlyMatchingKeys() {
+        final String kept = UUID.randomUUID().toString();
+        MatcherAssert.assertThat(
+            "did not retain the matching key",
+            new Attributes()
+                .with(kept, "ütf-vàl")
+                .with(UUID.randomUUID().toString(), "öther")
+                .only(Collections.singletonList(kept)),
+            Matchers.hasKey(kept)
+        );
+    }
+
+    @Test
+    void mergesWithMapOfAttributes() {
+        MatcherAssert.assertThat(
+            "did not merge all map entries",
+            new Attributes().with(
+                new ArrayMap<String, AttributeValue>()
+                    .with(
+                        UUID.randomUUID().toString(),
+                        AttributeValue.builder().s("ä").build()
+                    )
+                    .with(
+                        UUID.randomUUID().toString(),
+                        AttributeValue.builder().s("ö").build()
+                    )
+            ).keySet(),
+            Matchers.hasSize(2)
+        );
+    }
+
+    @Test
+    void convertsMultipleAttributesToExpectedKeys() {
+        MatcherAssert.assertThat(
+            "did not convert all attributes to expected keys",
+            new Attributes()
+                .with(UUID.randomUUID().toString(), "vàl-1")
+                .with(UUID.randomUUID().toString(), "vàl-2")
+                .asKeys().keySet(),
+            Matchers.hasSize(2)
         );
     }
 
