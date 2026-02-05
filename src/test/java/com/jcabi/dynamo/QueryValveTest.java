@@ -24,6 +24,7 @@ import software.amazon.awssdk.services.dynamodb.model.QueryResponse;
  * Test case for {@link QueryValve}.
  * @since 0.1
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class QueryValveTest {
 
     @Test
@@ -284,6 +285,93 @@ final class QueryValveTest {
                 .withIndexName("\u00efndex")
                 .fetch(
                     credentials, "t\u00e4ble",
+                    new Conditions(), new ArrayList<>(0)
+                ).items(),
+            Matchers.hasSize(1)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void fetchesWithConsistentRead() throws Exception {
+        final Credentials creds = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(creds).aws();
+        Mockito.doReturn(
+            QueryResponse.builder()
+                .items(
+                    Collections.singletonList(Collections.emptyMap())
+                )
+                .consumedCapacity(
+                    ConsumedCapacity.builder()
+                        .capacityUnits(1.0d).build()
+                )
+                .build()
+        ).when(aws).query(Mockito.any(QueryRequest.class));
+        MatcherAssert.assertThat(
+            "did not fetch with consistent read disabled",
+            new QueryValve()
+                .withConsistentRead(false)
+                .fetch(
+                    creds, "c\u00f6nsist-tbl",
+                    new Conditions(), new ArrayList<>(0)
+                ).items(),
+            Matchers.hasSize(1)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void fetchesWithCustomLimit() throws Exception {
+        final Credentials creds = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(creds).aws();
+        Mockito.doReturn(
+            QueryResponse.builder()
+                .items(
+                    Collections.singletonList(Collections.emptyMap())
+                )
+                .consumedCapacity(
+                    ConsumedCapacity.builder()
+                        .capacityUnits(1.0d).build()
+                )
+                .build()
+        ).when(aws).query(Mockito.any(QueryRequest.class));
+        MatcherAssert.assertThat(
+            "did not fetch with custom limit",
+            new QueryValve()
+                .withLimit(5)
+                .fetch(
+                    creds, "l\u00efmit-tbl",
+                    new Conditions(), new ArrayList<>(0)
+                ).items(),
+            Matchers.hasSize(1)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void fetchesWithAttributeToGet() throws Exception {
+        final Credentials creds = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(creds).aws();
+        Mockito.doReturn(
+            QueryResponse.builder()
+                .items(
+                    Collections.singletonList(Collections.emptyMap())
+                )
+                .consumedCapacity(
+                    ConsumedCapacity.builder()
+                        .capacityUnits(1.0d).build()
+                )
+                .build()
+        ).when(aws).query(Mockito.any(QueryRequest.class));
+        MatcherAssert.assertThat(
+            "did not fetch with attribute to get",
+            new QueryValve()
+                .withAttributeToGet("\u00e4ttr")
+                .fetch(
+                    creds, "\u00e4ttr-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
