@@ -9,7 +9,7 @@
     <artifactId>jcabi-maven-skin</artifactId>
     <version>2.0.1</version>
   </skin>
-  <bannerLeft name="jcabi-dynamo" href="https://skin.jcabi.com/">
+  <bannerLeft name="jcabi" href="https://www.jcabi.com/">
     <image src="https://jcabi.com/logo-square.svg" alt="jcabi" width="64" height="64"/>
   </bannerLeft>
   <custom>
@@ -19,16 +19,19 @@
     </jcabi>
   </custom>
   <body>
+    <breadcrumbs>
+      <item name="jcabi.com" href="https://www.jcabi.com"/>
+    </breadcrumbs>
     <menu name="Overview">
-      <item name="Introduction" href="./index.html"/>
+      <item name="Introduction" href="index.html"/>
       <item name="JavaDoc ${project.version}" href="./apidocs-${project.version}/index.html"/>
       <item name="Test coverage" href="./cobertura/index.html"/>
       <item name="Release History" href="https://github.com/jcabi/jcabi-dynamo/releases"/>
     </menu>
     <menu name="Examples">
-      <item name="Query vs. Scan" href="./example-query-scan.html"/>
-      <item name="Integration Testing" href="./example-it.html"/>
-      <item name="Unit testing w/mock" href="./example-mock.html"/>
+      <item name="Query vs. Scan" href="example-query-scan.html"/>
+      <item name="Integration Testing" href="example-it.html"/>
+      <item name="Unit testing w/mock" href="example-mock.html"/>
     </menu>
     <menu ref="reports"/>
   </body>
