@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import lombok.EqualsAndHashCode;
+import java.util.Objects;
 import lombok.ToString;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -33,7 +33,6 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
-@EqualsAndHashCode(of = { "credentials", "frm", "name", "attributes" })
 final class AwsItem implements Item {
 
     /**
@@ -78,6 +77,28 @@ final class AwsItem implements Item {
         this.name = table;
         this.attributes = attrs;
         this.keys = pks;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        final boolean equal;
+        if (this == obj) {
+            equal = true;
+        } else if (obj instanceof AwsItem) {
+            final AwsItem other = (AwsItem) obj;
+            equal = Objects.equals(this.credentials, other.credentials)
+                && Objects.equals(this.frm, other.frm)
+                && Objects.equals(this.name, other.name)
+                && Objects.equals(this.attributes, other.attributes);
+        } else {
+            equal = false;
+        }
+        return equal;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.credentials, this.frm, this.name, this.attributes);
     }
 
     @Override

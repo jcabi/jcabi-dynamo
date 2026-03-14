@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import lombok.EqualsAndHashCode;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
 
@@ -35,7 +34,6 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@EqualsAndHashCode(of = "attrs")
 @SuppressWarnings
     (
     {
@@ -185,6 +183,17 @@ public final class Attributes implements Map<String, AttributeValue> {
             );
         }
         return Joiner.on("; ").join(terms);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof Attributes
+            && this.attrs.equals(((Attributes) obj).attrs);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.attrs.hashCode();
     }
 
     @Override

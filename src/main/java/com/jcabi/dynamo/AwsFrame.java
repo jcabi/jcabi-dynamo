@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.Iterator;
 import java.util.Map;
-import lombok.EqualsAndHashCode;
+import java.util.Objects;
 import lombok.ToString;
 import software.amazon.awssdk.services.dynamodb.model.Condition;
 
@@ -22,11 +22,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
-@EqualsAndHashCode
-    (
-        callSuper = false,
-        of = { "credentials", "tbl", "name", "conditions", "valve" }
-    )
 final class AwsFrame extends AbstractCollection<Item> implements Frame {
 
     /**
@@ -82,6 +77,32 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
         this.name = label;
         this.conditions = conds;
         this.valve = vlv;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.LooseCoupling")
+    public boolean equals(final Object obj) {
+        final boolean equal;
+        if (this == obj) {
+            equal = true;
+        } else if (obj instanceof AwsFrame) {
+            final AwsFrame other = (AwsFrame) obj;
+            equal = Objects.equals(this.credentials, other.credentials)
+                && Objects.equals(this.tbl, other.tbl)
+                && Objects.equals(this.name, other.name)
+                && Objects.equals(this.conditions, other.conditions)
+                && Objects.equals(this.valve, other.valve);
+        } else {
+            equal = false;
+        }
+        return equal;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.credentials, this.tbl, this.name, this.conditions, this.valve
+        );
     }
 
     @Override
