@@ -95,13 +95,9 @@ public final class AttributeUpdates
      * @since 0.14.3
      */
     public AttributeUpdates with(final String name, final Object value) {
-        final AttributeValue attr;
-        if (value instanceof Long || value instanceof Integer) {
-            attr = AttributeValue.builder().n(value.toString()).build();
-        } else {
-            attr = AttributeValue.builder().s(value.toString()).build();
-        }
-        return this.with(name, attr);
+        return new AttributeUpdates(
+            this.attrs.with(name, AttributeUpdates.toUpdate(value))
+        );
     }
 
     /**
@@ -150,7 +146,7 @@ public final class AttributeUpdates
 
     @Override
     public boolean containsValue(final Object value) {
-        return this.attrs.containsValue(value);
+        return this.attrs.containsValue(AttributeUpdates.toUpdate(value));
     }
 
     @Override
@@ -201,5 +197,41 @@ public final class AttributeUpdates
         throw new UnsupportedOperationException(
             "AttributeUpdates class is immutable, can't do #clear()"
         );
+    }
+
+    /**
+     * Convert any input value to an {@link AttributeValueUpdate}.
+     *
+     * <p>If the value is already an {@link AttributeValueUpdate}, it is
+     * returned as-is. If it is an {@link AttributeValue}, it is wrapped
+     * with a {@link AttributeAction#PUT} action. Numeric values are
+     * stored as {@code n}, anything else as {@code s} via
+     * {@link Object#toString()}.
+     *
+     * @param value The value to convert
+     * @return The converted {@link AttributeValueUpdate}
+     */
+    private static AttributeValueUpdate toUpdate(final Object value) {
+        final AttributeValueUpdate result;
+        if (value instanceof AttributeValueUpdate) {
+            result = (AttributeValueUpdate) value;
+        } else if (value instanceof AttributeValue) {
+            result = AttributeValueUpdate.builder()
+                .value((AttributeValue) value)
+                .action(AttributeAction.PUT)
+                .build();
+        } else {
+            final AttributeValue attr;
+            if (value instanceof Long || value instanceof Integer) {
+                attr = AttributeValue.builder().n(value.toString()).build();
+            } else {
+                attr = AttributeValue.builder().s(value.toString()).build();
+            }
+            result = AttributeValueUpdate.builder()
+                .value(attr)
+                .action(AttributeAction.PUT)
+                .build();
+        }
+        return result;
     }
 }
