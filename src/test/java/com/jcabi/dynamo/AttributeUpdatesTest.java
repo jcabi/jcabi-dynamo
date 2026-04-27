@@ -187,6 +187,55 @@ final class AttributeUpdatesTest {
     }
 
     @Test
+    void containsObjectValue() {
+        final String value = "someString";
+        MatcherAssert.assertThat(
+            "should contain raw object value 'someString'",
+            new AttributeUpdates()
+                .with("attrkey", value)
+                .with("otherkey", "othervalue")
+                .containsValue(value),
+            Matchers.is(Boolean.TRUE)
+        );
+    }
+
+    @Test
+    void containsNumericObjectValue() {
+        final long value = 42L;
+        MatcherAssert.assertThat(
+            "should contain raw numeric value 42",
+            new AttributeUpdates()
+                .with("nkey", value)
+                .containsValue(value),
+            Matchers.is(Boolean.TRUE)
+        );
+    }
+
+    @Test
+    void containsAttributeValue() {
+        final AttributeValue value =
+            AttributeValue.builder().s("attrValue").build();
+        MatcherAssert.assertThat(
+            "should contain AttributeValue",
+            new AttributeUpdates()
+                .with("attrkey", value)
+                .containsValue(value),
+            Matchers.is(Boolean.TRUE)
+        );
+    }
+
+    @Test
+    void doesNotContainMissingValue() {
+        MatcherAssert.assertThat(
+            "should not contain missing value",
+            new AttributeUpdates()
+                .with("attrkey", "present")
+                .containsValue("absent"),
+            Matchers.is(Boolean.FALSE)
+        );
+    }
+
+    @Test
     void canTurnToString() {
         MatcherAssert.assertThat(
             "should contain key names",
