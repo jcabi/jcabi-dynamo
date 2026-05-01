@@ -69,6 +69,44 @@ final class H2DataTest {
     }
 
     @Test
+    void createsTableWithCompositePrimaryKey() throws Exception {
+        final String table = "events";
+        final String hash = "device";
+        final String range = "moment";
+        final String attr = "payload";
+        final MkData data = new H2Data().with(
+            table, new String[] {hash, range}, attr
+        );
+        data.put(
+            table,
+            new Attributes()
+                .with(hash, "device-1")
+                .with(range, "1")
+                .with(attr, "first")
+        );
+        data.put(
+            table,
+            new Attributes()
+                .with(hash, "device-1")
+                .with(range, "2")
+                .with(attr, "second")
+        );
+        MatcherAssert.assertThat(
+            "should fetch the row by composite key",
+            data.iterate(
+                table,
+                new Conditions()
+                    .with(hash, Conditions.equalTo("device-1"))
+                    .with(range, Conditions.equalTo("2"))
+            ).iterator().next(),
+            Matchers.hasEntry(
+                Matchers.equalTo(attr),
+                Matchers.equalTo(AttributeValue.builder().s("second").build())
+            )
+        );
+    }
+
+    @Test
     void createsManyTables() throws Exception {
         MatcherAssert.assertThat(
             "should create two tables",
