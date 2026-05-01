@@ -129,10 +129,16 @@ public final class H2Data implements MkData {
     };
 
     /**
-     * Create primary key.
+     * Declare a key column.
      */
     private static final Function<String, String> CREATE_KEY =
-        key -> String.format("`%s` VARCHAR PRIMARY KEY", key);
+        key -> String.format("`%s` VARCHAR NOT NULL", key);
+
+    /**
+     * Quote a key column name for use inside a PRIMARY KEY clause.
+     */
+    private static final Function<String, String> QUOTE_KEY =
+        key -> String.format("`%s`", key);
 
     /**
      * Create attr.
@@ -311,7 +317,8 @@ public final class H2Data implements MkData {
                 String.format("Empty list of keys for %s table", table)
             );
         }
-        final StringBuilder sql = new StringBuilder("CREATE TABLE ")
+        final StringBuilder sql = new StringBuilder(128)
+            .append("CREATE TABLE ")
             .append(H2Data.encodeTableName(table)).append(" (");
         Joiner.on(',').appendTo(
             sql,
@@ -324,7 +331,12 @@ public final class H2Data implements MkData {
                 Iterables.transform(Arrays.asList(attrs), H2Data.CREATE_ATTR)
             );
         }
-        sql.append(')');
+        sql.append(", PRIMARY KEY (");
+        Joiner.on(',').appendTo(
+            sql,
+            Iterables.transform(Arrays.asList(keys), H2Data.QUOTE_KEY)
+        );
+        sql.append("))");
         try {
             new JdbcSession(this.jdbc).sql(sql.toString()).execute();
         } catch (final SQLException ex) {
