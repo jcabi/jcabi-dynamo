@@ -25,6 +25,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
  * Test case for {@link H2Data}.
  * @since 0.10
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class H2DataTest {
 
     @Test
