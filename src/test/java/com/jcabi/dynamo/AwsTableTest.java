@@ -4,8 +4,13 @@
  */
 package com.jcabi.dynamo;
 
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.ConsumedCapacity;
@@ -85,5 +90,106 @@ final class AwsTableTest {
             )
         );
         Mockito.verify(aws).deleteItem(Mockito.any(DeleteItemRequest.class));
+    }
+
+    @Test
+    void returnsKeysFromDescribeTable() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            DescribeTableResponse.builder().table(
+                TableDescription.builder().keySchema(
+                    KeySchemaElement.builder().attributeName(AwsTableTest.KEY).build()
+                ).build()
+            ).build()
+        ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
+        final AwsTable table = new AwsTable(
+            credentials, Mockito.mock(Region.class), "table-with-key"
+        );
+        MatcherAssert.assertThat(
+            "keys() must return the single primary key declared in the table schema",
+            table.keys(),
+            Matchers.contains(AwsTableTest.KEY)
+        );
+    }
+
+    @Test
+    void returnsCompositeKeysInDeclaredOrder() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            DescribeTableResponse.builder().table(
+                TableDescription.builder().keySchema(
+                    KeySchemaElement.builder().attributeName("hash-key").build(),
+                    KeySchemaElement.builder().attributeName("range-key").build()
+                ).build()
+            ).build()
+        ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
+        final AwsTable table = new AwsTable(
+            credentials, Mockito.mock(Region.class), "composite-table"
+        );
+        MatcherAssert.assertThat(
+            "keys() must preserve the order of the composite primary key",
+            table.keys(),
+            Matchers.contains("hash-key", "range-key")
+        );
+    }
+
+    @Test
+    void requestsDescribeForOwnTable() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            DescribeTableResponse.builder().table(
+                TableDescription.builder().keySchema(
+                    KeySchemaElement.builder().attributeName(AwsTableTest.KEY).build()
+                ).build()
+            ).build()
+        ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
+        final String name = "my-described-table";
+        final AwsTable table = new AwsTable(
+            credentials, Mockito.mock(Region.class), name
+        );
+        table.keys();
+        Mockito.verify(aws).describeTable(
+            DescribeTableRequest.builder().tableName(name).build()
+        );
+    }
+
+    @Test
+    void wrapsSdkClientExceptionAsIoException() {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doThrow(SdkClientException.builder().message("boom").build())
+            .when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
+        Assertions.assertThrows(
+            IOException.class,
+            new AwsTable(
+                credentials, Mockito.mock(Region.class), "broken-table"
+            )::keys,
+            "keys() must rethrow SdkClientException wrapped as IOException"
+        );
+    }
+
+    @Test
+    void closesDynamoDbClientAfterDescribe() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            DescribeTableResponse.builder().table(
+                TableDescription.builder().keySchema(
+                    KeySchemaElement.builder().attributeName(AwsTableTest.KEY).build()
+                ).build()
+            ).build()
+        ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
+        new AwsTable(
+            credentials, Mockito.mock(Region.class), "closed-table"
+        ).keys();
+        Mockito.verify(aws).close();
     }
 }
