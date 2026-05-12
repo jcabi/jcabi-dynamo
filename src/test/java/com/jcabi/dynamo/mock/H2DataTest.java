@@ -247,6 +247,24 @@ final class H2DataTest {
     }
 
     @Test
+    void updateDoesNotInsertWhenKeyIsMissing() throws Exception {
+        final String table = "accounts";
+        final String key = "acct";
+        final String attr = "balance";
+        final MkData data = new H2Data().with(table, new String[]{key}, attr);
+        data.update(
+            table,
+            new Attributes().with(key, "ghost"),
+            new AttributeUpdates().with(attr, "100")
+        );
+        MatcherAssert.assertThat(
+            "update with a key that does not exist must not insert a new row",
+            Lists.newArrayList(data.iterate(table, new Conditions())),
+            Matchers.empty()
+        );
+    }
+
+    @Test
     void fetchesWithComparison() throws Exception {
         final String table = "x12";
         final String key = "foo1";
