@@ -49,6 +49,13 @@ public interface Dosage {
     @ToString
     @EqualsAndHashCode
     final class Empty implements Dosage {
+        /**
+         * Public ctor.
+         */
+        public Empty() {
+            // nothing to initialize
+        }
+
         @Override
         public List<Map<String, AttributeValue>> items() {
             return new ArrayList<>(0);
