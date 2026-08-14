@@ -18,7 +18,6 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 /**
  * Test case for {@link MkRegion}.
  * @since 0.10
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 final class MkRegionTest {
 
@@ -35,7 +34,7 @@ final class MkRegionTest {
         table.put(
             new Attributes()
                 .with(key, "32443")
-                .with(attr, "first value to \n\t€ save")
+                .with(attr, String.format("first value to %n\t€ save"))
                 .with(nattr, "150")
         );
         MatcherAssert.assertThat(
@@ -57,12 +56,12 @@ final class MkRegionTest {
         table.put(
             new Attributes()
                 .with(key, "32443")
-                .with(attr, "first value to \n\t€ save")
+                .with(attr, String.format("first value to %n\t€ save"))
         );
         MatcherAssert.assertThat(
-            "should contains '\n\t\u20ac save'",
+            "saved text cannot be found in the item",
             table.frame().iterator().next().get(attr).s(),
-            Matchers.containsString("\n\t\u20ac save")
+            Matchers.containsString(String.format("%n\t€ save"))
         );
     }
 
@@ -78,7 +77,7 @@ final class MkRegionTest {
         table.put(
             new Attributes()
                 .with(key, "32443")
-                .with(attr, "first value to \n\t€ save")
+                .with(attr, String.format("first value to %n\t€ save"))
         );
         final Item item = table.frame().iterator().next();
         item.put(
@@ -138,5 +137,4 @@ final class MkRegionTest {
         );
         MatcherAssert.assertThat("should equal 2", item.get(attr).n(), Matchers.equalTo("2"));
     }
-
 }

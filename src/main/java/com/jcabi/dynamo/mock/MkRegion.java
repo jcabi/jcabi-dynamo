@@ -14,7 +14,6 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Mock version of {@link Region}.
- *
  * @since 0.10
  */
 @Immutable
@@ -47,5 +46,4 @@ public final class MkRegion implements Region {
     public Table table(final String name) {
         return new MkTable(this.data, name);
     }
-
 }

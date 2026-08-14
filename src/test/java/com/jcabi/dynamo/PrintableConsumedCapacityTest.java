@@ -31,7 +31,7 @@ final class PrintableConsumedCapacityTest {
             new PrintableConsumedCapacity(
                 ConsumedCapacity.builder()
                     .capacityUnits(12.5)
-                    .tableName("t\u00e9st")
+                    .tableName("tést")
                     .build()
             ).print(),
             Matchers.equalTo("12.50 units")

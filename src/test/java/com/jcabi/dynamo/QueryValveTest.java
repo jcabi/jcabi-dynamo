@@ -24,7 +24,6 @@ import software.amazon.awssdk.services.dynamodb.model.QueryResponse;
  * Test case for {@link QueryValve}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class QueryValveTest {
 
     @Test
@@ -35,12 +34,8 @@ final class QueryValveTest {
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
             QueryResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
@@ -62,12 +57,8 @@ final class QueryValveTest {
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
             QueryResponse.builder()
-                .items(
-                    Collections.singletonList(item)
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
-                )
+                .items(Collections.singletonList(item))
+                .consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
@@ -88,16 +79,13 @@ final class QueryValveTest {
         final int expected = 7;
         Mockito.doReturn(
             QueryResponse.builder()
-                .count(expected)
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
-                )
+                .count(expected).consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
             "should not return wrong count",
             new QueryValve().count(
-                credentials, "c\u00f6unt-tbl", new Conditions()
+                credentials, "cöunt-tbl", new Conditions()
             ),
             Matchers.equalTo(expected)
         );
@@ -113,10 +101,10 @@ final class QueryValveTest {
                 final DynamoDbClient aws =
                     Mockito.mock(DynamoDbClient.class);
                 Mockito.doReturn(aws).when(creds).aws();
-                Mockito.doThrow(SdkClientException.create("f\u00e4iled"))
+                Mockito.doThrow(SdkClientException.create("fäiled"))
                     .when(aws).query(Mockito.any(QueryRequest.class));
                 new QueryValve().fetch(
-                    creds, "f\u00e4il-tbl",
+                    creds, "fäil-tbl",
                     new Conditions(), new ArrayList<>(0)
                 );
             }
@@ -133,10 +121,10 @@ final class QueryValveTest {
                 final DynamoDbClient aws =
                     Mockito.mock(DynamoDbClient.class);
                 Mockito.doReturn(aws).when(creds).aws();
-                Mockito.doThrow(SdkClientException.create("f\u00e4iled"))
+                Mockito.doThrow(SdkClientException.create("fäiled"))
                     .when(aws).query(Mockito.any(QueryRequest.class));
                 new QueryValve().count(
-                    creds, "c\u00f6unt-err", new Conditions()
+                    creds, "cöunt-err", new Conditions()
                 );
             }
         );
@@ -149,32 +137,27 @@ final class QueryValveTest {
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
-            QueryResponse.builder()
-                .items(
-                    Collections.singletonList(
-                        Collections.singletonMap(
-                            "h\u00e4sh",
-                            AttributeValue.builder()
-                                .s("v\u00e4l").build()
-                        )
-                    )
-                )
-                .lastEvaluatedKey(
+            QueryResponse.builder().items(
+                Collections.singletonList(
                     Collections.singletonMap(
-                        "h\u00e4sh",
+                        "häsh",
                         AttributeValue.builder()
-                            .s("l\u00e4st").build()
+                            .s("väl").build()
                     )
                 )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
+            ).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "häsh",
+                    AttributeValue.builder()
+                        .s("läst").build()
                 )
-                .build()
+            ).consumedCapacity(QueryValveTest.capacity())
+            .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
             "should not report no next when there is next",
             new QueryValve().fetch(
-                credentials, "p\u00e4ge-tbl",
+                credentials, "päge-tbl",
                 new Conditions(), new ArrayList<>(0)
             ).hasNext(),
             Matchers.is(true)
@@ -188,43 +171,36 @@ final class QueryValveTest {
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(credentials).aws();
         final Map<String, AttributeValue> item = Collections.singletonMap(
-            "s\u00f6rt",
-            AttributeValue.builder().s("v\u00e4l2").build()
+            "sört",
+            AttributeValue.builder().s("väl2").build()
         );
         Mockito.doReturn(
-            QueryResponse.builder()
-                .items(
-                    Collections.singletonList(
-                        Collections.singletonMap(
-                            "s\u00f6rt",
-                            AttributeValue.builder()
-                                .s("v\u00e4l1").build()
-                        )
-                    )
-                )
-                .lastEvaluatedKey(
+            QueryResponse.builder().items(
+                Collections.singletonList(
                     Collections.singletonMap(
-                        "s\u00f6rt",
+                        "sört",
                         AttributeValue.builder()
-                            .s("l\u00e4st").build()
+                            .s("väl1").build()
                     )
                 )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
+            ).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "sört",
+                    AttributeValue.builder()
+                        .s("läst").build()
                 )
-                .build()
+            ).consumedCapacity(QueryValveTest.capacity())
+            .build()
         ).doReturn(
             QueryResponse.builder()
                 .items(Collections.singletonList(item))
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
-                )
+                .consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
             "should not return wrong items on next page",
             new QueryValve().fetch(
-                credentials, "n\u00e9xt-tbl",
+                credentials, "néxt-tbl",
                 new Conditions(), new ArrayList<>(0)
             ).next().items(),
             Matchers.hasItem(item)
@@ -243,20 +219,15 @@ final class QueryValveTest {
                     Mockito.mock(DynamoDbClient.class);
                 Mockito.doReturn(aws).when(creds).aws();
                 Mockito.doReturn(
-                    QueryResponse.builder()
-                        .items(
-                            Collections.singletonList(
-                                Collections.emptyMap()
-                            )
+                    QueryResponse.builder().items(
+                        Collections.singletonList(
+                            Collections.emptyMap()
                         )
-                        .consumedCapacity(
-                            ConsumedCapacity.builder()
-                                .capacityUnits(1.0d).build()
-                        )
-                        .build()
+                    ).consumedCapacity(QueryValveTest.capacity())
+                    .build()
                 ).when(aws).query(Mockito.any(QueryRequest.class));
                 new QueryValve().fetch(
-                    creds, "n\u00f6-next-tbl",
+                    creds, "nö-next-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).next();
             }
@@ -271,20 +242,15 @@ final class QueryValveTest {
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
             QueryResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
             "should not fail fetching with index name",
             new QueryValve()
-                .withIndexName("\u00efndex")
-                .fetch(
-                    credentials, "t\u00e4ble",
+                .withIndexName("ïndex").fetch(
+                    credentials, "täble",
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
@@ -299,21 +265,15 @@ final class QueryValveTest {
         Mockito.doReturn(aws).when(creds).aws();
         Mockito.doReturn(
             QueryResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1.0d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
             "did not fetch with consistent read disabled",
             new QueryValve()
-                .withConsistentRead(false)
-                .fetch(
-                    creds, "c\u00f6nsist-tbl",
+                .withConsistentRead(false).fetch(
+                    creds, "cönsist-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
@@ -328,21 +288,15 @@ final class QueryValveTest {
         Mockito.doReturn(aws).when(creds).aws();
         Mockito.doReturn(
             QueryResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1.0d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
             "did not fetch with custom limit",
             new QueryValve()
-                .withLimit(5)
-                .fetch(
-                    creds, "l\u00efmit-tbl",
+                .withLimit(5).fetch(
+                    creds, "lïmit-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
@@ -357,25 +311,26 @@ final class QueryValveTest {
         Mockito.doReturn(aws).when(creds).aws();
         Mockito.doReturn(
             QueryResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1.0d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(QueryValveTest.capacity())
                 .build()
         ).when(aws).query(Mockito.any(QueryRequest.class));
         MatcherAssert.assertThat(
             "did not fetch with attribute to get",
             new QueryValve()
-                .withAttributeToGet("\u00e4ttr")
-                .fetch(
-                    creds, "\u00e4ttr-tbl",
+                .withAttributeToGet("ättr").fetch(
+                    creds, "ättr-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
         );
     }
 
+    /**
+     * Make consumed capacity.
+     * @return Consumed capacity
+     */
+    private static ConsumedCapacity capacity() {
+        return ConsumedCapacity.builder().capacityUnits(1.0d).build();
+    }
 }

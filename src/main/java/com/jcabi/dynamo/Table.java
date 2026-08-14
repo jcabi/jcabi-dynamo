@@ -64,12 +64,13 @@ public interface Table {
 
     /**
      * Delete item from aws table.
+     *
      * <p>It is recommended to use {@link Attributes} supplementary class,
      * instead of a raw {@link Map}.
+     *
      * @param attributes Attributes containing item key and value
      * @throws IOException In case of DynamoDB failure
      * @see Attributes
      */
     void delete(Map<String, AttributeValue> attributes) throws IOException;
-
 }

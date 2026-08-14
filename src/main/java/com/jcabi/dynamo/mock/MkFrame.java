@@ -25,7 +25,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Mock version of {@link Frame}.
- *
  * @since 0.10
  */
 @Immutable

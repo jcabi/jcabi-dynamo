@@ -12,6 +12,7 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateTableRequest;
  * @since 0.18.4
  */
 public final class Throughput {
+
     /**
      * Table.
      */
@@ -19,7 +20,7 @@ public final class Throughput {
 
     /**
      * Public ctor.
-     * @param tbl The table.
+     * @param tbl The table
      */
     public Throughput(final Table tbl) {
         this.table = tbl;
@@ -31,13 +32,10 @@ public final class Throughput {
     public void adjust() {
         this.table
             .region()
-            .aws()
-            .updateTable(
+            .aws().updateTable(
                 UpdateTableRequest.builder()
                     .tableName(this.table.name())
-                    .provisionedThroughput(
-                        Throughput.suitableThroughput()
-                    )
+                    .provisionedThroughput(Throughput.suitableThroughput())
                     .build()
             );
     }
@@ -45,15 +43,15 @@ public final class Throughput {
     /**
      * Decides which throughput value is the most suitable according to
      * certain parameters of elasticity/scalability.
-     * @return Throughput settings.
+     * @return Throughput settings
      * @todo #10 The exact algorithm for figuring out read and write
      *  capacities should be based on a CloudWatch metric accessed with
      *  credentials of this.table.region().aws().
      */
     private static ProvisionedThroughput suitableThroughput() {
         return ProvisionedThroughput.builder()
-            .readCapacityUnits((long) 100)
-            .writeCapacityUnits((long) 100)
+            .readCapacityUnits(100L)
+            .writeCapacityUnits(100L)
             .build();
     }
 }

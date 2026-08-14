@@ -30,7 +30,7 @@ final class ReFrameTest {
     void delegatesWhereWithNameAndValue() throws Exception {
         MatcherAssert.assertThat(
             "does not wrap where result in ReFrame",
-            new ReFrame(ReFrameTest.origin()).where("k\u00e9y", "1"),
+            new ReFrame(ReFrameTest.origin()).where("kéy", "1"),
             Matchers.instanceOf(ReFrame.class)
         );
     }
@@ -40,7 +40,7 @@ final class ReFrameTest {
         MatcherAssert.assertThat(
             "does not wrap where-with-condition result in ReFrame",
             new ReFrame(ReFrameTest.origin()).where(
-                "k\u00e9y", Conditions.equalTo("1")
+                "kéy", Conditions.equalTo("1")
             ),
             Matchers.instanceOf(ReFrame.class)
         );
@@ -116,15 +116,15 @@ final class ReFrameTest {
      * @throws IOException If fails
      */
     private static Frame origin() throws IOException {
-        final String table = "t\u00e9sts";
-        final String key = "k\u00e9y";
-        final String attr = "\u00e4ttr";
+        final String table = "tésts";
+        final String key = "kéy";
+        final String attr = "ättr";
         final H2Data data = new H2Data().with(
             table, new String[]{key}, attr
         );
         data.put(
             table,
-            new Attributes().with(key, "1").with(attr, "v\u00e4l")
+            new Attributes().with(key, "1").with(attr, "väl")
         );
         return new MkRegion(data).table(table).frame();
     }

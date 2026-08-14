@@ -49,7 +49,6 @@ public interface Region {
 
     /**
      * Simple region, basic implementation.
-     *
      * @since 0.1
      */
     @Immutable
@@ -57,6 +56,7 @@ public interface Region {
     @ToString
     @EqualsAndHashCode(of = "credentials")
     final class Simple implements Region {
+
         /**
          * Credentials.
          */
@@ -104,6 +104,7 @@ public interface Region {
     @ToString
     @EqualsAndHashCode(of = { "origin", "prefix" })
     final class Prefixed implements Region {
+
         /**
          * Original region.
          */
@@ -132,9 +133,8 @@ public interface Region {
         @Override
         public Table table(final String name) {
             return this.origin.table(
-                new StringBuilder(this.prefix).append(name).toString()
+                String.format("%s%s", this.prefix, name)
             );
         }
     }
-
 }

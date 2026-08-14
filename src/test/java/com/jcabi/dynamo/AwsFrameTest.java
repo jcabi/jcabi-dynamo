@@ -25,7 +25,7 @@ final class AwsFrameTest {
         MatcherAssert.assertThat(
             "did not return associated table",
             new AwsFrame(
-                Mockito.mock(Credentials.class), table, "t\u00e4bl"
+                Mockito.mock(Credentials.class), table, "täbl"
             ).table(),
             Matchers.equalTo(table)
         );
@@ -38,8 +38,8 @@ final class AwsFrameTest {
             new AwsFrame(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsTable.class),
-                "str\u00efng-tbl"
-            ).where("n\u00e4me", "v\u00e4lue"),
+                "strïng-tbl"
+            ).where("näme", "välue"),
             Matchers.instanceOf(Frame.class)
         );
     }
@@ -51,8 +51,8 @@ final class AwsFrameTest {
             new AwsFrame(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsTable.class),
-                "c\u00f6nd-tbl"
-            ).where("n\u00e4me", Condition.builder().build()),
+                "cönd-tbl"
+            ).where("näme", Condition.builder().build()),
             Matchers.instanceOf(Frame.class)
         );
     }
@@ -64,10 +64,10 @@ final class AwsFrameTest {
             new AwsFrame(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsTable.class),
-                "m\u00e4p-tbl"
+                "mäp-tbl"
             ).where(
                 Collections.singletonMap(
-                    "\u00e4ttr", Condition.builder().build()
+                    "ättr", Condition.builder().build()
                 )
             ),
             Matchers.instanceOf(Frame.class)
@@ -81,7 +81,7 @@ final class AwsFrameTest {
             new AwsFrame(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsTable.class),
-                "fl\u00f6w-tbl"
+                "flöw-tbl"
             ).through(Mockito.mock(Valve.class)),
             Matchers.instanceOf(Frame.class)
         );
@@ -98,7 +98,7 @@ final class AwsFrameTest {
             new AwsFrame(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsTable.class),
-                "s\u00efze-tbl", new Conditions(), valve
+                "sïze-tbl", new Conditions(), valve
             ).size(),
             Matchers.equalTo(expected)
         );
@@ -110,7 +110,7 @@ final class AwsFrameTest {
             IllegalStateException.class,
             () -> {
                 final Valve valve = Mockito.mock(Valve.class);
-                Mockito.doThrow(new IOException("b\u00f6om"))
+                Mockito.doThrow(new IOException("böom"))
                     .when(valve).count(
                         Mockito.any(),
                         Mockito.anyString(),
@@ -119,10 +119,9 @@ final class AwsFrameTest {
                 new AwsFrame(
                     Mockito.mock(Credentials.class),
                     Mockito.mock(AwsTable.class),
-                    "wr\u00e4p-tbl", new Conditions(), valve
+                    "wräp-tbl", new Conditions(), valve
                 ).size();
             }
         );
     }
-
 }

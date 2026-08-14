@@ -19,11 +19,11 @@ final class MkTableTest {
 
     @Test
     void returnsTableName() throws Exception {
-        final String name = "n\u00e4me";
+        final String name = "näme";
         MatcherAssert.assertThat(
             "does not return correct table name",
             new MkRegion(
-                new H2Data().with(name, new String[]{"cl\u00e9"})
+                new H2Data().with(name, new String[]{"clé"})
             ).table(name).name(),
             Matchers.equalTo(name)
         );
@@ -31,11 +31,11 @@ final class MkTableTest {
 
     @Test
     void returnsRegion() throws Exception {
-        final String name = "r\u00e9gion";
+        final String name = "région";
         MatcherAssert.assertThat(
             "does not return region",
             new MkRegion(
-                new H2Data().with(name, new String[]{"schl\u00fcssel"})
+                new H2Data().with(name, new String[]{"schlüssel"})
             ).table(name).region(),
             Matchers.instanceOf(MkRegion.class)
         );
@@ -43,11 +43,11 @@ final class MkTableTest {
 
     @Test
     void returnsFrame() throws Exception {
-        final String name = "fr\u00e4me";
+        final String name = "främe";
         MatcherAssert.assertThat(
             "does not return frame",
             new MkRegion(
-                new H2Data().with(name, new String[]{"k\u00e9y"})
+                new H2Data().with(name, new String[]{"kéy"})
             ).table(name).frame(),
             Matchers.notNullValue()
         );
@@ -55,9 +55,9 @@ final class MkTableTest {
 
     @Test
     void putsItemAndReturnsIt() throws Exception {
-        final String name = "\u00fcbung";
-        final String key = "k\u00e9y";
-        final String attr = "\u00e4ttr";
+        final String name = "übung";
+        final String key = "kéy";
+        final String attr = "ättr";
         MatcherAssert.assertThat(
             "does not return item after put",
             new MkRegion(
@@ -65,7 +65,7 @@ final class MkTableTest {
             ).table(name).put(
                 new Attributes()
                     .with(key, "47381")
-                    .with(attr, "v\u00e4lue")
+                    .with(attr, "välue")
             ),
             Matchers.notNullValue()
         );
@@ -73,9 +73,9 @@ final class MkTableTest {
 
     @Test
     void deletesItem() throws Exception {
-        final String name = "d\u00e9l";
-        final String key = "k\u00e9y";
-        final String attr = "\u00e4ttr";
+        final String name = "dél";
+        final String key = "kéy";
+        final String attr = "ättr";
         final Region region = new MkRegion(
             new H2Data().with(name, new String[]{key}, attr)
         );
@@ -83,7 +83,7 @@ final class MkTableTest {
         table.put(
             new Attributes()
                 .with(key, "89213")
-                .with(attr, "to-d\u00e9lete")
+                .with(attr, "to-délete")
         );
         table.delete(new Attributes().with(key, "89213"));
         MatcherAssert.assertThat(

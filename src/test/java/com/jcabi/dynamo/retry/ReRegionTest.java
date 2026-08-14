@@ -32,5 +32,4 @@ final class ReRegionTest {
             () -> retried.put(new Attributes())
         );
     }
-
 }

@@ -12,7 +12,6 @@ import java.io.IOException;
 
 /**
  * Mock data.
- *
  * @since 0.10
  */
 @Immutable

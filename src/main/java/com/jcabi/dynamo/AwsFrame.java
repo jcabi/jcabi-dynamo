@@ -16,7 +16,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Frame through AWS SDK.
- *
  * @since 0.1
  */
 @Immutable
@@ -67,7 +66,6 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
      * @param label Table name
      * @param conds Conditions
      * @param vlv Valve
-     * @checkstyle ParameterNumber (5 lines)
      */
     AwsFrame(final Credentials creds, final AwsTable table,
         final String label, final Conditions conds, final Valve vlv) {
@@ -182,5 +180,4 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
     public Table table() {
         return this.tbl;
     }
-
 }

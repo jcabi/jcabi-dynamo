@@ -81,5 +81,4 @@ public interface Frame extends Collection<Item> {
      * @since 0.7.21
      */
     Frame through(Valve valve);
-
 }

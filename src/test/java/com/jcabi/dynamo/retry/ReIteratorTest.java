@@ -6,6 +6,7 @@ package com.jcabi.dynamo.retry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.hamcrest.MatcherAssert;
@@ -23,7 +24,7 @@ final class ReIteratorTest {
         MatcherAssert.assertThat(
             "does not delegate hasNext to origin iterator",
             new ReIterator<>(
-                Arrays.asList("f\u00f6o", "b\u00e4r").iterator()
+                Arrays.asList("föo", "bär").iterator()
             ).hasNext(),
             Matchers.is(true)
         );
@@ -34,16 +35,16 @@ final class ReIteratorTest {
         MatcherAssert.assertThat(
             "does not delegate next to origin iterator",
             new ReIterator<>(
-                Arrays.asList("f\u00f6o", "b\u00e4r").iterator()
+                Arrays.asList("föo", "bär").iterator()
             ).next(),
-            Matchers.equalTo("f\u00f6o")
+            Matchers.equalTo("föo")
         );
     }
 
     @Test
     void delegatesRemoveToOrigin() {
         final List<String> items = new ArrayList<>(
-            Arrays.asList("\u00fcbung")
+            Collections.singletonList("übung")
         );
         final Iterator<String> iter = items.iterator();
         iter.next();
@@ -57,7 +58,7 @@ final class ReIteratorTest {
 
     @Test
     void returnsFalseWhenOriginIsExhausted() {
-        final List<String> items = Arrays.asList("\u00f6nly");
+        final List<String> items = Collections.singletonList("önly");
         final Iterator<String> iter = items.iterator();
         iter.next();
         MatcherAssert.assertThat(

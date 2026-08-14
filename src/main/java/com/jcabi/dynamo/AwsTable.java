@@ -10,8 +10,8 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -27,7 +27,6 @@ import software.amazon.awssdk.services.dynamodb.model.ReturnValue;
 
 /**
  * Single table in Dynamo, through AWS SDK.
- *
  * @since 0.1
  */
 @Immutable
@@ -57,8 +56,7 @@ final class AwsTable implements Table {
      * @param region Region
      * @param table Table name
      */
-    AwsTable(final Credentials creds, final Region region,
-        final String table) {
+    AwsTable(final Credentials creds, final Region region, final String table) {
         this.credentials = creds;
         this.reg = region;
         this.self = table;
@@ -73,16 +71,7 @@ final class AwsTable implements Table {
                 this, "#put('%[text]s'): created item in '%s', %s",
                 attributes, this.self,
                 new PrintableConsumedCapacity(
-                    aws.putItem(
-                        PutItemRequest.builder()
-                            .tableName(this.self)
-                            .item(attributes)
-                            .returnValues(ReturnValue.NONE)
-                            .returnConsumedCapacity(
-                                ReturnConsumedCapacity.TOTAL
-                            )
-                            .build()
-                    ).consumedCapacity()
+                    aws.putItem(this.insert(attributes)).consumedCapacity()
                 ).print()
             );
             return new AwsItem(
@@ -120,16 +109,42 @@ final class AwsTable implements Table {
         return this.self;
     }
 
+    @Override
+    public void delete(final Map<String, AttributeValue> attributes)
+        throws IOException {
+        final DynamoDbClient aws = this.credentials.aws();
+        try {
+            Logger.info(
+                this,
+                "#delete('%[text]s'): deleted item in '%s', %s",
+                attributes, this.self,
+                new PrintableConsumedCapacity(
+                    aws.deleteItem(this.removal(attributes)).consumedCapacity()
+                ).print()
+            );
+        } catch (final SdkClientException ex) {
+            throw new IOException(
+                String.format(
+                    "Failed to delete at \"%s\" by keys %s",
+                    this.self, attributes
+                ),
+                ex
+            );
+        } finally {
+            aws.close();
+        }
+    }
+
     /**
      * Get names of keys.
      * @return Names of attributes, which are primary keys
      * @throws IOException If DynamoDB fails
      */
     @Cacheable(forever = true)
-    public Collection<String> keys() throws IOException {
+    Collection<String> keys() throws IOException {
         final DynamoDbClient aws = this.credentials.aws();
         try {
-            final Collection<String> keys = new LinkedList<>();
+            final Collection<String> keys = new ArrayList<>(0);
             for (final KeySchemaElement key
                 : aws.describeTable(
                     DescribeTableRequest.builder()
@@ -155,38 +170,31 @@ final class AwsTable implements Table {
         }
     }
 
-    @Override
-    public void delete(final Map<String, AttributeValue> attributes)
-        throws IOException {
-        final DynamoDbClient aws = this.credentials.aws();
-        try {
-            Logger.info(
-                this,
-                "#delete('%[text]s'): deleted item in '%s', %s",
-                attributes, this.self,
-                new PrintableConsumedCapacity(
-                    aws.deleteItem(
-                        DeleteItemRequest.builder()
-                            .tableName(this.self)
-                            .key(attributes)
-                            .returnValues(ReturnValue.NONE)
-                            .returnConsumedCapacity(
-                                ReturnConsumedCapacity.TOTAL
-                            )
-                            .build()
-                    ).consumedCapacity()
-                ).print()
-            );
-        } catch (final SdkClientException ex) {
-            throw new IOException(
-                String.format(
-                    "Failed to delete at \"%s\" by keys %s",
-                    this.self, attributes
-                ),
-                ex
-            );
-        } finally {
-            aws.close();
-        }
+    /**
+     * Make a request to put an item.
+     * @param attrs Attributes of the item
+     * @return The request
+     */
+    private PutItemRequest insert(final Map<String, AttributeValue> attrs) {
+        return PutItemRequest.builder()
+            .tableName(this.self)
+            .item(attrs)
+            .returnValues(ReturnValue.NONE)
+            .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+            .build();
+    }
+
+    /**
+     * Make a request to delete an item.
+     * @param attrs Keys of the item
+     * @return The request
+     */
+    private DeleteItemRequest removal(final Map<String, AttributeValue> attrs) {
+        return DeleteItemRequest.builder()
+            .tableName(this.self)
+            .key(attrs)
+            .returnValues(ReturnValue.NONE)
+            .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+            .build();
     }
 }

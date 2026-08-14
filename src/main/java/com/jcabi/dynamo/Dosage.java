@@ -15,7 +15,6 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Dosage of items retrieved from table.
- *
  * @since 0.1
  */
 @Immutable
@@ -41,7 +40,6 @@ public interface Dosage {
 
     /**
      * Always empty.
-     *
      * @since 0.1
      */
     @Immutable
@@ -49,6 +47,7 @@ public interface Dosage {
     @ToString
     @EqualsAndHashCode
     final class Empty implements Dosage {
+
         /**
          * Public ctor.
          */
@@ -73,5 +72,4 @@ public interface Dosage {
             return false;
         }
     }
-
 }

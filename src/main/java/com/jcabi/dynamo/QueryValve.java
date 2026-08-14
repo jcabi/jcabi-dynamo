@@ -29,7 +29,6 @@ import software.amazon.awssdk.services.dynamodb.model.Select;
 
 /**
  * Query-based valve.
- *
  * @since 0.1
  */
 @Immutable
@@ -87,20 +86,32 @@ public final class QueryValve implements Valve {
      * @param idx Index name or empty string
      * @param slct Select
      * @param cnst Consistent read
-     * @checkstyle ParameterNumber (5 lines)
      */
     private QueryValve(final int lmt, final boolean fwd,
         final Iterable<String> attrs, final String idx,
         final String slct, final boolean cnst) {
+        this(lmt, fwd, idx, slct, cnst, Iterables.toArray(attrs, String.class));
+    }
+
+    /**
+     * Private ctor.
+     * @param lmt Limit
+     * @param fwd Forward
+     * @param idx Index name or empty string
+     * @param slct Select
+     * @param cnst Consistent read
+     * @param attrs Names of attributes to pre-fetch
+     */
+    private QueryValve(final int lmt, final boolean fwd, final String idx,
+        final String slct, final boolean cnst, final String... attrs) {
         this.limit = lmt;
         this.forward = fwd;
-        this.attributes = Iterables.toArray(attrs, String.class);
+        this.attributes = attrs;
         this.index = idx;
         this.select = slct;
         this.consistent = cnst;
     }
 
-    // @checkstyle ParameterNumber (5 lines)
     @Override
     public Dosage fetch(final Credentials credentials, final String table,
         final Map<String, Condition> conditions, final Collection<String> keys)
@@ -129,7 +140,6 @@ public final class QueryValve implements Valve {
             final QueryResponse result = aws.query(request);
             Logger.info(
                 this,
-                // @checkstyle LineLength (1 line)
                 "#items(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                 result.count(), table,
                 result.lastEvaluatedKey(),
@@ -171,7 +181,6 @@ public final class QueryValve implements Valve {
             final QueryResponse rslt = aws.query(request);
             Logger.info(
                 this,
-                // @checkstyle LineLength (1 line)
                 "#total(): COUNT=%d in '%s' using %s, %s",
                 rslt.count(), request.tableName(), request.queryFilter(),
                 new PrintableConsumedCapacity(
@@ -198,7 +207,6 @@ public final class QueryValve implements Valve {
      * @return New query valve
      * @see QueryRequest#consistentRead()
      * @since 0.12
-     * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withConsistentRead(final boolean cnst) {
         return new QueryValve(
@@ -214,7 +222,6 @@ public final class QueryValve implements Valve {
      * @return New query valve
      * @see QueryRequest#indexName()
      * @since 0.10.2
-     * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withIndexName(final String idx) {
         return new QueryValve(
@@ -230,7 +237,6 @@ public final class QueryValve implements Valve {
      * @return New query valve
      * @see QueryRequest#select()
      * @since 0.10.2
-     * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withSelect(final Select slct) {
         return new QueryValve(
@@ -245,7 +251,6 @@ public final class QueryValve implements Valve {
      * @param lmt Limit to use
      * @return New query valve
      * @see QueryRequest#limit()
-     * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withLimit(final int lmt) {
         return new QueryValve(
@@ -260,7 +265,6 @@ public final class QueryValve implements Valve {
      * @param fwd Forward flag
      * @return New query valve
      * @see QueryRequest#scanIndexForward()
-     * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withScanIndexForward(final boolean fwd) {
         return new QueryValve(
@@ -275,7 +279,6 @@ public final class QueryValve implements Valve {
      * @param name Name of attribute to pre-load
      * @return New query valve
      * @see QueryRequest#attributesToGet()
-     * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withAttributeToGet(final String name) {
         return new QueryValve(
@@ -293,7 +296,6 @@ public final class QueryValve implements Valve {
      * @param names Name of attributes to pre-load
      * @return New query valve
      * @see QueryRequest#attributesToGet()
-     * @checkstyle AvoidDuplicateLiterals (5 line)
      */
     public QueryValve withAttributesToGet(final String... names) {
         return new QueryValve(
@@ -309,13 +311,13 @@ public final class QueryValve implements Valve {
 
     /**
      * Next dosage.
-     *
      * @since 0.1
      */
     @ToString
     @Loggable(Loggable.DEBUG)
     @EqualsAndHashCode(of = { "credentials", "request", "result" })
     private final class NextDosage implements Dosage {
+
         /**
          * AWS client.
          */
@@ -364,14 +366,11 @@ public final class QueryValve implements Valve {
             final DynamoDbClient aws = this.credentials.aws();
             try {
                 final QueryRequest rqst = this.request.toBuilder()
-                    .exclusiveStartKey(
-                        this.result.lastEvaluatedKey()
-                    )
+                    .exclusiveStartKey(this.result.lastEvaluatedKey())
                     .build();
                 final QueryResponse rslt = aws.query(rqst);
                 Logger.info(
                     this,
-                    // @checkstyle LineLength (1 line)
                     "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                     rslt.count(), rqst.tableName(),
                     rslt.lastEvaluatedKey(),

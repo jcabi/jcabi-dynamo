@@ -49,10 +49,9 @@ final class AwsFrameITCase {
         final String name = RandomStringUtils.secure().nextAlphabetic(8);
         final RegionMock mock = new RegionMock();
         final Table tbl = mock.get(name).table(name);
-        final String hash = RandomStringUtils.secure().nextAlphabetic(8);
         tbl.put(
             new Attributes()
-                .with(mock.hash(), hash)
+                .with(mock.hash(), RandomStringUtils.secure().nextAlphabetic(8))
                 .with(mock.range(), 0)
         );
         MatcherAssert.assertThat(
@@ -131,5 +130,4 @@ final class AwsFrameITCase {
             Matchers.equalTo(10)
         );
     }
-
 }

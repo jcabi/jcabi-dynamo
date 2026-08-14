@@ -12,7 +12,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Provider of dosages of DynamoDB items.
- *
  * @since 0.7.21
  */
 @Immutable
@@ -42,5 +41,4 @@ public interface Valve {
      */
     int count(Credentials credentials, String table,
         Map<String, Condition> conditions) throws IOException;
-
 }

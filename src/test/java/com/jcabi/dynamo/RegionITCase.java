@@ -69,8 +69,7 @@ final class RegionITCase {
         MatcherAssert.assertThat(
             "should has size 5",
             tbl.frame()
-                .where(attr, Conditions.equalTo(value))
-                .through(
+                .where(attr, Conditions.equalTo(value)).through(
                     new ScanValve()
                         .withLimit(10)
                         .withAttributeToGet(attr)
@@ -96,11 +95,7 @@ final class RegionITCase {
             "should equal to attribute value",
             tbl.frame()
                 .where(attr, Conditions.equalTo(value))
-                .through(
-                    new ScanValve()
-                        .withLimit(10)
-                        .withAttributeToGet(attr)
-                )
+                .through(new ScanValve().withLimit(10).withAttributeToGet(attr))
                 .iterator().next().get(attr).s(),
             Matchers.equalTo(value)
         );
@@ -121,8 +116,7 @@ final class RegionITCase {
                 .with(attr, value)
         );
         final Iterator<Item> items = tbl.frame()
-            .where(attr, Conditions.equalTo(value))
-            .through(
+            .where(attr, Conditions.equalTo(value)).through(
                 new ScanValve()
                     .withLimit(10)
                     .withAttributeToGet(attr)
@@ -166,8 +160,7 @@ final class RegionITCase {
             "should not retrieve something",
             tbl.frame()
                 .where(mock.hash(), hash)
-                .where(mock.range(), Conditions.equalTo(idx))
-                .through(
+                .where(mock.range(), Conditions.equalTo(idx)).through(
                     new QueryValve()
                         .withAttributeToGet(attr)
                         .withConsistentRead(true)
@@ -178,5 +171,4 @@ final class RegionITCase {
             Matchers.is(false)
         );
     }
-
 }

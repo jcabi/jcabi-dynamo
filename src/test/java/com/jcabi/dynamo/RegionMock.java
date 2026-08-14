@@ -63,7 +63,7 @@ final class RegionMock {
      * Get DynamoDB server port.
      * @return TCP port
      */
-    public int port() {
+    int port() {
         return this.prt;
     }
 
@@ -71,7 +71,7 @@ final class RegionMock {
      * Get hash of the table.
      * @return Hash attribute name
      */
-    public String hash() {
+    String hash() {
         return this.ahash;
     }
 
@@ -79,7 +79,7 @@ final class RegionMock {
      * Get range of the table.
      * @return Hash attribute name
      */
-    public String range() {
+    String range() {
         return this.arrange;
     }
 
@@ -89,21 +89,19 @@ final class RegionMock {
      * @return Region
      * @throws Exception If fails
      */
-    public Region get(final String table) throws Exception {
+    Region get(final String table) throws Exception {
         final Region region = new Region.Simple(
             new Credentials.Direct(Credentials.TEST, this.prt)
         );
         final MadeTable mocker = new MadeTable(
             region,
             CreateTableRequest.builder()
-                .tableName(table)
-                .provisionedThroughput(
+                .tableName(table).provisionedThroughput(
                     ProvisionedThroughput.builder()
                         .readCapacityUnits(1L)
                         .writeCapacityUnits(1L)
                         .build()
-                )
-                .attributeDefinitions(
+                ).attributeDefinitions(
                     AttributeDefinition.builder()
                         .attributeName(this.ahash)
                         .attributeType(ScalarAttributeType.S)
@@ -112,8 +110,7 @@ final class RegionMock {
                         .attributeName(this.arrange)
                         .attributeType(ScalarAttributeType.N)
                         .build()
-                )
-                .keySchema(
+                ).keySchema(
                     KeySchemaElement.builder()
                         .attributeName(this.ahash)
                         .keyType(KeyType.HASH)
@@ -129,5 +126,4 @@ final class RegionMock {
         mocker.createIfAbsent();
         return new ReRegion(region);
     }
-
 }

@@ -25,7 +25,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
  * Test case for {@link H2Data}.
  * @since 0.10
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class H2DataTest {
 
     @Test
@@ -34,7 +33,7 @@ final class H2DataTest {
         final String key = "user";
         final int number = 43;
         final String attr = "user.name";
-        final String value = "some\n\t\u20ac text";
+        final String value = String.format("some%n\t€ text");
         final MkData data = new H2Data().with(
             table, new String[] {key},
             attr
@@ -198,7 +197,7 @@ final class H2DataTest {
             table,
             new Attributes()
                 .with(key, number)
-                .with(attr, "Dummy\n\t\u20ac text")
+                .with(attr, String.format("Dummy%n\t€ text"))
         );
         data.update(
             table,
@@ -280,16 +279,14 @@ final class H2DataTest {
                 table,
                 new Conditions().with(
                     value,
-                    Condition.builder()
-                        .attributeValueList(
-                            AttributeValue.builder().n("0").build()
-                        )
-                        .comparisonOperator(ComparisonOperator.GT)
-                        .build()
+                    Condition.builder().attributeValueList(
+                        AttributeValue.builder().n("0").build()
+                    )
+                    .comparisonOperator(ComparisonOperator.GT)
+                    .build()
                 )
             ).iterator().next().get(value).n(),
             Matchers.equalTo("1")
         );
     }
-
 }

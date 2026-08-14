@@ -5,7 +5,6 @@
 
 /**
  * Amazon Dynamo DB Object Layer, tests.
- *
  * @since 0.8
  */
 package com.jcabi.dynamo;

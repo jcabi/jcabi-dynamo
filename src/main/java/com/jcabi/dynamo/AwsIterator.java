@@ -93,7 +93,6 @@ final class AwsIterator implements Iterator<Item> {
      * @param conds Conditions
      * @param primary Primary keys of the table
      * @param vlv Valve with items
-     * @checkstyle ParameterNumber (5 lines)
      */
     AwsIterator(final Credentials creds, final AwsFrame frm,
         final String label, final Conditions conds,
@@ -184,13 +183,8 @@ final class AwsIterator implements Iterator<Item> {
                     DeleteItemRequest.builder()
                         .tableName(this.name)
                         .key(new Attributes(item).only(this.keys))
-                        .returnConsumedCapacity(
-                            ReturnConsumedCapacity.TOTAL
-                        )
-                        .expected(
-                            new Attributes(item)
-                                .only(this.keys).asKeys()
-                        )
+                        .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+                        .expected(new Attributes(item).only(this.keys).asKeys())
                         .build()
                 );
                 this.dosage.set(new AwsIterator.Fixed(prev, items));
@@ -210,11 +204,11 @@ final class AwsIterator implements Iterator<Item> {
 
     /**
      * Dosage with fixed list of items.
-     *
      * @since 0.1
      */
     @Immutable
     private static final class Fixed implements Dosage {
+
         /**
          * List of items.
          */

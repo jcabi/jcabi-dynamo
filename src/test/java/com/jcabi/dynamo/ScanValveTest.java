@@ -35,12 +35,8 @@ final class ScanValveTest {
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
             ScanResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(ScanValveTest.capacity())
                 .build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         MatcherAssert.assertThat(
@@ -62,12 +58,8 @@ final class ScanValveTest {
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
             ScanResponse.builder()
-                .items(
-                    Collections.singletonList(item)
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1d).build()
-                )
+                .items(Collections.singletonList(item))
+                .consumedCapacity(ScanValveTest.capacity())
                 .build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         MatcherAssert.assertThat(
@@ -88,17 +80,13 @@ final class ScanValveTest {
         final int expected = new Random().nextInt(100) + 1;
         Mockito.doReturn(
             ScanResponse.builder()
-                .count(expected)
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1d).build()
-                )
+                .count(expected).consumedCapacity(ScanValveTest.capacity())
                 .build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         MatcherAssert.assertThat(
             "did not return correct count from scan",
             new ScanValve().count(
-                creds, "c\u00f6unt-tbl", new Conditions()
+                creds, "cöunt-tbl", new Conditions()
             ),
             Matchers.equalTo(expected)
         );
@@ -115,10 +103,10 @@ final class ScanValveTest {
                     Mockito.mock(DynamoDbClient.class);
                 Mockito.doReturn(aws).when(creds).aws();
                 Mockito.doThrow(
-                    SdkClientException.create("f\u00e4iled")
+                    SdkClientException.create("fäiled")
                 ).when(aws).scan(Mockito.any(ScanRequest.class));
                 new ScanValve().fetch(
-                    creds, "f\u00e4il-tbl",
+                    creds, "fäil-tbl",
                     new Conditions(), new ArrayList<>(0)
                 );
             }
@@ -132,33 +120,27 @@ final class ScanValveTest {
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(creds).aws();
         Mockito.doReturn(
-            ScanResponse.builder()
-                .items(
-                    Collections.singletonList(
-                        Collections.singletonMap(
-                            "h\u00e4sh",
-                            AttributeValue.builder()
-                                .s("v\u00e4l").build()
-                        )
-                    )
-                )
-                .lastEvaluatedKey(
+            ScanResponse.builder().items(
+                Collections.singletonList(
                     Collections.singletonMap(
-                        "h\u00e4sh",
+                        "häsh",
                         AttributeValue.builder()
-                            .s("l\u00e4st").build()
+                            .s("väl").build()
                     )
                 )
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1d).build()
+            ).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "häsh",
+                    AttributeValue.builder()
+                        .s("läst").build()
                 )
-                .build()
+            ).consumedCapacity(ScanValveTest.capacity())
+            .build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         MatcherAssert.assertThat(
             "did not report next when more pages exist",
             new ScanValve().fetch(
-                creds, "p\u00e4ge-tbl",
+                creds, "päge-tbl",
                 new Conditions(), new ArrayList<>(0)
             ).hasNext(),
             Matchers.is(true)
@@ -173,45 +155,36 @@ final class ScanValveTest {
         Mockito.doReturn(aws).when(creds).aws();
         final Map<String, AttributeValue> item =
             Collections.singletonMap(
-                "s\u00f6rt",
-                AttributeValue.builder().s("v\u00e4l2").build()
+                "sört",
+                AttributeValue.builder().s("väl2").build()
             );
         Mockito.doReturn(
-            ScanResponse.builder()
-                .items(
-                    Collections.singletonList(
-                        Collections.singletonMap(
-                            "s\u00f6rt",
-                            AttributeValue.builder()
-                                .s("v\u00e4l1").build()
-                        )
-                    )
-                )
-                .lastEvaluatedKey(
+            ScanResponse.builder().items(
+                Collections.singletonList(
                     Collections.singletonMap(
-                        "s\u00f6rt",
+                        "sört",
                         AttributeValue.builder()
-                            .s("l\u00e4st").build()
+                            .s("väl1").build()
                     )
                 )
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1d).build()
+            ).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "sört",
+                    AttributeValue.builder()
+                        .s("läst").build()
                 )
-                .build()
+            ).consumedCapacity(ScanValveTest.capacity())
+            .build()
         ).doReturn(
             ScanResponse.builder()
                 .items(Collections.singletonList(item))
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1d).build()
-                )
+                .consumedCapacity(ScanValveTest.capacity())
                 .build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         MatcherAssert.assertThat(
             "did not return correct items on next page",
             new ScanValve().fetch(
-                creds, "n\u00e9xt-tbl",
+                creds, "néxt-tbl",
                 new Conditions(), new ArrayList<>(0)
             ).next().items(),
             Matchers.hasItem(item)
@@ -230,20 +203,15 @@ final class ScanValveTest {
                     Mockito.mock(DynamoDbClient.class);
                 Mockito.doReturn(aws).when(creds).aws();
                 Mockito.doReturn(
-                    ScanResponse.builder()
-                        .items(
-                            Collections.singletonList(
-                                Collections.emptyMap()
-                            )
+                    ScanResponse.builder().items(
+                        Collections.singletonList(
+                            Collections.emptyMap()
                         )
-                        .consumedCapacity(
-                            ConsumedCapacity.builder()
-                                .capacityUnits(1d).build()
-                        )
-                        .build()
+                    ).consumedCapacity(ScanValveTest.capacity())
+                    .build()
                 ).when(aws).scan(Mockito.any(ScanRequest.class));
                 new ScanValve().fetch(
-                    creds, "n\u00f6-next-tbl",
+                    creds, "nö-next-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).next();
             }
@@ -258,21 +226,15 @@ final class ScanValveTest {
         Mockito.doReturn(aws).when(creds).aws();
         Mockito.doReturn(
             ScanResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(ScanValveTest.capacity())
                 .build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         MatcherAssert.assertThat(
             "did not fetch with custom limit",
             new ScanValve()
-                .withLimit(5)
-                .fetch(
-                    creds, "l\u00efmit-tbl",
+                .withLimit(5).fetch(
+                    creds, "lïmit-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
@@ -287,25 +249,26 @@ final class ScanValveTest {
         Mockito.doReturn(aws).when(creds).aws();
         Mockito.doReturn(
             ScanResponse.builder()
-                .items(
-                    Collections.singletonList(Collections.emptyMap())
-                )
-                .consumedCapacity(
-                    ConsumedCapacity.builder()
-                        .capacityUnits(1d).build()
-                )
+                .items(Collections.singletonList(Collections.emptyMap()))
+                .consumedCapacity(ScanValveTest.capacity())
                 .build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         MatcherAssert.assertThat(
             "did not fetch with attribute to get",
             new ScanValve()
-                .withAttributeToGet("\u00e4ttr")
-                .fetch(
-                    creds, "\u00e4ttr-tbl",
+                .withAttributeToGet("ättr").fetch(
+                    creds, "ättr-tbl",
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
         );
     }
 
+    /**
+     * Make consumed capacity.
+     * @return Consumed capacity
+     */
+    private static ConsumedCapacity capacity() {
+        return ConsumedCapacity.builder().capacityUnits(1d).build();
+    }
 }

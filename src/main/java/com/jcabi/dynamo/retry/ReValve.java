@@ -20,7 +20,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Valve that retries on failure.
- *
  * @since 0.9
  */
 @Immutable
@@ -42,7 +41,6 @@ public final class ReValve implements Valve {
         this.origin = valve;
     }
 
-    // @checkstyle ParameterNumber (7 lines)
     @Override
     @RetryOnFailure(verbose = false, delay = 5, unit = TimeUnit.SECONDS)
     public Dosage fetch(final Credentials credentials, final String table,
@@ -59,5 +57,4 @@ public final class ReValve implements Valve {
         final Map<String, Condition> conditions) throws IOException {
         return this.origin.count(credentials, table, conditions);
     }
-
 }

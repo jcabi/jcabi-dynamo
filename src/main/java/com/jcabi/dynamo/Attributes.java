@@ -34,13 +34,7 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@SuppressWarnings
-    (
-    {
-        "PMD.TooManyMethods",
-        "PMD.LooseCoupling"
-    }
-    )
+@SuppressWarnings("PMD.LooseCoupling")
 public final class Attributes implements Map<String, AttributeValue> {
 
     /**

@@ -14,7 +14,6 @@ import lombok.ToString;
 
 /**
  * Frame that retries on failure.
- *
  * @param <T> Type of items
  * @since 0.9
  */

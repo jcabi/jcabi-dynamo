@@ -4,7 +4,6 @@
  */
 package com.jcabi.dynamo.mock;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.jcabi.aspects.Immutable;
@@ -22,10 +21,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,7 +40,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Mock data in H2 database.
- *
  * @since 0.10
  */
 @Immutable
@@ -54,97 +52,7 @@ public final class H2Data implements MkData {
      * Fetcher of rows.
      */
     private static final Outcome<Iterable<Attributes>> OUTCOME =
-        // @checkstyle AnonInnerLengthCheck (50 lines)
-        new Outcome<Iterable<Attributes>>() {
-            @Override
-            public Iterable<Attributes> handle(final ResultSet rset,
-                final Statement stmt) throws SQLException {
-                final Collection<Attributes> items = new LinkedList<>();
-                while (rset.next()) {
-                    items.add(this.fetch(rset));
-                }
-                return items;
-            }
-
-            /**
-             * Convert result set to Attributes.
-             * @param rset Result set
-             * @return Attribs
-             * @throws SQLException If fails
-             */
-            private Attributes fetch(final ResultSet rset) throws SQLException {
-                final ResultSetMetaData meta = rset.getMetaData();
-                Attributes attrs = new Attributes();
-                for (int idx = 0; idx < meta.getColumnCount(); ++idx) {
-                    final String text = rset.getString(idx + 1);
-                    final AttributeValue value;
-                    if (text.matches("[0-9]+")) {
-                        value = AttributeValue.builder().s(text).n(text).build();
-                    } else {
-                        value = AttributeValue.builder().s(text).build();
-                    }
-                    attrs = attrs.with(
-                        meta.getColumnName(idx + 1).toLowerCase(Locale.ENGLISH),
-                        value
-                    );
-                }
-                return attrs;
-            }
-        };
-
-    /**
-     * Where clause.
-     */
-    private static final Function<String, String> WHERE =
-        key -> String.format("`%s` = ?", key);
-
-    /**
-     * Select WHERE.
-     * @checkstyle AnonInnerLengthCheck (100 lines)
-     * @checkstyle LineLength (3 lines)
-     */
-    private static final Function<Map.Entry<String, Condition>, String> SELECT_WHERE = cnd -> {
-        final String opr;
-        if (cnd.getValue().comparisonOperatorAsString()
-            .equals(ComparisonOperator.GT.toString())) {
-            opr = ">";
-        } else if (cnd.getValue().comparisonOperatorAsString()
-            .equals(ComparisonOperator.LT.toString())) {
-            opr = "<";
-        } else if (cnd.getValue().comparisonOperatorAsString()
-            .equals(ComparisonOperator.EQ.toString())) {
-            opr = "=";
-        } else {
-            throw new UnsupportedOperationException(
-                String.format(
-                    // @checkstyle LineLength (1 line)
-                    "At the moment only EQ/GT/LT operators are supported: %s",
-                    cnd.getValue().comparisonOperatorAsString()
-                )
-            );
-        }
-        return String.format(
-            "`%s` %s ?", cnd.getKey(), opr
-        );
-    };
-
-    /**
-     * Declare a key column.
-     */
-    private static final Function<String, String> CREATE_KEY =
-        key -> String.format("`%s` VARCHAR NOT NULL", key);
-
-    /**
-     * Quote a key column name for use inside a PRIMARY KEY clause.
-     */
-    private static final Function<String, String> QUOTE_KEY =
-        key -> String.format("`%s`", key);
-
-    /**
-     * Create attr.
-     */
-    private static final Function<String, String> CREATE_ATTR =
-        key -> String.format("`%s` CLOB", key);
+        new H2Data.Rows();
 
     /**
      * WHERE clauses are joined with this.
@@ -169,27 +77,34 @@ public final class H2Data implements MkData {
      * @param file Where to keep the database
      */
     public H2Data(final File file) {
-        this.jdbc = H2Data.connection(
-            String.format(
-                "jdbc:h2:file:%s",
-                file.getAbsolutePath()
+        this(
+            H2Data.connection(
+                String.format(
+                    "jdbc:h2:file:%s",
+                    file.getAbsolutePath()
+                )
             )
         );
+    }
+
+    /**
+     * Private ctor.
+     * @param source Data source of the database
+     */
+    private H2Data(final DataSource source) {
+        this.jdbc = source;
     }
 
     @Override
     public Iterable<String> keys(final String table) throws IOException {
         try {
-            return new JdbcSession(this.jdbc)
-                // @checkstyle LineLength (1 line)
-                .sql(
-                "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = ?"
-                ).set(H2Data.encodeTableName(table))
-                .select(
-                    new ListOutcome<>(
-                        rset -> rset.getString(1).toLowerCase(Locale.ENGLISH)
-                    )
-                );
+            return new JdbcSession(this.jdbc).sql(
+            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = ?"
+            ).set(H2Data.encodeTableName(table)).select(
+                new ListOutcome<>(
+                    rset -> rset.getString(1).toLowerCase(Locale.ENGLISH)
+                )
+            );
         } catch (final SQLException ex) {
             throw new IOException(ex);
         }
@@ -205,7 +120,10 @@ public final class H2Data implements MkData {
                 sql.append(" WHERE ");
                 Joiner.on(H2Data.AND).appendTo(
                     sql,
-                    Iterables.transform(conds.entrySet(), H2Data.SELECT_WHERE)
+                    Iterables.transform(
+                        conds.entrySet(),
+                        cnd -> new H2Data.Clause(cnd).sql()
+                    )
                 );
             }
             JdbcSession session = new JdbcSession(this.jdbc)
@@ -266,10 +184,16 @@ public final class H2Data implements MkData {
                     "UPDATE %s SET %s WHERE %s",
                     H2Data.encodeTableName(table),
                     Joiner.on(',').join(
-                        Iterables.transform(attrs.keySet(), H2Data.WHERE)
+                        Iterables.transform(
+                            attrs.keySet(),
+                            key -> new H2Data.Column(key).where()
+                        )
                     ),
                     Joiner.on(H2Data.AND).join(
-                        Iterables.transform(keys.keySet(), H2Data.WHERE)
+                        Iterables.transform(
+                            keys.keySet(),
+                            key -> new H2Data.Column(key).where()
+                        )
                     )
                 )
             );
@@ -292,7 +216,10 @@ public final class H2Data implements MkData {
                     "DELETE FROM %s WHERE %s",
                     H2Data.encodeTableName(table),
                     Joiner.on(H2Data.AND).join(
-                        Iterables.transform(keys.keySet(), H2Data.WHERE)
+                        Iterables.transform(
+                            keys.keySet(),
+                            key -> new H2Data.Column(key).where()
+                        )
                     )
                 )
             );
@@ -322,19 +249,28 @@ public final class H2Data implements MkData {
             .append(H2Data.encodeTableName(table)).append(" (");
         Joiner.on(',').appendTo(
             sql,
-            Iterables.transform(Arrays.asList(keys), H2Data.CREATE_KEY)
+            Iterables.transform(
+                Arrays.asList(keys),
+                key -> new H2Data.Column(key).key()
+            )
         );
         if (attrs.length > 0) {
             sql.append(',');
             Joiner.on(',').appendTo(
                 sql,
-                Iterables.transform(Arrays.asList(attrs), H2Data.CREATE_ATTR)
+                Iterables.transform(
+                    Arrays.asList(attrs),
+                    key -> new H2Data.Column(key).attribute()
+                )
             );
         }
         sql.append(", PRIMARY KEY (");
         Joiner.on(',').appendTo(
             sql,
-            Iterables.transform(Arrays.asList(keys), H2Data.QUOTE_KEY)
+            Iterables.transform(
+                Arrays.asList(keys),
+                key -> new H2Data.Column(key).quoted()
+            )
         );
         sql.append("))");
         try {
@@ -390,4 +326,151 @@ public final class H2Data implements MkData {
         );
     }
 
+    /**
+     * One column of a table.
+     * @since 0.10
+     */
+    @Immutable
+    @ToString
+    @EqualsAndHashCode(of = "name")
+    private static final class Column {
+
+        /**
+         * Name of the column.
+         */
+        private final transient String name;
+
+        /**
+         * Public ctor.
+         * @param key Name of the column
+         */
+        Column(final String key) {
+            this.name = key;
+        }
+
+        /**
+         * Match the column against a value.
+         * @return SQL fragment
+         */
+        String where() {
+            return String.format("`%s` = ?", this.name);
+        }
+
+        /**
+         * Declare the column as a primary key.
+         * @return SQL fragment
+         */
+        String key() {
+            return String.format("`%s` VARCHAR NOT NULL", this.name);
+        }
+
+        /**
+         * Declare the column as an attribute.
+         * @return SQL fragment
+         */
+        String attribute() {
+            return String.format("`%s` CLOB", this.name);
+        }
+
+        /**
+         * Quote the name of the column.
+         * @return SQL fragment
+         */
+        String quoted() {
+            return String.format("`%s`", this.name);
+        }
+    }
+
+    /**
+     * One condition of a SELECT.
+     * @since 0.10
+     */
+    @ToString
+    @EqualsAndHashCode(of = "cond")
+    private static final class Clause {
+
+        /**
+         * Condition to render.
+         */
+        private final transient Map.Entry<String, Condition> cond;
+
+        /**
+         * Public ctor.
+         * @param cnd Condition to render
+         */
+        Clause(final Map.Entry<String, Condition> cnd) {
+            this.cond = cnd;
+        }
+
+        /**
+         * Render it as SQL.
+         * @return SQL fragment
+         */
+        String sql() {
+            final String operator =
+                this.cond.getValue().comparisonOperatorAsString();
+            final String opr;
+            if (operator.equals(ComparisonOperator.GT.toString())) {
+                opr = ">";
+            } else if (operator.equals(ComparisonOperator.LT.toString())) {
+                opr = "<";
+            } else if (operator.equals(ComparisonOperator.EQ.toString())) {
+                opr = "=";
+            } else {
+                throw new UnsupportedOperationException(
+                    String.format(
+                        "Only EQ/GT/LT operators are supported at the moment: %s",
+                        operator
+                    )
+                );
+            }
+            return String.format("`%s` %s ?", this.cond.getKey(), opr);
+        }
+    }
+
+    /**
+     * All rows of a result set.
+     * @since 0.10
+     */
+    @Immutable
+    @ToString
+    @EqualsAndHashCode
+    private static final class Rows implements Outcome<Iterable<Attributes>> {
+
+        @Override
+        public Iterable<Attributes> handle(final ResultSet rset,
+            final Statement stmt) throws SQLException {
+            final Collection<Attributes> items = new ArrayList<>(0);
+            while (rset.next()) {
+                items.add(H2Data.Rows.fetch(rset));
+            }
+            return items;
+        }
+
+        /**
+         * Convert result set to Attributes.
+         * @param rset Result set
+         * @return Attribs
+         * @throws SQLException If fails
+         */
+        private static Attributes fetch(final ResultSet rset)
+            throws SQLException {
+            final ResultSetMetaData meta = rset.getMetaData();
+            Attributes attrs = new Attributes();
+            for (int idx = 0; idx < meta.getColumnCount(); ++idx) {
+                final String text = rset.getString(idx + 1);
+                final AttributeValue value;
+                if (text.matches("[0-9]+")) {
+                    value = AttributeValue.builder().s(text).n(text).build();
+                } else {
+                    value = AttributeValue.builder().s(text).build();
+                }
+                attrs = attrs.with(
+                    meta.getColumnName(idx + 1).toLowerCase(Locale.ENGLISH),
+                    value
+                );
+            }
+            return attrs;
+        }
+    }
 }

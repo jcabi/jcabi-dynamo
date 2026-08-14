@@ -28,7 +28,6 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
  * Test case for {@link AwsItem}.
  * @since 0.21
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class AwsItemTest {
 
     @Test
@@ -60,13 +59,13 @@ final class AwsItemTest {
             new AwsItem(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsFrame.class),
-                "t\u00e9st-tbl",
+                "tést-tbl",
                 new Attributes().with(
-                    "k\u00e9y",
-                    AttributeValue.builder().s("v\u00e1l").build()
+                    "kéy",
+                    AttributeValue.builder().s("vál").build()
                 ),
-                new Array<>("k\u00e9y")
-            ).has("k\u00e9y"),
+                new Array<>("kéy")
+            ).has("kéy"),
             Matchers.is(true)
         );
     }
@@ -78,15 +77,15 @@ final class AwsItemTest {
             new AwsItem(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsFrame.class),
-                "t\u00e9st-tbl",
+                "tést-tbl",
                 new Attributes().with(
-                    "n\u00e4me",
-                    AttributeValue.builder().s("d\u00e4ta").build()
+                    "näme",
+                    AttributeValue.builder().s("däta").build()
                 ),
-                new Array<>("n\u00e4me")
-            ).get("n\u00e4me"),
+                new Array<>("näme")
+            ).get("näme"),
             Matchers.equalTo(
-                AttributeValue.builder().s("d\u00e4ta").build()
+                AttributeValue.builder().s("däta").build()
             )
         );
     }
@@ -96,32 +95,30 @@ final class AwsItemTest {
         final Credentials creds = Mockito.mock(Credentials.class);
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(creds).aws();
-        final String attr = "\u00e4ttr";
+        final String attr = "ättr";
         Mockito.doReturn(
-            GetItemResponse.builder()
-                .item(
-                    Collections.singletonMap(
-                        attr,
-                        AttributeValue.builder().s("r\u00e9sult").build()
-                    )
+            GetItemResponse.builder().item(
+                Collections.singletonMap(
+                    attr,
+                    AttributeValue.builder().s("résult").build()
                 )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0).build()
-                )
-                .build()
+            ).consumedCapacity(
+                ConsumedCapacity.builder().capacityUnits(1.0).build()
+            )
+            .build()
         ).when(aws).getItem(Mockito.any(GetItemRequest.class));
         MatcherAssert.assertThat(
             "did not fetch attribute from DynamoDB",
             new AwsItem(
-                creds, Mockito.mock(AwsFrame.class), "f\u00e9tch-tbl",
+                creds, Mockito.mock(AwsFrame.class), "fétch-tbl",
                 new Attributes().with(
                     "pk",
-                    AttributeValue.builder().s("f\u00e9tch-pk").build()
+                    AttributeValue.builder().s("fétch-pk").build()
                 ),
                 new Array<>("pk")
             ).get(attr),
             Matchers.equalTo(
-                AttributeValue.builder().s("r\u00e9sult").build()
+                AttributeValue.builder().s("résult").build()
             )
         );
     }
@@ -131,27 +128,25 @@ final class AwsItemTest {
         final Credentials creds = Mockito.mock(Credentials.class);
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(creds).aws();
-        final String attr = "ch\u00e9ck";
+        final String attr = "chéck";
         Mockito.doReturn(
-            GetItemResponse.builder()
-                .item(
-                    Collections.singletonMap(
-                        attr,
-                        AttributeValue.builder().s("pr\u00e9sent").build()
-                    )
+            GetItemResponse.builder().item(
+                Collections.singletonMap(
+                    attr,
+                    AttributeValue.builder().s("présent").build()
                 )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0).build()
-                )
-                .build()
+            ).consumedCapacity(
+                ConsumedCapacity.builder().capacityUnits(1.0).build()
+            )
+            .build()
         ).when(aws).getItem(Mockito.any(GetItemRequest.class));
         MatcherAssert.assertThat(
             "did not detect attribute existence via DynamoDB",
             new AwsItem(
-                creds, Mockito.mock(AwsFrame.class), "h\u00e4s-tbl",
+                creds, Mockito.mock(AwsFrame.class), "häs-tbl",
                 new Attributes().with(
                     "pk",
-                    AttributeValue.builder().s("h\u00e4s-pk").build()
+                    AttributeValue.builder().s("häs-pk").build()
                 ),
                 new Array<>("pk")
             ).has(attr),
@@ -164,42 +159,38 @@ final class AwsItemTest {
         final Credentials creds = Mockito.mock(Credentials.class);
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(creds).aws();
-        final String attr = "\u00fcpd";
+        final String attr = "üpd";
         Mockito.doReturn(
-            UpdateItemResponse.builder()
-                .attributes(
-                    Collections.singletonMap(
-                        attr,
-                        AttributeValue.builder().s("n\u00e9w").build()
-                    )
+            UpdateItemResponse.builder().attributes(
+                Collections.singletonMap(
+                    attr,
+                    AttributeValue.builder().s("néw").build()
                 )
-                .consumedCapacity(
-                    ConsumedCapacity.builder().capacityUnits(1.0).build()
-                )
-                .build()
+            ).consumedCapacity(
+                ConsumedCapacity.builder().capacityUnits(1.0).build()
+            )
+            .build()
         ).when(aws).updateItem(Mockito.any(UpdateItemRequest.class));
         MatcherAssert.assertThat(
             "did not return updated attributes",
             new AwsItem(
-                creds, Mockito.mock(AwsFrame.class), "\u00fcpd-tbl",
+                creds, Mockito.mock(AwsFrame.class), "üpd-tbl",
                 new Attributes().with(
                     "pk",
-                    AttributeValue.builder().s("\u00fcpd-pk").build()
+                    AttributeValue.builder().s("üpd-pk").build()
                 ),
                 new Array<>("pk")
             ).put(
                 attr,
                 AttributeValueUpdate.builder()
-                    .value(
-                        AttributeValue.builder().s("n\u00e9w").build()
-                    )
+                    .value(AttributeValue.builder().s("néw").build())
                     .action(AttributeAction.PUT)
                     .build()
             ),
             Matchers.hasEntry(
                 Matchers.equalTo(attr),
                 Matchers.equalTo(
-                    AttributeValue.builder().s("n\u00e9w").build()
+                    AttributeValue.builder().s("néw").build()
                 )
             )
         );
@@ -212,70 +203,70 @@ final class AwsItemTest {
             .when(aws).getItem(Mockito.any(GetItemRequest.class));
         final Item item = new AwsItem(
             AwsItemTest.mocked(aws),
-            Mockito.mock(AwsFrame.class), "abs\u00e9nt-tbl",
+            Mockito.mock(AwsFrame.class), "absént-tbl",
             new Attributes().with(
                 "pk",
-                AttributeValue.builder().s("abs\u00e9nt-pk").build()
+                AttributeValue.builder().s("absént-pk").build()
             ),
             new Array<>("pk")
         );
         Assertions.assertThrows(
             NoSuchElementException.class,
-            () -> item.get("m\u00efssing")
+            () -> item.get("mïssing")
         );
     }
 
     @Test
     void wrapsExceptionOnGet() {
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
-        Mockito.doThrow(SdkClientException.create("b\u00f6om"))
+        Mockito.doThrow(SdkClientException.create("böom"))
             .when(aws).getItem(Mockito.any(GetItemRequest.class));
         final Item item = new AwsItem(
             AwsItemTest.mocked(aws),
-            Mockito.mock(AwsFrame.class), "g\u00e9t-err",
+            Mockito.mock(AwsFrame.class), "gét-err",
             new Attributes().with(
                 "pk",
-                AttributeValue.builder().s("g\u00e9t-pk").build()
+                AttributeValue.builder().s("gét-pk").build()
             ),
             new Array<>("pk")
         );
         Assertions.assertThrows(
             IOException.class,
-            () -> item.get("f\u00e4il")
+            () -> item.get("fäil")
         );
     }
 
     @Test
     void wrapsExceptionOnHas() {
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
-        Mockito.doThrow(SdkClientException.create("b\u00f6om"))
+        Mockito.doThrow(SdkClientException.create("böom"))
             .when(aws).getItem(Mockito.any(GetItemRequest.class));
         final Item item = new AwsItem(
             AwsItemTest.mocked(aws),
-            Mockito.mock(AwsFrame.class), "h\u00e4s-err",
+            Mockito.mock(AwsFrame.class), "häs-err",
             new Attributes().with(
                 "pk",
-                AttributeValue.builder().s("h\u00e4s-pk").build()
+                AttributeValue.builder().s("häs-pk").build()
             ),
             new Array<>("pk")
         );
         Assertions.assertThrows(
             IOException.class,
-            () -> item.has("f\u00e4il")
+            () -> item.has("fäil")
         );
     }
 
     @Test
     void wrapsExceptionOnPut() {
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
-        Mockito.doThrow(SdkClientException.create("b\u00f6om"))
+        Mockito.doThrow(SdkClientException.create("böom"))
             .when(aws).updateItem(Mockito.any(UpdateItemRequest.class));
         final Item item = new AwsItem(
             AwsItemTest.mocked(aws),
-            Mockito.mock(AwsFrame.class), "p\u00fct-err",
+            Mockito.mock(AwsFrame.class), "püt-err",
             new Attributes().with(
                 "pk",
-                AttributeValue.builder().s("p\u00fct-pk").build()
+                AttributeValue.builder().s("püt-pk").build()
             ),
             new Array<>("pk")
         );
@@ -283,11 +274,9 @@ final class AwsItemTest {
             IOException.class,
             () -> item.put(
                 new AttributeUpdates().with(
-                    "f\u00e4il",
+                    "fäil",
                     AttributeValueUpdate.builder()
-                        .value(
-                            AttributeValue.builder().s("v\u00e1l").build()
-                        )
+                        .value(AttributeValue.builder().s("vál").build())
                         .action(AttributeAction.PUT)
                         .build()
                 )
@@ -298,13 +287,13 @@ final class AwsItemTest {
     @Test
     void distinguishesDifferentItems() {
         final Credentials creds = new Credentials.Simple(
-            "k\u00e9y1", "s\u00e9cret1"
+            "kéy1", "sécret1"
         );
         final AwsTable first = new AwsTable(
-            creds, new Region.Simple(creds), "t\u00e4ble-one"
+            creds, new Region.Simple(creds), "täble-one"
         );
         final AwsTable second = new AwsTable(
-            creds, new Region.Simple(creds), "t\u00e4ble-two"
+            creds, new Region.Simple(creds), "täble-two"
         );
         MatcherAssert.assertThat(
             "items with different tables should not be equal",
@@ -336,7 +325,7 @@ final class AwsItemTest {
             new AwsItem(
                 Mockito.mock(Credentials.class),
                 Mockito.mock(AwsFrame.class),
-                "fr\u00e4me-tbl",
+                "främe-tbl",
                 new Attributes(),
                 new Array<>()
             ).frame(),
@@ -361,11 +350,9 @@ final class AwsItemTest {
      */
     private static GetItemResponse empty() {
         return GetItemResponse.builder()
-            .item(Collections.emptyMap())
-            .consumedCapacity(
+            .item(Collections.emptyMap()).consumedCapacity(
                 ConsumedCapacity.builder().capacityUnits(1.0).build()
             )
             .build();
     }
-
 }

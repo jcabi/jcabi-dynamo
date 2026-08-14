@@ -21,8 +21,7 @@ final class ThroughputTest {
         final Region region = Mockito.mock(Region.class);
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.when(table.region()).thenReturn(region);
-        final String name = "Customers";
-        Mockito.when(table.name()).thenReturn(name);
+        Mockito.when(table.name()).thenReturn("Customers");
         Mockito.when(region.aws()).thenReturn(aws);
         new Throughput(table).adjust();
         Mockito.verify(aws, Mockito.times(1))

@@ -44,13 +44,13 @@ public interface Credentials {
 
     /**
      * Simple implementation.
-     *
      * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)
     @EqualsAndHashCode(of = { "key", "secret", "region" })
     final class Simple implements Credentials {
+
         /**
          * AWS key.
          */
@@ -95,8 +95,7 @@ public interface Credentials {
         @Override
         public DynamoDbClient aws() {
             return DynamoDbClient.builder()
-                .region(Region.of(this.region))
-                .credentialsProvider(
+                .region(Region.of(this.region)).credentialsProvider(
                     StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(this.key, this.secret)
                     )
@@ -107,7 +106,6 @@ public interface Credentials {
 
     /**
      * Assumed AWS IAM role.
-     *
      * @see <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/role-usecase-ec2app.html">Granting Applications that Run on Amazon EC2 Instances Access to AWS Resources</a>
      * @since 0.1
      */
@@ -115,6 +113,7 @@ public interface Credentials {
     @Loggable(Loggable.DEBUG)
     @EqualsAndHashCode(of = "region")
     final class Assumed implements Credentials {
+
         /**
          * Region name.
          */
@@ -150,13 +149,13 @@ public interface Credentials {
 
     /**
      * With explicitly specified endpoint.
-     *
      * @since 0.1
      */
     @Immutable
     @Loggable(Loggable.DEBUG)
     @EqualsAndHashCode(of = { "origin", "endpoint" })
     final class Direct implements Credentials {
+
         /**
          * Original credentials.
          */
@@ -170,20 +169,20 @@ public interface Credentials {
         /**
          * Public ctor.
          * @param creds Original credentials
-         * @param pnt Endpoint
+         * @param port Port number for localhost
          */
-        public Direct(final Credentials.Simple creds, final String pnt) {
-            this.origin = creds;
-            this.endpoint = pnt;
+        public Direct(final Credentials.Simple creds, final int port) {
+            this(creds, String.format("http://localhost:%d", port));
         }
 
         /**
          * Public ctor.
          * @param creds Original credentials
-         * @param port Port number for localhost
+         * @param pnt Endpoint
          */
-        public Direct(final Credentials.Simple creds, final int port) {
-            this(creds, String.format("http://localhost:%d", port));
+        public Direct(final Credentials.Simple creds, final String pnt) {
+            this.origin = creds;
+            this.endpoint = pnt;
         }
 
         @Override
@@ -195,8 +194,7 @@ public interface Credentials {
         public DynamoDbClient aws() {
             return DynamoDbClient.builder()
                 .endpointOverride(URI.create(this.endpoint))
-                .region(Region.US_EAST_1)
-                .credentialsProvider(
+                .region(Region.US_EAST_1).credentialsProvider(
                     StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(
                             this.origin.key, this.origin.secret

@@ -104,12 +104,11 @@ final class AwsTableTest {
                 ).build()
             ).build()
         ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
-        final AwsTable table = new AwsTable(
-            credentials, Mockito.mock(Region.class), "table-with-key"
-        );
         MatcherAssert.assertThat(
             "keys() must return the single primary key declared in the table schema",
-            table.keys(),
+            new AwsTable(
+                credentials, Mockito.mock(Region.class), "table-with-key"
+            ).keys(),
             Matchers.contains(AwsTableTest.KEY)
         );
     }
@@ -127,12 +126,11 @@ final class AwsTableTest {
                 ).build()
             ).build()
         ).when(aws).describeTable(Mockito.any(DescribeTableRequest.class));
-        final AwsTable table = new AwsTable(
-            credentials, Mockito.mock(Region.class), "composite-table"
-        );
         MatcherAssert.assertThat(
             "keys() must preserve the order of the composite primary key",
-            table.keys(),
+            new AwsTable(
+                credentials, Mockito.mock(Region.class), "composite-table"
+            ).keys(),
             Matchers.contains("hash-key", "range-key")
         );
     }

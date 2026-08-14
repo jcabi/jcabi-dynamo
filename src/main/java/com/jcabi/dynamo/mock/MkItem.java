@@ -25,7 +25,6 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Mock version of {@link Item}.
- *
  * @since 0.10
  */
 @Immutable

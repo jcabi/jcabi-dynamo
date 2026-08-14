@@ -22,9 +22,9 @@ final class MkItemTest {
 
     @Test
     void returnsFrameReference() throws Exception {
-        final String name = "fr\u00e4me";
-        final String key = "k\u00e9y";
-        final String attr = "\u00e4ttr";
+        final String name = "främe";
+        final String key = "kéy";
+        final String attr = "ättr";
         final Region region = new MkRegion(
             new H2Data().with(name, new String[]{key}, attr)
         );
@@ -32,7 +32,7 @@ final class MkItemTest {
         table.put(
             new Attributes()
                 .with(key, "28173")
-                .with(attr, "v\u00e4lue")
+                .with(attr, "välue")
         );
         MatcherAssert.assertThat(
             "does not return frame from item",
@@ -43,9 +43,9 @@ final class MkItemTest {
 
     @Test
     void checksAbsentAttributeReturnsFalse() throws Exception {
-        final String name = "h\u00e4s";
-        final String key = "k\u00e9y";
-        final String attr = "\u00e4ttr";
+        final String name = "häs";
+        final String key = "kéy";
+        final String attr = "ättr";
         final Region region = new MkRegion(
             new H2Data().with(name, new String[]{key}, attr)
         );
@@ -53,7 +53,7 @@ final class MkItemTest {
         table.put(
             new Attributes()
                 .with(key, "91823")
-                .with(attr, "v\u00e4lue")
+                .with(attr, "välue")
         );
         MatcherAssert.assertThat(
             "does not return false for absent attribute",
@@ -64,10 +64,10 @@ final class MkItemTest {
 
     @Test
     void putsMultipleAttributes() throws Exception {
-        final String name = "m\u00fclti";
-        final String key = "k\u00e9y";
-        final String first = "f\u00edrst";
-        final String second = "s\u00e9cond";
+        final String name = "mülti";
+        final String key = "kéy";
+        final String first = "fírst";
+        final String second = "sécond";
         final Region region = new MkRegion(
             new H2Data().with(
                 name, new String[]{key}, first, second
@@ -77,20 +77,20 @@ final class MkItemTest {
         table.put(
             new Attributes()
                 .with(key, "71234")
-                .with(first, "old\u00f6ne")
-                .with(second, "old\u00f6two")
+                .with(first, "oldöne")
+                .with(second, "oldötwo")
         );
         final Item item = table.frame().iterator().next();
         item.put(
             first,
             AttributeValueUpdate.builder().value(
-                AttributeValue.builder().s("n\u00e9w").build()
+                AttributeValue.builder().s("néw").build()
             ).build()
         );
         MatcherAssert.assertThat(
             "does not update attribute correctly",
             item.get(first).s(),
-            Matchers.equalTo("n\u00e9w")
+            Matchers.equalTo("néw")
         );
     }
 }

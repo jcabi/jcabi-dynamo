@@ -71,5 +71,4 @@ final class RegionTest {
         new Region.Prefixed(origin, "").table(name);
         Mockito.verify(origin).table(name);
     }
-
 }

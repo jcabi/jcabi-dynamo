@@ -40,8 +40,7 @@ final class AwsIteratorTest {
         Mockito.doReturn(true).when(first).hasNext();
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(first)
-            .when(valve)
-            .fetch(
+            .when(valve).fetch(
                 Mockito.eq(credentials), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
@@ -78,8 +77,7 @@ final class AwsIteratorTest {
         Mockito.doReturn(true).when(first).hasNext();
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(first)
-            .when(valve)
-            .fetch(
+            .when(valve).fetch(
                 Mockito.eq(credentials), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
@@ -122,8 +120,7 @@ final class AwsIteratorTest {
         Mockito.doReturn(false).when(second).hasNext();
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(first)
-            .when(valve)
-            .fetch(
+            .when(valve).fetch(
                 Mockito.eq(credentials), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
@@ -171,8 +168,7 @@ final class AwsIteratorTest {
         Mockito.doReturn(new ArrayList<Attributes>(0)).when(last).items();
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(first)
-            .when(valve)
-            .fetch(
+            .when(valve).fetch(
                 Mockito.eq(credentials), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
@@ -207,8 +203,7 @@ final class AwsIteratorTest {
         Mockito.doReturn(Collections.emptyList()).when(dosage).items();
         final Valve vlv = Mockito.mock(Valve.class);
         Mockito.doReturn(dosage)
-            .when(vlv)
-            .fetch(
+            .when(vlv).fetch(
                 Mockito.eq(creds), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
@@ -246,8 +241,7 @@ final class AwsIteratorTest {
         Mockito.doReturn(false).when(dosage).hasNext();
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(dosage)
-            .when(valve)
-            .fetch(
+            .when(valve).fetch(
                 Mockito.eq(creds), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
@@ -312,8 +306,7 @@ final class AwsIteratorTest {
         Mockito.doReturn(false).when(dosage).hasNext();
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(dosage)
-            .when(valve)
-            .fetch(
+            .when(valve).fetch(
                 Mockito.eq(creds), Mockito.anyString(),
                 Mockito.any(Map.class), Mockito.any(Collection.class)
             );
@@ -338,5 +331,4 @@ final class AwsIteratorTest {
             Mockito.any(DeleteItemRequest.class)
         );
     }
-
 }

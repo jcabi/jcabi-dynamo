@@ -49,11 +49,11 @@ final class CredentialsTest {
         MatcherAssert.assertThat(
             "Simple credentials did not format as region/key",
             new Credentials.Simple(
-                "t\u00e9st-k\u00e9y-000000000",
-                "s\u00e9cr\u00e9t-0000000000000000000000000000",
-                "us-\u00e9ast-1"
+                "tést-kéy-000000000",
+                "sécrét-0000000000000000000000000000",
+                "us-éast-1"
             ).toString(),
-            Matchers.equalTo("us-\u00e9ast-1/t\u00e9st-k\u00e9y-000000000")
+            Matchers.equalTo("us-éast-1/tést-kéy-000000000")
         );
     }
 
@@ -84,8 +84,8 @@ final class CredentialsTest {
     void formatsAssumedAsString() {
         MatcherAssert.assertThat(
             "Assumed credentials did not format as region",
-            new Credentials.Assumed("us-w\u00e9st-2").toString(),
-            Matchers.equalTo("us-w\u00e9st-2")
+            new Credentials.Assumed("us-wést-2").toString(),
+            Matchers.equalTo("us-wést-2")
         );
     }
 
@@ -131,15 +131,14 @@ final class CredentialsTest {
                 new Credentials.Simple(
                     "ABABABABABABABABAB02",
                     "ABCDEABCDEABCDEABCDEABCDEABCDEABCDEABC02",
-                    "us-\u00e9ast-1"
+                    "us-éast-1"
                 ),
-                "http://loc\u00e4l:9999"
+                "http://locäl:9999"
             ).toString(),
             Matchers.allOf(
-                Matchers.containsString("us-\u00e9ast-1"),
-                Matchers.containsString("http://loc\u00e4l:9999")
+                Matchers.containsString("us-éast-1"),
+                Matchers.containsString("http://locäl:9999")
             )
         );
     }
-
 }

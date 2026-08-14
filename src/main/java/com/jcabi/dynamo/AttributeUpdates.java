@@ -20,19 +20,12 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * DynamoDB item attribute updates.
- *
  * @since 0.12
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = "attrs")
-@SuppressWarnings
-    (
-    {
-        "PMD.TooManyMethods",
-        "PMD.LooseCoupling"
-    }
-    )
+@SuppressWarnings("PMD.LooseCoupling")
 public final class AttributeUpdates
     implements Map<String, AttributeValueUpdate> {
 

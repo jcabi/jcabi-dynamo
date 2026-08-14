@@ -16,7 +16,6 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Region that retries on failure.
- *
  * @since 0.9
  */
 @Immutable

@@ -21,14 +21,12 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Frame that retries on failure.
- *
  * @since 0.9
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = "origin")
-@SuppressWarnings("PMD.TooManyMethods")
 public final class ReFrame implements Frame {
 
     /**
@@ -151,5 +149,4 @@ public final class ReFrame implements Frame {
     public void clear() {
         this.origin.clear();
     }
-
 }

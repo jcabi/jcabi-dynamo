@@ -5,7 +5,6 @@
 
 /**
  * Retry all AWS operations a few times.
- *
  * @since 0.9
  */
 package com.jcabi.dynamo.retry;

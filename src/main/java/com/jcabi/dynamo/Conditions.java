@@ -38,7 +38,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 @SuppressWarnings
     (
     {
-        "PMD.TooManyMethods",
         "PMD.ProhibitPublicStaticMethods",
         "PMD.LooseCoupling"
     }
@@ -62,7 +61,15 @@ public final class Conditions implements Map<String, Condition> {
      * @param map Map of them
      */
     public Conditions(final Map<String, Condition> map) {
-        this.conds = Conditions.array(map);
+        this(Conditions.array(map));
+    }
+
+    /**
+     * Private ctor.
+     * @param map Map of them
+     */
+    private Conditions(final ArrayMap<String, Condition> map) {
+        this.conds = map;
     }
 
     /**
@@ -261,5 +268,4 @@ public final class Conditions implements Map<String, Condition> {
         cnds.putAll(map);
         return new ArrayMap<>(cnds);
     }
-
 }

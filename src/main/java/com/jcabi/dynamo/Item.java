@@ -38,8 +38,7 @@ public interface Item {
      * @return TRUE if it exists
      * @throws IOException In case of DynamoDB failure
      */
-    boolean has(String name)
-        throws IOException;
+    boolean has(String name) throws IOException;
 
     /**
      * Change one attribute, immediately saving it to AWS (all other attributes
@@ -79,5 +78,4 @@ public interface Item {
      * @return Frame
      */
     Frame frame();
-
 }

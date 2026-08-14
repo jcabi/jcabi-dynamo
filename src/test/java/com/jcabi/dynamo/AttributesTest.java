@@ -19,7 +19,6 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
  * Test case for {@link Attributes}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class AttributesTest {
 
     @Test
@@ -59,9 +58,9 @@ final class AttributesTest {
     @Test
     void buildsExpectedKeys() {
         final String attr = "attr-13";
-        final String value = "some value \u20ac";
+        final String value = "some value €";
         MatcherAssert.assertThat(
-            "should has 'some value \u20ac'",
+            "should has 'some value €'",
             new Attributes().with(attr, value).asKeys(),
             Matchers.hasEntry(
                 attr,
@@ -206,15 +205,13 @@ final class AttributesTest {
         MatcherAssert.assertThat(
             "did not merge all map entries",
             new Attributes().with(
-                new ArrayMap<String, AttributeValue>()
-                    .with(
-                        UUID.randomUUID().toString(),
-                        AttributeValue.builder().s("ä").build()
-                    )
-                    .with(
-                        UUID.randomUUID().toString(),
-                        AttributeValue.builder().s("ö").build()
-                    )
+                new ArrayMap<String, AttributeValue>().with(
+                    UUID.randomUUID().toString(),
+                    AttributeValue.builder().s("ä").build()
+                ).with(
+                    UUID.randomUUID().toString(),
+                    AttributeValue.builder().s("ö").build()
+                )
             ).keySet(),
             Matchers.hasSize(2)
         );
@@ -231,5 +228,4 @@ final class AttributesTest {
             Matchers.hasSize(2)
         );
     }
-
 }

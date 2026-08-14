@@ -17,7 +17,6 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Dosage that retries on failure.
- *
  * @since 0.9
  */
 @Immutable

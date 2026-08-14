@@ -16,7 +16,6 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
  * Test case for {@link Conditions}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class ConditionsTest {
 
     @Test
@@ -66,7 +65,7 @@ final class ConditionsTest {
         MatcherAssert.assertThat(
             "should not report empty after adding condition",
             new Conditions()
-                .with("\u00e4ttr", Condition.builder().build())
+                .with("ättr", Condition.builder().build())
                 .isEmpty(),
             Matchers.is(false)
         );
@@ -77,8 +76,8 @@ final class ConditionsTest {
         MatcherAssert.assertThat(
             "should not miss added key",
             new Conditions()
-                .with("k\u00e9y", Condition.builder().build())
-                .containsKey("k\u00e9y"),
+                .with("kéy", Condition.builder().build())
+                .containsKey("kéy"),
             Matchers.is(true)
         );
     }
@@ -88,8 +87,8 @@ final class ConditionsTest {
         MatcherAssert.assertThat(
             "should not contain absent key",
             new Conditions()
-                .with("pr\u00e9s", Condition.builder().build())
-                .containsKey("n\u00f6pe"),
+                .with("prés", Condition.builder().build())
+                .containsKey("nöpe"),
             Matchers.is(false)
         );
     }
@@ -100,7 +99,7 @@ final class ConditionsTest {
         MatcherAssert.assertThat(
             "should not miss added value",
             new Conditions()
-                .with("n\u00e4me", cond)
+                .with("näme", cond)
                 .containsValue(cond),
             Matchers.is(true)
         );
@@ -112,8 +111,8 @@ final class ConditionsTest {
         MatcherAssert.assertThat(
             "should not return wrong condition for key",
             new Conditions()
-                .with("r\u00e9tr", cond)
-                .get("r\u00e9tr"),
+                .with("rétr", cond)
+                .get("rétr"),
             Matchers.equalTo(cond)
         );
     }
@@ -123,8 +122,8 @@ final class ConditionsTest {
         MatcherAssert.assertThat(
             "should not return wrong size",
             new Conditions()
-                .with("f\u00ecrst", Condition.builder().build())
-                .with("s\u00e9cond", Condition.builder().build())
+                .with("fìrst", Condition.builder().build())
+                .with("sécond", Condition.builder().build())
                 .size(),
             Matchers.equalTo(2)
         );
@@ -135,7 +134,7 @@ final class ConditionsTest {
         Assertions.assertThrows(
             UnsupportedOperationException.class,
             () -> new Conditions()
-                .put("p\u00fct", Condition.builder().build())
+                .put("püt", Condition.builder().build())
         );
     }
 
@@ -143,7 +142,7 @@ final class ConditionsTest {
     void throwsOnRemove() {
         Assertions.assertThrows(
             UnsupportedOperationException.class,
-            () -> new Conditions().remove("r\u00e9m")
+            () -> new Conditions().remove("rém")
         );
     }
 
@@ -153,7 +152,7 @@ final class ConditionsTest {
             UnsupportedOperationException.class,
             () -> new Conditions().putAll(
                 Collections.singletonMap(
-                    "b\u00fclk", Condition.builder().build()
+                    "bülk", Condition.builder().build()
                 )
             )
         );
@@ -191,9 +190,9 @@ final class ConditionsTest {
     void createsEqualConditionForObject() {
         MatcherAssert.assertThat(
             "should not miss string attribute for Object",
-            Conditions.equalTo("v\u00e4lue")
+            Conditions.equalTo("välue")
                 .attributeValueList().get(0).s(),
-            Matchers.equalTo("v\u00e4lue")
+            Matchers.equalTo("välue")
         );
     }
 
@@ -203,8 +202,8 @@ final class ConditionsTest {
             "should not fail merging attribute map",
             new Conditions().withAttributes(
                 Collections.singletonMap(
-                    "m\u00e9rge",
-                    AttributeValue.builder().s("v\u00e4l").build()
+                    "mérge",
+                    AttributeValue.builder().s("väl").build()
                 )
             ).keySet(),
             Matchers.hasSize(1)
@@ -217,7 +216,7 @@ final class ConditionsTest {
             "should not fail combining conditions via map",
             new Conditions().with(
                 Collections.singletonMap(
-                    "c\u00f6mb", Condition.builder().build()
+                    "cömb", Condition.builder().build()
                 )
             ).keySet(),
             Matchers.hasSize(1)
@@ -228,8 +227,8 @@ final class ConditionsTest {
     void addsConditionViaObject() {
         MatcherAssert.assertThat(
             "should not fail adding condition via object",
-            new Conditions().with("n\u00e4me", (Object) "v\u00e4lue"),
-            Matchers.hasKey("n\u00e4me")
+            new Conditions().with("näme", (Object) "välue"),
+            Matchers.hasKey("näme")
         );
     }
 
@@ -238,10 +237,9 @@ final class ConditionsTest {
         MatcherAssert.assertThat(
             "should not produce string without attribute name",
             new Conditions()
-                .with("r\u00e4nge", Conditions.equalTo("v\u00e4l"))
+                .with("ränge", Conditions.equalTo("väl"))
                 .toString(),
-            Matchers.containsString("r\u00e4nge")
+            Matchers.containsString("ränge")
         );
     }
-
 }

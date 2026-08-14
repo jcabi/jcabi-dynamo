@@ -68,5 +68,4 @@ final class AwsIteratorITCase {
             Matchers.hasSize(0)
         );
     }
-
 }

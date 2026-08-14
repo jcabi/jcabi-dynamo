@@ -29,7 +29,6 @@ import software.amazon.awssdk.services.dynamodb.model.Select;
 
 /**
  * Scan-based valve.
- *
  * @since 0.1
  */
 @Immutable
@@ -62,11 +61,19 @@ public final class ScanValve implements Valve {
      * @param attrs Attributes to pre-load
      */
     private ScanValve(final int lmt, final Iterable<String> attrs) {
-        this.limit = lmt;
-        this.attributes = Iterables.toArray(attrs, String.class);
+        this(lmt, Iterables.toArray(attrs, String.class));
     }
 
-    // @checkstyle ParameterNumber (5 lines)
+    /**
+     * Private ctor.
+     * @param lmt Limit
+     * @param attrs Attributes to pre-load
+     */
+    private ScanValve(final int lmt, final String... attrs) {
+        this.limit = lmt;
+        this.attributes = attrs;
+    }
+
     @Override
     public Dosage fetch(final Credentials credentials,
         final String table, final Map<String, Condition> conditions,
@@ -87,7 +94,6 @@ public final class ScanValve implements Valve {
             final ScanResponse result = aws.scan(request);
             Logger.info(
                 this,
-                // @checkstyle LineLength (1 line)
                 "#items(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                 result.count(), table,
                 result.lastEvaluatedKey(),
@@ -125,7 +131,6 @@ public final class ScanValve implements Valve {
             final ScanResponse result = aws.scan(request);
             Logger.info(
                 this,
-                // @checkstyle LineLength (1 line)
                 "#total(): COUNT=%d in '%s' using %s, %s",
                 result.count(), request.tableName(),
                 request.filterExpression(),
@@ -180,13 +185,13 @@ public final class ScanValve implements Valve {
 
     /**
      * Next dosage.
-     *
      * @since 0.1
      */
     @ToString
     @Loggable(Loggable.DEBUG)
     @EqualsAndHashCode(of = { "credentials", "request", "result" })
     private final class NextDosage implements Dosage {
+
         /**
          * AWS client.
          */
@@ -235,14 +240,11 @@ public final class ScanValve implements Valve {
             final DynamoDbClient aws = this.credentials.aws();
             try {
                 final ScanRequest rqst = this.request.toBuilder()
-                    .exclusiveStartKey(
-                        this.result.lastEvaluatedKey()
-                    )
+                    .exclusiveStartKey(this.result.lastEvaluatedKey())
                     .build();
                 final ScanResponse rslt = aws.scan(rqst);
                 Logger.info(
                     this,
-                    // @checkstyle LineLength (1 line)
                     "#next(): loaded %d item(s) from '%s' and stopped at %s, using %s, %s",
                     rslt.count(), rqst.tableName(), rqst.scanFilter(),
                     rslt.lastEvaluatedKey(),

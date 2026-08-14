@@ -16,7 +16,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
  * Test case for {@link AttributesUpdates}.
  * @since 0.22
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings("CollectionIncompatibleType")
 final class AttributeUpdatesTest {
 
     @Test
@@ -175,8 +175,7 @@ final class AttributeUpdatesTest {
             "should contains value 'attrv'",
             new AttributeUpdates()
                 .with("attrkey", value)
-                .with("otherkey", "othervalue")
-                .containsValue(
+                .with("otherkey", "othervalue").containsValue(
                     AttributeValueUpdate.builder()
                         .value(AttributeValue.builder().s(value).build())
                         .action(AttributeAction.PUT)

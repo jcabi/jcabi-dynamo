@@ -27,7 +27,6 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
 
 /**
  * Single item/row in a DynamoDB table.
- *
  * @since 0.1
  */
 @Immutable
@@ -67,7 +66,6 @@ final class AwsItem implements Item {
      * @param table Table name
      * @param attrs Loaded already attributes with values
      * @param pks Keys of the table
-     * @checkstyle ParameterNumber (5 lines)
      */
     AwsItem(final Credentials creds, final AwsFrame frame,
         final String table, final Attributes attrs,
@@ -235,5 +233,4 @@ final class AwsItem implements Item {
             .consistentRead(true)
             .build();
     }
-
 }

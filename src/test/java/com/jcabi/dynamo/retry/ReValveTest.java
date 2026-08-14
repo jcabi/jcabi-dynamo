@@ -46,7 +46,7 @@ final class ReValveTest {
                 }
             ).fetch(
                 Credentials.TEST,
-                "t\u00e9st",
+                "tést",
                 Collections.emptyMap(),
                 Collections.emptyList()
             ),
@@ -79,7 +79,7 @@ final class ReValveTest {
                 }
             ).count(
                 Credentials.TEST,
-                "t\u00e9st",
+                "tést",
                 Collections.emptyMap()
             ),
             Matchers.equalTo(42)
