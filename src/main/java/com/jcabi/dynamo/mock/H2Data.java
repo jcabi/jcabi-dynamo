@@ -17,16 +17,10 @@ import com.jcabi.jdbc.Outcome;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.sql.DataSource;
 import lombok.EqualsAndHashCode;
@@ -35,7 +29,6 @@ import org.apache.commons.codec.binary.Base32;
 import org.h2.jdbcx.JdbcDataSource;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
-import software.amazon.awssdk.services.dynamodb.model.ComparisonOperator;
 import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
@@ -52,7 +45,7 @@ public final class H2Data implements MkData {
      * Fetcher of rows.
      */
     private static final Outcome<Iterable<Attributes>> OUTCOME =
-        new H2Data.Rows();
+        new Rows();
 
     /**
      * WHERE clauses are joined with this.
@@ -122,7 +115,7 @@ public final class H2Data implements MkData {
                     sql,
                     Iterables.transform(
                         conds.entrySet(),
-                        cnd -> new H2Data.Clause(cnd).sql()
+                        cnd -> new Clause(cnd).sql()
                     )
                 );
             }
@@ -186,13 +179,13 @@ public final class H2Data implements MkData {
                     Joiner.on(',').join(
                         Iterables.transform(
                             attrs.keySet(),
-                            key -> new H2Data.Column(key).where()
+                            key -> new Column(key).where()
                         )
                     ),
                     Joiner.on(H2Data.AND).join(
                         Iterables.transform(
                             keys.keySet(),
-                            key -> new H2Data.Column(key).where()
+                            key -> new Column(key).where()
                         )
                     )
                 )
@@ -218,7 +211,7 @@ public final class H2Data implements MkData {
                     Joiner.on(H2Data.AND).join(
                         Iterables.transform(
                             keys.keySet(),
-                            key -> new H2Data.Column(key).where()
+                            key -> new Column(key).where()
                         )
                     )
                 )
@@ -251,7 +244,7 @@ public final class H2Data implements MkData {
             sql,
             Iterables.transform(
                 Arrays.asList(keys),
-                key -> new H2Data.Column(key).key()
+                key -> new Column(key).key()
             )
         );
         if (attrs.length > 0) {
@@ -260,7 +253,7 @@ public final class H2Data implements MkData {
                 sql,
                 Iterables.transform(
                     Arrays.asList(attrs),
-                    key -> new H2Data.Column(key).attribute()
+                    key -> new Column(key).attribute()
                 )
             );
         }
@@ -269,7 +262,7 @@ public final class H2Data implements MkData {
             sql,
             Iterables.transform(
                 Arrays.asList(keys),
-                key -> new H2Data.Column(key).quoted()
+                key -> new Column(key).quoted()
             )
         );
         sql.append("))");
@@ -281,22 +274,12 @@ public final class H2Data implements MkData {
         return this;
     }
 
-    /**
-     * Make data source.
-     * @param jdbc URL
-     * @return Data source for JDBC
-     */
     private static DataSource connection(final String jdbc) {
         final JdbcDataSource src = new JdbcDataSource();
         src.setURL(jdbc);
         return src;
     }
 
-    /**
-     * Get value from attribute.
-     * @param attr Attribute value
-     * @return Text format
-     */
     private static String value(final AttributeValue attr) {
         String val = attr.s();
         if (val == null) {
@@ -310,11 +293,6 @@ public final class H2Data implements MkData {
         return val;
     }
 
-    /**
-     * Base32-encodes table name for use with H2.
-     * @param table Table name to encode
-     * @return Base-32-encoded table name
-     */
     private static String encodeTableName(final String table) {
         return Joiner.on("").join(
             "_",
@@ -324,153 +302,5 @@ public final class H2Data implements MkData {
                 .get()
                 .encodeAsString(table.getBytes(StandardCharsets.UTF_8))
         );
-    }
-
-    /**
-     * One column of a table.
-     * @since 0.10
-     */
-    @Immutable
-    @ToString
-    @EqualsAndHashCode(of = "name")
-    private static final class Column {
-
-        /**
-         * Name of the column.
-         */
-        private final transient String name;
-
-        /**
-         * Public ctor.
-         * @param key Name of the column
-         */
-        Column(final String key) {
-            this.name = key;
-        }
-
-        /**
-         * Match the column against a value.
-         * @return SQL fragment
-         */
-        String where() {
-            return String.format("`%s` = ?", this.name);
-        }
-
-        /**
-         * Declare the column as a primary key.
-         * @return SQL fragment
-         */
-        String key() {
-            return String.format("`%s` VARCHAR NOT NULL", this.name);
-        }
-
-        /**
-         * Declare the column as an attribute.
-         * @return SQL fragment
-         */
-        String attribute() {
-            return String.format("`%s` CLOB", this.name);
-        }
-
-        /**
-         * Quote the name of the column.
-         * @return SQL fragment
-         */
-        String quoted() {
-            return String.format("`%s`", this.name);
-        }
-    }
-
-    /**
-     * One condition of a SELECT.
-     * @since 0.10
-     */
-    @ToString
-    @EqualsAndHashCode(of = "cond")
-    private static final class Clause {
-
-        /**
-         * Condition to render.
-         */
-        private final transient Map.Entry<String, Condition> cond;
-
-        /**
-         * Public ctor.
-         * @param cnd Condition to render
-         */
-        Clause(final Map.Entry<String, Condition> cnd) {
-            this.cond = cnd;
-        }
-
-        /**
-         * Render it as SQL.
-         * @return SQL fragment
-         */
-        String sql() {
-            final String operator =
-                this.cond.getValue().comparisonOperatorAsString();
-            final String opr;
-            if (operator.equals(ComparisonOperator.GT.toString())) {
-                opr = ">";
-            } else if (operator.equals(ComparisonOperator.LT.toString())) {
-                opr = "<";
-            } else if (operator.equals(ComparisonOperator.EQ.toString())) {
-                opr = "=";
-            } else {
-                throw new UnsupportedOperationException(
-                    String.format(
-                        "Only EQ/GT/LT operators are supported at the moment: %s",
-                        operator
-                    )
-                );
-            }
-            return String.format("`%s` %s ?", this.cond.getKey(), opr);
-        }
-    }
-
-    /**
-     * All rows of a result set.
-     * @since 0.10
-     */
-    @Immutable
-    @ToString
-    @EqualsAndHashCode
-    private static final class Rows implements Outcome<Iterable<Attributes>> {
-
-        @Override
-        public Iterable<Attributes> handle(final ResultSet rset,
-            final Statement stmt) throws SQLException {
-            final Collection<Attributes> items = new ArrayList<>(0);
-            while (rset.next()) {
-                items.add(H2Data.Rows.fetch(rset));
-            }
-            return items;
-        }
-
-        /**
-         * Convert result set to Attributes.
-         * @param rset Result set
-         * @return Attribs
-         * @throws SQLException If fails
-         */
-        private static Attributes fetch(final ResultSet rset)
-            throws SQLException {
-            final ResultSetMetaData meta = rset.getMetaData();
-            Attributes attrs = new Attributes();
-            for (int idx = 0; idx < meta.getColumnCount(); ++idx) {
-                final String text = rset.getString(idx + 1);
-                final AttributeValue value;
-                if (text.matches("[0-9]+")) {
-                    value = AttributeValue.builder().s(text).n(text).build();
-                } else {
-                    value = AttributeValue.builder().s(text).build();
-                }
-                attrs = attrs.with(
-                    meta.getColumnName(idx + 1).toLowerCase(Locale.ENGLISH),
-                    value
-                );
-            }
-            return attrs;
-        }
     }
 }

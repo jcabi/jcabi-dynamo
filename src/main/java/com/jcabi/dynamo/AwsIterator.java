@@ -4,14 +4,12 @@
  */
 package com.jcabi.dynamo;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.immutable.Array;
 import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -187,7 +185,7 @@ final class AwsIterator implements Iterator<Item> {
                         .expected(new Attributes(item).only(this.keys).asKeys())
                         .build()
                 );
-                this.dosage.set(new AwsIterator.Fixed(prev, items));
+                this.dosage.set(new Fixed(prev, items));
                 --this.position;
                 Logger.info(
                     this,
@@ -199,49 +197,6 @@ final class AwsIterator implements Iterator<Item> {
             }
         } finally {
             this.lock.unlock();
-        }
-    }
-
-    /**
-     * Dosage with fixed list of items.
-     * @since 0.1
-     */
-    @Immutable
-    private static final class Fixed implements Dosage {
-
-        /**
-         * List of items.
-         */
-        private final transient Array<Map<String, AttributeValue>> list;
-
-        /**
-         * Previous dosage.
-         */
-        private final transient Dosage prev;
-
-        /**
-         * Ctor.
-         * @param dsg Dosage
-         * @param items Items
-         */
-        Fixed(final Dosage dsg, final List<Map<String, AttributeValue>> items) {
-            this.prev = dsg;
-            this.list = new Array<>(items);
-        }
-
-        @Override
-        public List<Map<String, AttributeValue>> items() {
-            return Collections.unmodifiableList(this.list);
-        }
-
-        @Override
-        public Dosage next() {
-            return this.prev.next();
-        }
-
-        @Override
-        public boolean hasNext() {
-            return this.prev.hasNext();
         }
     }
 }

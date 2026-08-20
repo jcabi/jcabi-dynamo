@@ -170,11 +170,6 @@ final class AwsTable implements Table {
         }
     }
 
-    /**
-     * Make a request to put an item.
-     * @param attrs Attributes of the item
-     * @return The request
-     */
     private PutItemRequest insert(final Map<String, AttributeValue> attrs) {
         return PutItemRequest.builder()
             .tableName(this.self)
@@ -184,11 +179,6 @@ final class AwsTable implements Table {
             .build();
     }
 
-    /**
-     * Make a request to delete an item.
-     * @param attrs Keys of the item
-     * @return The request
-     */
     private DeleteItemRequest removal(final Map<String, AttributeValue> attrs) {
         return DeleteItemRequest.builder()
             .tableName(this.self)

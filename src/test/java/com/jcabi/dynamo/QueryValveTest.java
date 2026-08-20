@@ -326,10 +326,6 @@ final class QueryValveTest {
         );
     }
 
-    /**
-     * Make consumed capacity.
-     * @return Consumed capacity
-     */
     private static ConsumedCapacity capacity() {
         return ConsumedCapacity.builder().capacityUnits(1.0d).build();
     }

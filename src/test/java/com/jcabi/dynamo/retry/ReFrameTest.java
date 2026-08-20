@@ -110,11 +110,6 @@ final class ReFrameTest {
         );
     }
 
-    /**
-     * Creates a frame backed by H2Data with one item.
-     * @return Frame with one item
-     * @throws IOException If fails
-     */
     private static Frame origin() throws IOException {
         final String table = "tésts";
         final String key = "kéy";

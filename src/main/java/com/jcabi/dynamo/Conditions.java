@@ -35,13 +35,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @EqualsAndHashCode(of = "conds")
-@SuppressWarnings
-    (
-    {
-        "PMD.ProhibitPublicStaticMethods",
-        "PMD.LooseCoupling"
-    }
-    )
+@SuppressWarnings({"PMD.ProhibitPublicStaticMethods", "PMD.LooseCoupling"})
 public final class Conditions implements Map<String, Condition> {
 
     /**
@@ -256,11 +250,6 @@ public final class Conditions implements Map<String, Condition> {
         );
     }
 
-    /**
-     * Convert map to ArrayMap.
-     * @param map Map of them
-     * @return Array map
-     */
     private static ArrayMap<String, Condition> array(
         final Map<String, Condition> map) {
         final ConcurrentMap<String, Condition> cnds =

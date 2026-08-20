@@ -333,21 +333,12 @@ final class AwsItemTest {
         );
     }
 
-    /**
-     * Creates a Credentials mock that returns the given DynamoDbClient.
-     * @param aws DynamoDbClient mock
-     * @return Credentials mock
-     */
     private static Credentials mocked(final DynamoDbClient aws) {
         final Credentials creds = Mockito.mock(Credentials.class);
         Mockito.doReturn(aws).when(creds).aws();
         return creds;
     }
 
-    /**
-     * Creates an empty GetItemResponse with consumed capacity.
-     * @return GetItemResponse with no items
-     */
     private static GetItemResponse empty() {
         return GetItemResponse.builder()
             .item(Collections.emptyMap()).consumedCapacity(

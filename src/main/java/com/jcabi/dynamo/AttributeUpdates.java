@@ -192,18 +192,6 @@ public final class AttributeUpdates
         );
     }
 
-    /**
-     * Convert any input value to an {@link AttributeValueUpdate}.
-     *
-     * <p>If the value is already an {@link AttributeValueUpdate}, it is
-     * returned as-is. If it is an {@link AttributeValue}, it is wrapped
-     * with a {@link AttributeAction#PUT} action. Numeric values are
-     * stored as {@code n}, anything else as {@code s} via
-     * {@link Object#toString()}.
-     *
-     * @param value The value to convert
-     * @return The converted {@link AttributeValueUpdate}
-     */
     private static AttributeValueUpdate toUpdate(final Object value) {
         final AttributeValueUpdate result;
         if (value instanceof AttributeValueUpdate) {

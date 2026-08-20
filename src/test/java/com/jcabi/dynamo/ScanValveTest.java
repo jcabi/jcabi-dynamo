@@ -264,10 +264,6 @@ final class ScanValveTest {
         );
     }
 
-    /**
-     * Make consumed capacity.
-     * @return Consumed capacity
-     */
     private static ConsumedCapacity capacity() {
         return ConsumedCapacity.builder().capacityUnits(1d).build();
     }

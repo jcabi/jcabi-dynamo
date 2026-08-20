@@ -219,11 +219,6 @@ final class AwsItem implements Item {
         return this.frm;
     }
 
-    /**
-     * Makes a GetItemRequest for a given attribute.
-     * @param attr Attribute name
-     * @return GetItemRequest
-     */
     private GetItemRequest makeItemRequestFor(final String attr) {
         return GetItemRequest.builder()
             .tableName(this.name)
