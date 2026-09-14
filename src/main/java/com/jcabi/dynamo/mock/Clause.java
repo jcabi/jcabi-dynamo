@@ -12,6 +12,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * One condition of a SELECT.
+ *
  * @since 0.10
  */
 @ToString
@@ -25,6 +26,7 @@ final class Clause {
 
     /**
      * Public ctor.
+     *
      * @param cnd Condition to render
      */
     Clause(final Map.Entry<String, Condition> cnd) {
@@ -33,6 +35,7 @@ final class Clause {
 
     /**
      * Render it as SQL.
+     *
      * @return SQL fragment
      */
     String sql() {

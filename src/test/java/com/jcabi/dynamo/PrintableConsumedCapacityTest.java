@@ -11,6 +11,7 @@ import software.amazon.awssdk.services.dynamodb.model.ConsumedCapacity;
 
 /**
  * Test case for {@link PrintableConsumedCapacity}.
+ *
  * @since 0.22
  */
 final class PrintableConsumedCapacityTest {

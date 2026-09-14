@@ -27,6 +27,7 @@ import software.amazon.awssdk.services.dynamodb.model.ReturnValue;
 
 /**
  * Single table in Dynamo, through AWS SDK.
+ *
  * @since 0.1
  */
 @Immutable
@@ -52,6 +53,7 @@ final class AwsTable implements Table {
 
     /**
      * Public ctor.
+     *
      * @param creds Credentials
      * @param region Region
      * @param table Table name
@@ -137,6 +139,7 @@ final class AwsTable implements Table {
 
     /**
      * Get names of keys.
+     *
      * @return Names of attributes, which are primary keys
      * @throws IOException If DynamoDB fails
      */

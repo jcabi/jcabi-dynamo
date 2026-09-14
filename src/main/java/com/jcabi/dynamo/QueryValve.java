@@ -29,6 +29,7 @@ import software.amazon.awssdk.services.dynamodb.model.Select;
 
 /**
  * Query-based valve.
+ *
  * @since 0.1
  */
 @Immutable
@@ -80,6 +81,7 @@ public final class QueryValve implements Valve {
 
     /**
      * Public ctor.
+     *
      * @param lmt Limit
      * @param fwd Forward
      * @param attrs Names of attributes to pre-fetch
@@ -95,6 +97,7 @@ public final class QueryValve implements Valve {
 
     /**
      * Private ctor.
+     *
      * @param lmt Limit
      * @param fwd Forward
      * @param idx Index name or empty string
@@ -203,6 +206,7 @@ public final class QueryValve implements Valve {
 
     /**
      * With consistent read.
+     *
      * @param cnst Consistent read
      * @return New query valve
      * @see QueryRequest#consistentRead()
@@ -218,6 +222,7 @@ public final class QueryValve implements Valve {
 
     /**
      * With index name.
+     *
      * @param idx Index name
      * @return New query valve
      * @see QueryRequest#indexName()
@@ -233,6 +238,7 @@ public final class QueryValve implements Valve {
 
     /**
      * With attributes to select.
+     *
      * @param slct Select to use
      * @return New query valve
      * @see QueryRequest#select()
@@ -248,6 +254,7 @@ public final class QueryValve implements Valve {
 
     /**
      * With given limit.
+     *
      * @param lmt Limit to use
      * @return New query valve
      * @see QueryRequest#limit()
@@ -262,6 +269,7 @@ public final class QueryValve implements Valve {
 
     /**
      * With scan index forward flag.
+     *
      * @param fwd Forward flag
      * @return New query valve
      * @see QueryRequest#scanIndexForward()
@@ -276,6 +284,7 @@ public final class QueryValve implements Valve {
 
     /**
      * With this extra attribute to pre-fetch.
+     *
      * @param name Name of attribute to pre-load
      * @return New query valve
      * @see QueryRequest#attributesToGet()
@@ -293,6 +302,7 @@ public final class QueryValve implements Valve {
 
     /**
      * With these extra attributes to pre-fetch.
+     *
      * @param names Name of attributes to pre-load
      * @return New query valve
      * @see QueryRequest#attributesToGet()
@@ -311,6 +321,7 @@ public final class QueryValve implements Valve {
 
     /**
      * Next dosage.
+     *
      * @since 0.1
      */
     @ToString
@@ -335,6 +346,7 @@ public final class QueryValve implements Valve {
 
         /**
          * Public ctor.
+         *
          * @param creds Credentials
          * @param rqst Query request
          * @param rslt Query response

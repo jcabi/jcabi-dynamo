@@ -17,7 +17,7 @@ import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
 /**
  * A Table that can be made and dropped.
  *
- * <p>Use it like this in your integration test:
+ * <p>Use it like this in your integration test:</p>
  *
  * <pre> public class FooITCase {
  *   private Region region;
@@ -44,7 +44,7 @@ import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
  * approach performance wise, since every table creation takes at least
  * ten seconds (at the time of writing). To speed things up a little, you
  * can create table before the entire test case and drop when all methods
- * are completed:
+ * are completed:</p>
  *
  * <pre> public class FooITCase {
  *   private static Region region;
@@ -69,7 +69,7 @@ import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
  * }</pre>
  *
  * <p>You IAM user policy would look like this (XXXXX should be replaced
- * by your AWS account number):
+ * by your AWS account number):</p>
  *
  * <pre>{
  *   "Statement": [
@@ -102,6 +102,7 @@ public final class MadeTable {
 
     /**
      * Public ctor.
+     *
      * @param reg Region
      * @param req Request
      */
@@ -112,6 +113,7 @@ public final class MadeTable {
 
     /**
      * Create table if it's absent.
+     *
      * @throws InterruptedException If something fails
      * @since 0.9
      */
@@ -123,6 +125,7 @@ public final class MadeTable {
 
     /**
      * Create table.
+     *
      * @throws InterruptedException If something fails
      */
     public void create() throws InterruptedException {
@@ -153,6 +156,7 @@ public final class MadeTable {
 
     /**
      * Drop table.
+     *
      * @throws InterruptedException If something fails
      */
     public void drop() throws InterruptedException {
@@ -171,6 +175,7 @@ public final class MadeTable {
 
     /**
      * The table exists?
+     *
      * @return TRUE if it exists in DynamoDB
      * @since 0.9
      */

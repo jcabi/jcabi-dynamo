@@ -20,6 +20,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * DynamoDB item attribute updates.
+ *
  * @since 0.12
  */
 @Immutable
@@ -43,6 +44,7 @@ public final class AttributeUpdates
 
     /**
      * Private ctor.
+     *
      * @param map Map of them
      */
     public AttributeUpdates(final Map<String, AttributeValueUpdate> map) {
@@ -51,6 +53,7 @@ public final class AttributeUpdates
 
     /**
      * With this attribute.
+     *
      * @param name Attribute name
      * @param value The value
      * @return AttributeUpdates
@@ -64,6 +67,7 @@ public final class AttributeUpdates
 
     /**
      * With this attribute.
+     *
      * @param name Attribute name
      * @param value The value
      * @return AttributeUpdates
@@ -82,6 +86,7 @@ public final class AttributeUpdates
 
     /**
      * With this attribute.
+     *
      * @param name Attribute name
      * @param value The value
      * @return AttributeUpdates
@@ -95,6 +100,7 @@ public final class AttributeUpdates
 
     /**
      * With these AttributeUpdates.
+     *
      * @param map AttributeUpdates to add
      * @return AttributeUpdates
      */

@@ -14,6 +14,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Test case for {@link Conditions}.
+ *
  * @since 0.1
  */
 final class ConditionsTest {

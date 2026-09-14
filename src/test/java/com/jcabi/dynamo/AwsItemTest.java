@@ -26,6 +26,7 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
 
 /**
  * Test case for {@link AwsItem}.
+ *
  * @since 0.21
  */
 final class AwsItemTest {

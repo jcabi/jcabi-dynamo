@@ -13,6 +13,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Dosage with fixed list of items.
+ *
  * @since 0.1
  */
 @Immutable
@@ -30,6 +31,7 @@ final class Fixed implements Dosage {
 
     /**
      * Ctor.
+     *
      * @param dsg Dosage
      * @param items Items
      */

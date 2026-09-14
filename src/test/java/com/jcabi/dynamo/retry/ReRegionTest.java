@@ -14,6 +14,7 @@ import software.amazon.awssdk.core.exception.SdkClientException;
 
 /**
  * Test case for {@link ReRegion}.
+ *
  * @since 0.1
  */
 final class ReRegionTest {

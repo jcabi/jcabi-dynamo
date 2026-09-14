@@ -33,6 +33,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Mock data in H2 database.
+ *
  * @since 0.10
  */
 @Immutable
@@ -59,6 +60,7 @@ public final class H2Data implements MkData {
 
     /**
      * Public ctor.
+     *
      * @throws IOException If fails
      */
     public H2Data() throws IOException {
@@ -67,6 +69,7 @@ public final class H2Data implements MkData {
 
     /**
      * Public ctor.
+     *
      * @param file Where to keep the database
      */
     public H2Data(final File file) {
@@ -82,6 +85,7 @@ public final class H2Data implements MkData {
 
     /**
      * Private ctor.
+     *
      * @param source Data source of the database
      */
     private H2Data(final DataSource source) {
@@ -224,6 +228,7 @@ public final class H2Data implements MkData {
 
     /**
      * With this table, that has given primary keys.
+     *
      * @param table Table name
      * @param keys Primary keys
      * @param attrs Attributes

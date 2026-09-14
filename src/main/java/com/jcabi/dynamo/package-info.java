@@ -7,10 +7,10 @@
  * Amazon Dynamo DB Object Layer.
  *
  * <p>Start with {@link Region} interface. It contains a few classes
- * that should be instantiated in order to start working with this library.
+ * that should be instantiated in order to start working with this library.</p>
  *
  * <p>The only dependency you need is (check our latest version available
- * at <a href="http://www.jcabi.com">www.jcabi.com</a>):
+ * at <a href="http://www.jcabi.com">www.jcabi.com</a>):</p>
  *
  * <pre>&lt;dependency&gt;
  *   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;

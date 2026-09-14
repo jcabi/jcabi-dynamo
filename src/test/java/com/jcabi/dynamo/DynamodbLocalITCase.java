@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Integration case with DynamoDB Local.
+ *
  * @since 0.23
  */
 final class DynamodbLocalITCase {

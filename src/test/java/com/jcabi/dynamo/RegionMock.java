@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.dynamodb.model.ScalarAttributeType;
 
 /**
  * Mock of a {@link Region}.
+ *
  * @since 0.16.2
  */
 final class RegionMock {
@@ -49,6 +50,7 @@ final class RegionMock {
 
     /**
      * Ctor.
+     *
      * @param hash Hash
      * @param range Range
      * @param port Port
@@ -61,6 +63,7 @@ final class RegionMock {
 
     /**
      * Get DynamoDB server port.
+     *
      * @return TCP port
      */
     int port() {
@@ -69,6 +72,7 @@ final class RegionMock {
 
     /**
      * Get hash of the table.
+     *
      * @return Hash attribute name
      */
     String hash() {
@@ -77,6 +81,7 @@ final class RegionMock {
 
     /**
      * Get range of the table.
+     *
      * @return Hash attribute name
      */
     String range() {
@@ -85,6 +90,7 @@ final class RegionMock {
 
     /**
      * Get region with a table.
+     *
      * @param table Table name
      * @return Region
      * @throws Exception If fails

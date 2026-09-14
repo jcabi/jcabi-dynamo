@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MkTable}.
+ *
  * @since 0.10
  */
 final class MkTableTest {

@@ -11,6 +11,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Test case for {@link Credentials}.
+ *
  * @since 0.1
  */
 final class CredentialsTest {

@@ -23,6 +23,7 @@ import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
 
 /**
  * Test case for {@link AwsIterator}.
+ *
  * @since 0.1
  */
 @SuppressWarnings("unchecked")

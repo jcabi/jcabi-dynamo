@@ -25,6 +25,7 @@ import software.amazon.awssdk.services.dynamodb.model.TableDescription;
 
 /**
  * Test case for {@link AwsTable}.
+ *
  * @since 0.1
  */
 final class AwsTableTest {

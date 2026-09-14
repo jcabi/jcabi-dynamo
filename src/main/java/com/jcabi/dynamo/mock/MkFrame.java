@@ -25,6 +25,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Mock version of {@link Frame}.
+ *
  * @since 0.10
  */
 @Immutable
@@ -50,6 +51,7 @@ final class MkFrame extends AbstractCollection<Item> implements Frame {
 
     /**
      * Public ctor.
+     *
      * @param dta Data
      * @param table Table
      */
@@ -59,6 +61,7 @@ final class MkFrame extends AbstractCollection<Item> implements Frame {
 
     /**
      * Public ctor.
+     *
      * @param dta Data
      * @param table Table
      * @param conditions Map of conditions

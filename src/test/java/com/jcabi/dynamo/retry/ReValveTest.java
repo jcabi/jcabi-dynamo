@@ -17,6 +17,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Test case for {@link ReValve}.
+ *
  * @since 0.9
  */
 final class ReValveTest {

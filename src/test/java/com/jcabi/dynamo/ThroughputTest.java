@@ -11,6 +11,7 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateTableRequest;
 
 /**
  * Test case for {@link Throughput}.
+ *
  * @since 0.1
  */
 final class ThroughputTest {

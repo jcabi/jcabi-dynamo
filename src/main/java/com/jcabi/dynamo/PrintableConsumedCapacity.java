@@ -8,6 +8,7 @@ import software.amazon.awssdk.services.dynamodb.model.ConsumedCapacity;
 
 /**
  * Printable consumed capacity.
+ *
  * @since 0.22
  */
 final class PrintableConsumedCapacity {
@@ -19,6 +20,7 @@ final class PrintableConsumedCapacity {
 
     /**
      * Default ctor.
+     *
      * @param capacity Consumed capacity
      */
     PrintableConsumedCapacity(final ConsumedCapacity capacity) {
@@ -27,6 +29,7 @@ final class PrintableConsumedCapacity {
 
     /**
      * Print consumed capacity nicely.
+     *
      * @return Suffix to add to a log line
      */
     String print() {

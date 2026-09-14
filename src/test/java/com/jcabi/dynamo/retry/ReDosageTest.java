@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Test case for {@link ReDosage}.
+ *
  * @since 0.9
  */
 final class ReDosageTest {

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link AwsIterator}.
+ *
  * @since 0.16.2
  */
 final class AwsIteratorITCase {

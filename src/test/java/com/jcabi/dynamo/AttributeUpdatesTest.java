@@ -14,6 +14,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Test case for {@link AttributesUpdates}.
+ *
  * @since 0.22
  */
 @SuppressWarnings("CollectionIncompatibleType")

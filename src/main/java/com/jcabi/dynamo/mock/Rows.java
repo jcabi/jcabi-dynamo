@@ -20,6 +20,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * All rows of a result set.
+ *
  * @since 0.10
  */
 @Immutable

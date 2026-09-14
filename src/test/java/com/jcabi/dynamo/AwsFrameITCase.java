@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link AwsFrame}.
+ *
  * @since 0.21
  */
 final class AwsFrameITCase {

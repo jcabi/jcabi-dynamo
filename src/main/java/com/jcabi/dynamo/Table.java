@@ -14,7 +14,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
  *
  * <p>To get data from the table use {@link Table#frame()} method. To
  * create a new item in the table (or replace the existing one) use
- * {@link Table#put(Attributes)} method. For example:
+ * {@link Table#put(Attributes)} method. For example:</p>
  *
  * <pre> Region region = new Region.Simple(...);
  * Table table = region.table("employees");
@@ -35,7 +35,7 @@ public interface Table {
      * Put new item there.
      *
      * <p>It is recommended to use {@link Attributes} supplementary class,
-     * instead of a raw {@link Map}.
+     * instead of a raw {@link Map}.</p>
      *
      * @param attributes Attributes to save
      * @return Item just created
@@ -46,18 +46,21 @@ public interface Table {
 
     /**
      * Make a new frame, in order to retrieve items.
+     *
      * @return Frame
      */
     Frame frame();
 
     /**
      * Get back to the entire region.
+     *
      * @return Region
      */
     Region region();
 
     /**
      * Get real table name.
+     *
      * @return Actual name of DynamoDB table
      */
     String name();
@@ -66,7 +69,7 @@ public interface Table {
      * Delete item from aws table.
      *
      * <p>It is recommended to use {@link Attributes} supplementary class,
-     * instead of a raw {@link Map}.
+     * instead of a raw {@link Map}.</p>
      *
      * @param attributes Attributes containing item key and value
      * @throws IOException In case of DynamoDB failure

@@ -23,7 +23,7 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
  * DynamoDB item attributes.
  *
  * <p>It's a convenient immutable builder of a map of attribute values for
- * DynamoDB put operation. Use it like this:
+ * DynamoDB put operation. Use it like this:</p>
  *
  * <pre>Map&lt;String, AttributeValue&gt; attributes = new Attributes()
  *   .with("hash", "some value")
@@ -51,6 +51,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * Private ctor.
+     *
      * @param map Map of them
      */
     public Attributes(final Map<String, AttributeValue> map) {
@@ -59,6 +60,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * With this attribute.
+     *
      * @param name Attribute name
      * @param value The value
      * @return Attributes
@@ -69,6 +71,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * With these attributes.
+     *
      * @param map Attributes to add
      * @return Attributes
      */
@@ -83,6 +86,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * Convert them to a map of expected values.
+     *
      * @return Expected values
      */
     public Map<String, ExpectedAttributeValue> asKeys() {
@@ -102,6 +106,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * With this attribute.
+     *
      * @param name Attribute name
      * @param value The value
      * @return Attributes
@@ -115,6 +120,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * With this attribute.
+     *
      * @param name Attribute name
      * @param value The value
      * @return Attributes
@@ -128,6 +134,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * With this attribute.
+     *
      * @param name Attribute name
      * @param value The value
      * @return Attributes
@@ -141,6 +148,7 @@ public final class Attributes implements Map<String, AttributeValue> {
 
     /**
      * Filter out all keys except provided ones.
+     *
      * @param keys Keys to leave in the map
      * @return Attributes
      */

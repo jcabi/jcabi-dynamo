@@ -29,6 +29,7 @@ import software.amazon.awssdk.services.dynamodb.model.Select;
 
 /**
  * Scan-based valve.
+ *
  * @since 0.1
  */
 @Immutable
@@ -57,6 +58,7 @@ public final class ScanValve implements Valve {
 
     /**
      * Public ctor.
+     *
      * @param lmt Limit
      * @param attrs Attributes to pre-load
      */
@@ -66,6 +68,7 @@ public final class ScanValve implements Valve {
 
     /**
      * Private ctor.
+     *
      * @param lmt Limit
      * @param attrs Attributes to pre-load
      */
@@ -146,6 +149,7 @@ public final class ScanValve implements Valve {
 
     /**
      * With given limit.
+     *
      * @param lmt Limit to use
      * @return New query valve
      */
@@ -155,6 +159,7 @@ public final class ScanValve implements Valve {
 
     /**
      * With this extra attribute to pre-fetch.
+     *
      * @param name Name of attribute to pre-load
      * @return New query valve
      */
@@ -170,6 +175,7 @@ public final class ScanValve implements Valve {
 
     /**
      * With these extra attributes to pre-fetch.
+     *
      * @param names Name of attributes to pre-load
      * @return New query valve
      */
@@ -185,6 +191,7 @@ public final class ScanValve implements Valve {
 
     /**
      * Next dosage.
+     *
      * @since 0.1
      */
     @ToString
@@ -209,6 +216,7 @@ public final class ScanValve implements Valve {
 
         /**
          * Public ctor.
+         *
          * @param creds Credentials
          * @param rqst Scan request
          * @param rslt Scan response

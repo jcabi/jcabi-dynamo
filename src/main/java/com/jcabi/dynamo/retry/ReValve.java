@@ -20,6 +20,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Valve that retries on failure.
+ *
  * @since 0.9
  */
 @Immutable
@@ -35,6 +36,7 @@ public final class ReValve implements Valve {
 
     /**
      * Public ctor.
+     *
      * @param valve Origin valve
      */
     public ReValve(final Valve valve) {

@@ -22,6 +22,7 @@ import software.amazon.awssdk.services.dynamodb.model.QueryResponse;
 
 /**
  * Test case for {@link QueryValve}.
+ *
  * @since 0.1
  */
 final class QueryValveTest {

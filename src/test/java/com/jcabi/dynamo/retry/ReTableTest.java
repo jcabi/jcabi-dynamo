@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link ReTable}.
+ *
  * @since 0.1
  */
 final class ReTableTest {

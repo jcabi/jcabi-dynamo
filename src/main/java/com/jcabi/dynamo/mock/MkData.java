@@ -12,6 +12,7 @@ import java.io.IOException;
 
 /**
  * Mock data.
+ *
  * @since 0.10
  */
 @Immutable
@@ -19,6 +20,7 @@ public interface MkData {
 
     /**
      * Get keys for the given table.
+     *
      * @param table Name of the table
      * @return All keys of the table
      * @throws IOException If fails
@@ -27,6 +29,7 @@ public interface MkData {
 
     /**
      * Iterate everything for the given table.
+     *
      * @param table Name of the table
      * @param conds Conditions
      * @return All rows found
@@ -37,6 +40,7 @@ public interface MkData {
 
     /**
      * Insert a new item into the given table.
+     *
      * @param table Table name
      * @param attrs Full set of attributes that form the new item
      * @throws IOException If fails
@@ -47,6 +51,7 @@ public interface MkData {
      * Update attributes of an existing item in the given table.
      * Unlike {@link #put}, this method does not insert a new item; it only
      * modifies attribute values of the item already identified by {@code keys}.
+     *
      * @param table Table name
      * @param keys Primary key attributes that identify the item to update
      * @param attrs Attribute changes to apply to the identified item
@@ -57,6 +62,7 @@ public interface MkData {
 
     /**
      * Delete attributes from the given table.
+     *
      * @param table Table name
      * @param keys Keys
      * @throws IOException If fails

@@ -23,7 +23,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
  * DynamoDB query conditions.
  *
  * <p>It's a convenient immutable builder of a map of conditions for
- * DynamoDB query/scan operations. Use it like this:
+ * DynamoDB query/scan operations. Use it like this:</p>
  *
  * <pre>Map&lt;String, Condition&gt; conditions = new Conditions()
  *   .with("hash", Conditions.equalTo("some value"))
@@ -52,6 +52,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * Public ctor.
+     *
      * @param map Map of them
      */
     public Conditions(final Map<String, Condition> map) {
@@ -60,6 +61,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * Private ctor.
+     *
      * @param map Map of them
      */
     private Conditions(final ArrayMap<String, Condition> map) {
@@ -68,6 +70,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * Equal to static condition builder (factory method).
+     *
      * @param value The value to equal to
      * @return The condition just created
      */
@@ -79,6 +82,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * Equal to static condition builder (factory method).
+     *
      * @param value The value to equal to
      * @return The condition just created
      */
@@ -90,6 +94,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * Equal to static condition builder (factory method).
+     *
      * @param value The value to equal to
      * @return The condition just created
      */
@@ -101,6 +106,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * Equal to static condition builder (factory method).
+     *
      * @param value The value to equal to
      * @return The condition just created
      */
@@ -113,6 +119,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * With this condition.
+     *
      * @param name Attribute name
      * @param value The condition
      * @return New map of conditions
@@ -125,6 +132,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * With this condition.
+     *
      * @param name Attribute name
      * @param value The condition
      * @return New map of conditions
@@ -141,6 +149,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * With these conditions.
+     *
      * @param map The conditions
      * @return New map of conditions
      */
@@ -158,6 +167,7 @@ public final class Conditions implements Map<String, Condition> {
 
     /**
      * With these conditions.
+     *
      * @param map The conditions
      * @return New map of conditions
      */

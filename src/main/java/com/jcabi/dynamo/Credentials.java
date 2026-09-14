@@ -16,7 +16,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 /**
  * Amazon DynamoDB credentials.
  *
- * <p>It is recommended to use {@link Credentials.Simple} in most cases.
+ * <p>It is recommended to use {@link Credentials.Simple} in most cases.</p>
  *
  * @since 0.1
  */
@@ -36,7 +36,7 @@ public interface Credentials {
      * Build AWS client.
      *
      * <p>Don't forget to shut it down after use,
-     * using {@link DynamoDbClient#close()}.
+     * using {@link DynamoDbClient#close()}.</p>
      *
      * @return Amazon Dynamo DB client
      */
@@ -44,6 +44,7 @@ public interface Credentials {
 
     /**
      * Simple implementation.
+     *
      * @since 0.1
      */
     @Immutable
@@ -68,6 +69,7 @@ public interface Credentials {
 
         /**
          * Public ctor, with "us-east-1" region.
+         *
          * @param akey AWS key
          * @param scrt Secret
          */
@@ -77,6 +79,7 @@ public interface Credentials {
 
         /**
          * Public ctor.
+         *
          * @param akey AWS key
          * @param scrt Secret
          * @param reg Region
@@ -106,6 +109,7 @@ public interface Credentials {
 
     /**
      * Assumed AWS IAM role.
+     *
      * @see <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/role-usecase-ec2app.html">Granting Applications that Run on Amazon EC2 Instances Access to AWS Resources</a>
      * @since 0.1
      */
@@ -128,6 +132,7 @@ public interface Credentials {
 
         /**
          * Public ctor.
+         *
          * @param reg Region
          */
         public Assumed(final String reg) {
@@ -149,6 +154,7 @@ public interface Credentials {
 
     /**
      * With explicitly specified endpoint.
+     *
      * @since 0.1
      */
     @Immutable
@@ -168,6 +174,7 @@ public interface Credentials {
 
         /**
          * Public ctor.
+         *
          * @param creds Original credentials
          * @param port Port number for localhost
          */
@@ -177,6 +184,7 @@ public interface Credentials {
 
         /**
          * Public ctor.
+         *
          * @param creds Original credentials
          * @param pnt Endpoint
          */

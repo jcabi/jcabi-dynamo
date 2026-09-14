@@ -19,6 +19,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Mock version of {@link Table}.
+ *
  * @since 0.10
  */
 @Immutable
@@ -39,6 +40,7 @@ final class MkTable implements Table {
 
     /**
      * Public ctor.
+     *
      * @param dta Data
      * @param name Name of the table
      */

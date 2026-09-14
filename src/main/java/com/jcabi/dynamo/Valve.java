@@ -12,6 +12,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Provider of dosages of DynamoDB items.
+ *
  * @since 0.7.21
  */
 @Immutable
@@ -19,6 +20,7 @@ public interface Valve {
 
     /**
      * Fetch the first dosage.
+     *
      * @param credentials Credentials to AWS
      * @param table Table name
      * @param conditions Conditions
@@ -33,6 +35,7 @@ public interface Valve {
 
     /**
      * Count items.
+     *
      * @param credentials Credentials to AWS
      * @param table Table name
      * @param conditions Conditions

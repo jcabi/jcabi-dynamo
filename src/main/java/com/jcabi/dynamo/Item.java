@@ -16,7 +16,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
  * <p>The class is immutable, which means that every call to
  * {@link #put(String,AttributeValueUpdate)} or {@link #put(Map)} changes
  * data in Amazon, but doesn't change the object. The object will contain
- * dirty data right after PUT operation, and should not be used any more.
+ * dirty data right after PUT operation, and should not be used any more.</p>
  *
  * @since 0.1
  */
@@ -26,6 +26,7 @@ public interface Item {
     /**
      * Get one attribute, fetching directly from AWS (runtime exception if
      * the attribute is absent, use {@link #has(String)} first).
+     *
      * @param name Attribute name
      * @return Value
      * @throws IOException In case of DynamoDB failure
@@ -34,6 +35,7 @@ public interface Item {
 
     /**
      * Does this attribute exist?
+     *
      * @param name Attribute name
      * @return TRUE if it exists
      * @throws IOException In case of DynamoDB failure
@@ -45,7 +47,7 @@ public interface Item {
      * will be set to NULL, except primary keys).
      *
      * <p>Data in memory will become out of sync right after a successful
-     * execution of the method.
+     * execution of the method.</p>
      *
      * @param name Attribute name
      * @param value Value to save
@@ -60,10 +62,10 @@ public interface Item {
      * Change all attributes in one call.
      *
      * <p>Data in memory will become out of sync right after a successful
-     * execution of the method.
+     * execution of the method.</p>
      *
      * <p>It is recommended to use {@link AttributeUpdates} supplementary class,
-     * instead of a raw {@link Map}.
+     * instead of a raw {@link Map}.</p>
      *
      * @param attrs Attributes
      * @return Values saved
@@ -75,6 +77,7 @@ public interface Item {
 
     /**
      * Get back to the frame it is from.
+     *
      * @return Frame
      */
     Frame frame();

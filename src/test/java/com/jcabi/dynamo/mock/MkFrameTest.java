@@ -19,6 +19,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Test case for {@link MkFrame}.
+ *
  * @since 0.10
  */
 final class MkFrameTest {

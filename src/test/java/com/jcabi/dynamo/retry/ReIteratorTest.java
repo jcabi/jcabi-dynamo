@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link ReIterator}.
+ *
  * @since 0.9
  */
 final class ReIteratorTest {

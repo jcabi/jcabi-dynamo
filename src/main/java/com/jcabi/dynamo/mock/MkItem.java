@@ -25,6 +25,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Mock version of {@link Item}.
+ *
  * @since 0.10
  */
 @Immutable
@@ -50,6 +51,7 @@ final class MkItem implements Item {
 
     /**
      * Public ctor.
+     *
      * @param dta Data
      * @param tbl Table
      * @param attribs Map of attributes

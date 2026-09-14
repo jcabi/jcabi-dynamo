@@ -9,6 +9,7 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateTableRequest;
 
 /**
  * Throughput of a table.
+ *
  * @since 0.18.4
  */
 public final class Throughput {
@@ -20,6 +21,7 @@ public final class Throughput {
 
     /**
      * Public ctor.
+     *
      * @param tbl The table
      */
     public Throughput(final Table tbl) {

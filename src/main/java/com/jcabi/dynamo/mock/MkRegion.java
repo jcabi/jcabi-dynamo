@@ -14,6 +14,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Mock version of {@link Region}.
+ *
  * @since 0.10
  */
 @Immutable
@@ -29,6 +30,7 @@ public final class MkRegion implements Region {
 
     /**
      * Public ctor.
+     *
      * @param dta Data to use
      */
     public MkRegion(final MkData dta) {

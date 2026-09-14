@@ -16,6 +16,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Test case for {@link MkItem}.
+ *
  * @since 0.10
  */
 final class MkItemTest {

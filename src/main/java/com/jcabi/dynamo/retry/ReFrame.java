@@ -21,6 +21,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Frame that retries on failure.
+ *
  * @since 0.9
  */
 @Immutable
@@ -36,6 +37,7 @@ public final class ReFrame implements Frame {
 
     /**
      * Public ctor.
+     *
      * @param frame Origin frame
      */
     public ReFrame(final Frame frame) {

@@ -23,6 +23,7 @@ import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
 
 /**
  * Test case for {@link ScanValve}.
+ *
  * @since 0.1
  */
 final class ScanValveTest {

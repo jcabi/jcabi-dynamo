@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Test case for {@link AwsFrame}.
+ *
  * @since 0.1
  */
 final class AwsFrameTest {

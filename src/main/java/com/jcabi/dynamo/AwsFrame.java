@@ -16,6 +16,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Frame through AWS SDK.
+ *
  * @since 0.1
  */
 @Immutable
@@ -50,6 +51,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
 
     /**
      * Public ctor.
+     *
      * @param creds Credentials
      * @param table Table
      * @param label Table name
@@ -61,6 +63,7 @@ final class AwsFrame extends AbstractCollection<Item> implements Frame {
 
     /**
      * Public ctor.
+     *
      * @param creds Credentials
      * @param table Table
      * @param label Table name

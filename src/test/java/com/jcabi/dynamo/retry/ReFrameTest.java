@@ -22,6 +22,7 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 
 /**
  * Test case for {@link ReFrame}.
+ *
  * @since 0.9
  */
 final class ReFrameTest {

@@ -14,6 +14,7 @@ import lombok.ToString;
 
 /**
  * Frame that retries on failure.
+ *
  * @param <T> Type of items
  * @since 0.9
  */
@@ -29,6 +30,7 @@ public final class ReIterator<T> implements Iterator<T> {
 
     /**
      * Public ctor.
+     *
      * @param iterator Origin iterator
      */
     public ReIterator(final Iterator<T> iterator) {

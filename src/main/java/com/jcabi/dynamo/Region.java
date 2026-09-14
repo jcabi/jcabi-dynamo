@@ -13,13 +13,13 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 /**
  * Amazon DynamoDB region.
  *
- * <p>It is recommended to use {@link Region.Simple} in most cases.
+ * <p>It is recommended to use {@link Region.Simple} in most cases.</p>
  *
  * <p>You can use {@link #aws()} method to get access to Amazon DynamoDB
- * client directly.
+ * client directly.</p>
  *
  * <p>Since version 0.9 it is strongly recommended to wrap your region
- * in {@link com.jcabi.dynamo.retry.ReRegion} before use, for example:
+ * in {@link com.jcabi.dynamo.retry.ReRegion} before use, for example:</p>
  *
  * <pre> Region region = new ReRegion(new Region.Simple(credentials));</pre>
  *
@@ -27,7 +27,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
  * shutdown invoking {@link DynamoDbClient#close()}. Callers are not expected
  * to call it, but can if they want to explicitly release any open resources and
  * forcibly terminate all pending asynchronous service calls. Once a client has
- * been shutdown, it should not be used to make any more requests.
+ * been shutdown, it should not be used to make any more requests.</p>
  *
  * @since 0.1
  */
@@ -36,12 +36,14 @@ public interface Region {
 
     /**
      * Get DynamoDB client.
+     *
      * @return The client
      */
     DynamoDbClient aws();
 
     /**
      * Get one table.
+     *
      * @param name Table name
      * @return Table
      */
@@ -49,6 +51,7 @@ public interface Region {
 
     /**
      * Simple region, basic implementation.
+     *
      * @since 0.1
      */
     @Immutable
@@ -64,6 +67,7 @@ public interface Region {
 
         /**
          * Public ctor.
+         *
          * @param creds Credentials
          */
         public Simple(final Credentials creds) {
@@ -85,7 +89,7 @@ public interface Region {
      * All tables have a prefix in front of their names.
      *
      * <p>The region has to be used in combination with another region,
-     * for example {@link Region.Simple}:
+     * for example {@link Region.Simple}:</p>
      *
      * <pre>Region region = new Region.Prefixed(
      *   new Region.Simple(creds),
@@ -95,7 +99,7 @@ public interface Region {
      * <p>Now, {@code region.table("test")} will return a {@link Table}
      * instance pointing to the Dynamo DB table named {@code "foo-test"}. Could
      * be a convenient mechanism when you have many tables for different
-     * projects in the same region.
+     * projects in the same region.</p>
      *
      * @since 0.1
      */
@@ -117,6 +121,7 @@ public interface Region {
 
         /**
          * Public ctor.
+         *
          * @param region Original region
          * @param pfx Prefix to add to all tables
          */

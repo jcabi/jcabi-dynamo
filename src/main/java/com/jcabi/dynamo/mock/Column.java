@@ -10,6 +10,7 @@ import lombok.ToString;
 
 /**
  * One column of a table.
+ *
  * @since 0.10
  */
 @Immutable
@@ -24,6 +25,7 @@ final class Column {
 
     /**
      * Public ctor.
+     *
      * @param key Name of the column
      */
     Column(final String key) {
@@ -32,6 +34,7 @@ final class Column {
 
     /**
      * Match the column against a value.
+     *
      * @return SQL fragment
      */
     String where() {
@@ -40,6 +43,7 @@ final class Column {
 
     /**
      * Declare the column as a primary key.
+     *
      * @return SQL fragment
      */
     String key() {
@@ -48,6 +52,7 @@ final class Column {
 
     /**
      * Declare the column as an attribute.
+     *
      * @return SQL fragment
      */
     String attribute() {
@@ -56,6 +61,7 @@ final class Column {
 
     /**
      * Quote the name of the column.
+     *
      * @return SQL fragment
      */
     String quoted() {

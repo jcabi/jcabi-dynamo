@@ -17,6 +17,7 @@ import software.amazon.awssdk.services.dynamodb.model.ExpectedAttributeValue;
 
 /**
  * Test case for {@link Attributes}.
+ *
  * @since 0.1
  */
 final class AttributesTest {

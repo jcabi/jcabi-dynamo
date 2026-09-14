@@ -13,6 +13,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
  * Test case for {@link Region}.
+ *
  * @since 0.1
  */
 final class RegionTest {

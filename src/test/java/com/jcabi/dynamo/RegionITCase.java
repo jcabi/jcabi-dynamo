@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Integration case for {@link Region}.
+ *
  * @since 0.1
  */
 final class RegionITCase {

@@ -27,6 +27,7 @@ import software.amazon.awssdk.services.dynamodb.model.UpdateItemResponse;
 
 /**
  * Single item/row in a DynamoDB table.
+ *
  * @since 0.1
  */
 @Immutable
@@ -61,6 +62,7 @@ final class AwsItem implements Item {
 
     /**
      * Public ctor.
+     *
      * @param creds Credentials
      * @param frame Frame
      * @param table Table name

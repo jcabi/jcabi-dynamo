@@ -17,6 +17,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 
 /**
  * Test case for {@link MkRegion}.
+ *
  * @since 0.10
  */
 final class MkRegionTest {

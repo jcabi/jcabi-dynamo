@@ -26,7 +26,7 @@ import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
 /**
  * Iterator of items in AWS SDK.
  *
- * <p>The class is mutable and thread-safe.
+ * <p>The class is mutable and thread-safe.</p>
  *
  * @since 0.1
  */
@@ -85,6 +85,7 @@ final class AwsIterator implements Iterator<Item> {
 
     /**
      * Public ctor.
+     *
      * @param creds Credentials
      * @param frm Frame object
      * @param label Table name

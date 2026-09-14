@@ -5,6 +5,7 @@
 
 /**
  * Amazon Dynamo DB Object Layer, mock version, tests.
+ *
  * @since 0.10
  */
 package com.jcabi.dynamo.mock;

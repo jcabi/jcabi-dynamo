@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
  * Dosage of items retrieved from table.
+ *
  * @since 0.1
  */
 @Immutable
@@ -22,24 +23,28 @@ public interface Dosage {
 
     /**
      * Items.
+     *
      * @return List of items
      */
     List<Map<String, AttributeValue>> items();
 
     /**
      * Has next dosage?
+     *
      * @return TRUE if next storage is available
      */
     boolean hasNext();
 
     /**
      * Fetch next dosage.
+     *
      * @return The dosage
      */
     Dosage next();
 
     /**
      * Always empty.
+     *
      * @since 0.1
      */
     @Immutable
