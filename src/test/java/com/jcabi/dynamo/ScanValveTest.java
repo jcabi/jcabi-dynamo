@@ -6,6 +6,7 @@ package com.jcabi.dynamo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
@@ -118,11 +119,7 @@ final class ScanValveTest {
                 .consumedCapacity(ScanValveTest.capacity()).build()
         ).when(aws).scan(Mockito.any(ScanRequest.class));
         final Conditions conditions = new Conditions().with("hash", "value");
-        MatcherAssert.assertThat(
-            "must include the page after an empty page",
-            new ScanValve().count(credentials, "pages", conditions),
-            Matchers.equalTo(5)
-        );
+        final int count = new ScanValve().count(credentials, "pages", conditions);
         final ArgumentCaptor<ScanRequest> requests =
             ArgumentCaptor.forClass(ScanRequest.class);
         Mockito.verify(aws, Mockito.times(3)).scan(requests.capture());
@@ -130,11 +127,16 @@ final class ScanValveTest {
             .scanFilter(conditions).select(Select.COUNT).limit(Integer.MAX_VALUE)
             .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL).build();
         MatcherAssert.assertThat(
-            "must preserve scan options and advance each continuation key",
-            requests.getAllValues(),
-            Matchers.contains(
-                expected, expected.toBuilder().exclusiveStartKey(first).build(),
-                expected.toBuilder().exclusiveStartKey(second).build()
+            "must count every page while preserving options and continuation keys",
+            Arrays.asList(count, requests.getAllValues()),
+            Matchers.equalTo(
+                Arrays.asList(
+                    5, Arrays.asList(
+                        expected,
+                        expected.toBuilder().exclusiveStartKey(first).build(),
+                        expected.toBuilder().exclusiveStartKey(second).build()
+                    )
+                )
             )
         );
         Mockito.verify(aws).close();
@@ -146,12 +148,11 @@ final class ScanValveTest {
         final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
         Mockito.doReturn(aws).when(credentials).aws();
         Mockito.doReturn(
-            ScanResponse.builder().count(Integer.MAX_VALUE - 2)
-                .lastEvaluatedKey(
-                    Collections.singletonMap(
-                        "id", AttributeValue.builder().s("last").build()
-                    )
-                ).consumedCapacity(ScanValveTest.capacity()).build()
+            ScanResponse.builder().count(Integer.MAX_VALUE - 2).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "id", AttributeValue.builder().s("last").build()
+                )
+            ).consumedCapacity(ScanValveTest.capacity()).build()
         ).doReturn(
             ScanResponse.builder().count(4)
                 .consumedCapacity(ScanValveTest.capacity()).build()

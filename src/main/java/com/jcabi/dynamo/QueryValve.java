@@ -197,7 +197,6 @@ public final class QueryValve implements Valve {
                 bld = request.toBuilder()
                     .exclusiveStartKey(rslt.lastEvaluatedKey());
             } while (!rslt.lastEvaluatedKey().isEmpty());
-            // AwsFrame.size() must obey the Collection.size() upper bound.
             return (int) Math.min(Integer.MAX_VALUE, total);
         } catch (final SdkClientException ex) {
             throw new IOException(

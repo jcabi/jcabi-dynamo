@@ -148,7 +148,6 @@ public final class ScanValve implements Valve {
                 bld = request.toBuilder()
                     .exclusiveStartKey(result.lastEvaluatedKey());
             } while (!result.lastEvaluatedKey().isEmpty());
-            // AwsFrame.size() must obey the Collection.size() upper bound.
             return (int) Math.min(Integer.MAX_VALUE, total);
         } finally {
             aws.close();
