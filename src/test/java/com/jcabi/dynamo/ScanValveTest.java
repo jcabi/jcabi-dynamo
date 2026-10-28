@@ -13,13 +13,16 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.ConsumedCapacity;
+import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest;
 import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
+import software.amazon.awssdk.services.dynamodb.model.Select;
 
 /**
  * Test case for {@link ScanValve}.
@@ -91,6 +94,93 @@ final class ScanValveTest {
             ),
             Matchers.equalTo(expected)
         );
+    }
+
+    @Test
+    void countsEveryPageIncludingAnEmptyPage() {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        final Map<String, AttributeValue> first = Collections.singletonMap(
+            "id", AttributeValue.builder().s("first").build()
+        );
+        final Map<String, AttributeValue> second = Collections.singletonMap(
+            "id", AttributeValue.builder().s("second").build()
+        );
+        Mockito.doReturn(
+            ScanResponse.builder().count(2).lastEvaluatedKey(first)
+                .consumedCapacity(ScanValveTest.capacity()).build()
+        ).doReturn(
+            ScanResponse.builder().count(0).lastEvaluatedKey(second)
+                .consumedCapacity(ScanValveTest.capacity()).build()
+        ).doReturn(
+            ScanResponse.builder().count(3)
+                .consumedCapacity(ScanValveTest.capacity()).build()
+        ).when(aws).scan(Mockito.any(ScanRequest.class));
+        final Conditions conditions = new Conditions().with("hash", "value");
+        MatcherAssert.assertThat(
+            "must include the page after an empty page",
+            new ScanValve().count(credentials, "pages", conditions),
+            Matchers.equalTo(5)
+        );
+        final ArgumentCaptor<ScanRequest> requests =
+            ArgumentCaptor.forClass(ScanRequest.class);
+        Mockito.verify(aws, Mockito.times(3)).scan(requests.capture());
+        final ScanRequest expected = ScanRequest.builder().tableName("pages")
+            .scanFilter(conditions).select(Select.COUNT).limit(Integer.MAX_VALUE)
+            .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL).build();
+        MatcherAssert.assertThat(
+            "must preserve scan options and advance each continuation key",
+            requests.getAllValues(),
+            Matchers.contains(
+                expected, expected.toBuilder().exclusiveStartKey(first).build(),
+                expected.toBuilder().exclusiveStartKey(second).build()
+            )
+        );
+        Mockito.verify(aws).close();
+    }
+
+    @Test
+    void capsCountsLargerThanIntegerMaxValue() {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            ScanResponse.builder().count(Integer.MAX_VALUE - 2)
+                .lastEvaluatedKey(
+                    Collections.singletonMap(
+                        "id", AttributeValue.builder().s("last").build()
+                    )
+                ).consumedCapacity(ScanValveTest.capacity()).build()
+        ).doReturn(
+            ScanResponse.builder().count(4)
+                .consumedCapacity(ScanValveTest.capacity()).build()
+        ).when(aws).scan(Mockito.any(ScanRequest.class));
+        MatcherAssert.assertThat(
+            "must not overflow the Collection.size result",
+            new ScanValve().count(credentials, "large", new Conditions()),
+            Matchers.equalTo(Integer.MAX_VALUE)
+        );
+    }
+
+    @Test
+    void closesClientWhenCountingALaterPageFails() {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            ScanResponse.builder().count(2).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "id", AttributeValue.builder().s("last").build()
+                )
+            ).consumedCapacity(ScanValveTest.capacity()).build()
+        ).doThrow(SdkClientException.create("second page failed"))
+            .when(aws).scan(Mockito.any(ScanRequest.class));
+        Assertions.assertThrows(
+            SdkClientException.class,
+            () -> new ScanValve().count(credentials, "pages", new Conditions())
+        );
+        Mockito.verify(aws).close();
     }
 
     @Test
