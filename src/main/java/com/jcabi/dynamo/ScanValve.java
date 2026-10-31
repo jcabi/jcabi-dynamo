@@ -124,24 +124,31 @@ public final class ScanValve implements Valve {
         final Map<String, Condition> conditions) {
         final DynamoDbClient aws = credentials.aws();
         try {
-            final ScanRequest request = ScanRequest.builder()
+            ScanRequest.Builder bld = ScanRequest.builder()
                 .tableName(table)
                 .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
                 .scanFilter(conditions)
                 .select(Select.COUNT)
-                .limit(Integer.MAX_VALUE)
-                .build();
-            final ScanResponse result = aws.scan(request);
-            Logger.info(
-                this,
-                "#total(): COUNT=%d in '%s' using %s, %s",
-                result.count(), request.tableName(),
-                request.filterExpression(),
-                new PrintableConsumedCapacity(
-                    result.consumedCapacity()
-                ).print()
-            );
-            return result.count();
+                .limit(Integer.MAX_VALUE);
+            long total = 0L;
+            ScanResponse result;
+            do {
+                final ScanRequest request = bld.build();
+                result = aws.scan(request);
+                total += result.count();
+                Logger.info(
+                    this,
+                    "#count(): PAGE COUNT=%d in '%s' using %s, %s",
+                    result.count(), request.tableName(),
+                    request.filterExpression(),
+                    new PrintableConsumedCapacity(
+                        result.consumedCapacity()
+                    ).print()
+                );
+                bld = request.toBuilder()
+                    .exclusiveStartKey(result.lastEvaluatedKey());
+            } while (!result.lastEvaluatedKey().isEmpty());
+            return (int) Math.min(Integer.MAX_VALUE, total);
         } finally {
             aws.close();
         }
