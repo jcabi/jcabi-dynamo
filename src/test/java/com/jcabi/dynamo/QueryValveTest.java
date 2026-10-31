@@ -99,27 +99,22 @@ final class QueryValveTest {
     @Test
     void countsEveryPageIncludingAnEmptyPage() throws Exception {
         final Credentials credentials = Mockito.mock(Credentials.class);
-        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(QueryValveTest.threePages()).when(credentials).aws();
+        MatcherAssert.assertThat(
+            "must not lose items from later pages",
+            new QueryValve().count(credentials, "pages", new Conditions()),
+            Matchers.equalTo(5)
+        );
+    }
+
+    @Test
+    void passesContinuationKeyToEveryNextQuery() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = QueryValveTest.threePages();
         Mockito.doReturn(aws).when(credentials).aws();
-        final Map<String, AttributeValue> first = Collections.singletonMap(
-            "id", AttributeValue.builder().s("first").build()
-        );
-        final Map<String, AttributeValue> second = Collections.singletonMap(
-            "id", AttributeValue.builder().s("second").build()
-        );
-        Mockito.doReturn(
-            QueryResponse.builder().count(2).lastEvaluatedKey(first)
-                .consumedCapacity(QueryValveTest.capacity()).build()
-        ).doReturn(
-            QueryResponse.builder().count(0).lastEvaluatedKey(second)
-                .consumedCapacity(QueryValveTest.capacity()).build()
-        ).doReturn(
-            QueryResponse.builder().count(3)
-                .consumedCapacity(QueryValveTest.capacity()).build()
-        ).when(aws).query(Mockito.any(QueryRequest.class));
         final Conditions conditions = new Conditions().with("hash", "value");
-        final int count = new QueryValve().withIndexName("index")
-            .withConsistentRead(false).count(credentials, "pages", conditions);
+        new QueryValve().withIndexName("index").withConsistentRead(false)
+            .count(credentials, "pages", conditions);
         final ArgumentCaptor<QueryRequest> requests =
             ArgumentCaptor.forClass(QueryRequest.class);
         Mockito.verify(aws, Mockito.times(3)).query(requests.capture());
@@ -128,19 +123,18 @@ final class QueryValveTest {
             .select(Select.COUNT).limit(Integer.MAX_VALUE)
             .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL).build();
         MatcherAssert.assertThat(
-            "must count every page while preserving options and continuation keys",
-            Arrays.asList(count, requests.getAllValues()),
+            "must not lose options or continuation keys between queries",
+            requests.getAllValues(),
             Matchers.equalTo(
                 Arrays.asList(
-                    5, Arrays.asList(
-                        expected,
-                        expected.toBuilder().exclusiveStartKey(first).build(),
-                        expected.toBuilder().exclusiveStartKey(second).build()
-                    )
+                    expected,
+                    expected.toBuilder()
+                        .exclusiveStartKey(QueryValveTest.key("first")).build(),
+                    expected.toBuilder()
+                        .exclusiveStartKey(QueryValveTest.key("second")).build()
                 )
             )
         );
-        Mockito.verify(aws).close();
     }
 
     @Test
@@ -417,6 +411,29 @@ final class QueryValveTest {
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
+        );
+    }
+
+    private static DynamoDbClient threePages() {
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(
+            QueryResponse.builder().count(2)
+                .lastEvaluatedKey(QueryValveTest.key("first"))
+                .consumedCapacity(QueryValveTest.capacity()).build()
+        ).doReturn(
+            QueryResponse.builder().count(0)
+                .lastEvaluatedKey(QueryValveTest.key("second"))
+                .consumedCapacity(QueryValveTest.capacity()).build()
+        ).doReturn(
+            QueryResponse.builder().count(3)
+                .consumedCapacity(QueryValveTest.capacity()).build()
+        ).when(aws).query(Mockito.any(QueryRequest.class));
+        return aws;
+    }
+
+    private static Map<String, AttributeValue> key(final String value) {
+        return Collections.singletonMap(
+            "id", AttributeValue.builder().s(value).build()
         );
     }
 

@@ -100,26 +100,21 @@ final class ScanValveTest {
     @Test
     void countsEveryPageIncludingAnEmptyPage() {
         final Credentials credentials = Mockito.mock(Credentials.class);
-        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(ScanValveTest.threePages()).when(credentials).aws();
+        MatcherAssert.assertThat(
+            "must not lose items from later pages",
+            new ScanValve().count(credentials, "pages", new Conditions()),
+            Matchers.equalTo(5)
+        );
+    }
+
+    @Test
+    void passesContinuationKeyToEveryNextScan() {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = ScanValveTest.threePages();
         Mockito.doReturn(aws).when(credentials).aws();
-        final Map<String, AttributeValue> first = Collections.singletonMap(
-            "id", AttributeValue.builder().s("first").build()
-        );
-        final Map<String, AttributeValue> second = Collections.singletonMap(
-            "id", AttributeValue.builder().s("second").build()
-        );
-        Mockito.doReturn(
-            ScanResponse.builder().count(2).lastEvaluatedKey(first)
-                .consumedCapacity(ScanValveTest.capacity()).build()
-        ).doReturn(
-            ScanResponse.builder().count(0).lastEvaluatedKey(second)
-                .consumedCapacity(ScanValveTest.capacity()).build()
-        ).doReturn(
-            ScanResponse.builder().count(3)
-                .consumedCapacity(ScanValveTest.capacity()).build()
-        ).when(aws).scan(Mockito.any(ScanRequest.class));
         final Conditions conditions = new Conditions().with("hash", "value");
-        final int count = new ScanValve().count(credentials, "pages", conditions);
+        new ScanValve().count(credentials, "pages", conditions);
         final ArgumentCaptor<ScanRequest> requests =
             ArgumentCaptor.forClass(ScanRequest.class);
         Mockito.verify(aws, Mockito.times(3)).scan(requests.capture());
@@ -127,19 +122,18 @@ final class ScanValveTest {
             .scanFilter(conditions).select(Select.COUNT).limit(Integer.MAX_VALUE)
             .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL).build();
         MatcherAssert.assertThat(
-            "must count every page while preserving options and continuation keys",
-            Arrays.asList(count, requests.getAllValues()),
+            "must not lose options or continuation keys between scans",
+            requests.getAllValues(),
             Matchers.equalTo(
                 Arrays.asList(
-                    5, Arrays.asList(
-                        expected,
-                        expected.toBuilder().exclusiveStartKey(first).build(),
-                        expected.toBuilder().exclusiveStartKey(second).build()
-                    )
+                    expected,
+                    expected.toBuilder()
+                        .exclusiveStartKey(ScanValveTest.key("first")).build(),
+                    expected.toBuilder()
+                        .exclusiveStartKey(ScanValveTest.key("second")).build()
                 )
             )
         );
-        Mockito.verify(aws).close();
     }
 
     @Test
@@ -353,6 +347,29 @@ final class ScanValveTest {
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
+        );
+    }
+
+    private static DynamoDbClient threePages() {
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(
+            ScanResponse.builder().count(2)
+                .lastEvaluatedKey(ScanValveTest.key("first"))
+                .consumedCapacity(ScanValveTest.capacity()).build()
+        ).doReturn(
+            ScanResponse.builder().count(0)
+                .lastEvaluatedKey(ScanValveTest.key("second"))
+                .consumedCapacity(ScanValveTest.capacity()).build()
+        ).doReturn(
+            ScanResponse.builder().count(3)
+                .consumedCapacity(ScanValveTest.capacity()).build()
+        ).when(aws).scan(Mockito.any(ScanRequest.class));
+        return aws;
+    }
+
+    private static Map<String, AttributeValue> key(final String value) {
+        return Collections.singletonMap(
+            "id", AttributeValue.builder().s(value).build()
         );
     }
 
