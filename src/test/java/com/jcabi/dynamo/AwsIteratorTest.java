@@ -33,12 +33,9 @@ final class AwsIteratorTest {
     void hasNextOnFreshIterator() throws IOException {
         final Credentials credentials = Mockito.mock(Credentials.class);
         final Dosage first = Mockito.mock(Dosage.class);
-        Mockito.doReturn(
-            Collections.singletonList(
-                new Attributes().with("attribute-1", "value-1")
-            )
-        ).when(first).items();
-        Mockito.doReturn(true).when(first).hasNext();
+        AwsIteratorTest.setupDosageItemsAndHasNextStubs(
+            "attribute-1", "value-1", first
+        );
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(first)
             .when(valve).fetch(
@@ -72,10 +69,7 @@ final class AwsIteratorTest {
         final String attr = "attribute-1";
         final String value = "value-1";
         final Dosage first = Mockito.mock(Dosage.class);
-        Mockito.doReturn(
-            Collections.singletonList(new Attributes().with(attr, value))
-        ).when(first).items();
-        Mockito.doReturn(true).when(first).hasNext();
+        AwsIteratorTest.setupDosageItemsAndHasNextStubs(attr, value, first);
         final Valve valve = Mockito.mock(Valve.class);
         Mockito.doReturn(first)
             .when(valve).fetch(
@@ -109,10 +103,7 @@ final class AwsIteratorTest {
         final String attr = "attribute-1";
         final String value = "value-1";
         final Dosage first = Mockito.mock(Dosage.class);
-        Mockito.doReturn(
-            Collections.singletonList(new Attributes().with(attr, value))
-        ).when(first).items();
-        Mockito.doReturn(true).when(first).hasNext();
+        AwsIteratorTest.setupDosageItemsAndHasNextStubs(attr, value, first);
         final Dosage second = Mockito.mock(Dosage.class);
         Mockito.doReturn(second).when(first).next();
         Mockito.doReturn(
@@ -154,16 +145,10 @@ final class AwsIteratorTest {
         final String attr = "attribute-1";
         final String value = "value-1";
         final Dosage first = Mockito.mock(Dosage.class);
-        Mockito.doReturn(
-            Collections.singletonList(new Attributes().with(attr, value))
-        ).when(first).items();
-        Mockito.doReturn(true).when(first).hasNext();
+        AwsIteratorTest.setupDosageItemsAndHasNextStubs(attr, value, first);
         final Dosage second = Mockito.mock(Dosage.class);
         Mockito.doReturn(second).when(first).next();
-        Mockito.doReturn(
-            Collections.singletonList(new Attributes().with(attr, value))
-        ).when(second).items();
-        Mockito.doReturn(true).when(second).hasNext();
+        AwsIteratorTest.setupDosageItemsAndHasNextStubs(attr, value, second);
         final Dosage last = Mockito.mock(Dosage.class);
         Mockito.doReturn(last).when(second).next();
         Mockito.doReturn(new ArrayList<Attributes>(0)).when(last).items();
@@ -331,5 +316,13 @@ final class AwsIteratorTest {
         Mockito.verify(aws).deleteItem(
             Mockito.any(DeleteItemRequest.class)
         );
+    }
+
+    private static void setupDosageItemsAndHasNextStubs(final String attr,
+        final String value, final Dosage first) {
+        Mockito.doReturn(
+            Collections.singletonList(new Attributes().with(attr, value))
+        ).when(first).items();
+        Mockito.doReturn(true).when(first).hasNext();
     }
 }
