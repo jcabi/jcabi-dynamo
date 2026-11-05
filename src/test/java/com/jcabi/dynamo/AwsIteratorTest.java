@@ -270,6 +270,51 @@ final class AwsIteratorTest {
     }
 
     @Test
+    void hasNextBehindTwoEmptyDosages() throws IOException {
+        final Credentials creds = Mockito.mock(Credentials.class);
+        final Dosage last = Mockito.mock(Dosage.class);
+        Mockito.doReturn(
+            Collections.singletonList(
+                new Attributes().with(UUID.randomUUID().toString(), "dernière")
+            )
+        ).when(last).items();
+        Mockito.doReturn(false).when(last).hasNext();
+        final Dosage second = Mockito.mock(Dosage.class);
+        Mockito.doReturn(Collections.emptyList()).when(second).items();
+        Mockito.doReturn(true).when(second).hasNext();
+        Mockito.doReturn(last).when(second).next();
+        final Dosage first = Mockito.mock(Dosage.class);
+        Mockito.doReturn(Collections.emptyList()).when(first).items();
+        Mockito.doReturn(true).when(first).hasNext();
+        Mockito.doReturn(second).when(first).next();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(first)
+            .when(valve).fetch(
+                Mockito.eq(creds), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = UUID.randomUUID().toString();
+        MatcherAssert.assertThat(
+            "did not find the item behind two empty dosages",
+            new AwsIterator(
+                creds,
+                new AwsFrame(
+                    creds,
+                    new AwsTable(
+                        creds,
+                        Mockito.mock(Region.class),
+                        table
+                    ),
+                    table
+                ),
+                table, new Conditions(),
+                new ArrayList<>(0), valve
+            ).hasNext(),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
     void throwsOnRemoveBeforeIteration() {
         final String table = UUID.randomUUID().toString();
         final Credentials creds = Mockito.mock(Credentials.class);

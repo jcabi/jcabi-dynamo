@@ -126,7 +126,7 @@ final class AwsIterator implements Iterator<Item> {
                 }
                 this.position = -1;
             }
-            if (this.dosage.get().hasNext()
+            while (this.dosage.get().hasNext()
                 && this.position + 1 >= this.dosage.get().items().size()) {
                 this.dosage.set(this.dosage.get().next());
                 this.position = -1;
