@@ -6,12 +6,14 @@ package com.jcabi.dynamo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -19,6 +21,8 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.ConsumedCapacity;
 import software.amazon.awssdk.services.dynamodb.model.QueryRequest;
 import software.amazon.awssdk.services.dynamodb.model.QueryResponse;
+import software.amazon.awssdk.services.dynamodb.model.ReturnConsumedCapacity;
+import software.amazon.awssdk.services.dynamodb.model.Select;
 
 /**
  * Test case for {@link QueryValve}.
@@ -90,6 +94,89 @@ final class QueryValveTest {
             ),
             Matchers.equalTo(expected)
         );
+    }
+
+    @Test
+    void countsEveryPageIncludingAnEmptyPage() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        Mockito.doReturn(QueryValveTest.threePages()).when(credentials).aws();
+        MatcherAssert.assertThat(
+            "must not lose items from later pages",
+            new QueryValve().count(credentials, "pages", new Conditions()),
+            Matchers.equalTo(5)
+        );
+    }
+
+    @Test
+    void passesContinuationKeyToEveryNextQuery() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = QueryValveTest.threePages();
+        Mockito.doReturn(aws).when(credentials).aws();
+        final Conditions conditions = new Conditions().with("hash", "value");
+        new QueryValve().withIndexName("index").withConsistentRead(false)
+            .count(credentials, "pages", conditions);
+        final ArgumentCaptor<QueryRequest> requests =
+            ArgumentCaptor.forClass(QueryRequest.class);
+        Mockito.verify(aws, Mockito.times(3)).query(requests.capture());
+        final QueryRequest expected = QueryRequest.builder().tableName("pages")
+            .keyConditions(conditions).consistentRead(false).indexName("index")
+            .select(Select.COUNT).limit(Integer.MAX_VALUE)
+            .returnConsumedCapacity(ReturnConsumedCapacity.TOTAL).build();
+        MatcherAssert.assertThat(
+            "must not lose options or continuation keys between queries",
+            requests.getAllValues(),
+            Matchers.equalTo(
+                Arrays.asList(
+                    expected,
+                    expected.toBuilder()
+                        .exclusiveStartKey(QueryValveTest.key("first")).build(),
+                    expected.toBuilder()
+                        .exclusiveStartKey(QueryValveTest.key("second")).build()
+                )
+            )
+        );
+    }
+
+    @Test
+    void capsCountsLargerThanIntegerMaxValue() throws Exception {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            QueryResponse.builder().count(Integer.MAX_VALUE - 2).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "id", AttributeValue.builder().s("last").build()
+                )
+            ).consumedCapacity(QueryValveTest.capacity()).build()
+        ).doReturn(
+            QueryResponse.builder().count(4)
+                .consumedCapacity(QueryValveTest.capacity()).build()
+        ).when(aws).query(Mockito.any(QueryRequest.class));
+        MatcherAssert.assertThat(
+            "must not overflow the Collection.size result",
+            new QueryValve().count(credentials, "large", new Conditions()),
+            Matchers.equalTo(Integer.MAX_VALUE)
+        );
+    }
+
+    @Test
+    void closesClientWhenCountingALaterPageFails() {
+        final Credentials credentials = Mockito.mock(Credentials.class);
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(aws).when(credentials).aws();
+        Mockito.doReturn(
+            QueryResponse.builder().count(2).lastEvaluatedKey(
+                Collections.singletonMap(
+                    "id", AttributeValue.builder().s("last").build()
+                )
+            ).consumedCapacity(QueryValveTest.capacity()).build()
+        ).doThrow(SdkClientException.create("second page failed"))
+            .when(aws).query(Mockito.any(QueryRequest.class));
+        Assertions.assertThrows(
+            IOException.class,
+            () -> new QueryValve().count(credentials, "pages", new Conditions())
+        );
+        Mockito.verify(aws).close();
     }
 
     @Test
@@ -324,6 +411,29 @@ final class QueryValveTest {
                     new Conditions(), new ArrayList<>(0)
                 ).items(),
             Matchers.hasSize(1)
+        );
+    }
+
+    private static DynamoDbClient threePages() {
+        final DynamoDbClient aws = Mockito.mock(DynamoDbClient.class);
+        Mockito.doReturn(
+            QueryResponse.builder().count(2)
+                .lastEvaluatedKey(QueryValveTest.key("first"))
+                .consumedCapacity(QueryValveTest.capacity()).build()
+        ).doReturn(
+            QueryResponse.builder().count(0)
+                .lastEvaluatedKey(QueryValveTest.key("second"))
+                .consumedCapacity(QueryValveTest.capacity()).build()
+        ).doReturn(
+            QueryResponse.builder().count(3)
+                .consumedCapacity(QueryValveTest.capacity()).build()
+        ).when(aws).query(Mockito.any(QueryRequest.class));
+        return aws;
+    }
+
+    private static Map<String, AttributeValue> key(final String value) {
+        return Collections.singletonMap(
+            "id", AttributeValue.builder().s(value).build()
         );
     }
 

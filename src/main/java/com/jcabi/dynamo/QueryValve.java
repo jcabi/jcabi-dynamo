@@ -180,17 +180,24 @@ public final class QueryValve implements Valve {
             if (!this.index.isEmpty()) {
                 bld = bld.indexName(this.index);
             }
-            final QueryRequest request = bld.build();
-            final QueryResponse rslt = aws.query(request);
-            Logger.info(
-                this,
-                "#total(): COUNT=%d in '%s' using %s, %s",
-                rslt.count(), request.tableName(), request.queryFilter(),
-                new PrintableConsumedCapacity(
-                    rslt.consumedCapacity()
-                ).print()
-            );
-            return rslt.count();
+            long total = 0L;
+            QueryResponse rslt;
+            do {
+                final QueryRequest request = bld.build();
+                rslt = aws.query(request);
+                total += rslt.count();
+                Logger.info(
+                    this,
+                    "#count(): PAGE COUNT=%d in '%s' using %s, %s",
+                    rslt.count(), request.tableName(), request.queryFilter(),
+                    new PrintableConsumedCapacity(
+                        rslt.consumedCapacity()
+                    ).print()
+                );
+                bld = request.toBuilder()
+                    .exclusiveStartKey(rslt.lastEvaluatedKey());
+            } while (!rslt.lastEvaluatedKey().isEmpty());
+            return (int) Math.min(Integer.MAX_VALUE, total);
         } catch (final SdkClientException ex) {
             throw new IOException(
                 String.format(
