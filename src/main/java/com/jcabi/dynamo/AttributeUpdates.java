@@ -209,7 +209,7 @@ public final class AttributeUpdates
                 .build();
         } else {
             final AttributeValue attr;
-            if (value instanceof Long || value instanceof Integer) {
+            if (value instanceof Number) {
                 attr = AttributeValue.builder().n(value.toString()).build();
             } else {
                 attr = AttributeValue.builder().s(value.toString()).build();
