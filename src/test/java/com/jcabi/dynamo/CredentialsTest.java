@@ -7,6 +7,7 @@ package com.jcabi.dynamo;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 /**
@@ -120,6 +121,20 @@ final class CredentialsTest {
             "Direct credentials with port did not create AWS client",
             aws,
             Matchers.notNullValue()
+        );
+        aws.close();
+    }
+
+    @Test
+    void preservesDirectCredentialsRegion() {
+        final DynamoDbClient aws = new Credentials.Direct(
+            new Credentials.Simple("local-key", "local-secret", "eu-west-1"),
+            "http://localhost:8000"
+        ).aws();
+        MatcherAssert.assertThat(
+            "Direct credentials must preserve the supplied region",
+            aws.serviceClientConfiguration().region(),
+            Matchers.equalTo(Region.EU_WEST_1)
         );
         aws.close();
     }
