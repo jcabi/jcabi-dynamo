@@ -202,7 +202,7 @@ public interface Credentials {
         public DynamoDbClient aws() {
             return DynamoDbClient.builder()
                 .endpointOverride(URI.create(this.endpoint))
-                .region(Region.US_EAST_1).credentialsProvider(
+                .region(Region.of(this.origin.region)).credentialsProvider(
                     StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(
                             this.origin.key, this.origin.secret
