@@ -4,6 +4,9 @@
  */
 package com.jcabi.dynamo;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Arrays;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +22,28 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
  */
 @SuppressWarnings("CollectionIncompatibleType")
 final class AttributeUpdatesTest {
+
+    @Test
+    void storesEveryNumericTypeAsANumber() {
+        for (final Number number : Arrays.<Number>asList(
+            1.5d, 2.5f, (short) 3, (byte) 4,
+            new BigDecimal("5.125"),
+            new BigInteger("123456789012345678901234567890"),
+            6, 7L
+        )) {
+            MatcherAssert.assertThat(
+                String.format(
+                    "must preserve the numeric type for %s", number.getClass()
+                ),
+                new AttributeUpdates().with("number", number).get("number"),
+                Matchers.equalTo(
+                    AttributeValueUpdate.builder().value(
+                        AttributeValue.builder().n(number.toString()).build()
+                    ).action(AttributeAction.PUT).build()
+                )
+            );
+        }
+    }
 
     @Test
     void tellsIfEmpty() {
