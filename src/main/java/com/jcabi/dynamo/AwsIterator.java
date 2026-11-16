@@ -84,6 +84,11 @@ final class AwsIterator implements Iterator<Item> {
     private transient int position;
 
     /**
+     * Whether remove() is allowed, set by next() and cleared by remove().
+     */
+    private transient boolean removable;
+
+    /**
      * Public ctor.
      *
      * @param creds Credentials
@@ -150,6 +155,7 @@ final class AwsIterator implements Iterator<Item> {
                 );
             }
             ++this.position;
+            this.removable = true;
             return new AwsItem(
                 this.credentials,
                 this.frame,
@@ -167,7 +173,7 @@ final class AwsIterator implements Iterator<Item> {
         this.lock.lock();
         try {
             final Dosage prev = this.dosage.get();
-            if (prev == null) {
+            if (prev == null || !this.removable) {
                 throw new IllegalStateException(
                     "You can't call remove() until you call next()"
                 );
@@ -188,6 +194,7 @@ final class AwsIterator implements Iterator<Item> {
                 );
                 this.dosage.set(new Fixed(prev, items));
                 --this.position;
+                this.removable = false;
                 Logger.info(
                     this,
                     "#remove(): item #%d removed from DynamoDB",

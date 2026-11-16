@@ -363,6 +363,71 @@ final class AwsIteratorTest {
         );
     }
 
+    @Test
+    void rejectsSecondRemoveInRow() throws IOException {
+        final Iterator<Item> iter = AwsIteratorTest.iteratorOverThree();
+        iter.next();
+        iter.next();
+        iter.remove();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            iter::remove,
+            "removed a second item without a call to next()"
+        );
+    }
+
+    @Test
+    void rejectsRemoveAfterHasNextOnly() throws IOException {
+        final Iterator<Item> iter = AwsIteratorTest.iteratorOverThree();
+        MatcherAssert.assertThat(
+            "should have an item to return",
+            iter.hasNext(),
+            Matchers.is(true)
+        );
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            iter::remove,
+            "removed an item that next() never returned"
+        );
+    }
+
+    private static Iterator<Item> iteratorOverThree() throws IOException {
+        final Credentials creds = Mockito.mock(Credentials.class);
+        Mockito.doReturn(Mockito.mock(DynamoDbClient.class))
+            .when(creds).aws();
+        final String attr = UUID.randomUUID().toString();
+        final Dosage dosage = Mockito.mock(Dosage.class);
+        Mockito.doReturn(
+            Arrays.asList(
+                new Attributes().with(attr, "alpha"),
+                new Attributes().with(attr, "beta"),
+                new Attributes().with(attr, "gamma")
+            )
+        ).when(dosage).items();
+        Mockito.doReturn(false).when(dosage).hasNext();
+        final Valve valve = Mockito.mock(Valve.class);
+        Mockito.doReturn(dosage)
+            .when(valve).fetch(
+                Mockito.eq(creds), Mockito.anyString(),
+                Mockito.any(Map.class), Mockito.any(Collection.class)
+            );
+        final String table = UUID.randomUUID().toString();
+        return new AwsIterator(
+            creds,
+            new AwsFrame(
+                creds,
+                new AwsTable(
+                    creds,
+                    Mockito.mock(Region.class),
+                    table
+                ),
+                table
+            ),
+            table, new Conditions(),
+            Collections.singletonList(attr), valve
+        );
+    }
+
     private static void setupDosageItemsAndHasNextStubs(final String attr,
         final String value, final Dosage first) {
         Mockito.doReturn(
