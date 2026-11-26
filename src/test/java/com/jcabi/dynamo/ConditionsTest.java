@@ -20,6 +20,30 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 final class ConditionsTest {
 
     @Test
+    void retainsOperandTypesInConvenienceConditions() {
+        final int integer = 42;
+        final long large = 4_294_967_296L;
+        final String key = "count";
+        MatcherAssert.assertThat(
+            "an integer operand should produce numeric equality",
+            new Conditions().with(key, integer).get(key),
+            Matchers.equalTo(Conditions.equalTo(integer))
+        );
+        MatcherAssert.assertThat(
+            "a long operand should preserve its full numeric value",
+            new Conditions().with(key, large).get(key),
+            Matchers.equalTo(Conditions.equalTo(large))
+        );
+        MatcherAssert.assertThat(
+            "numeric-looking text should still use a string operand",
+            new Conditions().with(key, "42").get(key),
+            Matchers.equalTo(
+                Conditions.equalTo(AttributeValue.builder().s("42").build())
+            )
+        );
+    }
+
+    @Test
     void worksAsMapWithCorrectKeySetSize() {
         MatcherAssert.assertThat(
             "should has size 1",
