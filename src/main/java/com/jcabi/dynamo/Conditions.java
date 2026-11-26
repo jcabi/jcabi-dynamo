@@ -99,9 +99,13 @@ public final class Conditions implements Map<String, Condition> {
      * @return The condition just created
      */
     public static Condition equalTo(final Object value) {
-        return Conditions.equalTo(
-            AttributeValue.builder().s(value.toString()).build()
-        );
+        final AttributeValue.Builder attr = AttributeValue.builder();
+        if (value instanceof Number) {
+            attr.n(value.toString());
+        } else {
+            attr.s(value.toString());
+        }
+        return Conditions.equalTo(attr.build());
     }
 
     /**
