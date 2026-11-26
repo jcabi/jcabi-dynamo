@@ -43,16 +43,16 @@ final class Rows implements Outcome<Iterable<Attributes>> {
         Attributes attrs = new Attributes();
         for (int idx = 0; idx < meta.getColumnCount(); ++idx) {
             final String text = rset.getString(idx + 1);
-            final AttributeValue value;
-            if (text.matches("[0-9]+")) {
-                value = AttributeValue.builder().s(text).n(text).build();
-            } else {
-                value = AttributeValue.builder().s(text).build();
+            if (text != null) {
+                final AttributeValue.Builder value = AttributeValue.builder().s(text);
+                if (text.matches("[0-9]+")) {
+                    value.n(text);
+                }
+                attrs = attrs.with(
+                    meta.getColumnName(idx + 1).toLowerCase(Locale.ENGLISH),
+                    value.build()
+                );
             }
-            attrs = attrs.with(
-                meta.getColumnName(idx + 1).toLowerCase(Locale.ENGLISH),
-                value
-            );
         }
         return attrs;
     }
