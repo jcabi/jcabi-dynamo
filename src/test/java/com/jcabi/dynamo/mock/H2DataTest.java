@@ -29,6 +29,22 @@ import software.amazon.awssdk.services.dynamodb.model.Condition;
 final class H2DataTest {
 
     @Test
+    void omitsAbsentAttributesWhenReadingRows() throws Exception {
+        final String table = "items";
+        final String key = "id";
+        final Attributes item = new Attributes().with(key, "item-one");
+        final MkData data = new H2Data().with(
+            table, new String[]{key}, "description"
+        );
+        data.put(table, item);
+        MatcherAssert.assertThat(
+            "reading a row should return just its stored attributes",
+            data.iterate(table, new Conditions()).iterator().next(),
+            Matchers.equalTo(item)
+        );
+    }
+
+    @Test
     void storesAndReadsAttributes() throws Exception {
         final String table = "users";
         final String key = "user";
